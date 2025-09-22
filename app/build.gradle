@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.oliinyk.yaroslav.easyreads"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0.0"
 
@@ -50,7 +50,8 @@ android {
     buildFeatures {
         viewBinding true
     }
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '34.0.00'
+    namespace 'com.oliinyk.yaroslav.easyreads'
 }
 
 dependencies {
