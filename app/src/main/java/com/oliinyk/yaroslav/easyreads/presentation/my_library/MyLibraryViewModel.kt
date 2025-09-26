@@ -23,9 +23,9 @@ class MyLibraryViewModel @Inject constructor(
     private val readingGoalRepository: ReadingGoalRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<MyLibraryUiState> =
-        MutableStateFlow(MyLibraryUiState())
-    val stateUi: StateFlow<MyLibraryUiState>
+    private val _stateUi: MutableStateFlow<MyLibraryStateUi> =
+        MutableStateFlow(MyLibraryStateUi())
+    val stateUi: StateFlow<MyLibraryStateUi>
         get() = _stateUi.asStateFlow()
 
     init {
@@ -58,7 +58,7 @@ class MyLibraryViewModel @Inject constructor(
     }
 }
 
-data class MyLibraryUiState(
+data class MyLibraryStateUi(
     val finishedCount: Int = 0,
     val readingCount: Int = 0,
     val wantToReadCount: Int = 0,
