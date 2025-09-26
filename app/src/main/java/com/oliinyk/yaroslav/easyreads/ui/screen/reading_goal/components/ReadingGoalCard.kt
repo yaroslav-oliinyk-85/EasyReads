@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components
+package com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryUiState
+import com.oliinyk.yaroslav.easyreads.presentation.reading_goal.ReadingGoalStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
+import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -27,8 +28,10 @@ import java.util.Locale
 @Composable
 fun ReadingGoalCard(
     modifier: Modifier,
-    stateUi: MyLibraryUiState,
-    onClick: () -> Unit
+    stateUi: ReadingGoalStateUi,
+    isVisibleChangeGoalButton: Boolean = true,
+    onChangeGoalClick: () -> Unit = { /* optional */ },
+    onClick: () -> Unit = { /* optional */ }
 ) {
     Card(
         modifier = modifier
@@ -43,8 +46,8 @@ fun ReadingGoalCard(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(
-                    horizontal = Dimens.MyLibraryScreen.ReadingGoalCard.columnPaddingHorizontal,
-                    vertical = Dimens.MyLibraryScreen.ReadingGoalCard.columnPaddingVertical
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -85,6 +88,13 @@ fun ReadingGoalCard(
                 trackColor = MaterialTheme.colorScheme.background
             )
             Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
+            if (isVisibleChangeGoalButton) {
+                AppTextButton(
+                    onClick = onChangeGoalClick
+                ) {
+                    Text(text = stringResource(R.string.reading_goal__label__goal_change_text))
+                }
+            }
         }
     }
 }

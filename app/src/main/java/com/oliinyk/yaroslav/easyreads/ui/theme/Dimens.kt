@@ -1,5 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.theme
 
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 
 object Dimens {
@@ -14,6 +15,11 @@ object Dimens {
 
     val paddingVerticalSmall = 8.dp
     val paddingVerticalMedium = 16.dp
+
+    val arrangementHorizontalSpaceSmall = 8.dp
+    val arrangementVerticalSpaceSmall = 8.dp
+
+    val finishedBookCoverImageSize = DpSize(74.dp, 120.dp)
 
     object AppComponents {
         val appDividerThickness = 2.dp

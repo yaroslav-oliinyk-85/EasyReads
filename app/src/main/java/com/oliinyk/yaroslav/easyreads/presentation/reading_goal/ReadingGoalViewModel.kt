@@ -27,9 +27,9 @@ class ReadingGoalViewModel @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<ReadingGoalUiState> =
-        MutableStateFlow(ReadingGoalUiState())
-    val stateUi: StateFlow<ReadingGoalUiState>
+    private val _stateUi: MutableStateFlow<ReadingGoalStateUi> =
+        MutableStateFlow(ReadingGoalStateUi())
+    val stateUi: StateFlow<ReadingGoalStateUi>
         get() = _stateUi.asStateFlow()
 
     init {
@@ -57,7 +57,7 @@ class ReadingGoalViewModel @Inject constructor(
                     _stateUi.update { state ->
                         state.copy(
                             books = currentYearFinishedBooks,
-                            readBooksCount = currentYearFinishedBooks.size,
+                            currentYearFinishedBooksCount = currentYearFinishedBooks.size,
                             readPages = readPages
                         )
                     }
@@ -86,9 +86,9 @@ class ReadingGoalViewModel @Inject constructor(
     }
 }
 
-data class ReadingGoalUiState(
+data class ReadingGoalStateUi(
     val books: List<Book> = emptyList(),
-    val readBooksCount: Int = 0,
+    val currentYearFinishedBooksCount: Int = 0,
     val readingGoals: Int = 0,
     val readPages: Int = 0,
     val averagePagesHour: Int = 0,

@@ -1,27 +1,56 @@
 package com.oliinyk.yaroslav.easyreads.presentation.reading_goal
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.FragmentReadingGoalBinding
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import java.util.Date
 
 @AndroidEntryPoint
 class ReadingGoalFragment : Fragment() {
 
+    private val viewModel: ReadingGoalViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    ReadingGoalScreen(
+                        viewModel = viewModel,
+                        onBookClick = { book ->
+                            findNavController().navigate(
+                                ReadingGoalFragmentDirections.showDetails(book)
+                            )
+                        },
+                        onChangeGoalClick = {
+                            // TODO handle goal change
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    /*
     private var _binding: FragmentReadingGoalBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -134,4 +163,5 @@ class ReadingGoalFragment : Fragment() {
             //TODO: Change Your Goal
         }
     }
+    */
 }
