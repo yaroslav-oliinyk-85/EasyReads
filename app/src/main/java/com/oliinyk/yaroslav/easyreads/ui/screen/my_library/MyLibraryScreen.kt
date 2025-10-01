@@ -47,7 +47,9 @@ fun MyLibraryScreen(
                     Text(text = stringResource(R.string.my_library__toolbar__title_text))
                 },
                 actions = {
-                    IconButton(onClick = { onAddBookClick(Book()) }) {
+                    IconButton(
+                        onClick = { onAddBookClick(Book()) }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = stringResource(R.string.menu_item__my_library__add_text),

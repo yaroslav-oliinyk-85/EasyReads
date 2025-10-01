@@ -50,6 +50,6 @@ fun AppTextButton(
                 width = Dimens.AppComponents.appTextButtonBorderWith,
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            ),
+            )
     )
 }

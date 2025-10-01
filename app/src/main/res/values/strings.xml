@@ -67,10 +67,13 @@
     <string name="book_details__toast__message_note_updated_text">Note updated</string>
 
     <!-- Book Edit -->
+    <string name="book_edit__title__add_text">Add</string>
+    <string name="book_edit__title__edit_text">Edit</string>
     <string name="book_edit__label__change_cover_image_text">Press\nto\nchange</string>
+    <string name="book_edit__label__cover_image_content_description_text">Book cover image</string>
     <string name="book_edit__label__book_title_text">Title:</string>
     <string name="book_edit__label__book_author_text">Author:</string>
-    <string name="book_edit__label__book_pages_count_text">Pages:</string>
+    <string name="book_edit__label__book_pages_amount_text">Pages:</string>
     <string name="book_edit__label__book_page_current_text">Page Current:</string>
     <string name="book_edit__label__book_isbn_text">ISBN:</string>
     <string name="book_edit__label__book_description_text">Description:</string>

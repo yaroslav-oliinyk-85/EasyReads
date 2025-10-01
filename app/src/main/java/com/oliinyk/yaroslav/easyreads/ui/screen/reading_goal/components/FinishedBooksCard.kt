@@ -98,11 +98,11 @@ private fun FinishedBooksGridItem(
         book.coverImageFileName?.let { coverImageFileName ->
             val file = File(context.filesDir, coverImageFileName)
             AsyncImage(
+                modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(context)
                     .data(file)
                     .build(),
                 contentDescription = book.title,
-                modifier = modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         }

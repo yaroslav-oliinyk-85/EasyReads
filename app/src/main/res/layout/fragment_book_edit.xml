@@ -195,7 +195,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/page_amount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/page_amount"
-                android:text="@string/book_edit__label__book_pages_count_text" />
+                android:text="@string/book_edit__label__book_pages_amount_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/page_amount"

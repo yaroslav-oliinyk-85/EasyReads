@@ -1,0 +1,142 @@
+package com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import com.oliinyk.yaroslav.easyreads.R
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
+import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
+import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStateUi
+import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+
+@Composable
+fun BookAddEditScreenContent(
+    modifier: Modifier = Modifier,
+    stateUi: BookAddEditStateUi,
+    onCoverClick: () -> Unit,
+    onEvent: (BookAddEditEvent) -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colorScheme.background)
+            .padding(
+                horizontal = Dimens.paddingHorizontalMedium,
+                vertical = Dimens.paddingVerticalSmall
+            )
+    ) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = Dimens.paddingHorizontalMedium,
+                        vertical = Dimens.paddingVerticalMedium
+                    ),
+                verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceMedium)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    BookCoverImage(
+                        stateUi = stateUi,
+                        onCoverClick = onCoverClick
+                    )
+
+                    Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+                    ShelvesButtonWithDropdownMenu(
+                        modifier = Modifier.width(Dimens.bookAddEditCoverImageSize.width),
+                        stateUi = stateUi,
+                        onEvent = onEvent
+                    )
+                }
+
+                // Title
+                BookEditFieldWithDropdownMenu(
+                    label = stringResource(R.string.book_edit__label__book_title_text),
+                    value = stateUi.book.title,
+                    suggestions = stateUi.suggestionTitles,
+                    hint = stringResource(R.string.book_edit__hint__enter_book_title_text),
+                    onValueChange = { title -> onEvent(BookAddEditEvent.TitleChanged(title)) }
+                )
+
+                // Author
+                BookEditFieldWithDropdownMenu(
+                    label = stringResource(R.string.book_edit__label__book_author_text),
+                    value = stateUi.book.author,
+                    suggestions = stateUi.suggestionAuthors,
+                    hint = stringResource(R.string.book_edit__hint__enter_book_author_text),
+                    onValueChange = { author -> onEvent(BookAddEditEvent.AuthorChanged(author)) }
+                )
+
+                // Page Amount
+                BookEditField(
+                    label = stringResource(R.string.book_edit__label__book_pages_amount_text),
+                    value = if (stateUi.book.pageAmount != 0) stateUi.book.pageAmount.toString() else "",
+                    hint = stringResource(R.string.book_edit__hint__book_pages_count_text),
+                    keyboardType = KeyboardType.Number,
+                    onValueChange = { pageAmount ->
+                        onEvent(
+                            BookAddEditEvent.PageAmountChanged(
+                                pageAmount.take(AppConstants.BOOK_PAGE_AMOUNT_MAX_LENGTH)
+                            )
+                        )
+                    }
+                )
+
+                // ISBN
+                BookEditField(
+                    label = stringResource(R.string.book_edit__label__book_isbn_text),
+                    value = stateUi.book.isbn,
+                    hint = stringResource(R.string.book_edit__hint__book_isbn_input_text),
+                    keyboardType = KeyboardType.Number,
+                    onValueChange = { isbn ->
+                        onEvent(
+                            BookAddEditEvent.IsbnChanged(
+                                isbn.take(AppConstants.BOOK_ISBN_MAX_LENGTH)
+                            )
+                        )
+                    }
+                )
+
+                // Description
+                BookEditField(
+                    label = stringResource(R.string.book_edit__label__book_description_text),
+                    value = stateUi.book.description,
+                    hint = stringResource(R.string.book_edit__hint__enter_book_description_text),
+                    singleLine = false,
+                    minLines = 10,
+                    onValueChange = { description ->
+                        onEvent(
+                            BookAddEditEvent.DescriptionChanged(
+                                description
+                            )
+                        )
+                    }
+                )
+            }
+        }
+    }
+}

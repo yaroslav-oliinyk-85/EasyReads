@@ -78,7 +78,7 @@
 
     <fragment
         android:id="@+id/bookEditFragment"
-        android:name="com.oliinyk.yaroslav.easyreads.presentation.book.edit.BookEditFragment"
+        android:name="com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookEditFragment"
         android:label="BookEditFragment"
         tools:layout="@layout/fragment_book_edit">
         <argument

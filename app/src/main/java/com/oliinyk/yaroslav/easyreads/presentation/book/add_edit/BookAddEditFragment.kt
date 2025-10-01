@@ -1,49 +1,136 @@
-package com.oliinyk.yaroslav.easyreads.presentation.book.edit
+package com.oliinyk.yaroslav.easyreads.presentation.book.add_edit
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
-import androidx.core.view.MenuProvider
-import androidx.core.widget.doOnTextChanged
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.FragmentBookEditBinding
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.domain.util.ToastHelper
-import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.File
-import java.util.Date
 
-private const val FILE_PROVIDER_AUTHORITY =
-    "com.oliinyk.yaroslav.easyreads.fileprovider"
+//TODO: takePhotoLauncher implement or remove
+private const val FILE_PROVIDER_AUTHORITY = "com.oliinyk.yaroslav.easyreads.fileprovider"
 
 @AndroidEntryPoint
 class BookEditFragment : Fragment() {
+
+    private val args: BookEditFragmentArgs by navArgs()
+    private val viewModel: BookAddEditViewModel by viewModels()
+
+    //TODO: takePhotoLauncher implement or remove
+    private var photoName: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.removeUnusedCoverImage(requireContext().applicationContext)
+            findNavController().popBackStack()
+        }
+
+        viewModel.updateStateUi {
+            it.copy(book = args.book)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    BookAddEditScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        viewModel = viewModel,
+                        onEvent = { event -> viewModel.onEvent(event) },
+                        onCoverClick = {
+                            launchBookCoverImagePicker()
+                        },
+                        onSaveClick = {
+                            viewModel.save(requireContext().applicationContext)
+                            findNavController().popBackStack()
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    private val pickBookCoverImageLauncher = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            if (uri != null) {
+                viewModel.updateCoverImage(requireContext().applicationContext, uri)
+            }
+        }
+    }
+
+    private fun launchBookCoverImagePicker() {
+        val pickBookCoverImageIntent = pickBookCoverImageLauncher.contract.createIntent(
+            requireContext(),
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+        if (canResolveIntent(pickBookCoverImageIntent)) {
+            pickBookCoverImageLauncher.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        } else {
+            ToastHelper.show(
+                requireContext(),
+                getString(R.string.msg_warn__not_able_to_open_image_picker),
+                Toast.LENGTH_LONG
+            )
+        }
+    }
+
+    //TODO: takePhotoLauncher implement or remove
+    private val takePhotoLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { didTakePhoto ->
+        // Handle the result
+        if (didTakePhoto && photoName != null) {
+            viewModel.updateStateUi { stateUi ->
+                stateUi.copy(tookPhotoName = photoName)
+            }
+        }
+    }
+
+    private fun canResolveIntent(intent: Intent): Boolean {
+        val packageManager: PackageManager = requireActivity().packageManager
+        val resolvedActivity: ResolveInfo? =
+            packageManager.resolveActivity(
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
+            )
+        return resolvedActivity != null
+    }
+
+    /*
 
     private var _binding: FragmentBookEditBinding? = null
     private val binding
@@ -366,4 +453,6 @@ class BookEditFragment : Fragment() {
             }
         }
     }
+
+     */
 }

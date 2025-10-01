@@ -16,10 +16,14 @@ object Dimens {
     val paddingVerticalSmall = 8.dp
     val paddingVerticalMedium = 16.dp
 
+    val paddingBottomTiny = 4.dp
+
     val arrangementHorizontalSpaceSmall = 8.dp
     val arrangementVerticalSpaceSmall = 8.dp
+    val arrangementVerticalSpaceMedium = 16.dp
 
     val finishedBookCoverImageSize = DpSize(74.dp, 120.dp)
+    val bookAddEditCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
 
     object AppComponents {
         val appDividerThickness = 2.dp
