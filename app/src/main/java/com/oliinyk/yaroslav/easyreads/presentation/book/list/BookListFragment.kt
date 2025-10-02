@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -24,12 +27,74 @@ import com.oliinyk.yaroslav.easyreads.databinding.FragmentBookListBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingOrderType
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.BookListScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookListFragment : Fragment() {
 
+    private val viewModel: BookListViewModel by viewModels()
+    private val args: BookListFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+
+        args.bookShelveType?.let { bookShelveType ->
+            viewModel.updateBookShelveType(bookShelveType)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    BookListScreen(
+                        viewModel = viewModel,
+                        onBookClick = { book ->
+                            findNavController().navigate(
+                                BookListFragmentDirections.showDetails(book)
+                            )
+                        },
+                        onAddBookClick = {
+                            findNavController().navigate(
+                                BookListFragmentDirections.showAddBook(Book())
+                            )
+                        },
+                        onHolderSizeChange = { holderSize ->
+                            viewModel.updateHolderSize(holderSize)
+                        },
+                        onSortingChange = { type ->
+                            viewModel.updateBookSorting(
+                                viewModel.bookSorting.copy(bookSortingType = type)
+                            )
+                        },
+                        onSortingOrderChange = {
+                            val newOrder =
+                                if (viewModel.bookSorting.bookSortingOrderType == BookSortingOrderType.DESC) {
+                                    BookSortingOrderType.ASC
+                                } else {
+                                    BookSortingOrderType.DESC
+                                }
+                            viewModel.updateBookSorting(
+                                viewModel.bookSorting.copy(bookSortingOrderType = newOrder)
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    /*
     private var _binding: FragmentBookListBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -254,4 +319,5 @@ class BookListFragment : Fragment() {
             }
         }
     }
+    */
 }

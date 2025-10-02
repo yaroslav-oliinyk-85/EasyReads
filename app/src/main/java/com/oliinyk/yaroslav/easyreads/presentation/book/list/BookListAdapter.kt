@@ -9,6 +9,7 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.databinding.ListItemBookBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.domain.util.DiffUtilCallbackHelper
 import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 
@@ -86,15 +87,11 @@ class BookHolder(
             }
         }
     }
-
-    enum class HolderSize {
-        SMALL, DEFAULT, LARGE
-    }
 }
 
 data class BookListAdapter(
     private var books: List<Book> = emptyList(),
-    val holderSize: BookHolder.HolderSize,
+    val holderSize: HolderSize,
     private val onClickedBook: (Book) -> Unit
 ) : RecyclerView.Adapter<BookHolder>() {
 

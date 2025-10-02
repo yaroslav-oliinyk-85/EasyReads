@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSorting
+import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.PreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +42,7 @@ class BookListViewModel @Inject constructor(
                 if (holderSizeString.isNotEmpty()) {
                     _stateUi.update {
                         it.copy(
-                            holderSize = BookHolder.HolderSize.valueOf(holderSizeString)
+                            holderSize = HolderSize.valueOf(holderSizeString)
                         )
                     }
                 }
@@ -68,7 +69,7 @@ class BookListViewModel @Inject constructor(
         }
     }
 
-    fun updateHolderSize(holderSize: BookHolder.HolderSize) {
+    fun updateHolderSize(holderSize: HolderSize) {
         viewModelScope.launch {
             preferencesRepository.setBookListCellHolderSize(holderSize.toString())
         }
@@ -98,7 +99,7 @@ class BookListViewModel @Inject constructor(
 
 data class StateUiBookList(
     val books: List<Book> = emptyList(),
-    val holderSize: BookHolder.HolderSize = BookHolder.HolderSize.DEFAULT,
+    val holderSize: HolderSize = HolderSize.DEFAULT,
     val bookSorting: BookSorting = BookSorting(),
     val bookShelveType: BookShelveType? = null
 )

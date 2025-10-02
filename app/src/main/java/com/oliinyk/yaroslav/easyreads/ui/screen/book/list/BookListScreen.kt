@@ -1,0 +1,45 @@
+package com.oliinyk.yaroslav.easyreads.ui.screen.book.list
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.oliinyk.yaroslav.easyreads.domain.model.Book
+import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
+import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
+import com.oliinyk.yaroslav.easyreads.presentation.book.list.BookListViewModel
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListScreenContent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListScreenTopAppBar
+
+@Composable
+fun BookListScreen(
+    modifier: Modifier = Modifier,
+    viewModel: BookListViewModel,
+    onBookClick: (Book) -> Unit,
+    onAddBookClick: () -> Unit,
+    onHolderSizeChange: (HolderSize) -> Unit,
+    onSortingChange: (BookSortingType) -> Unit,
+    onSortingOrderChange: () -> Unit
+) {
+    val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    Scaffold(
+        topBar = {
+            BookListScreenTopAppBar(
+                stateUi = stateUi,
+                onAddBookClick = onAddBookClick,
+                onHolderSizeChange = onHolderSizeChange
+            )
+        },
+        content = { padding ->
+            BookListScreenContent(
+                modifier = modifier.padding(padding),
+                stateUi = stateUi,
+                onBookClick = onBookClick,
+                onSortingChange = onSortingChange,
+                onSortingOrderChange = onSortingOrderChange
+            )
+        }
+    )
+}

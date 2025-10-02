@@ -16,6 +16,7 @@
     <string name="menu_item__my_library__add_text">add</string>
 
     <string name="menu_item__book_list__add_text">add</string>
+    <string name="menu_item__book_list__more_text">more</string>
     <string name="menu_item__book_list__image_size_large_text">Size Large</string>
     <string name="menu_item__book_list__image_size_default_text">Size Default</string>
     <string name="menu_item__book_list__image_size_small_text">Size Small</string>
@@ -33,6 +34,7 @@
     <string name="book_list__button__sorted_by_author_text">Author</string>
     <string name="book_list__button__sorted_by_added_date_text">Added Date</string>
     <string name="book_list__button__sorted_by_updated_date_text">Updated Date</string>
+    <string name="book_list__button__sorted_order_content_description_text">Sort Order</string>
 
     <!-- Book Details -->
     <string name="book_details__button__see_all_notes_text">See All Notes (%1$d)</string>
