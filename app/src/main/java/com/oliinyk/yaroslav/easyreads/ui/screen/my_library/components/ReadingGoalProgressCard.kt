@@ -71,7 +71,7 @@ fun ReadingGoalProgressCard(
                     stateUi.currentYearFinishedBooksCount,
                     stateUi.readingGoals
                 ),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))

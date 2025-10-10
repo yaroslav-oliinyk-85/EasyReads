@@ -100,7 +100,8 @@ fun ShelveItem(
 ) {
     Text(
         text = label,
-        style = MaterialTheme.typography.bodyLarge,
+        fontSize = Dimens.shelveItemTextFontSize,
+        style = MaterialTheme.typography.titleMedium,
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)

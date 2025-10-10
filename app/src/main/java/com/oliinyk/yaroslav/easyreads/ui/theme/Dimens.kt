@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.ui.theme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 object Dimens {
 
@@ -48,6 +49,8 @@ object Dimens {
         horizontal = 16.dp,
         vertical = 0.dp
     )
+
+    val shelveItemTextFontSize = 18.sp
 
     object AppComponents {
         val appDividerThickness = 2.dp
