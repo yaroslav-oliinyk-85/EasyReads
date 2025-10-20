@@ -37,12 +37,14 @@ object Dimens {
     val paddingAllSmall = 8.dp
     val paddingAllMedium = 16.dp
 
+    val arrangementHorizontalSpaceTiny = 4.dp
     val arrangementHorizontalSpaceSmall = 8.dp
+    val arrangementVerticalSpaceTiny = 4.dp
     val arrangementVerticalSpaceSmall = 8.dp
     val arrangementVerticalSpaceMedium = 16.dp
 
-    val finishedBookCoverImageSize = DpSize(74.dp, 120.dp)
-    val bookAddEditCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
+    val readingGoalBookCoverImageSize = DpSize(80.dp, 130.dp)
+    val bookAddEditBookCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
 
     val bookListItemPercentageSize = 44.dp
     val bookListItemSortOrderSize = 42.dp

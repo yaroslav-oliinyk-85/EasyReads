@@ -61,7 +61,7 @@ fun BookAddEditContent(
                     Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
                     ShelvesButtonWithDropdownMenu(
-                        modifier = Modifier.width(Dimens.bookAddEditCoverImageSize.width),
+                        modifier = Modifier.width(Dimens.bookAddEditBookCoverImageSize.width),
                         stateUi = stateUi,
                         onEvent = onEvent
                     )

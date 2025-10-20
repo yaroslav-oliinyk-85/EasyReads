@@ -56,7 +56,7 @@ fun BookDetailsCoverSection(
                 model = ImageRequest.Builder(context)
                     .data(bookCoverImageFile)
                     .build(),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
                 modifier = Modifier
                     .height(Dimens.bookDetailsCoverImageHeight)
                     .width(Dimens.bookDetailsCoverImageWidth)

@@ -7,6 +7,9 @@
     <string name="date_year_format">yyyy</string>
     <string name="book_reading_progress_percentage_text">%1$d%%</string>
 
+    <!-- Content Description -->
+    <string name="book_cover_image__content_description__text">Book Cover Image</string>
+
     <!-- Toolbar -->
     <string name="note_list__toolbar__title_text">Notes (%1$d)</string>
     <string name="book_details__toolbar__title_test">Details</string>
@@ -74,7 +77,6 @@
     <string name="book_edit__title__add_text">Add</string>
     <string name="book_edit__title__edit_text">Edit</string>
     <string name="book_edit__label__change_cover_image_text">Press\nto\nchange</string>
-    <string name="book_edit__label__cover_image_content_description_text">Book cover image</string>
     <string name="book_edit__label__book_title_text">Title:</string>
     <string name="book_edit__label__book_author_text">Author:</string>
     <string name="book_edit__label__book_pages_amount_text">Pages:</string>

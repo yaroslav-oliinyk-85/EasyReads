@@ -93,7 +93,7 @@ fun BookListItem(
             model = ImageRequest.Builder(context)
                 .data(file)
                 .build(),
-            contentDescription = stringResource(R.string.book_edit__label__cover_image_content_description_text),
+            contentDescription = stringResource(R.string.book_cover_image__content_description__text),
             contentScale = ContentScale.Crop
         )
 

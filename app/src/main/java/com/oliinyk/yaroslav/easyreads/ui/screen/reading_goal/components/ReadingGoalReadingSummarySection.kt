@@ -22,16 +22,16 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun ReadingSummaryCard(
-    modifier: Modifier,
-    stateUi: ReadingGoalStateUi
+fun ReadingGoalReadingSummarySection(
+    stateUi: ReadingGoalStateUi,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .padding(
                     horizontal = Dimens.paddingHorizontalMedium,
                     vertical = Dimens.paddingVerticalSmall
@@ -40,13 +40,13 @@ fun ReadingSummaryCard(
             Text(
                 text = stringResource(R.string.reading_goal__label__summery_title_text),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
-            Spacer(modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             Row(
-                modifier = modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(

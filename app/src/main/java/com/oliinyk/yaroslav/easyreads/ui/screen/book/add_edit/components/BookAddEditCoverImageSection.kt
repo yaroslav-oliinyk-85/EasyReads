@@ -32,7 +32,7 @@ fun BookAddEditCoverImageSection(
 ) {
     Box(
         modifier = modifier
-            .size(Dimens.bookAddEditCoverImageSize)
+            .size(Dimens.bookAddEditBookCoverImageSize)
             .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
             .border(
                 width = Dimens.AppComponents.appTextButtonBorderWith,
@@ -57,7 +57,7 @@ fun BookAddEditCoverImageSection(
                         .data(bookCoverImageFile)
                         .build(),
                     contentDescription = stringResource(
-                        R.string.book_edit__label__cover_image_content_description_text
+                        R.string.book_cover_image__content_description__text
                     ),
                     contentScale = ContentScale.Crop
                 )
