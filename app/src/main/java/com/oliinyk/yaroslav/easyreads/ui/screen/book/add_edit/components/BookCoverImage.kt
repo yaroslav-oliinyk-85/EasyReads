@@ -43,18 +43,18 @@ fun BookCoverImage(
         contentAlignment = Alignment.Center
     ) {
         val context = LocalContext.current
-        val file: File? = if (stateUi.pickedImageName != null) {
+        val bookCoverImageFile: File? = if (stateUi.pickedImageName != null) {
             File(context.filesDir, stateUi.pickedImageName)
         } else if (stateUi.book.coverImageFileName != null) {
             File(context.filesDir, stateUi.book.coverImageFileName)
         } else { null }
 
-        file?.let {
+        bookCoverImageFile?.let {
             if (it.exists()) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize().alpha(0.25f),
                     model = ImageRequest.Builder(context)
-                        .data(file)
+                        .data(bookCoverImageFile)
                         .build(),
                     contentDescription = stringResource(
                         R.string.book_edit__label__cover_image_content_description_text

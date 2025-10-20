@@ -90,6 +90,8 @@ fun ReadingGoalProgressCard(
             Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
             if (isVisibleChangeGoalButton) {
                 AppTextButton(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical),
                     onClick = onChangeGoalClick
                 ) {
                     Text(text = stringResource(R.string.reading_goal__label__goal_change_text))

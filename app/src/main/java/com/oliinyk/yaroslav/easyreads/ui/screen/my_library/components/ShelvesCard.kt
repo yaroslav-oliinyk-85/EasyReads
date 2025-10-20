@@ -79,6 +79,8 @@ fun ShelvesCard(
             AppDivider()
             Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
             AppTextButton(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical),
                 onClick = onSeeAllClick
             ) {
                 Text(
@@ -100,7 +102,7 @@ fun ShelveItem(
 ) {
     Text(
         text = label,
-        fontSize = Dimens.shelveItemTextFontSize,
+        fontSize = Dimens.appTitleMediunFontSize,
         style = MaterialTheme.typography.titleMedium,
         modifier = modifier
             .fillMaxWidth()

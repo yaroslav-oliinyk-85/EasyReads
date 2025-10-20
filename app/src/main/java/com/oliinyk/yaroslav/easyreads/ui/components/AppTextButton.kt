@@ -43,10 +43,7 @@ fun AppTextButton(
         interactionSource = interactionSource,
         content = content,
         //CST
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical)
-            .border(
+        modifier = modifier.border(
                 width = Dimens.AppComponents.appTextButtonBorderWith,
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)

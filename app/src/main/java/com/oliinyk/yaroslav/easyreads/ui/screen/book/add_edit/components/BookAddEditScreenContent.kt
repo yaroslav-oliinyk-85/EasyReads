@@ -37,10 +37,7 @@ fun BookAddEditScreenContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
-            .padding(
-                horizontal = Dimens.paddingHorizontalMedium,
-                vertical = Dimens.paddingVerticalSmall
-            )
+            .padding(Dimens.paddingAllMedium)
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),

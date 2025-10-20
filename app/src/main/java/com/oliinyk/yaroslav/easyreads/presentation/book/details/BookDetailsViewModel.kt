@@ -8,6 +8,9 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.NoteRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MILLISECONDS_IN_ONE_SECOND
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HOUR
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -108,4 +111,52 @@ data class BookDetailsUiState(
     val book: Book = Book(),
     val notes: List<Note> = emptyList(),
     val readingSessions: List<ReadingSession> = emptyList()
-)
+) {
+    val percentage: Int
+        get() {
+            return if (book.pageAmount != 0) {
+                book.pageCurrent * 100 / book.pageAmount
+            } else {
+                0
+            }
+        }
+    private val totalReadMinutes: Int
+        get() {
+            return if (readingSessions.isNotEmpty()) {
+                val totalReadTimeInSeconds = readingSessions
+                    .map { (it.readTimeInMilliseconds / MILLISECONDS_IN_ONE_SECOND).toInt() }
+                    .reduce { acc, i -> acc + i }
+                totalReadTimeInSeconds / SECONDS_IN_ONE_MINUTE
+            } else {
+                0
+            }
+        }
+    val readHours: Int
+        get() {
+            return if (totalReadMinutes != 0) totalReadMinutes / MINUTES_IN_ONE_HOUR else 0
+        }
+    val readMinutes: Int
+        get() {
+            return if (totalReadMinutes != 0)  totalReadMinutes % MINUTES_IN_ONE_HOUR else 0
+        }
+    val readPagesHour: Int
+        get() {
+            return if (readingSessions.isNotEmpty()) {
+                readingSessions
+                    .map { it.readPagesHour }
+                    .reduce { acc, i -> acc + i } / readingSessions.size
+            } else {
+                0
+            }
+        }
+}
+
+sealed class BookDetailsUiEvent {
+    object SeeAllNotes : BookDetailsUiEvent()
+    object AddNote : BookDetailsUiEvent()
+    data class EditNote(val note: Note) : BookDetailsUiEvent()
+    object StartReadingSession : BookDetailsUiEvent()
+    object SeeAllReadingSessions : BookDetailsUiEvent()
+    object AddReadingSession : BookDetailsUiEvent()
+    data class EditReadingSession(val readingSession: ReadingSession) : BookDetailsUiEvent()
+}

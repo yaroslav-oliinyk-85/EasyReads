@@ -5,8 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.widget.ImageView
-import androidx.core.view.doOnLayout
-import com.oliinyk.yaroslav.easyreads.R
 import java.io.File
 import kotlin.math.roundToInt
 

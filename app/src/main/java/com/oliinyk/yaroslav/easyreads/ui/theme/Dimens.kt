@@ -23,8 +23,10 @@ object Dimens {
 
     val paddingTopTiny = 4.dp
     val paddingTopSmall = 8.dp
+    val paddingTopMedium = 16.dp
 
     val paddingBottomTiny = 4.dp
+    val paddingBottomSmall = 8.dp
 
     val paddingStartSmall = 8.dp
 
@@ -33,6 +35,7 @@ object Dimens {
 
     val paddingAllTiny = 4.dp
     val paddingAllSmall = 8.dp
+    val paddingAllMedium = 16.dp
 
     val arrangementHorizontalSpaceSmall = 8.dp
     val arrangementVerticalSpaceSmall = 8.dp
@@ -50,7 +53,10 @@ object Dimens {
         vertical = 0.dp
     )
 
-    val shelveItemTextFontSize = 18.sp
+    val appTitleMediunFontSize = 18.sp
+
+    val bookDetailsCoverImageHeight = 240.dp
+    val bookDetailsCoverImageWidth = 160.dp
 
     object AppComponents {
         val appDividerThickness = 2.dp

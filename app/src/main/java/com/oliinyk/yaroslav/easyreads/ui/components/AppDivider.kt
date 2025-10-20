@@ -11,9 +11,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun AppDivider(
-    modifier: Modifier = Modifier,
-    thickness: Dp = DividerDefaults.Thickness,
-    color: Color = DividerDefaults.color
+    modifier: Modifier = Modifier
 ) {
     Divider(
         modifier = modifier,

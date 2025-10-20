@@ -21,8 +21,9 @@
     <string name="menu_item__book_list__image_size_default_text">Size Default</string>
     <string name="menu_item__book_list__image_size_small_text">Size Small</string>
 
-    <string name="menu_item__book_details__edit_text">edit</string>
-    <string name="menu_item__book_details__remove_text">remove</string>
+    <string name="menu_item__book_details__edit_text">Edit</string>
+    <string name="menu_item__book_details__remove_text">Remove</string>
+    <string name="menu_item__book_details__more_text">more</string>
 
     <string name="menu_item__book_edit__save_text">save</string>
 
@@ -63,7 +64,8 @@
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
     <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions (%1$d)</string>
 
-    <string name="book_details__dialog__message_book_remove_text">Book will be removed</string>
+    <string name="book_details__dialog__title_book_remove_text">Remove</string>
+    <string name="book_details__dialog__message_book_remove_text">Book will be removed!</string>
 
     <string name="book_details__toast__message_new_note_added_text">New note added</string>
     <string name="book_details__toast__message_note_updated_text">Note updated</string>

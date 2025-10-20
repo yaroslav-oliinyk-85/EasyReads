@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -32,12 +33,154 @@ import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
 import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookDetailsFragment : Fragment() {
 
+    private val args: BookDetailsFragmentArgs by navArgs()
+    private val viewModel: BookDetailsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        reenterTransition = inflater.inflateTransition(R.transition.fade)
+
+        viewModel.loadBookById(args.book.id)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    BookDetailsScreen(
+                        viewModel = viewModel,
+                        onEvent = { event -> handleEvent(event) },
+                        onEditBook = {
+                            findNavController().navigate(
+                                BookDetailsFragmentDirections.showEditBook(viewModel.getCurrentBook())
+                            )
+                        },
+                        onRemoveBook = {
+                            deleteBookCoverImage(
+                                requireContext(),
+                                viewModel.getCurrentBook().coverImageFileName
+                            )
+                            viewModel.removeCurrentBook()
+                            findNavController().popBackStack()
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(NoteAddEditDialogFragment.REQUEST_KEY_NOTE) { _, bundle ->
+            val note = bundle.getParcelable(NoteAddEditDialogFragment.BUNDLE_KEY_NOTE) as Note?
+            note?.let {
+                if (it.bookId == null) {
+                    viewModel.addNote(it)
+
+                    /* TODO: convert to Compose
+                    ToastHelper.show(
+                        requireContext().applicationContext,
+                        getString(R.string.book_details__toast__message_new_note_added_text)
+                    )
+                    */
+                } else {
+                    viewModel.updateNote(it)
+
+                    /* TODO: convert to Compose
+                    ToastHelper.show(
+                        requireContext().applicationContext,
+                        getString(R.string.book_details__toast__message_note_updated_text)
+                    )
+                    */
+                }
+            }
+        }
+        setFragmentResultListener(
+            ReadingSessionAddEditDialogFragment.REQUEST_KEY_READING_SESSION
+        ) { _, bundle ->
+            val readingSessionUpdated = bundle.getParcelable(
+                ReadingSessionAddEditDialogFragment.BUNDLE_KEY_READING_SESSION
+            ) as ReadingSession?
+
+            readingSessionUpdated?.let { readingSession ->
+                if (readingSession.bookId == null) {
+                    viewModel.addReadingSession(readingSession)
+                } else {
+                    viewModel.updateReadingSession(readingSession)
+                }
+            }
+        }
+    }
+
+    private fun handleEvent(event: BookDetailsUiEvent) {
+        when (event) {
+            is BookDetailsUiEvent.SeeAllNotes -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showNotes(viewModel.getCurrentBook().id)
+                )
+            }
+            is BookDetailsUiEvent.AddNote -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showAddNoteDialog(Note())
+                )
+            }
+            is BookDetailsUiEvent.EditNote -> {
+                if (viewModel.getNotes().isNotEmpty()) {
+                    findNavController().navigate(
+                        BookDetailsFragmentDirections
+                            .showAddNoteDialog(event.note)
+                    )
+                }
+            }
+            is BookDetailsUiEvent.StartReadingSession -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showReadingSessionRecord(
+                        viewModel.getCurrentBook()
+                    )
+                )
+            }
+            is BookDetailsUiEvent.SeeAllReadingSessions -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showReadingSessions(
+                        viewModel.getCurrentBook()
+                    )
+                )
+            }
+            is BookDetailsUiEvent.AddReadingSession -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showReadingSessionRecord(
+                        viewModel.getCurrentBook()
+                    )
+                )
+            }
+            is BookDetailsUiEvent.EditReadingSession -> {
+                findNavController().navigate(
+                    BookDetailsFragmentDirections.showReadingSessionAddEdit(
+                        event.readingSession
+                    )
+                )
+            }
+        }
+    }
+
+    /*
     private var _binding: FragmentBookDetailsBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -386,4 +529,6 @@ class BookDetailsFragment : Fragment() {
 
         }
     }
+
+     */
 }
