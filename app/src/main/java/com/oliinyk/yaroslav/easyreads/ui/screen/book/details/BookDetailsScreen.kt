@@ -48,11 +48,11 @@ fun BookDetailsScreen(
                 onRemoveBook = { showBookDeletingConfirmDialog = true }
             )
         }
-    ) { innerPadding ->
+    ) { paddingValues ->
         BookDetailsContent(
             stateUi = stateUi,
             onEvent = onEvent,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(paddingValues)
         )
     }
 }

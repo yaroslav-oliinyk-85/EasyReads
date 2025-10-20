@@ -26,9 +26,9 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ReadingGoalProgressCard(
-    modifier: Modifier,
+fun MyLibraryReadingGoalProgressSection(
     stateUi: MyLibraryStateUi,
+    modifier: Modifier = Modifier,
     isVisibleChangeGoalButton: Boolean = true,
     onChangeGoalClick: () -> Unit = { /* optional */ },
     onClick: () -> Unit = { /* optional */ }
@@ -37,13 +37,12 @@ fun ReadingGoalProgressCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-//        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(
             Dimens.roundedCornerShapeSize
         )
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     horizontal = Dimens.MyLibraryScreen.ReadingGoalCard.columnPaddingHorizontal,
@@ -62,9 +61,9 @@ fun ReadingGoalProgressCard(
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
-            AppDivider(modifier = modifier)
-            Spacer(modifier = modifier.height(Dimens.spacerHeightMedium))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
+            AppDivider()
+            Spacer(Modifier.height(Dimens.spacerHeightMedium))
             Text(
                 text = stringResource(
                     R.string.reading_goal__label__goal_reading_progress_text,
@@ -74,20 +73,20 @@ fun ReadingGoalProgressCard(
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             LinearProgressIndicator(
                 progress = if (stateUi.readingGoals > 0) {
                     stateUi.currentYearFinishedBooksCount.toFloat() / stateUi.readingGoals
                 } else {
                     stateUi.readingGoals.toFloat()
                 },
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(Dimens.MyLibraryScreen.ReadingGoalCard.linearProgressIndicatorHeight),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = MaterialTheme.colorScheme.background
             )
-            Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             if (isVisibleChangeGoalButton) {
                 AppTextButton(
                     modifier = Modifier.fillMaxWidth()

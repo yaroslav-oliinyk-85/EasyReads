@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,11 +22,11 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun ShelvesCard(
-    modifier: Modifier,
+fun MyLibraryShelvesSection(
     stateUi: MyLibraryStateUi,
     onShelfClick: (BookShelveType) -> Unit,
     onSeeAllClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -35,7 +34,7 @@ fun ShelvesCard(
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
     ) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     horizontal = Dimens.MyLibraryScreen.ShelvesCard.columnPaddingHorizontal,
@@ -48,10 +47,9 @@ fun ShelvesCard(
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
-            ShelveItem(
-                modifier = modifier,
+            MyLibraryShelveItem(
                 label = stringResource(
                     R.string.my_library__label__shelve_finished_text,
                     stateUi.finishedCount
@@ -59,8 +57,7 @@ fun ShelvesCard(
                 onClick = { onShelfClick(BookShelveType.FINISHED) }
             )
             AppDivider()
-            ShelveItem(
-                modifier = modifier,
+            MyLibraryShelveItem(
                 label = stringResource(
                     R.string.my_library__label__shelve_reading_text,
                     stateUi.readingCount
@@ -68,8 +65,7 @@ fun ShelvesCard(
                 onClick = { onShelfClick(BookShelveType.READING) }
             )
             AppDivider()
-            ShelveItem(
-                modifier = modifier,
+            MyLibraryShelveItem(
                 label = stringResource(
                     R.string.my_library__label__shelve_want_to_read_text,
                     stateUi.wantToReadCount
@@ -77,7 +73,7 @@ fun ShelvesCard(
                 onClick = { onShelfClick(BookShelveType.WANT_TO_READ) }
             )
             AppDivider()
-            Spacer(modifier = modifier.height(Dimens.spacerHeightSmall))
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppTextButton(
                 modifier = Modifier.fillMaxWidth()
                     .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical),
@@ -87,26 +83,10 @@ fun ShelvesCard(
                     text = stringResource(
                         R.string.my_library__label__shelve_see_all_books,
                         stateUi.allCount
-                    )
+                    ),
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
     }
-}
-
-@Composable
-fun ShelveItem(
-    modifier: Modifier,
-    label: String,
-    onClick: () -> Unit
-) {
-    Text(
-        text = label,
-        fontSize = Dimens.appTitleMediunFontSize,
-        style = MaterialTheme.typography.titleMedium,
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = Dimens.MyLibraryScreen.shelveItemPaddingVertical)
-    )
 }

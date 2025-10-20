@@ -32,9 +32,9 @@ fun BookListScreen(
                 onHolderSizeChange = onHolderSizeChange
             )
         },
-        content = { padding ->
+        content = { paddingValues ->
             BookListContent(
-                modifier = modifier.padding(padding),
+                modifier = modifier.padding(paddingValues),
                 stateUi = stateUi,
                 onBookClick = onBookClick,
                 onSortingChange = onSortingChange,
