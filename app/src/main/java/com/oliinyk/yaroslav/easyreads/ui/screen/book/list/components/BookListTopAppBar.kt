@@ -25,7 +25,7 @@ import com.oliinyk.yaroslav.easyreads.presentation.book.list.StateUiBookList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookListScreenTopAppBar(
+fun BookListTopAppBar(
     stateUi: StateUiBookList,
     onAddBookClick: () -> Unit,
     onHolderSizeChange: (HolderSize) -> Unit

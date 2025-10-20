@@ -13,7 +13,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun SortControls(
+fun BookListSortControlSection(
     modifier: Modifier = Modifier,
     currentSorting: BookSorting,
     onSortingChange: (BookSortingType) -> Unit,

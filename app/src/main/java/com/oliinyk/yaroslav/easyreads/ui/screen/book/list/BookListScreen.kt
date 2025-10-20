@@ -10,8 +10,8 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.presentation.book.list.BookListViewModel
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListScreenContent
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListScreenTopAppBar
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListContent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListTopAppBar
 
 @Composable
 fun BookListScreen(
@@ -26,14 +26,14 @@ fun BookListScreen(
     val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
     Scaffold(
         topBar = {
-            BookListScreenTopAppBar(
+            BookListTopAppBar(
                 stateUi = stateUi,
                 onAddBookClick = onAddBookClick,
                 onHolderSizeChange = onHolderSizeChange
             )
         },
         content = { padding ->
-            BookListScreenContent(
+            BookListContent(
                 modifier = modifier.padding(padding),
                 stateUi = stateUi,
                 onBookClick = onBookClick,

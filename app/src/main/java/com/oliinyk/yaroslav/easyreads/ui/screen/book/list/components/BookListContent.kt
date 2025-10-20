@@ -13,7 +13,7 @@ import com.oliinyk.yaroslav.easyreads.presentation.book.list.StateUiBookList
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun BookListScreenContent(
+fun BookListContent(
     modifier: Modifier = Modifier,
     stateUi: StateUiBookList,
     onBookClick: (Book) -> Unit,
@@ -26,12 +26,12 @@ fun BookListScreenContent(
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = Dimens.paddingHorizontalMedium)
     ) {
-        SortControls(
+        BookListSortControlSection(
             currentSorting = stateUi.bookSorting,
             onSortingChange = onSortingChange,
             onSortingOrderChange = onSortingOrderChange
         )
-        BookList(
+        BookListSection(
             stateUi = stateUi,
             onBookClick = onBookClick
         )
