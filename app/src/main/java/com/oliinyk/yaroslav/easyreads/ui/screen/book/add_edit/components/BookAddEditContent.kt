@@ -26,7 +26,7 @@ import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStat
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun BookAddEditScreenContent(
+fun BookAddEditContent(
     modifier: Modifier = Modifier,
     stateUi: BookAddEditStateUi,
     onCoverClick: () -> Unit,
@@ -46,17 +46,14 @@ fun BookAddEditScreenContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(
-                        horizontal = Dimens.paddingHorizontalMedium,
-                        vertical = Dimens.paddingVerticalMedium
-                    ),
-                verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceMedium)
+                    .padding(all = Dimens.paddingAllMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    BookCoverImage(
+                    BookAddEditCoverImageSection(
                         stateUi = stateUi,
                         onCoverClick = onCoverClick
                     )

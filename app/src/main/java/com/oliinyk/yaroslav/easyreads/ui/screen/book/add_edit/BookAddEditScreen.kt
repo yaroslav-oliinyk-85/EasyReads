@@ -20,7 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditViewModel
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditScreenContent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +58,7 @@ fun BookAddEditScreen(
             )
         },
         content = { paddingValues ->
-            BookAddEditScreenContent(
+            BookAddEditContent(
                 modifier = modifier.padding(paddingValues),
                 stateUi = stateUi,
                 onCoverClick = onCoverClick,

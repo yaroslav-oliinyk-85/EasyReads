@@ -25,7 +25,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.io.File
 
 @Composable
-fun BookCoverImage(
+fun BookAddEditCoverImageSection(
     modifier: Modifier = Modifier,
     stateUi: BookAddEditStateUi,
     onCoverClick: () -> Unit
