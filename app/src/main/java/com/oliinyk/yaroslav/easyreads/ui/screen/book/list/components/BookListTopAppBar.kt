@@ -71,6 +71,7 @@ fun BookListTopAppBar(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_large_text),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
@@ -93,6 +94,7 @@ fun BookListTopAppBar(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_default_text),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
@@ -115,6 +117,7 @@ fun BookListTopAppBar(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_small_text),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },

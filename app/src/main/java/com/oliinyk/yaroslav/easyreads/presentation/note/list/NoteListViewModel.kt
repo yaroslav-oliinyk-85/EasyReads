@@ -22,7 +22,16 @@ class NoteListViewModel @Inject constructor(
     val stateUi: StateFlow<NoteListStateUi>
         get() = _stateUi.asStateFlow()
 
+    private val _editingNote: MutableStateFlow<Note?> = MutableStateFlow(null)
+    val editingNote: StateFlow<Note?>
+        get() = _editingNote.asStateFlow()
+
+    private val _removingNote: MutableStateFlow<Note?> = MutableStateFlow(null)
+    val removingNote: StateFlow<Note?>
+        get() = _removingNote.asStateFlow()
+
     fun loadNotes(bookId: UUID) {
+        _stateUi.update { it.copy(bookId = bookId) }
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->
                 _stateUi.update { it.copy(notes = notes) }
@@ -30,8 +39,18 @@ class NoteListViewModel @Inject constructor(
         }
     }
 
-    fun addNote(note: Note) {
-        noteRepository.insert(note)
+    fun save(note: Note) {
+        if (note.bookId == null) {
+            add(note)
+        } else {
+            update(note)
+        }
+    }
+
+    fun add(note: Note) {
+        stateUi.value.bookId?.let { bookId ->
+            noteRepository.insert(note.copy(bookId = bookId))
+        }
     }
 
     fun update(note: Note) {
@@ -41,8 +60,29 @@ class NoteListViewModel @Inject constructor(
     fun remove(note: Note) {
         noteRepository.remove(note)
     }
+
+    fun openAddDialog() {
+        _editingNote.value = Note()
+    }
+
+    fun openEditDialog(note: Note) {
+        _editingNote.value = note
+    }
+
+    fun dismissAddEditDialog() {
+        _editingNote.value = null
+    }
+
+    fun openRemoveDialog(note: Note) {
+        _removingNote.value = note
+    }
+
+    fun dismissRemoveDialog() {
+        _removingNote.value = null
+    }
 }
 
 data class NoteListStateUi(
+    val bookId: UUID? = null,
     val notes: List<Note> = emptyList()
 )

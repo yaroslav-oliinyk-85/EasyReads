@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.presentation.book.add_edit
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
@@ -62,11 +63,13 @@ class BookAddEditViewModel @Inject constructor(
                 it.copy(book = it.book.copy(author = event.value))
             }
 
-            is BookAddEditEvent.PageAmountChanged -> if (event.value.all { it.isDigit() }) {
+            is BookAddEditEvent.PageAmountChanged -> if (event.value.isBlank()) {
+                updateStateUi { it.copy(book = it.book.copy(pageAmount = 0)) }
+            } else if (event.value.isDigitsOnly()) {
                 updateStateUi { it.copy(book = it.book.copy(pageAmount = event.value.toInt())) }
             }
 
-            is BookAddEditEvent.IsbnChanged -> if (event.value.all { it.isDigit() }) {
+            is BookAddEditEvent.IsbnChanged -> if (event.value.isDigitsOnly()) {
                 updateStateUi {
                     it.copy(book = it.book.copy(isbn = event.value))
                 }

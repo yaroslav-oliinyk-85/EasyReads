@@ -27,7 +27,7 @@ fun MyLibraryShelveItem(
     ) {
         Text(
             text = label,
-            fontSize = Dimens.appTitleMediunFontSize,
+            fontSize = Dimens.appTitleMediumFontSize,
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier
                 .weight(1.0f)

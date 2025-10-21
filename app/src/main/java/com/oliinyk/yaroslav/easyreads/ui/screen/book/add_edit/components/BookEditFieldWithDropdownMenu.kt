@@ -2,6 +2,7 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.window.PopupProperties
+import com.oliinyk.yaroslav.easyreads.ui.components.AppEditField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +25,7 @@ fun BookEditFieldWithDropdownMenu(
     value: String,
     suggestions: List<String>,
     hint: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = true,
     minLines: Int = 1,
     onValueChange: (String) -> Unit
@@ -40,11 +42,11 @@ fun BookEditFieldWithDropdownMenu(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        BookEditField(
+        AppEditField(
             label = label,
             value = value,
             hint = hint,
-            keyboardType = keyboardType,
+            keyboardOptions = keyboardOptions,
             singleLine = singleLine,
             minLines = minLines,
             onValueChange = { newValue ->

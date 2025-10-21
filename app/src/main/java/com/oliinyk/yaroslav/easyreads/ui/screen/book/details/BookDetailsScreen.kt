@@ -30,8 +30,8 @@ fun BookDetailsScreen(
 
     if (showBookDeletingConfirmDialog) {
         AppConfirmDialog(
-            title = stringResource(R.string.book_details__dialog__title_book_remove_text),
-            message = stringResource(R.string.book_details__dialog__message_book_remove_text),
+            title = stringResource(R.string.book_details__confirmation_dialog__title_book_remove_text),
+            message = viewModel.getCurrentBook().title,
             onConfirm = {
                 onRemoveBook()
                 showBookDeletingConfirmDialog = false

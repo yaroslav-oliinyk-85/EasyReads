@@ -54,6 +54,7 @@ fun BookDetailsTopAppBar(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__edit_text),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
@@ -73,6 +74,7 @@ fun BookDetailsTopAppBar(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__remove_text),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },

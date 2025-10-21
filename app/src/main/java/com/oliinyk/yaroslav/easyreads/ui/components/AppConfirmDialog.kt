@@ -1,10 +1,12 @@
 package com.oliinyk.yaroslav.easyreads.ui.components
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 
 @Composable
@@ -14,23 +16,35 @@ fun AppConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    val messageMaxLine = 5
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(stringResource(R.string.confirmation_dialog__button__ok_text))
+            AppTextButton(onClick = onConfirm) {
+                Text(stringResource(R.string.confirmation_dialog__button__ok_text), style = MaterialTheme.typography.bodyLarge)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.confirmation_dialog__button__cancel_text))
+            AppTextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.confirmation_dialog__button__cancel_text), style = MaterialTheme.typography.bodyLarge)
             }
         },
         title = {
             Text(text = title)
         },
         text = {
-            Text(text = message)
+            Text(text = message, maxLines = messageMaxLine, overflow = TextOverflow.Ellipsis)
         }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AppConfirmDialogPreview() {
+    AppConfirmDialog(
+        title = "Remove Note Dialog",
+        message = "Note will be removed!",
+        onConfirm = {},
+        onDismiss = {}
     )
 }

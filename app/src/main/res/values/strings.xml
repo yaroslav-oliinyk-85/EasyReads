@@ -61,8 +61,8 @@
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
     <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions (%1$d)</string>
 
-    <string name="book_details__dialog__title_book_remove_text">Remove</string>
-    <string name="book_details__dialog__message_book_remove_text">Book will be removed!</string>
+    <string name="book_details__confirmation_dialog__title_book_remove_text">Remove Book</string>
+    <string name="book_details__confirmation_dialog__message_book_remove_text">Book will be removed!</string>
 
     <string name="book_details__toast__message_new_note_added_text">New note added</string>
     <string name="book_details__toast__message_note_updated_text">Note updated</string>
@@ -71,12 +71,12 @@
     <string name="book_edit__title__add_text">Add</string>
     <string name="book_edit__title__edit_text">Edit</string>
     <string name="book_edit__label__change_cover_image_text">Press\nto\nchange</string>
-    <string name="book_edit__label__book_title_text">Title:</string>
-    <string name="book_edit__label__book_author_text">Author:</string>
-    <string name="book_edit__label__book_pages_amount_text">Pages:</string>
-    <string name="book_edit__label__book_page_current_text">Page Current:</string>
-    <string name="book_edit__label__book_isbn_text">ISBN:</string>
-    <string name="book_edit__label__book_description_text">Description:</string>
+    <string name="book_edit__label__book_title_text">Title</string>
+    <string name="book_edit__label__book_author_text">Author</string>
+    <string name="book_edit__label__book_pages_amount_text">Pages</string>
+    <string name="book_edit__label__book_page_current_text">Page Current</string>
+    <string name="book_edit__label__book_isbn_text">ISBN</string>
+    <string name="book_edit__label__book_description_text">Description</string>
     <string name="book_edit__hint__enter_book_title_text">Enter book title</string>
     <string name="book_edit__hint__enter_book_author_text">Enter author</string>
     <string name="book_edit__hint__book_pages_count_text">Enter pages count</string>
@@ -92,18 +92,21 @@
 
     <!-- Note List -->
     <string name="note_list__label__no_notes_text">No Notes</string>
-    <string name="note_list__dialog__confirmation_note_remove_message_text">Note will be removed</string>
+    <string name="note_list__confirmation_dialog__title_note_remove_text">Remove Note</string>
+    <string name="note_list__confirmation_dialog__message_note_remove_text">Note will be removed!</string>
     <!-- Note List Item -->
     <string name="note_list_item__label__page_text">"%1$d Page"</string>
     <string name="note_list_item__tools__note_text">Note Text</string>
     <string name="note_list_item__tools__added_date_text">13.10.2024 10:30</string>
 
     <!-- Note Add Edit Dialog -->
+    <string name="note_add_edit_dialog__label__note_text">Note Text</string>
+    <string name="note_add_edit_dialog__label__note_page_text">Note Page</string>
     <string name="note_add_edit_dialog__hint__enter_note_text">Enter note text</string>
     <string name="note_add_edit_dialog__hint__enter_note_page_text">Enter page</string>
     <string name="note_add_edit_dialog__button__save_text">Save</string>
     <string name="note_add_edit_dialog__button__cancel_text">Cancel</string>
-    <string name="note_add_edit_dialog__error__message_text">Must not be empty</string>
+    <string name="note_add_edit_dialog__error__message_text">Note text must not be empty!</string>
 
     <!-- Confirmation Dialog -->
     <string name="confirmation_dialog__button__ok_text">Ok</string>

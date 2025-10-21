@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+    // ----- dp -----
     val spacerHeightSmall = 8.dp
     val spacerHeightMedium = 16.dp
 
@@ -55,7 +56,7 @@ object Dimens {
         vertical = 0.dp
     )
 
-    val appTitleMediunFontSize = 18.sp
+    val appTitleMediumFontSize = 18.sp
 
     val bookDetailsCoverImageHeight = 240.dp
     val bookDetailsCoverImageWidth = 160.dp
@@ -86,4 +87,6 @@ object Dimens {
 
         val shelveItemPaddingVertical = paddingVerticalMedium
     }
+
+    // ----- sp -----
 }

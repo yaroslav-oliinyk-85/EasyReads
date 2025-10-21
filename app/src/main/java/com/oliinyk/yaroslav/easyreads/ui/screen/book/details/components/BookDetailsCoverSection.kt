@@ -66,7 +66,7 @@ fun BookDetailsCoverSection(
             // --- Title ---
             Text(
                 text = book.title,
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediunFontSize),
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediumFontSize),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()

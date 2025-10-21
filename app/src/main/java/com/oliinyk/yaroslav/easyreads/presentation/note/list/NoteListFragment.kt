@@ -2,35 +2,22 @@ package com.oliinyk.yaroslav.easyreads.presentation.note.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.FragmentNoteListBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
-import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsFragmentDirections
 import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteListFragment : Fragment() {
@@ -55,44 +42,7 @@ class NoteListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
-                    NoteListScreen(
-                        viewModel = viewModel,
-                        onAdd = {
-                            findNavController().navigate(
-                                NoteListFragmentDirections.showEditNoteDialog(Note())
-                            )
-                        },
-                        onEdit = { note ->
-                            findNavController().navigate(
-                                NoteListFragmentDirections.showEditNoteDialog(note)
-                            )
-                        },
-                        onRemove = { note ->
-                            AlertDialogHelper.showConfirmationDialog(
-                                requireContext(),
-                                R.string.note_list__dialog__confirmation_note_remove_message_text
-                            ) {
-                                viewModel.remove(note)
-                            }
-                        }
-                    )
-                }
-            }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setFragmentResultListener(
-            NoteAddEditDialogFragment.REQUEST_KEY_NOTE
-        ) { _, bundle ->
-            val note = bundle.getParcelable(NoteAddEditDialogFragment.BUNDLE_KEY_NOTE) as Note?
-            note?.let {
-                if (it.bookId == null) {
-                    viewModel.addNote(note.copy(bookId = args.bookId))
-                } else {
-                    viewModel.update(it)
+                    NoteListScreen(viewModel = viewModel)
                 }
             }
         }
