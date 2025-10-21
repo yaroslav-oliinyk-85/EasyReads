@@ -15,7 +15,6 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListTop
 
 @Composable
 fun BookListScreen(
-    modifier: Modifier = Modifier,
     viewModel: BookListViewModel,
     onBookClick: (Book) -> Unit,
     onAddBookClick: () -> Unit,
@@ -34,7 +33,7 @@ fun BookListScreen(
         },
         content = { paddingValues ->
             BookListContent(
-                modifier = modifier.padding(paddingValues),
+                modifier = Modifier.padding(paddingValues),
                 stateUi = stateUi,
                 onBookClick = onBookClick,
                 onSortingChange = onSortingChange,

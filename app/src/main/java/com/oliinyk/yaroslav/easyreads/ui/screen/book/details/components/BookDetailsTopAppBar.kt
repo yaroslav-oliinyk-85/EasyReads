@@ -42,7 +42,7 @@ fun BookDetailsTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(R.string.menu_item__book_details__more_text),
+                    contentDescription = stringResource(R.string.menu_item__more_text),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -53,7 +53,7 @@ fun BookDetailsTopAppBar(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(R.string.menu_item__book_details__edit_text),
+                            text = stringResource(R.string.menu_item__edit_text),
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
@@ -64,7 +64,7 @@ fun BookDetailsTopAppBar(
                     trailingIcon = {
                         Icon(
                             imageVector = Icons.Default.Edit,
-                            contentDescription = stringResource(R.string.menu_item__book_details__edit_text),
+                            contentDescription = stringResource(R.string.menu_item__edit_text),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -72,7 +72,7 @@ fun BookDetailsTopAppBar(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = stringResource(R.string.menu_item__book_details__remove_text),
+                            text = stringResource(R.string.menu_item__remove_text),
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
@@ -83,7 +83,7 @@ fun BookDetailsTopAppBar(
                     trailingIcon = {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = stringResource(R.string.menu_item__book_details__remove_text),
+                            contentDescription = stringResource(R.string.menu_item__remove_text),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }

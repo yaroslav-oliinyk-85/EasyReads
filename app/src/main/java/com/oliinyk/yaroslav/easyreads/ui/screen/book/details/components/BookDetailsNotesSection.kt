@@ -98,7 +98,7 @@ fun BookDetailsNotesSection(
                     // --- edit note button ---
                     AppIconButton(
                         imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(R.string.menu_item__book_details__edit_text),
+                        contentDescription = stringResource(R.string.menu_item__edit_text),
                         onClick = { onEdit(lastNote) }
                     )
                 }
@@ -129,7 +129,7 @@ fun BookDetailsNotesSection(
                 // --- add note button ---
                 AppIconButton(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.menu_item__book_list__add_text),
+                    contentDescription = stringResource(R.string.menu_item__add_text),
                     onClick = onAdd
                 )
             }

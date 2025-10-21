@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -17,14 +18,14 @@ class NoteListViewModel @Inject constructor(
     private val noteRepository: NoteRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<List<Note>> = MutableStateFlow(emptyList())
-    val stateUi: StateFlow<List<Note>>
+    private val _stateUi: MutableStateFlow<NoteListStateUi> = MutableStateFlow(NoteListStateUi())
+    val stateUi: StateFlow<NoteListStateUi>
         get() = _stateUi.asStateFlow()
 
     fun loadNotes(bookId: UUID) {
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->
-                _stateUi.value = notes
+                _stateUi.update { it.copy(notes = notes) }
             }
         }
     }
@@ -41,3 +42,7 @@ class NoteListViewModel @Inject constructor(
         noteRepository.remove(note)
     }
 }
+
+data class NoteListStateUi(
+    val notes: List<Note> = emptyList()
+)

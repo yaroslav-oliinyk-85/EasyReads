@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components
+package com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -12,20 +12,24 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.Book
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyLibraryTopAppBar(
-    onAddBookClick: (Book) -> Unit
+fun NoteListTopAppBar(
+    noteSize: Int,
+    onAdd: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(R.string.my_library__toolbar__title_text))
+            Text(
+                stringResource(
+                    R.string.note_list__toolbar__title_text,
+                    noteSize)
+            )
         },
         actions = {
             IconButton(
-                onClick = { onAddBookClick(Book()) }
+                onClick = onAdd
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,

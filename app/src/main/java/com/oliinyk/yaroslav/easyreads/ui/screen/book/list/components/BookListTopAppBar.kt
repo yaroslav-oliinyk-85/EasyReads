@@ -47,7 +47,7 @@ fun BookListTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.menu_item__book_list__add_text),
+                    contentDescription = stringResource(R.string.menu_item__add_text),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -57,7 +57,7 @@ fun BookListTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(R.string.menu_item__book_list__more_text),
+                    contentDescription = stringResource(R.string.menu_item__more_text),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }

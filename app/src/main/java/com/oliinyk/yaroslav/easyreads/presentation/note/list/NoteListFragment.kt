@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -22,13 +23,82 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.databinding.FragmentNoteListBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
+import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsFragmentDirections
 import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteListFragment : Fragment() {
 
+    private val args: NoteListFragmentArgs by navArgs()
+    private val viewModel: NoteListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+
+        viewModel.loadNotes(args.bookId)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    NoteListScreen(
+                        viewModel = viewModel,
+                        onAdd = {
+                            findNavController().navigate(
+                                NoteListFragmentDirections.showEditNoteDialog(Note())
+                            )
+                        },
+                        onEdit = { note ->
+                            findNavController().navigate(
+                                NoteListFragmentDirections.showEditNoteDialog(note)
+                            )
+                        },
+                        onRemove = { note ->
+                            AlertDialogHelper.showConfirmationDialog(
+                                requireContext(),
+                                R.string.note_list__dialog__confirmation_note_remove_message_text
+                            ) {
+                                viewModel.remove(note)
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(
+            NoteAddEditDialogFragment.REQUEST_KEY_NOTE
+        ) { _, bundle ->
+            val note = bundle.getParcelable(NoteAddEditDialogFragment.BUNDLE_KEY_NOTE) as Note?
+            note?.let {
+                if (it.bookId == null) {
+                    viewModel.addNote(note.copy(bookId = args.bookId))
+                } else {
+                    viewModel.update(it)
+                }
+            }
+        }
+    }
+
+    /*
     private var _binding: FragmentNoteListBinding? = null
     private val binding: FragmentNoteListBinding
         get() = checkNotNull(_binding) {
@@ -173,4 +243,5 @@ class NoteListFragment : Fragment() {
             _adapter.updateData(notes)
         }
     }
+    */
 }

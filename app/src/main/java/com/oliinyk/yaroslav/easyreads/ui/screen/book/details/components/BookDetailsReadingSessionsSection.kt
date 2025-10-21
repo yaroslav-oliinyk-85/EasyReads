@@ -118,7 +118,7 @@ fun BookDetailsReadingSessionsSection(
                     // --- edit reading session button ---
                     AppIconButton(
                         imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(R.string.menu_item__book_details__edit_text),
+                        contentDescription = stringResource(R.string.menu_item__edit_text),
                         onClick = { onEdit(session) }
                     )
                 }

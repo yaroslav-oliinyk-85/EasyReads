@@ -16,21 +16,15 @@
     <string name="book_list__toolbar__title_text">Books (%1$d)</string>
 
     <!-- Menu Items Text -->
-    <string name="menu_item__my_library__add_text">add</string>
-
-    <string name="menu_item__book_list__add_text">add</string>
-    <string name="menu_item__book_list__more_text">more</string>
     <string name="menu_item__book_list__image_size_large_text">Size Large</string>
     <string name="menu_item__book_list__image_size_default_text">Size Default</string>
     <string name="menu_item__book_list__image_size_small_text">Size Small</string>
 
-    <string name="menu_item__book_details__edit_text">Edit</string>
-    <string name="menu_item__book_details__remove_text">Remove</string>
-    <string name="menu_item__book_details__more_text">more</string>
-
-    <string name="menu_item__book_edit__save_text">save</string>
-
-    <string name="menu_item__note_list__add_text">add</string>
+    <string name="menu_item__add_text">add</string>
+    <string name="menu_item__edit_text">Edit</string>
+    <string name="menu_item__save_text">save</string>
+    <string name="menu_item__remove_text">Remove</string>
+    <string name="menu_item__more_text">more</string>
 
     <!-- Book List -->
     <string name="book_list__button__sorted_by_text">Sorted by: %1$s</string>

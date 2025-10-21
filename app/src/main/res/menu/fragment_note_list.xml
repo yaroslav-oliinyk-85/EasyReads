@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_add_note"
         android:icon="@drawable/ic_menu_book_add"
-        android:title="@string/menu_item__note_list__add_text"
+        android:title="@string/menu_item__add_text"
         app:showAsAction="ifRoom" />
 
 </menu>

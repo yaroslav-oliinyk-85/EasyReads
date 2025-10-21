@@ -46,7 +46,7 @@ fun BookAddEditScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Done,
-                            contentDescription = stringResource(R.string.menu_item__book_edit__save_text),
+                            contentDescription = stringResource(R.string.menu_item__save_text),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
