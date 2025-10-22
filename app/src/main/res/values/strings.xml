@@ -20,11 +20,11 @@
     <string name="menu_item__book_list__image_size_default_text">Size Default</string>
     <string name="menu_item__book_list__image_size_small_text">Size Small</string>
 
-    <string name="menu_item__add_text">add</string>
+    <string name="menu_item__add_text">Add</string>
     <string name="menu_item__edit_text">Edit</string>
-    <string name="menu_item__save_text">save</string>
+    <string name="menu_item__save_text">Save</string>
     <string name="menu_item__remove_text">Remove</string>
-    <string name="menu_item__more_text">more</string>
+    <string name="menu_item__more_text">More</string>
 
     <!-- Book List -->
     <string name="book_list__button__sorted_by_text">Sorted by: %1$s</string>
@@ -35,6 +35,7 @@
     <string name="book_list__button__sorted_order_content_description_text">Sort Order</string>
 
     <!-- Book Details -->
+    <string name="book_details__button__add_note_text">Add Note</string>
     <string name="book_details__button__see_all_notes_text">See All Notes (%1$d)</string>
     <string name="book_details__label__book_description_text">Description</string>
     <string name="book_details__label__book_isbn_text">ISBN:</string>

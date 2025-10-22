@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
@@ -117,22 +117,48 @@ fun BookDetailsNotesSection(
                 // --- see all notes button ---
                 AppTextButton(
                     onClick = onSeeAll,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(.5f)
                 ) {
                     Text(
                         text = stringResource(
                             R.string.book_details__button__see_all_notes_text,
                             notes.size
-                        )
+                        ),
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
                 // --- add note button ---
-                AppIconButton(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.menu_item__add_text),
-                    onClick = onAdd
-                )
+                AppTextButton(
+                    onClick = onAdd,
+                    modifier = Modifier.weight(.5f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.book_details__button__add_note_text),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsNotesSectionPreview() {
+    BookDetailsNotesSection(
+        notes = listOf(Note()),
+        onSeeAll = {},
+        onAdd = {},
+        onEdit = {}
+    )
+}
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsNotesSectionEmptyPreview() {
+    BookDetailsNotesSection(
+        notes = emptyList(),
+        onSeeAll = {},
+        onAdd = {},
+        onEdit = {}
+    )
 }

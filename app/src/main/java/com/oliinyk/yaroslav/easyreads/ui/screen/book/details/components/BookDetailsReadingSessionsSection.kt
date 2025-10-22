@@ -133,18 +133,11 @@ fun BookDetailsReadingSessionsSection(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // see all reading session button
-                AppTextButton(
-                    onClick = onSeeAll,
+                SeeAllReadingSessionButton(
+                    quantity = sessions.size,
+                    onSeeAll = onSeeAll,
                     modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = stringResource(
-                            R.string.book_details__button__see_all_reading_sessions_text,
-                            sessions.size
-                        )
-                    )
-                }
+                )
             }
         }
     }
