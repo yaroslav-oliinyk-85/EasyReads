@@ -16,6 +16,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,16 +30,30 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun BookDetailsNotesSection(
     notes: List<Note>,
-    onSeeAll: () -> Unit,
-    onAdd: () -> Unit,
-    onEdit: (Note) -> Unit,
+    onSeeAllNotes: () -> Unit,
+    onAddNote: (Note) -> Unit,
+    onEditNote: (Note) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var editingNote: Note? by remember { mutableStateOf(null) }
+
+    editingNote?.let { note ->
+        NoteAddEditDialog(
+            note = note,
+            onSave = { note ->
+                if (note.bookId == null) onAddNote(note) else onEditNote(note)
+                editingNote = null
+            },
+            onDismissRequest = { editingNote = null }
+        )
+    }
+
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
@@ -99,7 +117,7 @@ fun BookDetailsNotesSection(
                     AppIconButton(
                         imageVector = Icons.Default.Edit,
                         contentDescription = stringResource(R.string.menu_item__edit_text),
-                        onClick = { onEdit(lastNote) }
+                        onClick = { editingNote = lastNote }
                     )
                 }
             }
@@ -116,7 +134,7 @@ fun BookDetailsNotesSection(
             ) {
                 // --- see all notes button ---
                 AppTextButton(
-                    onClick = onSeeAll,
+                    onClick = onSeeAllNotes,
                     modifier = Modifier.weight(.5f)
                 ) {
                     Text(
@@ -129,7 +147,9 @@ fun BookDetailsNotesSection(
                 }
                 // --- add note button ---
                 AppTextButton(
-                    onClick = onAdd,
+                    onClick = {
+                        editingNote = Note()
+                    },
                     modifier = Modifier.weight(.5f)
                 ) {
                     Text(
@@ -147,9 +167,9 @@ fun BookDetailsNotesSection(
 private fun BookDetailsNotesSectionPreview() {
     BookDetailsNotesSection(
         notes = listOf(Note()),
-        onSeeAll = {},
-        onAdd = {},
-        onEdit = {}
+        onSeeAllNotes = {},
+        onAddNote = {},
+        onEditNote = {}
     )
 }
 @Preview(showBackground = true)
@@ -157,8 +177,8 @@ private fun BookDetailsNotesSectionPreview() {
 private fun BookDetailsNotesSectionEmptyPreview() {
     BookDetailsNotesSection(
         notes = emptyList(),
-        onSeeAll = {},
-        onAdd = {},
-        onEdit = {}
+        onSeeAllNotes = {},
+        onAddNote = {},
+        onEditNote = {}
     )
 }

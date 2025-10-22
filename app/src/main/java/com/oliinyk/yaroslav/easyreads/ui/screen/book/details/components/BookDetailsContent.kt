@@ -10,14 +10,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiEvent
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsEvent
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsStateUi
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun BookDetailsContent(
-    stateUi: BookDetailsUiState,
-    onEvent: (BookDetailsUiEvent) -> Unit,
+    stateUi: BookDetailsStateUi,
+    onEvent: (BookDetailsEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -36,25 +36,25 @@ fun BookDetailsContent(
         item {
             BookDetailsProgressSection(
                 stateUi = stateUi,
-                onStartReadingSession = { onEvent(BookDetailsUiEvent.StartReadingSession) },
-                onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllReadingSessions) }
+                onStartReadingSession = { onEvent(BookDetailsEvent.StartReadingSession) },
+                onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) }
             )
         }
         if (!stateUi.book.isFinished) {
             item {
                 BookDetailsReadingSessionsSection(
                     sessions = stateUi.readingSessions,
-                    onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllReadingSessions) },
-                    onEdit = { onEvent(BookDetailsUiEvent.EditReadingSession(it)) }
+                    onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) },
+                    onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) }
                 )
             }
         }
         item {
             BookDetailsNotesSection(
                 notes = stateUi.notes,
-                onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllNotes) },
-                onAdd = { onEvent(BookDetailsUiEvent.AddNote) },
-                onEdit = { onEvent(BookDetailsUiEvent.EditNote(it)) }
+                onSeeAllNotes = { onEvent(BookDetailsEvent.SeeAllNotes) },
+                onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
+                onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) }
             )
         }
         item {

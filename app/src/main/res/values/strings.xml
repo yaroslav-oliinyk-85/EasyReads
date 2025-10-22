@@ -28,6 +28,7 @@
 
     <!-- Book List -->
     <string name="book_list__button__sorted_by_text">Sorted by: %1$s</string>
+    <string name="book_list__dropdown_menu_item__sort_by_text">Sort by: %1$s</string>
     <string name="book_list__button__sorted_by_title_text">Title</string>
     <string name="book_list__button__sorted_by_author_text">Author</string>
     <string name="book_list__button__sorted_by_added_date_text">Added Date</string>

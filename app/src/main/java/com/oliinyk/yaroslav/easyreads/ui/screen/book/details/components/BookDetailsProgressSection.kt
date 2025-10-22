@@ -22,21 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MILLISECONDS_IN_ONE_SECOND
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HOUR
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
-import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun BookDetailsProgressSection(
     modifier: Modifier = Modifier,
-    stateUi: BookDetailsUiState,
+    stateUi: BookDetailsStateUi,
     onStartReadingSession: () -> Unit,
     onSeeAll: () -> Unit
 ) {

@@ -84,7 +84,7 @@ fun SortByButtonWithDropdownMenu(
                     text = {
                         Text(
                             text = stringResource(
-                                R.string.book_list__button__sorted_by_text,
+                                R.string.book_list__dropdown_menu_item__sort_by_text,
                                 stringResource(
                                     when (type) {
                                         BookSortingType.TITLE -> R.string.book_list__button__sorted_by_title_text
@@ -94,6 +94,7 @@ fun SortByButtonWithDropdownMenu(
                                     }
                                 )
                             ),
+                            style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
                     },

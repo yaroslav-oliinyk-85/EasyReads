@@ -27,9 +27,9 @@ class BookDetailsViewModel @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<BookDetailsUiState> =
-        MutableStateFlow(BookDetailsUiState())
-    val stateUi: StateFlow<BookDetailsUiState>
+    private val _stateUi: MutableStateFlow<BookDetailsStateUi> =
+        MutableStateFlow(BookDetailsStateUi())
+    val stateUi: StateFlow<BookDetailsStateUi>
         get() = _stateUi.asStateFlow()
 
     fun loadBookById(bookId: UUID) {
@@ -62,7 +62,7 @@ class BookDetailsViewModel @Inject constructor(
         readingSessionRepository.remove(stateUi.value.readingSessions)
     }
 
-    fun updateStateUi(onUpdate: (BookDetailsUiState) -> BookDetailsUiState) {
+    fun updateStateUi(onUpdate: (BookDetailsStateUi) -> BookDetailsStateUi) {
         _stateUi.update {
             onUpdate(it)
         }
@@ -105,9 +105,21 @@ class BookDetailsViewModel @Inject constructor(
 
         readingSessionRepository.update(readingSession)
     }
+
+    fun handleEvent(event: BookDetailsEvent) {
+        when (event) {
+            is BookDetailsEvent.AddNote -> {
+                addNote(event.note.copy(bookId = stateUi.value.book.id))
+            }
+            is BookDetailsEvent.EditNote -> {
+                updateNote(event.note)
+            }
+            else -> { /* TODO: */  }
+        }
+    }
 }
 
-data class BookDetailsUiState(
+data class BookDetailsStateUi(
     val book: Book = Book(),
     val notes: List<Note> = emptyList(),
     val readingSessions: List<ReadingSession> = emptyList()
@@ -151,12 +163,12 @@ data class BookDetailsUiState(
         }
 }
 
-sealed class BookDetailsUiEvent {
-    object SeeAllNotes : BookDetailsUiEvent()
-    object AddNote : BookDetailsUiEvent()
-    data class EditNote(val note: Note) : BookDetailsUiEvent()
-    object StartReadingSession : BookDetailsUiEvent()
-    object SeeAllReadingSessions : BookDetailsUiEvent()
-    object AddReadingSession : BookDetailsUiEvent()
-    data class EditReadingSession(val readingSession: ReadingSession) : BookDetailsUiEvent()
+sealed interface BookDetailsEvent {
+    object SeeAllNotes : BookDetailsEvent
+    data class AddNote(val note: Note) : BookDetailsEvent
+    data class EditNote(val note: Note) : BookDetailsEvent
+    object StartReadingSession : BookDetailsEvent
+    object SeeAllReadingSessions : BookDetailsEvent
+    object AddReadingSession : BookDetailsEvent
+    data class EditReadingSession(val readingSession: ReadingSession) : BookDetailsEvent
 }

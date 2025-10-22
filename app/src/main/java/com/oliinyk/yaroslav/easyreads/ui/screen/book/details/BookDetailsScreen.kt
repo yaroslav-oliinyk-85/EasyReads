@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiEvent
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsEvent
 import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsViewModel
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components.BookDetailsContent
@@ -20,7 +20,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components.BookDeta
 @Composable
 fun BookDetailsScreen(
     viewModel: BookDetailsViewModel,
-    onEvent: (BookDetailsUiEvent) -> Unit,
+    onEvent: (BookDetailsEvent) -> Unit,
     onEditBook: () -> Unit,
     onRemoveBook: () -> Unit
 ) {

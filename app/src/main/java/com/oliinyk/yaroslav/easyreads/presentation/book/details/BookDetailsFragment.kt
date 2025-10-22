@@ -1,42 +1,25 @@
 package com.oliinyk.yaroslav.easyreads.presentation.book.details
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.FragmentBookDetailsBinding
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
-import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MILLISECONDS_IN_ONE_SECOND
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HOUR
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
-import com.oliinyk.yaroslav.easyreads.domain.util.ToastHelper
 import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
-import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BookDetailsFragment : Fragment() {
@@ -129,54 +112,42 @@ class BookDetailsFragment : Fragment() {
         }
     }
 
-    private fun handleEvent(event: BookDetailsUiEvent) {
+    private fun handleEvent(event: BookDetailsEvent) {
         when (event) {
-            is BookDetailsUiEvent.SeeAllNotes -> {
+            is BookDetailsEvent.SeeAllNotes -> {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showNotes(viewModel.getCurrentBook().id)
                 )
             }
-            is BookDetailsUiEvent.AddNote -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showAddNoteDialog(Note())
-                )
-            }
-            is BookDetailsUiEvent.EditNote -> {
-                if (viewModel.getNotes().isNotEmpty()) {
-                    findNavController().navigate(
-                        BookDetailsFragmentDirections
-                            .showAddNoteDialog(event.note)
-                    )
-                }
-            }
-            is BookDetailsUiEvent.StartReadingSession -> {
+            is BookDetailsEvent.StartReadingSession -> {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showReadingSessionRecord(
                         viewModel.getCurrentBook()
                     )
                 )
             }
-            is BookDetailsUiEvent.SeeAllReadingSessions -> {
+            is BookDetailsEvent.SeeAllReadingSessions -> {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showReadingSessions(
                         viewModel.getCurrentBook()
                     )
                 )
             }
-            is BookDetailsUiEvent.AddReadingSession -> {
+            is BookDetailsEvent.AddReadingSession -> {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showReadingSessionRecord(
                         viewModel.getCurrentBook()
                     )
                 )
             }
-            is BookDetailsUiEvent.EditReadingSession -> {
+            is BookDetailsEvent.EditReadingSession -> {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showReadingSessionAddEdit(
                         event.readingSession
                     )
                 )
             }
+            else -> viewModel.handleEvent(event)
         }
     }
 
