@@ -1,6 +1,7 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HO
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
 import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
+import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
@@ -35,7 +37,8 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun BookDetailsProgressSection(
     modifier: Modifier = Modifier,
     stateUi: BookDetailsUiState,
-    onStartReadingSession: () -> Unit
+    onStartReadingSession: () -> Unit,
+    onSeeAll: () -> Unit
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -86,16 +89,15 @@ fun BookDetailsProgressSection(
                 ReadingProgressIndicator(percentage = stateUi.percentage)
             }
 
+            // ---------- Divider ----------
+            AppDivider(modifier = Modifier.padding(vertical = Dimens.paddingVerticalSmall))
+
             if(!stateUi.book.isFinished) {
-
-                // ---------- Divider ----------
-                AppDivider(modifier = Modifier.padding(vertical = Dimens.paddingVerticalSmall))
-
                 // ---------- Start reading session button ----------
                 IconButton(
                     onClick = onStartReadingSession,
                     modifier = Modifier
-                        .size(96.dp)
+                        .size(Dimens.startReadingSessionButtonSize)
                         .background(
                             color = MaterialTheme.colorScheme.background,
                             shape = CircleShape
@@ -104,18 +106,40 @@ fun BookDetailsProgressSection(
                     Icon(
                         painter = painterResource(R.drawable.ic_button_record_start),
                         contentDescription = stringResource(R.string.book_details__label__start_reading_session_text),
-                        modifier = Modifier.size(64.dp),
+                        modifier = Modifier.size(Dimens.startReadingSessionIconSize),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 Text(
                     text = stringResource(R.string.book_details__label__start_reading_session_text),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp),
+                        .padding(vertical = Dimens.paddingVerticalSmall),
                     textAlign = TextAlign.Center
                 )
+            }
+
+            // ---------- Footer buttons ----------
+            if (stateUi.book.isFinished) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // see all reading session button
+                    AppTextButton(
+                        onClick = onSeeAll,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.book_details__button__see_all_reading_sessions_text,
+                                stateUi.readingSessions.size
+                            )
+                        )
+                    }
+                }
             }
         }
     }

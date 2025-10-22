@@ -36,15 +36,18 @@ fun BookDetailsContent(
         item {
             BookDetailsProgressSection(
                 stateUi = stateUi,
-                onStartReadingSession = { onEvent(BookDetailsUiEvent.StartReadingSession) }
+                onStartReadingSession = { onEvent(BookDetailsUiEvent.StartReadingSession) },
+                onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllReadingSessions) }
             )
         }
-        item {
-            BookDetailsReadingSessionsSection(
-                sessions = stateUi.readingSessions,
-                onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllReadingSessions) },
-                onEdit = { onEvent(BookDetailsUiEvent.EditReadingSession(it)) }
-            )
+        if (!stateUi.book.isFinished) {
+            item {
+                BookDetailsReadingSessionsSection(
+                    sessions = stateUi.readingSessions,
+                    onSeeAll = { onEvent(BookDetailsUiEvent.SeeAllReadingSessions) },
+                    onEdit = { onEvent(BookDetailsUiEvent.EditReadingSession(it)) }
+                )
+            }
         }
         item {
             BookDetailsNotesSection(

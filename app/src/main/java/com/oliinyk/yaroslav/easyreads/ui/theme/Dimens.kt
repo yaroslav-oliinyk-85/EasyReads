@@ -56,10 +56,11 @@ object Dimens {
         vertical = 0.dp
     )
 
-    val appTitleMediumFontSize = 18.sp
-
     val bookDetailsCoverImageHeight = 240.dp
     val bookDetailsCoverImageWidth = 160.dp
+
+    val startReadingSessionButtonSize = 96.dp
+    val startReadingSessionIconSize = 64.dp
 
     object AppComponents {
         val appDividerThickness = 2.dp
@@ -89,4 +90,5 @@ object Dimens {
     }
 
     // ----- sp -----
+    val appTitleMediumFontSize = 18.sp
 }
