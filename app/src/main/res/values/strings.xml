@@ -124,10 +124,10 @@
     <!-- Reading Session Record -->
     <string name="reading_session_record__tools__read_time_text">01:13:57</string>
     <string name="reading_session_record__label__read_time_text">%1$02d:%2$02d:%3$02d</string>
-    <string name="reading_session_record__label__record_status_started_text">Reading...</string>
+    <string name="reading_session_record__label__record_status_started_text">Reading</string>
     <string name="reading_session_record__label__record_status_paused_text">Paused</string>
     <string name="reading_session_record__button__finish_recording_text">Finish</string>
-    <string name="reading_session_record__button__show_notes_text">See Notes</string>
+    <string name="reading_session_record__button__show_notes_text">See All Notes (%d)</string>
     <string name="reading_session_record__button__add_note_text">Add Note</string>
     <string name="reading_session_record__tools__read_pages_text">Pages: 153/647</string>
     <string name="reading_session_record__label__read_pages_text">Pages: %1$d/%2$d</string>
@@ -246,8 +246,8 @@
 
     <!-- Read Time Counter Notification -->
     <string name="read_time_counter_notification_channel_name">Read Time Counter</string>
-    <string name="read_time_counter_notification_content_title_text">Reading...</string>
-    <string name="read_time_counter_notification_content_text">Reading time: %1$02d:%2$02d</string>
+    <string name="read_time_counter_notification_content_title_text">Reading</string>
+    <string name="read_time_counter_notification_content_text">Reading time: %1$02d:%2$02d:%3$02d</string>
 
     <!-- My Library -->
     <string name="my_library__label__shelves_title_text">Shelves</string>

@@ -46,6 +46,8 @@ object Dimens {
 
     val readingGoalBookCoverImageSize = DpSize(80.dp, 130.dp)
     val bookAddEditBookCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
+    val bookDetailsBookCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
+    val readingSessionRecordBookCoverImageSize = DpSize(width = 120.dp, height = 180.dp)
 
     val bookListItemPercentageSize = 44.dp
     val bookListItemSortOrderSize = 42.dp
@@ -55,9 +57,6 @@ object Dimens {
         horizontal = 16.dp,
         vertical = 0.dp
     )
-
-    val bookDetailsCoverImageHeight = 240.dp
-    val bookDetailsCoverImageWidth = 160.dp
 
     val startReadingSessionButtonSize = 96.dp
     val startReadingSessionIconSize = 64.dp

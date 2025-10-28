@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -26,12 +27,123 @@ import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment.Companion.BUNDLE_KEY_READING_SESSION
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment.Companion.REQUEST_KEY_READING_SESSION
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.ReadingSessionRecordScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ReadingSessionRecordFragment : Fragment() {
+
+    private val args: ReadingSessionRecordFragmentArgs by navArgs()
+    private val viewModel: ReadingSessionRecordViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            requireActivity().startService(
+                Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                    action = ReadTimeCounterService.Actions.STOP.toString()
+                }
+            )
+            viewModel.removeUnfinishedReadingSession()
+            findNavController().popBackStack()
+        }
+
+        viewModel.setup(args.book)
+
+        requireActivity().startService(
+            Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                action = ReadTimeCounterService.Actions.START.toString()
+                putExtra("bookId", args.book.id.toString())
+                putExtra("bookTitle", args.book.title)
+                putExtra("pageCurrent", args.book.pageCurrent)
+            }
+        )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    ReadingSessionRecordScreen(
+                        viewModel = viewModel,
+                        onEvent = { event ->
+                            when(event) {
+                                ReadingSessionRecordEvent.OnStartPause -> {
+                                    viewModel.resumeOrPause { resumeOrPauseAction ->
+                                        requireActivity().startService(
+                                            Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                                                action = resumeOrPauseAction.toString()
+                                            }
+                                        )
+                                    }
+                                }
+                                ReadingSessionRecordEvent.OnShowNotes -> {
+                                    findNavController().navigate(
+                                        ReadingSessionRecordFragmentDirections.showNotes(
+                                            viewModel.currentBook.id
+                                        )
+                                    )
+                                }
+                                is ReadingSessionRecordEvent.OnAddNote -> {
+                                    viewModel.addNote(event.note)
+                                }
+                                ReadingSessionRecordEvent.OnFinish -> {
+                                    requireActivity().startService(
+                                        Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                                            action = ReadTimeCounterService.Actions.PAUSE.toString()
+                                        }
+                                    )
+                                    viewModel.currentReadingSession?.let { readingSession ->
+                                        findNavController().navigate(
+                                            ReadingSessionRecordFragmentDirections.showReadingSessionAddEdit(
+                                                readingSession
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener(
+            REQUEST_KEY_READING_SESSION
+        ) { _, bundle ->
+            val readingSessionUpdated =
+                bundle.getParcelable(BUNDLE_KEY_READING_SESSION) as ReadingSession?
+            readingSessionUpdated?.let { readingSession ->
+                requireActivity().startService(
+                    Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                        action = ReadTimeCounterService.Actions.STOP.toString()
+                    }
+                )
+                viewModel.save(readingSession)
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(250)
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    /*
 
     private var _binding: FragmentReadingSessionRecordBinding? = null
     private val binding: FragmentReadingSessionRecordBinding
@@ -58,7 +170,7 @@ class ReadingSessionRecordFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.loadLastUnfinishedByBookId(args.book)
+        viewModel.setup(args.book)
 
         requireActivity().startService(
             Intent(requireContext(), ReadTimeCounterService::class.java).apply {
@@ -237,4 +349,6 @@ class ReadingSessionRecordFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    */
 }

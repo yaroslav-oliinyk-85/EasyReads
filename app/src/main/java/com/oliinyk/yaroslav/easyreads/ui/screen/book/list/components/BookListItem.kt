@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -35,10 +37,10 @@ import java.io.File
 
 @Composable
 fun BookListItem(
-    modifier: Modifier = Modifier,
     book: Book,
-    holderSize: HolderSize = HolderSize.DEFAULT,
-    onClickedBook: (Book) -> Unit
+    onClickedBook: (Book) -> Unit,
+    modifier: Modifier = Modifier,
+    holderSize: HolderSize = HolderSize.DEFAULT
 ) {
     val percentage = if (book.pageAmount != 0) {
         (book.pageCurrent * 100 / book.pageAmount)
@@ -71,86 +73,106 @@ fun BookListItem(
         }
     }
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .clickable { onClickedBook(book) }
-            .padding(Dimens.paddingAllSmall)
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
     ) {
-        // Book Cover Image
-        val context = LocalContext.current
-        val file: File? = if (book.coverImageFileName != null) {
-            File(context.filesDir, book.coverImageFileName)
-        } else { null }
-        AsyncImage(
-            modifier = Modifier
-                .width(coverImageWidth)
-                .height(bookListItemHeight)
-                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-                .background(MaterialTheme.colorScheme.background),
-            model = ImageRequest.Builder(context)
-                .data(file)
-                .build(),
-            contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.width(Dimens.spacerWidthSmall))
-
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .height(bookListItemHeight)
-                .align(Alignment.Top)
+        Row(
+            modifier = modifier.fillMaxWidth()
+                .clickable { onClickedBook(book) }
+                .padding(Dimens.paddingAllSmall)
         ) {
-            Text(
-                text = book.title,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = titleMaxLines,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = book.author,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = authorMaxLines,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(top = Dimens.paddingTopTiny)
+            // Book Cover Image
+            val context = LocalContext.current
+            val file: File? = if (book.coverImageFileName != null) {
+                File(context.filesDir, book.coverImageFileName)
+            } else {
+                null
+            }
+            AsyncImage(
+                modifier = Modifier
+                    .width(coverImageWidth)
+                    .height(bookListItemHeight)
+                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                    .background(MaterialTheme.colorScheme.background),
+                model = ImageRequest.Builder(context)
+                    .data(file)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
+                contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.width(Dimens.spacerWidthSmall))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(bookListItemHeight)
+                    .align(Alignment.Top)
             ) {
-                // Shelve
                 Text(
-                    modifier = Modifier.padding(end = Dimens.paddingEndTiny),
-                    text = stringResource(
-                        R.string.book_details__label__shelve_text,
-                        when (book.shelve) {
-                        BookShelveType.WANT_TO_READ -> stringResource(R.string.book_details__label__shelve_want_to_read_text)
-                        BookShelveType.READING -> stringResource(R.string.book_details__label__shelve_reading_text)
-                        BookShelveType.FINISHED -> stringResource(R.string.book_details__label__shelve_finished_text)
-                    }),
-                    style = MaterialTheme.typography.bodyMedium
+                    text = book.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = titleMaxLines,
+                    overflow = TextOverflow.Ellipsis
                 )
-                // Pages
                 Text(
-                    modifier = Modifier.weight(1f)
-                        .padding(end = Dimens.paddingEndSmall),
-                    text = stringResource(
-                        R.string.book_details__label__book_pages_text,
-                        book.pageCurrent,
-                        book.pageAmount
-                    ),
+                    text = book.author,
                     style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.End
+                    maxLines = authorMaxLines,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = Dimens.paddingTopTiny)
                 )
-                ReadingProgressIndicator(percentage = percentage)
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Shelve
+                    Text(
+                        modifier = Modifier.padding(end = Dimens.paddingEndTiny),
+                        text = stringResource(
+                            R.string.book_details__label__shelve_text,
+                            when (book.shelve) {
+                                BookShelveType.WANT_TO_READ -> stringResource(R.string.book_details__label__shelve_want_to_read_text)
+                                BookShelveType.READING -> stringResource(R.string.book_details__label__shelve_reading_text)
+                                BookShelveType.FINISHED -> stringResource(R.string.book_details__label__shelve_finished_text)
+                            }
+                        ),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    // Pages
+                    Text(
+                        modifier = Modifier.weight(1f)
+                            .padding(end = Dimens.paddingEndSmall),
+                        text = stringResource(
+                            R.string.book_details__label__book_pages_text,
+                            book.pageCurrent,
+                            book.pageAmount
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.End
+                    )
+                    ReadingProgressIndicator(percentage = percentage)
+                }
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun BookListItemPreview() {
+    BookListItem(
+        book = Book().copy(
+            title = "Title",
+            author = "Author",
+            pageCurrent = 50,
+            pageAmount = 250
+        ),
+        onClickedBook = {}
+    )
 }

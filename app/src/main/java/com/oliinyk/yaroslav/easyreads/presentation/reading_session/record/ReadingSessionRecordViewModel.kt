@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,13 +36,26 @@ class ReadingSessionRecordViewModel @Inject constructor(
     val currentBook: Book
         get() = checkNotNull(stateUi.value.book)
 
-    fun loadLastUnfinishedByBookId(book: Book) {
+    fun setup(book: Book) {
         _stateUi.update { it.copy(book = book) }
+        loadLastUnfinishedByBookId(book.id)
+        loadNoteCount(book.id)
+    }
+
+    private fun loadLastUnfinishedByBookId(bookId: UUID) {
         viewModelScope.launch {
-            readingSessionRepository.getLastUnfinishedByBookId(book.id).collect { readingSessionFromDB ->
+            readingSessionRepository.getLastUnfinishedByBookId(bookId).collect { readingSessionFromDB ->
                 readingSessionFromDB?.let {
                     _stateUi.update { it.copy(readingSession = readingSessionFromDB) }
                 }
+            }
+        }
+    }
+
+    private fun loadNoteCount(bookId: UUID) {
+        viewModelScope.launch {
+            noteRepository.getAllByBookId(bookId).collect { notes ->
+                _stateUi.update { it.copy(noteCount = notes.size) }
             }
         }
     }
@@ -98,5 +112,13 @@ class ReadingSessionRecordViewModel @Inject constructor(
 
 data class ReadingSessionRecordStateUi(
     val book: Book? = null,
-    val readingSession: ReadingSession? = null
+    val readingSession: ReadingSession? = null,
+    val noteCount: Int = 0
 )
+
+sealed interface ReadingSessionRecordEvent {
+    object OnStartPause : ReadingSessionRecordEvent
+    object OnFinish : ReadingSessionRecordEvent
+    object OnShowNotes : ReadingSessionRecordEvent
+    data class OnAddNote(val note: Note) : ReadingSessionRecordEvent
+}

@@ -13,5 +13,5 @@ interface ReadTimeCounterRepository {
 
     fun stop()
 
-    fun getReadTimeInMilliseconds(): Long
+    fun getReadingSession(): ReadingSession
 }

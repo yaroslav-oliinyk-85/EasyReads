@@ -48,8 +48,8 @@ fun NoteListScreen(
         editingNote?.let { note ->
             NoteAddEditDialog(
                 note = note,
-                onSave = { note ->
-                    viewModel.save(note)
+                onSave = {
+                    viewModel.save(it)
                     viewModel.dismissAddEditDialog()
                 },
                 onDismissRequest = { viewModel.dismissAddEditDialog() }

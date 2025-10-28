@@ -55,6 +55,7 @@ fun BookAddEditCoverImageSection(
                     modifier = Modifier.fillMaxSize().alpha(0.25f),
                     model = ImageRequest.Builder(context)
                         .data(bookCoverImageFile)
+                        .crossfade(true)
                         .build(),
                     contentDescription = stringResource(
                         R.string.book_cover_image__content_description__text

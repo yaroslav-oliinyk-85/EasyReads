@@ -24,7 +24,7 @@ fun AppTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = ButtonDefaults.textShape,
+    shape: Shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,

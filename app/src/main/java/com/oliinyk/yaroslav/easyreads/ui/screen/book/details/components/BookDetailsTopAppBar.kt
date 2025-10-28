@@ -31,10 +31,7 @@ fun BookDetailsTopAppBar(
     var menuExpanded by remember { mutableStateOf(false) }
     TopAppBar(
         title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge
-            )
+            Text(text = title)
         },
         actions = {
             IconButton(
@@ -91,22 +88,6 @@ fun BookDetailsTopAppBar(
                     }
                 )
             }
-            /*
-            IconButton(onClick = onEditBook) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = stringResource(R.string.menu_item__book_details__edit_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-            IconButton(onClick = onRemoveBook) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(R.string.menu_item__book_details__remove_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-            */
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,

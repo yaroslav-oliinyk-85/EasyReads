@@ -46,8 +46,8 @@ fun BookDetailsNotesSection(
     editingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
-            onSave = { note ->
-                if (note.bookId == null) onAddNote(note) else onEditNote(note)
+            onSave = {
+                if (it.bookId == null) onAddNote(it) else onEditNote(it)
                 editingNote = null
             },
             onDismissRequest = { editingNote = null }

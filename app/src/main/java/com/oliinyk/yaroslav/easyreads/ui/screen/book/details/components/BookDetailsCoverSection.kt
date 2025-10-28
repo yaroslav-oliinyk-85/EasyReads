@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -17,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
@@ -28,8 +30,8 @@ import java.io.File
 
 @Composable
 fun BookDetailsCoverSection(
-    modifier: Modifier = Modifier,
-    book: Book
+    book: Book,
+    modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -55,11 +57,11 @@ fun BookDetailsCoverSection(
             AsyncImage(
                 model = ImageRequest.Builder(context)
                     .data(bookCoverImageFile)
+                    .crossfade(true)
                     .build(),
                 contentDescription = stringResource(R.string.book_cover_image__content_description__text),
                 modifier = Modifier
-                    .height(Dimens.bookDetailsCoverImageHeight)
-                    .width(Dimens.bookDetailsCoverImageWidth)
+                    .size(Dimens.bookDetailsBookCoverImageSize)
                     .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
                 contentScale = ContentScale.Crop
             )
@@ -97,4 +99,15 @@ fun BookDetailsCoverSection(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsCoverSectionPreview() {
+    BookDetailsCoverSection(
+        Book().copy(
+            title = "Book Title",
+            author = "Book Author"
+        )
+    )
 }

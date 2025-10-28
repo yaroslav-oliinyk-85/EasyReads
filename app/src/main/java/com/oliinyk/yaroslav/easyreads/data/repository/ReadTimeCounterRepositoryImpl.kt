@@ -54,8 +54,8 @@ class ReadTimeCounterRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getReadTimeInMilliseconds(): Long {
-        return _readingSession.readTimeInMilliseconds
+    override fun getReadingSession(): ReadingSession {
+        return _readingSession.copy()
     }
 
     override fun start(bookId: UUID, pageCurrent: Int) {

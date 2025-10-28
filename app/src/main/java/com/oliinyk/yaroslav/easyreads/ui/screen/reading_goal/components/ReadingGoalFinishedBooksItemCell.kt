@@ -42,6 +42,7 @@ fun ReadingGoalFinishedBooksItemCell(
                 modifier = Modifier.fillMaxSize(),
                 model = ImageRequest.Builder(context)
                     .data(file)
+                    .crossfade(true)
                     .build(),
                 contentDescription = stringResource(R.string.book_cover_image__content_description__text),
                 contentScale = ContentScale.Crop

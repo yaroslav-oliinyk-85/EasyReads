@@ -124,10 +124,13 @@ class ReadTimeCounterService : Service() {
     }
 
     private fun getContentText(): String {
-        val readTimeInMilliseconds = readTimeCounterRepository.getReadTimeInMilliseconds()
-        val minutes = readTimeInMilliseconds / MILLISECONDS_IN_ONE_SECOND / SECONDS_IN_ONE_MINUTE
-        val seconds = readTimeInMilliseconds / MILLISECONDS_IN_ONE_SECOND % SECONDS_IN_ONE_MINUTE
-        return getString(R.string.read_time_counter_notification_content_text, minutes, seconds)
+        val readingSession = readTimeCounterRepository.getReadingSession()
+        return getString(
+            R.string.read_time_counter_notification_content_text,
+            readingSession.readHours,
+            readingSession.readMinutes,
+            readingSession.readSeconds
+        )
     }
 
     override fun onDestroy() {
