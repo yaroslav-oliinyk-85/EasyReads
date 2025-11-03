@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -224,7 +225,7 @@ fun ReadingSessionAddEditDialog(
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
 
                 // --- Buttons Save ---
-                AppTextButton(
+                Button(
                     onClick = {
                         if (uiState.endPage <= uiState.startPage) {
                             uiState = uiState.copy(
@@ -247,7 +248,8 @@ fun ReadingSessionAddEditDialog(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
                 ) {
                     Text(
                         text = stringResource(

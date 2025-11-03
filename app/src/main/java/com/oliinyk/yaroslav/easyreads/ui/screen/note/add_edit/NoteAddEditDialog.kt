@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -99,7 +100,7 @@ fun NoteAddEditDialog(
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
 
                 // --- save button ---
-                AppTextButton(
+                Button(
                     onClick = {
                         if (noteText.isBlank()) {
                             noteTextLabelError = errorMessageText
@@ -112,7 +113,8 @@ fun NoteAddEditDialog(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
                 ) {
                     Text(
                         text = stringResource(R.string.note_add_edit_dialog__button__save_text),
