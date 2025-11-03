@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordEvent
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordStateUi
+import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordUiState
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.components.ReadingSessionRecordContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.components.ReadingSessionRecordTopAppBar
@@ -17,7 +17,7 @@ fun ReadingSessionRecordScreen(
     viewModel: ReadingSessionRecordViewModel,
     onEvent: (ReadingSessionRecordEvent) -> Unit
 ) {
-    val stateUi: ReadingSessionRecordStateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val uiState: ReadingSessionRecordUiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -25,7 +25,7 @@ fun ReadingSessionRecordScreen(
         }
     ) { paddingValues ->
         ReadingSessionRecordContent(
-            stateUi = stateUi,
+            stateUi = uiState,
             onEvent = onEvent,
             modifier = Modifier.padding(paddingValues)
         )

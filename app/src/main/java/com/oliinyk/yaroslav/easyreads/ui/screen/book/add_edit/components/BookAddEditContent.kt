@@ -107,7 +107,7 @@ fun BookAddEditContent(
                     onValueChange = { pageAmount ->
                         onEvent(
                             BookAddEditEvent.PageAmountChanged(
-                                pageAmount.take(AppConstants.BOOK_PAGE_AMOUNT_MAX_LENGTH).trim()
+                                pageAmount.trim().take(AppConstants.BOOK_PAGE_AMOUNT_MAX_LENGTH)
                             )
                         )
                     }

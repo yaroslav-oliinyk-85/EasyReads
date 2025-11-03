@@ -8,13 +8,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
@@ -26,15 +24,20 @@ fun AppEditField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = true,
+    readOnly: Boolean = false,
     minLines: Int = 1,
-    labelError: String = ""
+    labelError: String = "",
+    labelTextAlign: TextAlign = TextAlign.Start
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            modifier = Modifier.padding(bottom = Dimens.paddingBottomTiny),
-            text = label,
-            style = MaterialTheme.typography.bodyLarge
-        )
+        if (label.isNotBlank()) {
+            Text(
+                modifier = Modifier.fillMaxWidth().padding(bottom = Dimens.paddingBottomTiny),
+                text = label,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = labelTextAlign
+            )
+        }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth()
                 .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
@@ -46,7 +49,8 @@ fun AppEditField(
             minLines = minLines,
             keyboardOptions = keyboardOptions,
             shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
-            isError = labelError.isNotBlank()
+            isError = labelError.isNotBlank(),
+            readOnly = readOnly
         )
         if (labelError.isNotBlank()) {
             Text(

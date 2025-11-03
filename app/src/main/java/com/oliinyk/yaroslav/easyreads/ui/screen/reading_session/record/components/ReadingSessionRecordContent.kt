@@ -25,20 +25,32 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordEvent
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordStateUi
+import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit.NoteAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun ReadingSessionRecordContent(
-    stateUi: ReadingSessionRecordStateUi,
+    stateUi: ReadingSessionRecordUiState,
     onEvent: (ReadingSessionRecordEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var addingNote: Note? by remember { mutableStateOf(null) }
+    var editingReadingSession: ReadingSession? by remember { mutableStateOf(null) }
+    editingReadingSession?.let { readingSession ->
+        ReadingSessionAddEditDialog(
+            readingSession = readingSession,
+            onSave = { it
+                onEvent(ReadingSessionRecordEvent.OnFinish(it))
+                editingReadingSession = null
+            },
+            onDismissRequest = { editingReadingSession = null }
+        )
+    }
 
+    var addingNote: Note? by remember { mutableStateOf(null) }
     addingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
@@ -54,10 +66,7 @@ fun ReadingSessionRecordContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(
-                horizontal = Dimens.paddingHorizontalMedium,
-                vertical = Dimens.paddingVerticalSmall
-            ),
+            .padding(Dimens.paddingAllMedium),
         verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
     ) {
         ReadingSessionRecordBookCoverSection(
@@ -70,6 +79,7 @@ fun ReadingSessionRecordContent(
         )
 
         Row(Modifier.fillMaxWidth()) {
+            // --- See All Notes Button ---
             AppTextButton(
                 onClick = { onEvent(ReadingSessionRecordEvent.OnShowNotes) },
                 modifier = Modifier
@@ -86,6 +96,7 @@ fun ReadingSessionRecordContent(
 
             Spacer(Modifier.width(Dimens.spacerWidthSmall))
 
+            // --- Add Note Button ---
             AppTextButton(
                 onClick = { addingNote = Note().copy(bookId = stateUi.book?.id) },
                 modifier = Modifier.weight(.5f)
@@ -97,8 +108,12 @@ fun ReadingSessionRecordContent(
             }
         }
 
+        // --- Finish Button ---
         AppTextButton(
-            onClick = { onEvent(ReadingSessionRecordEvent.OnFinish) },
+            onClick = {
+                onEvent(ReadingSessionRecordEvent.OnPause)
+                editingReadingSession = stateUi.readingSession
+            },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
@@ -114,7 +129,7 @@ fun ReadingSessionRecordContent(
 private fun ReadingSessionRecordContentPreview() {
     EasyReadsTheme {
         ReadingSessionRecordContent(
-            stateUi = ReadingSessionRecordStateUi(),
+            stateUi = ReadingSessionRecordUiState(),
             onEvent = {}
         )
     }

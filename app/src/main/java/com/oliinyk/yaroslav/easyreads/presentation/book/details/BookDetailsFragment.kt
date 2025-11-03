@@ -68,50 +68,6 @@ class BookDetailsFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setFragmentResultListener(NoteAddEditDialogFragment.REQUEST_KEY_NOTE) { _, bundle ->
-            val note = bundle.getParcelable(NoteAddEditDialogFragment.BUNDLE_KEY_NOTE) as Note?
-            note?.let {
-                if (it.bookId == null) {
-                    viewModel.addNote(it)
-
-                    /* TODO: convert to Compose
-                    ToastHelper.show(
-                        requireContext().applicationContext,
-                        getString(R.string.book_details__toast__message_new_note_added_text)
-                    )
-                    */
-                } else {
-                    viewModel.updateNote(it)
-
-                    /* TODO: convert to Compose
-                    ToastHelper.show(
-                        requireContext().applicationContext,
-                        getString(R.string.book_details__toast__message_note_updated_text)
-                    )
-                    */
-                }
-            }
-        }
-        setFragmentResultListener(
-            ReadingSessionAddEditDialogFragment.REQUEST_KEY_READING_SESSION
-        ) { _, bundle ->
-            val readingSessionUpdated = bundle.getParcelable(
-                ReadingSessionAddEditDialogFragment.BUNDLE_KEY_READING_SESSION
-            ) as ReadingSession?
-
-            readingSessionUpdated?.let { readingSession ->
-                if (readingSession.bookId == null) {
-                    viewModel.addReadingSession(readingSession)
-                } else {
-                    viewModel.updateReadingSession(readingSession)
-                }
-            }
-        }
-    }
-
     private fun handleEvent(event: BookDetailsEvent) {
         when (event) {
             is BookDetailsEvent.SeeAllNotes -> {
@@ -137,13 +93,6 @@ class BookDetailsFragment : Fragment() {
                 findNavController().navigate(
                     BookDetailsFragmentDirections.showReadingSessionRecord(
                         viewModel.getCurrentBook()
-                    )
-                )
-            }
-            is BookDetailsEvent.EditReadingSession -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showReadingSessionAddEdit(
-                        event.readingSession
                     )
                 )
             }

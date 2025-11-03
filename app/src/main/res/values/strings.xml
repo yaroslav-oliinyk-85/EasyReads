@@ -134,14 +134,18 @@
     <string name="reading_session_record__toolbar__title_text">Reading Session</string>
 
     <!-- Reading Session Add Edit Dialog -->
+    <string name="reading_session_add_edit_dialog__hint__enter_start_page_text">Enter start page</string>
     <string name="reading_session_add_edit_dialog__hint__enter_end_page_text">Enter end page</string>
     <string name="reading_session_add_edit_dialog__button__save_text">Save</string>
     <string name="reading_session_add_edit_dialog__button__cancel_text">Cancel</string>
     <string name="reading_session_add_edit_dialog__tools__start_page_text">0</string>
-    <string name="reading_session_add_edit_dialog__label__read_hour_text">hours</string>
-    <string name="reading_session_add_edit_dialog__label__read_minutes_text">minutes</string>
-    <string name="reading_session_add_edit_dialog__label__read_seconds_text">seconds</string>
-    <string name="reading_session_add_edit_dialog__error__message_text">End page must be greate then start page</string>
+    <string name="reading_session_add_edit_dialog__label__start_page_text">Start Page</string>
+    <string name="reading_session_add_edit_dialog__label__end_page_text">End Page</string>
+    <string name="reading_session_add_edit_dialog__label__read_hour_text">Hours</string>
+    <string name="reading_session_add_edit_dialog__label__read_minutes_text">Minutes</string>
+    <string name="reading_session_add_edit_dialog__label__read_seconds_text">Seconds</string>
+    <string name="reading_session_add_edit_dialog__error__end_page_message_text">End page must be greater than Start Page</string>
+    <string name="reading_session_add_edit_dialog__error__start_page_message_text">Start Page must be less than End Page</string>
 
     <string-array name="reading_session_add_edit_dialog__spinner__hour">
         <item>00</item>

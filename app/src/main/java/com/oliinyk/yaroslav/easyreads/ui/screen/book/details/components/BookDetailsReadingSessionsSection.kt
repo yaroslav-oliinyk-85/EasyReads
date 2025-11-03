@@ -15,6 +15,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,7 +27,7 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
-import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
@@ -33,6 +37,18 @@ fun BookDetailsReadingSessionsSection(
     onSeeAll: () -> Unit,
     onEdit: (ReadingSession) -> Unit
 ) {
+    var editingReadingSession: ReadingSession? by remember { mutableStateOf(null) }
+    editingReadingSession?.let { readingSession ->
+        ReadingSessionAddEditDialog(
+            readingSession = readingSession,
+            onSave = { it
+                onEdit(it)
+                editingReadingSession = null
+            },
+            onDismissRequest = { editingReadingSession = null }
+        )
+    }
+
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
@@ -119,7 +135,7 @@ fun BookDetailsReadingSessionsSection(
                     AppIconButton(
                         imageVector = Icons.Default.Edit,
                         contentDescription = stringResource(R.string.menu_item__edit_text),
-                        onClick = { onEdit(session) }
+                        onClick = { editingReadingSession = session }
                     )
                 }
             }

@@ -88,6 +88,17 @@ class ReadingSessionRecordFragment : Fragment() {
                                         )
                                     }
                                 }
+                                ReadingSessionRecordEvent.OnPause -> {
+                                    viewModel.currentReadingSession?.let {
+                                        if (it.recordStatus == ReadingSessionRecordStatusType.STARTED) {
+                                            requireActivity().startService(
+                                                Intent(requireContext(), ReadTimeCounterService::class.java).apply {
+                                                    action = ReadTimeCounterService.Actions.PAUSE.toString()
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
                                 ReadingSessionRecordEvent.OnShowNotes -> {
                                     findNavController().navigate(
                                         ReadingSessionRecordFragmentDirections.showNotes(
@@ -98,19 +109,14 @@ class ReadingSessionRecordFragment : Fragment() {
                                 is ReadingSessionRecordEvent.OnAddNote -> {
                                     viewModel.addNote(event.note)
                                 }
-                                ReadingSessionRecordEvent.OnFinish -> {
+                                is ReadingSessionRecordEvent.OnFinish -> {
                                     requireActivity().startService(
                                         Intent(requireContext(), ReadTimeCounterService::class.java).apply {
-                                            action = ReadTimeCounterService.Actions.PAUSE.toString()
+                                            action = ReadTimeCounterService.Actions.STOP.toString()
                                         }
                                     )
-                                    viewModel.currentReadingSession?.let { readingSession ->
-                                        findNavController().navigate(
-                                            ReadingSessionRecordFragmentDirections.showReadingSessionAddEdit(
-                                                readingSession
-                                            )
-                                        )
-                                    }
+                                    viewModel.save(event.readingSession)
+                                    findNavController().popBackStack()
                                 }
                             }
                         }

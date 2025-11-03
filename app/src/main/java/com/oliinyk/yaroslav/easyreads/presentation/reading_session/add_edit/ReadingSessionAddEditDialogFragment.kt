@@ -59,7 +59,7 @@ class ReadingSessionAddEditDialogFragment : DialogFragment() {
                 }
 
                 if (readingSession.endPage <= readingSession.startPage) {
-                    editEndPage.error = getString(R.string.reading_session_add_edit_dialog__error__message_text)
+                    editEndPage.error = getString(R.string.reading_session_add_edit_dialog__error__end_page_message_text)
                     return@setOnClickListener
                 }
 

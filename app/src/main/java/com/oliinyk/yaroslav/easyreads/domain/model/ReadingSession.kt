@@ -25,6 +25,7 @@ data class ReadingSession(
     val readPages: Int = 0,
 
     val recordStatus: ReadingSessionRecordStatusType = ReadingSessionRecordStatusType.STARTED
+
 ) : BaseModel(), Parcelable {
     private val readTotalSeconds: Int
         get() =  (readTimeInMilliseconds / MILLISECONDS_IN_ONE_SECOND).toInt()
@@ -42,6 +43,15 @@ data class ReadingSession(
         get() = if (readTotalSeconds != 0) {
             (readPages.toDouble() / readTotalSeconds.toDouble() * SECONDS_IN_ONE_HOUR).roundToInt()
         } else { 0 }
+
+    companion object {
+        fun toReadTimeInMilliseconds(hours: Int, minutes: Int, seconds: Int): Long {
+            val readHours = hours * SECONDS_IN_ONE_HOUR
+            val readMinutes = minutes * SECONDS_IN_ONE_MINUTE
+            val readSeconds = seconds
+            return (readHours + readMinutes + readSeconds).toLong() * MILLISECONDS_IN_ONE_SECOND
+        }
+    }
 }
 
 fun ReadingSession.toEntity(): ReadingSessionEntity = ReadingSessionEntity(

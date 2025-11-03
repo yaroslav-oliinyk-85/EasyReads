@@ -108,13 +108,20 @@ class BookDetailsViewModel @Inject constructor(
 
     fun handleEvent(event: BookDetailsEvent) {
         when (event) {
+            is BookDetailsEvent.EditReadingSession -> {
+                if (event.readingSession.bookId == null) {
+                    addReadingSession(event.readingSession)
+                } else {
+                    updateReadingSession(event.readingSession)
+                }
+            }
             is BookDetailsEvent.AddNote -> {
                 addNote(event.note.copy(bookId = stateUi.value.book.id))
             }
             is BookDetailsEvent.EditNote -> {
                 updateNote(event.note)
             }
-            else -> { /* TODO: */  }
+            else -> { /* already handled in fragment */  }
         }
     }
 }
