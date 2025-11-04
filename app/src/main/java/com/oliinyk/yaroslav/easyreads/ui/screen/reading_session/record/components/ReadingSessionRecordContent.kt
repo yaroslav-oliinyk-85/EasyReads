@@ -75,52 +75,15 @@ fun ReadingSessionRecordContent(
 
         ReadingSessionRecordSection(
             readingSession = stateUi.readingSession ?: ReadingSession(),
-            onStartPause = { onEvent(ReadingSessionRecordEvent.OnStartPause) }
-        )
-
-        Row(Modifier.fillMaxWidth()) {
-            // --- See All Notes Button ---
-            AppTextButton(
-                onClick = { onEvent(ReadingSessionRecordEvent.OnShowNotes) },
-                modifier = Modifier
-                    .weight(.5f)
-            ) {
-                Text(
-                    text = stringResource(
-                        R.string.reading_session_record__button__show_notes_text,
-                        stateUi.noteCount
-                    ),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-
-            Spacer(Modifier.width(Dimens.spacerWidthSmall))
-
-            // --- Add Note Button ---
-            AppTextButton(
-                onClick = { addingNote = Note().copy(bookId = stateUi.book?.id) },
-                modifier = Modifier.weight(.5f)
-            ) {
-                Text(
-                    text = stringResource(R.string.reading_session_record__button__add_note_text),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        }
-
-        // --- Finish Button ---
-        AppTextButton(
-            onClick = {
+            notesCount = stateUi.notesCount,
+            onClickStartPause = { onEvent(ReadingSessionRecordEvent.OnStartPause) },
+            onClickShowNotes = { onEvent(ReadingSessionRecordEvent.OnShowNotes) },
+            onClickAddNote = { addingNote = Note().copy(bookId = stateUi.book?.id) },
+            onClickFinish = {
                 onEvent(ReadingSessionRecordEvent.OnPause)
                 editingReadingSession = stateUi.readingSession
             },
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = stringResource(R.string.reading_session_record__button__finish_recording_text),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+        )
     }
 }
 
@@ -129,7 +92,14 @@ fun ReadingSessionRecordContent(
 private fun ReadingSessionRecordContentPreview() {
     EasyReadsTheme {
         ReadingSessionRecordContent(
-            stateUi = ReadingSessionRecordUiState(),
+            stateUi = ReadingSessionRecordUiState(
+                book = Book(
+                    title = "Title",
+                    author = "Author"
+                ),
+                readingSession = ReadingSession(),
+                notesCount = 5
+            ),
             onEvent = {}
         )
     }

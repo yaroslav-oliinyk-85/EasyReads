@@ -31,7 +31,7 @@ fun MyLibraryShelveItem(
             style = MaterialTheme.typography.titleMedium,
             modifier = modifier
                 .weight(1.0f)
-                .padding(vertical = Dimens.MyLibraryScreen.shelveItemPaddingVertical)
+                .padding(vertical = Dimens.paddingVerticalMedium)
         )
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,

@@ -46,7 +46,7 @@ fun SortByButtonWithDropdownMenu(
                 shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
             )
             .border(
-                width = Dimens.AppComponents.appTextButtonBorderWith,
+                width = Dimens.buttonBorderWith,
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
             ),

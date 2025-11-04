@@ -22,11 +22,9 @@ fun MyLibraryContent(
         modifier = modifier
             .fillMaxSize()
             .padding(
-                horizontal = Dimens.MyLibraryScreen.columnPaddingHorizontal,
-                vertical = Dimens.MyLibraryScreen.columnPaddingVertical),
-        verticalArrangement = Arrangement.spacedBy(
-            Dimens.MyLibraryScreen.lazyColumnVerticalArrangementSpace
-        )
+                horizontal = Dimens.paddingHorizontalMedium,
+                vertical = Dimens.paddingVerticalSmall),
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
     ) {
         item {
             MyLibraryReadingGoalProgressSection(

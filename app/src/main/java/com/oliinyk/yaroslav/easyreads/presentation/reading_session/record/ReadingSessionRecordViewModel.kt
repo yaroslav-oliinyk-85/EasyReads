@@ -55,7 +55,7 @@ class ReadingSessionRecordViewModel @Inject constructor(
     private fun loadNoteCount(bookId: UUID) {
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->
-                _uiState.update { it.copy(noteCount = notes.size) }
+                _uiState.update { it.copy(notesCount = notes.size) }
             }
         }
     }
@@ -113,7 +113,7 @@ class ReadingSessionRecordViewModel @Inject constructor(
 data class ReadingSessionRecordUiState(
     val book: Book? = null,
     val readingSession: ReadingSession? = null,
-    val noteCount: Int = 0
+    val notesCount: Int = 0
 )
 
 sealed interface ReadingSessionRecordEvent {

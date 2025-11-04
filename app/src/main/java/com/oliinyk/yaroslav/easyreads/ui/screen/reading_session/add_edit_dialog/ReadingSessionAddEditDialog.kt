@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,10 +33,12 @@ import com.oliinyk.yaroslav.easyreads.domain.extension.takeFirstTwoDigits
 import com.oliinyk.yaroslav.easyreads.domain.extension.toBookPage
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
+import com.oliinyk.yaroslav.easyreads.ui.components.AppButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppEditField
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -225,7 +226,7 @@ fun ReadingSessionAddEditDialog(
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
 
                 // --- Buttons Save ---
-                Button(
+                AppButton(
                     onClick = {
                         if (uiState.endPage <= uiState.startPage) {
                             uiState = uiState.copy(
@@ -248,8 +249,7 @@ fun ReadingSessionAddEditDialog(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = stringResource(
@@ -281,9 +281,11 @@ fun ReadingSessionAddEditDialog(
 @Preview(showBackground = true)
 @Composable
 fun ReadingSessionAddEditDialogPreview() {
-    ReadingSessionAddEditDialog(
-        readingSession = ReadingSession(startPage = 25),
-        onSave = { },
-        onDismissRequest = { }
-    )
+    EasyReadsTheme {
+        ReadingSessionAddEditDialog(
+            readingSession = ReadingSession(startPage = 25),
+            onSave = { },
+            onDismissRequest = { }
+        )
+    }
 }

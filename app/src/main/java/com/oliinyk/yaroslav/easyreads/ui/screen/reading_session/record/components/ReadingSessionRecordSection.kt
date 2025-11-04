@@ -1,12 +1,18 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,14 +28,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
+import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordEvent
+import com.oliinyk.yaroslav.easyreads.ui.components.AppButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
+import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun ReadingSessionRecordSection(
     readingSession: ReadingSession,
-    onStartPause: () -> Unit,
+    notesCount: Int,
+    onClickStartPause: () -> Unit,
+    onClickShowNotes: () -> Unit,
+    onClickAddNote: () -> Unit,
+    onClickFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val isRecording = when(readingSession.recordStatus) {
@@ -53,7 +66,7 @@ fun ReadingSessionRecordSection(
                     readingSession.readMinutes,
                     readingSession.readSeconds
                 ),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -62,7 +75,7 @@ fun ReadingSessionRecordSection(
 
             // Big circular Start/Pause button
             IconButton(
-                onClick = onStartPause,
+                onClick = onClickStartPause,
                 modifier = Modifier
                     .size(Dimens.startReadingSessionButtonSize)
                     .background(
@@ -98,6 +111,53 @@ fun ReadingSessionRecordSection(
                     .fillMaxWidth()
                     .padding(vertical = Dimens.paddingVerticalSmall)
             )
+
+            AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
+
+            Row(
+                Modifier.fillMaxWidth()
+            ) {
+                // --- See All Notes Button ---
+                AppTextButton(
+                    onClick = onClickShowNotes,
+                    modifier = Modifier
+                        .weight(.5f)
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.reading_session_record__button__show_notes_text,
+                            notesCount
+                        ),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
+                Spacer(Modifier.width(Dimens.spacerWidthSmall))
+
+                // --- Add Note Button ---
+                AppTextButton(
+                    onClick = onClickAddNote,
+                    modifier = Modifier.weight(.5f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.reading_session_record__button__add_note_text),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+            // --- Finish Button ---
+            AppButton(
+                onClick = onClickFinish,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(R.string.reading_session_record__button__finish_recording_text),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }
@@ -108,7 +168,11 @@ private fun ReadingSessionRecordSectionPreview() {
     EasyReadsTheme {
         ReadingSessionRecordSection(
             readingSession = ReadingSession(),
-            onStartPause = { }
+            notesCount = 5,
+            onClickStartPause = { },
+            onClickShowNotes = { },
+            onClickAddNote = { },
+            onClickFinish = { }
         )
     }
 }

@@ -41,7 +41,7 @@ fun AppIconButton(
     IconButton(
         onClick = onClick,
         modifier = modifier.border(
-            width = Dimens.AppComponents.appTextButtonBorderWith,
+            width = Dimens.buttonBorderWith,
             color = MaterialTheme.colorScheme.primary,
             shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
         )

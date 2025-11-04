@@ -45,8 +45,8 @@ fun MyLibraryReadingGoalProgressSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    horizontal = Dimens.MyLibraryScreen.ReadingGoalCard.columnPaddingHorizontal,
-                    vertical = Dimens.MyLibraryScreen.ReadingGoalCard.columnPaddingVertical
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -82,7 +82,7 @@ fun MyLibraryReadingGoalProgressSection(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(Dimens.MyLibraryScreen.ReadingGoalCard.linearProgressIndicatorHeight),
+                    .height(Dimens.linearProgressIndicatorHeight),
                 color = MaterialTheme.colorScheme.primary,
                 trackColor = MaterialTheme.colorScheme.background
             )
@@ -90,7 +90,7 @@ fun MyLibraryReadingGoalProgressSection(
             if (isVisibleChangeGoalButton) {
                 AppTextButton(
                     modifier = Modifier.fillMaxWidth()
-                        .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical),
+                        .padding(vertical = Dimens.paddingVerticalSmall),
                     onClick = onChangeGoalClick
                 ) {
                     Text(text = stringResource(R.string.reading_goal__label__goal_change_text))

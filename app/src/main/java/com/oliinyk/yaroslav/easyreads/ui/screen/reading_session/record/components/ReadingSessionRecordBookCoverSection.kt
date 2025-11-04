@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -79,6 +80,8 @@ fun ReadingSessionRecordBookCoverSection(
                 text = book.title,
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediumFontSize),
                 textAlign = TextAlign.Center,
+                maxLines = Dimens.readingSessionRecordBookTitleMaxLines,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth(),
             )
 
@@ -91,6 +94,8 @@ fun ReadingSessionRecordBookCoverSection(
                 Text(
                     text = book.author,
                     style = MaterialTheme.typography.bodyLarge,
+                    maxLines = Dimens.readingSessionRecordBookAuthorMaxLines,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
                 )
                 // --- Pages ---
@@ -114,8 +119,8 @@ private fun ReadingSessionRecordBookCoverSectionPreview() {
     EasyReadsTheme {
         ReadingSessionRecordBookCoverSection(
             Book().copy(
-                title = "Book title",
-                author = "Author",
+                title = "Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title",
+                author = "Author Author Author Author Author",
                 pageCurrent = 50,
                 pageAmount = 250
             )

@@ -13,7 +13,7 @@ fun AppDivider(
     Divider(
         modifier = modifier,
         //CST
-        thickness = Dimens.AppComponents.appDividerThickness,
+        thickness = Dimens.appDividerThickness,
         color = MaterialTheme.colorScheme.background
     )
 }

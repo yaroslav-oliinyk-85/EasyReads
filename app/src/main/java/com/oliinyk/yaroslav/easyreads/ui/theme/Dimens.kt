@@ -38,6 +38,10 @@ object Dimens {
     val paddingAllSmall = 8.dp
     val paddingAllMedium = 16.dp
 
+    val buttonContentPaddingVertical = 12.dp
+    val buttonContentPaddingHorizontal = 12.dp
+    val buttonBorderWith = 1.dp
+
     val arrangementHorizontalSpaceTiny = 4.dp
     val arrangementHorizontalSpaceSmall = 8.dp
     val arrangementVerticalSpaceTiny = 4.dp
@@ -61,33 +65,13 @@ object Dimens {
     val startReadingSessionButtonSize = 96.dp
     val startReadingSessionIconSize = 64.dp
 
-    object AppComponents {
-        val appDividerThickness = 2.dp
+    val linearProgressIndicatorHeight = 5.dp
 
-        val appTextButtonPaddingVertical = 8.dp
-        val appTextButtonBorderWith = 1.dp
-    }
+    val appDividerThickness = 2.dp
 
-    object MyLibraryScreen {
-        val columnPaddingHorizontal = paddingHorizontalMedium
-        val columnPaddingVertical = paddingVerticalSmall
-        val lazyColumnVerticalArrangementSpace = 8.dp
-
-        object ReadingGoalCard {
-            val columnPaddingHorizontal = paddingHorizontalMedium
-            val columnPaddingVertical = paddingVerticalSmall
-
-            val linearProgressIndicatorHeight = 5.dp
-        }
-
-        object ShelvesCard {
-            val columnPaddingHorizontal = paddingHorizontalMedium
-            val columnPaddingVertical = paddingVerticalSmall
-        }
-
-        val shelveItemPaddingVertical = paddingVerticalMedium
-    }
-
-    // ----- sp -----
+    // ----- text -----
     val appTitleMediumFontSize = 18.sp
+
+    val readingSessionRecordBookTitleMaxLines = 3
+    val readingSessionRecordBookAuthorMaxLines = 1
 }

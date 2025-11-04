@@ -37,8 +37,8 @@ fun MyLibraryShelvesSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    horizontal = Dimens.MyLibraryScreen.ShelvesCard.columnPaddingHorizontal,
-                    vertical = Dimens.MyLibraryScreen.ShelvesCard.columnPaddingVertical)
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall)
             ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -76,7 +76,7 @@ fun MyLibraryShelvesSection(
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppTextButton(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(vertical = Dimens.AppComponents.appTextButtonPaddingVertical),
+                    .padding(vertical = Dimens.paddingVerticalSmall),
                 onClick = onSeeAllClick
             ) {
                 Text(

@@ -9,7 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,10 +27,12 @@ import androidx.core.text.isDigitsOnly
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.BOOK_PAGE_AMOUNT_MAX_LENGTH
+import com.oliinyk.yaroslav.easyreads.ui.components.AppButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppEditField
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun NoteAddEditDialog(
@@ -100,7 +101,7 @@ fun NoteAddEditDialog(
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
 
                 // --- save button ---
-                Button(
+                AppButton(
                     onClick = {
                         if (noteText.isBlank()) {
                             noteTextLabelError = errorMessageText
@@ -113,8 +114,7 @@ fun NoteAddEditDialog(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = stringResource(R.string.note_add_edit_dialog__button__save_text),
@@ -142,9 +142,11 @@ fun NoteAddEditDialog(
 @Preview(showBackground = true)
 @Composable
 fun NoteAddEditDialogPreview() {
-    NoteAddEditDialog(
-        note = Note(),
-        onSave = {},
-        onDismissRequest = {}
-    )
+    EasyReadsTheme {
+        NoteAddEditDialog(
+            note = Note(),
+            onSave = {},
+            onDismissRequest = {}
+        )
+    }
 }
