@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit
+package com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit_dialog
 
 import android.os.Parcelable
 import androidx.compose.foundation.layout.Arrangement

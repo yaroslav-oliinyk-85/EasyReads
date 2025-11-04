@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit
+package com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit_dialog
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

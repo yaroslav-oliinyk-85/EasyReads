@@ -27,7 +27,7 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit.ReadingSessionAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit_dialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable

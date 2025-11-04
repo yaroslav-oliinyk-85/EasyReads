@@ -15,7 +15,7 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.list.ReadingSessionListViewModel
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit.ReadingSessionAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit_dialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.components.ReadingSessionListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.components.ReadingSessionListTopAppBar
 

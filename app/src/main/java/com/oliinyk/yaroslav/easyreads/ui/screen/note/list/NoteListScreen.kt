@@ -12,7 +12,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.presentation.note.list.NoteListStateUi
 import com.oliinyk.yaroslav.easyreads.presentation.note.list.NoteListViewModel
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
-import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit.NoteAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit_dialog.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListTopAppBar
 

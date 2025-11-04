@@ -27,8 +27,8 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordEvent
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
-import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit.NoteAddEditDialog
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit.ReadingSessionAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit_dialog.NoteAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit_dialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
