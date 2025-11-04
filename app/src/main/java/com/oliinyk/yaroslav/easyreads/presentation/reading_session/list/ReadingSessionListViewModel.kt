@@ -20,22 +20,22 @@ class ReadingSessionListViewModel @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ViewModel() {
 
-    private val _stateUi = MutableStateFlow(ReadingSessionListUiState())
-    val stateUi
-        get() = _stateUi.asStateFlow()
+    private val _uiState = MutableStateFlow(ReadingSessionListUiState())
+    val uiState
+        get() = _uiState.asStateFlow()
 
     fun loadReadingSessionsByBookId(book: Book) {
-        _stateUi.update { it.copy(book = book) }
+        _uiState.update { it.copy(book = book) }
 
         viewModelScope.launch {
             readingSessionRepository.getAllByBookId(bookId = book.id).collect { readingSessions ->
-                _stateUi.update { it.copy(readingSessions = readingSessions) }
+                _uiState.update { it.copy(readingSessions = readingSessions) }
             }
         }
     }
 
-    fun addReadingSession(readingSession: ReadingSession) {
-        stateUi.value.book?.let { book ->
+    private fun addReadingSession(readingSession: ReadingSession) {
+        uiState.value.book?.let { book ->
             bookRepository.update(
                 book.copy(
                     pageCurrent = readingSession.endPage,
@@ -51,10 +51,10 @@ class ReadingSessionListViewModel @Inject constructor(
         }
     }
 
-    fun updateReadingSession(readingSession: ReadingSession) {
-        stateUi.value.book?.let { book ->
+    private fun updateReadingSession(readingSession: ReadingSession) {
+        uiState.value.book?.let { book ->
 
-            if (_stateUi.value.readingSessions[0].id == readingSession.id) {
+            if (_uiState.value.readingSessions[0].id == readingSession.id) {
                 bookRepository.update(
                     book.copy(pageCurrent = readingSession.endPage)
                 )
@@ -64,8 +64,16 @@ class ReadingSessionListViewModel @Inject constructor(
         }
     }
 
+    fun save(readingSession: ReadingSession) {
+        if (readingSession.bookId == null) {
+            addReadingSession(readingSession)
+        } else {
+            updateReadingSession(readingSession)
+        }
+    }
+
     fun remove(readingSession: ReadingSession) {
-        stateUi.value.book?.let { book ->
+        uiState.value.book?.let { book ->
 
             if (book.pageCurrent == readingSession.endPage) {
                 bookRepository.update(

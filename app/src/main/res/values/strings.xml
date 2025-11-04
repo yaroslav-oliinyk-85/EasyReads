@@ -94,7 +94,7 @@
 
     <!-- Note List -->
     <string name="note_list__label__no_notes_text">No Notes</string>
-    <string name="note_list__confirmation_dialog__title_note_remove_text">Remove Note</string>
+    <string name="note_list__confirmation_dialog__title_text">Remove Note</string>
     <string name="note_list__confirmation_dialog__message_note_remove_text">Note will be removed!</string>
     <!-- Note List Item -->
     <string name="note_list_item__label__page_text">"%1$d Page"</string>
@@ -239,7 +239,8 @@
 
     <!-- Reading Session List -->
     <string name="reading_session_list__label__list_empty_text">No Reading Sessions</string>
-    <string name="reading_session_list__dialog__confirmation_remove_message_text">Reading Session will be removed</string>
+    <string name="reading_session_list__confirmation_dialog__title_text">Remove Reading Session</string>
+    <string name="reading_session_list__confirmation_dialog__message_text">Date: %1$s\nRead pages: %2$d\nPages read from: %3$d to %4$d</string>
     <!-- Reading Session List Item -->
     <string name="reading_session_list_item__label__date_text">%s</string>
     <string name="reading_session_list_item__label__read_time_text">READ TIME\n%1$02d:%2$02d</string>

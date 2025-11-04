@@ -4,27 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.FragmentReadingSessionListBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
 import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ReadingSessionListFragment : Fragment() {
 
+    private val args: ReadingSessionListFragmentArgs by navArgs()
+    private val viewModel: ReadingSessionListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
+
+        viewModel.loadReadingSessionsByBookId(args.book)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                EasyReadsTheme {
+                    ReadingSessionListScreen(viewModel = viewModel)
+                }
+            }
+        }
+    }
+
+    /*
     private var _binding: FragmentReadingSessionListBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -141,4 +165,5 @@ class ReadingSessionListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    */
 }

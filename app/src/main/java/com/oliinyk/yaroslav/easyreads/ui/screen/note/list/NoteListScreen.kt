@@ -35,7 +35,7 @@ fun NoteListScreen(
         }
     ) { paddingValues ->
         NoteListContent(
-            stateUi = stateUi,
+            notes = stateUi.notes,
             onEdit = { note ->
                 viewModel.openEditDialog(note)
             },
@@ -58,7 +58,7 @@ fun NoteListScreen(
 
         removingNote?.let { note ->
             AppConfirmDialog(
-                title = stringResource(R.string.note_list__confirmation_dialog__title_note_remove_text),
+                title = stringResource(R.string.note_list__confirmation_dialog__title_text),
                 message = note.text,
                 onConfirm = {
                     viewModel.remove(note)
