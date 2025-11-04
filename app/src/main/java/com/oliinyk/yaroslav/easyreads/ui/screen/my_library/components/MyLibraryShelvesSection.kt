@@ -14,12 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun MyLibraryShelvesSection(
@@ -30,7 +32,6 @@ fun MyLibraryShelvesSection(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-//        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
     ) {
         Column(
@@ -88,5 +89,17 @@ fun MyLibraryShelvesSection(
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyLibraryShelvesSectionPreview() {
+    EasyReadsTheme {
+        MyLibraryShelvesSection(
+            stateUi = MyLibraryStateUi(),
+            onShelfClick = { },
+            onSeeAllClick = {}
+        )
     }
 }
