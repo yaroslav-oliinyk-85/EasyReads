@@ -13,7 +13,10 @@
     <!-- Toolbar -->
     <string name="note_list__toolbar__title_text">Notes (%1$d)</string>
     <string name="book_details__toolbar__title_test">Details</string>
-    <string name="book_list__toolbar__title_text">Books (%1$d)</string>
+    <string name="book_list__toolbar__title_all_text">All Books (%1$d)</string>
+    <string name="book_list__toolbar__title_finished_text">Finished Books (%1$d)</string>
+    <string name="book_list__toolbar__title_reading_text">Reading Books (%1$d)</string>
+    <string name="book_list__toolbar__title_want_to_read_text">Want To Read Books (%1$d)</string>
 
     <!-- Menu Items Text -->
     <string name="menu_item__book_list__image_size_large_text">Size Large</string>

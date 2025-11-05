@@ -20,13 +20,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.presentation.book.list.StateUiBookList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookListTopAppBar(
-    stateUi: StateUiBookList,
+    booksCount: Int,
+    bookShelveType: BookShelveType?,
+    holderSize: HolderSize,
     onAddBookClick: () -> Unit,
     onHolderSizeChange: (HolderSize) -> Unit
 ) {
@@ -34,10 +37,24 @@ fun BookListTopAppBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(
-                    R.string.book_list__toolbar__title_text,
-                    stateUi.books.size
-                )
+                text = when(bookShelveType) {
+                    BookShelveType.WANT_TO_READ -> stringResource(
+                        R.string.book_list__toolbar__title_want_to_read_text,
+                        booksCount
+                    )
+                    BookShelveType.READING -> stringResource(
+                        R.string.book_list__toolbar__title_reading_text,
+                        booksCount
+                    )
+                    BookShelveType.FINISHED -> stringResource(
+                        R.string.book_list__toolbar__title_finished_text,
+                        booksCount
+                    )
+                    else -> stringResource(
+                        R.string.book_list__toolbar__title_all_text,
+                        booksCount
+                    )
+                }
             )
         },
         actions = {
@@ -80,7 +97,7 @@ fun BookListTopAppBar(
                         onHolderSizeChange(HolderSize.LARGE)
                     },
                     trailingIcon = {
-                        if (stateUi.holderSize == HolderSize.LARGE) {
+                        if (holderSize == HolderSize.LARGE) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = stringResource(R.string.menu_item__book_list__image_size_large_text),
@@ -103,7 +120,7 @@ fun BookListTopAppBar(
                         onHolderSizeChange(HolderSize.DEFAULT)
                     },
                     trailingIcon = {
-                        if (stateUi.holderSize == HolderSize.DEFAULT) {
+                        if (holderSize == HolderSize.DEFAULT) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = stringResource(R.string.menu_item__book_list__image_size_default_text),
@@ -126,7 +143,7 @@ fun BookListTopAppBar(
                         onHolderSizeChange(HolderSize.SMALL)
                     },
                     trailingIcon = {
-                        if (stateUi.holderSize == HolderSize.SMALL) {
+                        if (holderSize == HolderSize.SMALL) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = stringResource(R.string.menu_item__book_list__image_size_small_text),
