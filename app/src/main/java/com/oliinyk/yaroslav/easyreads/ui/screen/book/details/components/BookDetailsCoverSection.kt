@@ -1,16 +1,22 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,23 +54,46 @@ fun BookDetailsCoverSection(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // --- Book Cover ---
+            var isBookCoverImageScaledState by rememberSaveable { mutableStateOf(false) }
+
+            val booCoverImageSize = if (!isBookCoverImageScaledState) {
+                Dimens.bookDetailsBookCoverImageSize
+            } else {
+                Dimens.bookDetailsBookCoverImageScaledSize
+            }
+
             val context = LocalContext.current
             val bookCoverImageFile: File? = if (book.coverImageFileName != null) {
                 File(context.filesDir, book.coverImageFileName)
             } else {
                 null
             }
-            AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data(bookCoverImageFile)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
+            Box(
                 modifier = Modifier
-                    .size(Dimens.bookDetailsBookCoverImageSize)
-                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
-                contentScale = ContentScale.Crop
-            )
+                    .size(booCoverImageSize)
+                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                    .background(MaterialTheme.colorScheme.background)
+                    .clickable(
+                        onClick = {
+                            isBookCoverImageScaledState = !isBookCoverImageScaledState
+                        }
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                bookCoverImageFile?.let { file ->
+                    AsyncImage(
+                        model = ImageRequest.Builder(context)
+                            .data(file)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = stringResource(R.string.book_cover_image__content_description__text),
+                        modifier = Modifier
+                            .size(booCoverImageSize)
+                            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
             // --- Title ---
             Text(
                 text = book.title,
