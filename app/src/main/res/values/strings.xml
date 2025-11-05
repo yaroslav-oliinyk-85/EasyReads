@@ -34,6 +34,11 @@
     <string name="book_list__button__sorted_by_added_date_text">Added Date</string>
     <string name="book_list__button__sorted_by_updated_date_text">Updated Date</string>
     <string name="book_list__button__sorted_order_content_description_text">Sort Order</string>
+    <!-- Book List Item -->
+    <string name="book_list_item__label__shelve_info_text">SHELVE\n%s</string>
+    <string name="book_list_item__label__shelve_want_to_read_text">WANT TO READ\n%s</string>
+    <string name="book_list_item__label__shelve_reading_text">READING\n%s</string>
+    <string name="book_list_item__label__shelve_finished_text">FINISHED\n%s</string>
 
     <!-- Book Details -->
     <string name="book_details__button__add_note_text">Add Note</string>

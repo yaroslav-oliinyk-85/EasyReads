@@ -33,6 +33,7 @@ object Dimens {
 
     val paddingEndTiny = 4.dp
     val paddingEndSmall = 8.dp
+    val paddingEndMedium = 16.dp
 
     val paddingAllTiny = 4.dp
     val paddingAllSmall = 8.dp
@@ -74,4 +75,6 @@ object Dimens {
 
     val readingSessionRecordBookTitleMaxLines = 3
     val readingSessionRecordBookAuthorMaxLines = 1
+
+    val bookListItemShelveTextMaxLines = 2
 }

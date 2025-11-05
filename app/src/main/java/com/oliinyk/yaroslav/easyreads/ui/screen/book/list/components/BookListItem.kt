@@ -1,5 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components
 
+import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.io.File
+import java.util.Date
 
 @Composable
 fun BookListItem(
@@ -133,20 +135,41 @@ fun BookListItem(
                 ) {
                     // Shelve
                     Text(
-                        modifier = Modifier.padding(end = Dimens.paddingEndTiny),
-                        text = stringResource(
-                            R.string.book_details__label__shelve_text,
-                            when (book.shelve) {
-                                BookShelveType.WANT_TO_READ -> stringResource(R.string.book_details__label__shelve_want_to_read_text)
-                                BookShelveType.READING -> stringResource(R.string.book_details__label__shelve_reading_text)
-                                BookShelveType.FINISHED -> stringResource(R.string.book_details__label__shelve_finished_text)
-                            }
-                        ),
+                        modifier = Modifier
+                            .padding(end = Dimens.paddingEndTiny)
+                            .weight(1f),
+                        text = when (book.shelve) {
+                            BookShelveType.FINISHED -> stringResource(
+                                R.string.book_list_item__label__shelve_finished_text,
+                                book.finishedDate?.let { finishedDate ->
+                                    DateFormat.format(
+                                        stringResource(R.string.date_and_time_format),
+                                        finishedDate
+                                    ).toString()
+                                } ?: ""
+                            )
+                            BookShelveType.READING -> stringResource(
+                                R.string.book_list_item__label__shelve_reading_text,
+                                DateFormat.format(
+                                    stringResource(R.string.date_and_time_format),
+                                    book.updatedDate
+                                ).toString()
+                            )
+                            BookShelveType.WANT_TO_READ -> stringResource(
+                                R.string.book_list_item__label__shelve_want_to_read_text,
+                                DateFormat.format(
+                                    stringResource(R.string.date_and_time_format),
+                                    book.addedDate
+                                ).toString()
+                            )
+                        },
+                        maxLines = Dimens.bookListItemShelveTextMaxLines,
+                        overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.bodyMedium
                     )
                     // Pages
                     Text(
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
                             .padding(end = Dimens.paddingEndSmall),
                         text = stringResource(
                             R.string.book_details__label__book_pages_text,
@@ -165,14 +188,47 @@ fun BookListItem(
 
 @Preview
 @Composable
-private fun BookListItemPreview() {
+private fun BookListItemFinishedPreview() {
+    BookListItem(
+        book = Book().copy(
+            title = "Title",
+            author = "Author",
+            pageCurrent = 1250,
+            pageAmount = 2500,
+            finishedDate = Date(),
+            shelve = BookShelveType.FINISHED
+        ),
+        onClickedBook = {},
+        holderSize = HolderSize.LARGE
+    )
+}
+@Preview
+@Composable
+private fun BookListItemReadingPreview() {
     BookListItem(
         book = Book().copy(
             title = "Title",
             author = "Author",
             pageCurrent = 50,
-            pageAmount = 250
+            pageAmount = 250,
+            shelve = BookShelveType.READING
         ),
-        onClickedBook = {}
+        onClickedBook = {},
+        holderSize = HolderSize.DEFAULT
+    )
+}
+@Preview
+@Composable
+private fun BookListItemWantToReadPreview() {
+    BookListItem(
+        book = Book().copy(
+            title = "Title",
+            author = "Author",
+            pageCurrent = 50,
+            pageAmount = 250,
+            shelve = BookShelveType.WANT_TO_READ
+        ),
+        onClickedBook = {},
+        holderSize = HolderSize.SMALL
     )
 }
