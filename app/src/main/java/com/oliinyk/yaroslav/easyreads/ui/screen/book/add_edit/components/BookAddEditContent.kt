@@ -80,7 +80,7 @@ fun BookAddEditContent(
                         imeAction = ImeAction.Next
                     ),
                     singleLine = false,
-                    onValueChange = { title -> onEvent(BookAddEditEvent.TitleChanged(title.trim())) }
+                    onValueChange = { title -> onEvent(BookAddEditEvent.TitleChanged(title)) }
                 )
 
                 // Author
@@ -92,7 +92,7 @@ fun BookAddEditContent(
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
-                    onValueChange = { author -> onEvent(BookAddEditEvent.AuthorChanged(author.trim())) }
+                    onValueChange = { author -> onEvent(BookAddEditEvent.AuthorChanged(author)) }
                 )
 
                 // Page Amount
@@ -125,7 +125,7 @@ fun BookAddEditContent(
                     onValueChange = { isbn ->
                         onEvent(
                             BookAddEditEvent.IsbnChanged(
-                                isbn.take(AppConstants.BOOK_ISBN_MAX_LENGTH).trim()
+                                isbn.trim().take(AppConstants.BOOK_ISBN_MAX_LENGTH)
                             )
                         )
                     }
@@ -145,7 +145,7 @@ fun BookAddEditContent(
                     onValueChange = { description ->
                         onEvent(
                             BookAddEditEvent.DescriptionChanged(
-                                description.trim()
+                                description
                             )
                         )
                     }
