@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditAppTopBar
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditBottomBar
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditContent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,8 +20,9 @@ fun BookAddEditScreen(
     modifier: Modifier = Modifier,
     viewModel: BookAddEditViewModel,
     onEvent: (BookAddEditEvent) -> Unit,
-    onCoverClick: () -> Unit,
-    onSaveClick: () -> Unit
+    onClickCoverImage: () -> Unit,
+    onClickSave: () -> Unit,
+    onClickCancel: () -> Unit
 ) {
     val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
 
@@ -28,16 +30,21 @@ fun BookAddEditScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             BookAddEditAppTopBar(
-                bookTitle = stateUi.book.title,
-                onSaveClick = onSaveClick
+                bookTitle = stateUi.book.title
             )
         },
         content = { paddingValues ->
             BookAddEditContent(
                 modifier = modifier.padding(paddingValues),
                 stateUi = stateUi,
-                onCoverClick = onCoverClick,
+                onCoverClick = onClickCoverImage,
                 onEvent = onEvent
+            )
+        },
+        bottomBar = {
+            BookAddEditBottomBar(
+                onClickSave = onClickSave,
+                onClickCancel = onClickCancel
             )
         }
     )

@@ -1,10 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -16,29 +12,17 @@ import com.oliinyk.yaroslav.easyreads.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookAddEditAppTopBar(
-    bookTitle: String,
-    onSaveClick: () -> Unit
+    bookTitle: String
 ) {
     TopAppBar(
         title = {
             Text(
                 text = if (bookTitle.isBlank()) {
-                    stringResource(R.string.book_edit__title__add_text)
+                    stringResource(R.string.book_add_edit__title__add_text)
                 } else {
-                    stringResource(R.string.book_edit__title__edit_text)
+                    stringResource(R.string.book_add_edit__title__edit_text)
                 }
             )
-        },
-        actions = {
-            IconButton(
-                onClick = { onSaveClick() }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Done,
-                    contentDescription = stringResource(R.string.menu_item__save_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
         },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,

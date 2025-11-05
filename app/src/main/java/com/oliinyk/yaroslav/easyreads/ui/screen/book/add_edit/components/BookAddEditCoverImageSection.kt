@@ -65,7 +65,7 @@ fun BookAddEditCoverImageSection(
             }
         }
         Text(
-            text = stringResource(R.string.book_edit__label__change_cover_image_text),
+            text = stringResource(R.string.book_add_edit__label__change_cover_image_text),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary

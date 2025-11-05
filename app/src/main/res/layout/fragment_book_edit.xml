@@ -64,7 +64,7 @@
                     android:padding="4dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textStyle="bold"
-                    android:text="@string/book_edit__label__change_cover_image_text" />
+                    android:text="@string/book_add_edit__label__change_cover_image_text" />
 
             </FrameLayout>
 
@@ -122,7 +122,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/title"
-                android:text="@string/book_edit__label__book_title_text" />
+                android:text="@string/book_add_edit__label__book_title_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/title"
@@ -138,7 +138,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
-                android:hint="@string/book_edit__hint__enter_book_title_text" />
+                android:hint="@string/book_add_edit__hint__enter_book_title_text" />
 
             <View
                 android:id="@+id/split_1"
@@ -158,7 +158,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/author"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/author"
-                android:text="@string/book_edit__label__book_author_text" />
+                android:text="@string/book_add_edit__label__book_author_text" />
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/author"
@@ -175,7 +175,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
-                android:hint="@string/book_edit__hint__enter_book_author_text" />
+                android:hint="@string/book_add_edit__hint__enter_book_author_text" />
 
             <View
                 android:id="@+id/split_2"
@@ -195,7 +195,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/page_amount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/page_amount"
-                android:text="@string/book_edit__label__book_pages_amount_text" />
+                android:text="@string/book_add_edit__label__book_pages_amount_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/page_amount"
@@ -212,7 +212,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:inputType="number"
                 android:maxLength="4"
-                android:hint="@string/book_edit__hint__book_pages_count_text" />
+                android:hint="@string/book_add_edit__hint__book_pages_count_text" />
 
             <View
                 android:id="@+id/split_3"
@@ -234,7 +234,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/page_current"
                 android:visibility="gone"
-                android:text="@string/book_edit__label__book_page_current_text" />
+                android:text="@string/book_add_edit__label__book_page_current_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/page_current"
@@ -252,7 +252,7 @@
                 app:layout_constraintStart_toEndOf="@+id/barrier_2"
                 app:layout_constraintTop_toBottomOf="@+id/page_amount"
                 android:visibility="gone"
-                android:hint="@string/book_edit__hint__book_page_current_text" />
+                android:hint="@string/book_add_edit__hint__book_page_current_text" />
 
             <View
                 android:id="@+id/split_4"
@@ -272,7 +272,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/isbn_input"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/isbn_input"
-                android:text="@string/book_edit__label__book_isbn_text" />
+                android:text="@string/book_add_edit__label__book_isbn_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/isbn_input"
@@ -289,7 +289,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrier_1"
                 app:layout_constraintTop_toBottomOf="@+id/page_current"
-                android:hint="@string/book_edit__hint__book_isbn_input_text" />
+                android:hint="@string/book_add_edit__hint__book_isbn_input_text" />
 
             <View
                 android:id="@+id/split_5"
@@ -309,7 +309,7 @@
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/isbn_input"
-                android:text="@string/book_edit__label__book_description_text" />
+                android:text="@string/book_add_edit__label__book_description_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/description_text"
@@ -327,7 +327,7 @@
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:minLines="10"
-                android:hint="@string/book_edit__hint__enter_book_description_text" />
+                android:hint="@string/book_add_edit__hint__enter_book_description_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

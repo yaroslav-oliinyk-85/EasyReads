@@ -67,11 +67,14 @@ class BookEditFragment : Fragment() {
                         modifier = Modifier.fillMaxSize(),
                         viewModel = viewModel,
                         onEvent = { event -> viewModel.onEvent(event) },
-                        onCoverClick = {
+                        onClickCoverImage = {
                             launchBookCoverImagePicker()
                         },
-                        onSaveClick = {
+                        onClickSave = {
                             viewModel.save(requireContext().applicationContext)
+                            findNavController().popBackStack()
+                        },
+                        onClickCancel = {
                             findNavController().popBackStack()
                         }
                     )

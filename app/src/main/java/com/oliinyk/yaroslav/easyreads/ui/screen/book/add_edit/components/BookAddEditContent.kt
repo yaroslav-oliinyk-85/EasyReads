@@ -40,7 +40,11 @@ fun BookAddEditContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(MaterialTheme.colorScheme.background)
-            .padding(Dimens.paddingAllMedium)
+            .padding(horizontal = Dimens.paddingHorizontalMedium)
+            .padding(
+                top = Dimens.paddingTopMedium,
+                bottom = Dimens.paddingEndSmall
+            )
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -72,10 +76,10 @@ fun BookAddEditContent(
 
                 // Title
                 BookEditFieldWithDropdownMenu(
-                    label = stringResource(R.string.book_edit__label__book_title_text),
+                    label = stringResource(R.string.book_add_edit__label__book_title_text),
                     value = stateUi.book.title,
                     suggestions = stateUi.suggestionTitles,
-                    hint = stringResource(R.string.book_edit__hint__enter_book_title_text),
+                    hint = stringResource(R.string.book_add_edit__hint__enter_book_title_text),
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
@@ -85,10 +89,10 @@ fun BookAddEditContent(
 
                 // Author
                 BookEditFieldWithDropdownMenu(
-                    label = stringResource(R.string.book_edit__label__book_author_text),
+                    label = stringResource(R.string.book_add_edit__label__book_author_text),
                     value = stateUi.book.author,
                     suggestions = stateUi.suggestionAuthors,
-                    hint = stringResource(R.string.book_edit__hint__enter_book_author_text),
+                    hint = stringResource(R.string.book_add_edit__hint__enter_book_author_text),
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     ),
@@ -97,9 +101,9 @@ fun BookAddEditContent(
 
                 // Page Amount
                 AppEditField(
-                    label = stringResource(R.string.book_edit__label__book_pages_amount_text),
+                    label = stringResource(R.string.book_add_edit__label__book_pages_amount_text),
                     value = if (stateUi.book.pageAmount != 0) stateUi.book.pageAmount.toString() else "",
-                    hint = stringResource(R.string.book_edit__hint__book_pages_count_text),
+                    hint = stringResource(R.string.book_add_edit__hint__book_pages_count_text),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Next
@@ -115,9 +119,9 @@ fun BookAddEditContent(
 
                 // ISBN
                 AppEditField(
-                    label = stringResource(R.string.book_edit__label__book_isbn_text),
+                    label = stringResource(R.string.book_add_edit__label__book_isbn_text),
                     value = stateUi.book.isbn,
-                    hint = stringResource(R.string.book_edit__hint__book_isbn_input_text),
+                    hint = stringResource(R.string.book_add_edit__hint__book_isbn_input_text),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Next
@@ -134,9 +138,9 @@ fun BookAddEditContent(
                 // Description
                 val descriptionMinLines = 5
                 AppEditField(
-                    label = stringResource(R.string.book_edit__label__book_description_text),
+                    label = stringResource(R.string.book_add_edit__label__book_description_text),
                     value = stateUi.book.description,
-                    hint = stringResource(R.string.book_edit__hint__enter_book_description_text),
+                    hint = stringResource(R.string.book_add_edit__hint__enter_book_description_text),
                     keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Done
                     ),
