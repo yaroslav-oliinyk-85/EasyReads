@@ -44,7 +44,7 @@
             app:destination="@id/bookEditFragment" />
         <argument
             android:name="bookShelveType"
-            app:argType="com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType"
+            app:argType="com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType"
             app:nullable="true" />
     </fragment>
 

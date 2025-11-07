@@ -27,7 +27,7 @@ fun BookListScreen(
         topBar = {
             BookListTopAppBar(
                 booksCount = stateUi.books.size,
-                bookShelveType = stateUi.bookShelveType,
+                bookShelvesType = stateUi.bookShelvesType,
                 holderSize = stateUi.holderSize,
                 onAddBookClick = onAddBookClick,
                 onHolderSizeChange = onHolderSizeChange

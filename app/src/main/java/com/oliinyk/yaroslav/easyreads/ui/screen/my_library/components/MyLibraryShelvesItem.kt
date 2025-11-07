@@ -18,7 +18,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
-fun MyLibraryShelveItem(
+fun MyLibraryShelvesItem(
     label: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -49,9 +49,9 @@ fun MyLibraryShelveItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun MyLibraryShelveItemPreview() {
+private fun MyLibraryShelvesItemPreview() {
     EasyReadsTheme {
-        MyLibraryShelveItem(
+        MyLibraryShelvesItem(
             label = "Finished",
             onClick = { }
         )

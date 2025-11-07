@@ -7,7 +7,7 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -80,7 +80,7 @@ class BookAddEditViewModel @Inject constructor(
             }
 
             is BookAddEditEvent.ShelveChanged -> updateStateUi {
-                it.copy(book = it.book.copy(shelve = event.value))
+                it.copy(book = it.book.copy(shelf = event.value))
             }
         }
     }
@@ -93,9 +93,9 @@ class BookAddEditViewModel @Inject constructor(
         } else {
             deleteBookCoverImage(contextApplication, _stateUi.value.pickedImageName)
         }
-        if (!saveBook.isFinished && saveBook.shelve == BookShelveType.FINISHED) {
+        if (!saveBook.isFinished && saveBook.shelf == BookShelvesType.FINISHED) {
             saveBook = saveBook.copy(isFinished = true, finishedDate = Date())
-        } else if (saveBook.isFinished && saveBook.shelve != BookShelveType.FINISHED) {
+        } else if (saveBook.isFinished && saveBook.shelf != BookShelvesType.FINISHED) {
             saveBook = saveBook.copy(isFinished = false, finishedDate = null)
         }
 
@@ -155,7 +155,7 @@ data class BookAddEditStateUi(
 )
 
 sealed interface BookAddEditEvent {
-    data class ShelveChanged(val value: BookShelveType) : BookAddEditEvent
+    data class ShelveChanged(val value: BookShelvesType) : BookAddEditEvent
     data class TitleChanged(val value: String) : BookAddEditEvent
     data class AuthorChanged(val value: String) : BookAddEditEvent
     data class PageAmountChanged(val value: String) : BookAddEditEvent

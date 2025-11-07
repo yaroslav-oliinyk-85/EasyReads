@@ -24,7 +24,7 @@ fun BookDetailsScreen(
     onEditBook: () -> Unit,
     onRemoveBook: () -> Unit
 ) {
-    val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var showBookDeletingConfirmDialog by remember { mutableStateOf(false) }
 
@@ -50,7 +50,7 @@ fun BookDetailsScreen(
         }
     ) { paddingValues ->
         BookDetailsContent(
-            stateUi = stateUi,
+            uiState = uiState,
             onEvent = onEvent,
             modifier = Modifier.padding(paddingValues)
         )

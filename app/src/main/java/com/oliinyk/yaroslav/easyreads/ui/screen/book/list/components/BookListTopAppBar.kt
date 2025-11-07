@@ -20,15 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
-import com.oliinyk.yaroslav.easyreads.presentation.book.list.StateUiBookList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookListTopAppBar(
     booksCount: Int,
-    bookShelveType: BookShelveType?,
+    bookShelvesType: BookShelvesType?,
     holderSize: HolderSize,
     onAddBookClick: () -> Unit,
     onHolderSizeChange: (HolderSize) -> Unit
@@ -37,16 +36,16 @@ fun BookListTopAppBar(
     TopAppBar(
         title = {
             Text(
-                text = when(bookShelveType) {
-                    BookShelveType.WANT_TO_READ -> stringResource(
+                text = when(bookShelvesType) {
+                    BookShelvesType.WANT_TO_READ -> stringResource(
                         R.string.book_list__toolbar__title_want_to_read_text,
                         booksCount
                     )
-                    BookShelveType.READING -> stringResource(
+                    BookShelvesType.READING -> stringResource(
                         R.string.book_list__toolbar__title_reading_text,
                         booksCount
                     )
-                    BookShelveType.FINISHED -> stringResource(
+                    BookShelvesType.FINISHED -> stringResource(
                         R.string.book_list__toolbar__title_finished_text,
                         booksCount
                     )

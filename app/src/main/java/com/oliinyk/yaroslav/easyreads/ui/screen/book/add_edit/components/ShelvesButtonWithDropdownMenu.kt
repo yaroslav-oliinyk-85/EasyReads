@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
 import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -33,15 +33,15 @@ fun ShelvesButtonWithDropdownMenu(
             onClick = { expanded = true }
         ) {
             Text(
-                text = when (stateUi.book.shelve) {
-                    BookShelveType.FINISHED ->
-                        stringResource(R.string.book_details__label__shelve_finished_text)
+                text = when (stateUi.book.shelf) {
+                    BookShelvesType.FINISHED ->
+                        stringResource(R.string.book_details__button__shelf_finished_text)
 
-                    BookShelveType.READING ->
-                        stringResource(R.string.book_details__label__shelve_reading_text)
+                    BookShelvesType.READING ->
+                        stringResource(R.string.book_details__button__shelf_reading_text)
 
-                    BookShelveType.WANT_TO_READ ->
-                        stringResource(R.string.book_details__label__shelve_want_to_read_text)
+                    BookShelvesType.WANT_TO_READ ->
+                        stringResource(R.string.book_details__button__shelf_want_to_read_text)
                 }
             )
         }
@@ -50,24 +50,24 @@ fun ShelvesButtonWithDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            BookShelveType.entries.forEach { shelve ->
+            BookShelvesType.entries.forEach { shelf ->
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = when(shelve) {
-                                BookShelveType.FINISHED ->
-                                    stringResource(R.string.book_details__label__shelve_finished_text)
-                                BookShelveType.READING ->
-                                    stringResource(R.string.book_details__label__shelve_reading_text)
-                                BookShelveType.WANT_TO_READ ->
-                                    stringResource(R.string.book_details__label__shelve_want_to_read_text)
+                            text = when(shelf) {
+                                BookShelvesType.FINISHED ->
+                                    stringResource(R.string.book_details__button__shelf_finished_text)
+                                BookShelvesType.READING ->
+                                    stringResource(R.string.book_details__button__shelf_reading_text)
+                                BookShelvesType.WANT_TO_READ ->
+                                    stringResource(R.string.book_details__button__shelf_want_to_read_text)
                             },
                             color = MaterialTheme.colorScheme.primary
                         )
                     },
                     onClick = {
                         expanded = false
-                        onEvent(BookAddEditEvent.ShelveChanged(shelve))
+                        onEvent(BookAddEditEvent.ShelveChanged(shelf))
                     }
                 )
             }

@@ -62,7 +62,7 @@
         app:layout_constraintStart_toEndOf="@+id/cover_image"
         app:layout_constraintBottom_toBottomOf="@+id/progress"
         app:layout_constraintTop_toTopOf="@+id/progress"
-        android:text="@string/book_details__label__shelve_text"/>
+        android:text="@string/book_details__label__shelf_text"/>
 
     <TextView
         android:id="@+id/pages"

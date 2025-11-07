@@ -58,106 +58,128 @@ fun BookDetailsNotesSection(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(Dimens.paddingAllSmall)
         ) {
             if (notes.isEmpty()) {
-                // --- no notes text ---
                 Text(
                     text = stringResource(R.string.book_details__label__no_notes_text),
                     style = MaterialTheme.typography.bodyMedium
                 )
             } else {
-                val lastNote = notes.first()
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Row {
-                            // --- note text ---
-                            Text(
-                                text = lastNote.text,
-                                style = MaterialTheme.typography.bodyMedium,
-                                maxLines = 5,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                        Spacer(Modifier.height(Dimens.spacerHeightSmall))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            // --- note added date text ---
-                            Text(
-                                text = DateFormat.format(
-                                    stringResource(R.string.date_and_time_format),
-                                    lastNote.addedDate
-                                ).toString(),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                            Spacer(Modifier.weight(1f))
-                            // --- note page text ---
-                            lastNote.page?.let { page ->
-                                Text(
-                                    text = stringResource(
-                                        R.string.note_list_item__label__page_text,
-                                        page
-                                    ),
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
-                        }
+                ShowLatestNoteInfoRow(
+                    latestNote = notes.first(),
+                    onClickEditNote = { latestNote ->
+                        editingNote = latestNote
                     }
-                    Spacer(Modifier.width(Dimens.spacerWidthSmall))
-                    // --- edit note button ---
-                    AppIconButton(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(R.string.menu_item__edit_text),
-                        onClick = { editingNote = lastNote }
-                    )
-                }
+                )
             }
-
-            // ---------- Divider ----------
 
             AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
 
-            // ---------- Footer buttons ----------
+            BottomActionButtonsRow(
+                notesCount = notes.size,
+                onClickSeeAllNotes = onSeeAllNotes,
+                onClickAddNote = { editingNote = it }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ShowLatestNoteInfoRow(
+    latestNote: Note,
+    onClickEditNote: (Note) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
+            Row {
+                // --- note text ---
+                Text(
+                    text = latestNote.text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 5,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.arrangementHorizontalSpaceSmall),
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // --- see all notes button ---
-                AppTextButton(
-                    onClick = onSeeAllNotes,
-                    modifier = Modifier.weight(.5f)
-                ) {
+                // --- note added date text ---
+                Text(
+                    text = DateFormat.format(
+                        stringResource(R.string.date_and_time_format),
+                        latestNote.addedDate
+                    ).toString(),
+                    style = MaterialTheme.typography.bodySmall
+                )
+                Spacer(Modifier.weight(1f))
+                // --- note page text ---
+                latestNote.page?.let { page ->
                     Text(
                         text = stringResource(
-                            R.string.book_details__button__see_all_notes_text,
-                            notes.size
+                            R.string.note_list_item__label__page_text,
+                            page
                         ),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-                // --- add note button ---
-                AppTextButton(
-                    onClick = {
-                        editingNote = Note()
-                    },
-                    modifier = Modifier.weight(.5f)
-                ) {
-                    Text(
-                        text = stringResource(R.string.book_details__button__add_note_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodySmall
                     )
                 }
             }
+        }
+        Spacer(Modifier.width(Dimens.spacerWidthSmall))
+        // --- edit note icon button ---
+        AppIconButton(
+            imageVector = Icons.Default.Edit,
+            contentDescription = stringResource(R.string.menu_item__edit_text),
+            onClick = { onClickEditNote(latestNote) }
+        )
+    }
+}
+
+@Composable
+private fun BottomActionButtonsRow(
+    notesCount: Int,
+    onClickSeeAllNotes: () -> Unit,
+    onClickAddNote: (Note) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(Dimens.arrangementHorizontalSpaceSmall),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // --- see all notes button ---
+        AppTextButton(
+            onClick = onClickSeeAllNotes,
+            modifier = Modifier.weight(.5f)
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.book_details__button__see_all_notes_text,
+                    notesCount
+                ),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+        // --- add note button ---
+        AppTextButton(
+            onClick = {
+                onClickAddNote(Note())
+            },
+            modifier = Modifier.weight(.5f)
+        ) {
+            Text(
+                text = stringResource(R.string.book_details__button__add_note_text),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
@@ -166,7 +188,12 @@ fun BookDetailsNotesSection(
 @Composable
 private fun BookDetailsNotesSectionPreview() {
     BookDetailsNotesSection(
-        notes = listOf(Note()),
+        notes = listOf(
+            Note(
+                text = "Note Text",
+                page = 5
+            )
+        ),
         onSeeAllNotes = {},
         onAddNote = {},
         onEditNote = {}

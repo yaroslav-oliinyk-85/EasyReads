@@ -3,7 +3,7 @@ package com.oliinyk.yaroslav.easyreads.presentation.my_library
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType.*
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType.*
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingGoal
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingGoalRepository
@@ -46,9 +46,9 @@ class MyLibraryViewModel @Inject constructor(
                 }
                 _stateUi.update {
                     it.copy(
-                        finishedCount = books.filter { it.shelve == FINISHED }.count(),
-                        readingCount = books.filter { it.shelve == READING }.count(),
-                        wantToReadCount = books.filter { it.shelve == WANT_TO_READ }.count(),
+                        finishedCount = books.filter { it.shelf == FINISHED }.count(),
+                        readingCount = books.filter { it.shelf == READING }.count(),
+                        wantToReadCount = books.filter { it.shelf == WANT_TO_READ }.count(),
                         allCount = books.size,
                         currentYearFinishedBooksCount = currentYearFinishedBooks.size
                     )

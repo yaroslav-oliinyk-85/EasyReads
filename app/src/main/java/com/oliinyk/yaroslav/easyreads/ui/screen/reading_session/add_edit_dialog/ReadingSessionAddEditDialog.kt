@@ -253,7 +253,7 @@ fun ReadingSessionAddEditDialog(
                 ) {
                     Text(
                         text = stringResource(
-                            R.string.reading_session_add_edit_dialog__button__save_text
+                            R.string.dialog__button__save_text
                         ),
                         style = MaterialTheme.typography.bodyLarge
                     )
@@ -268,7 +268,7 @@ fun ReadingSessionAddEditDialog(
                 ) {
                     Text(
                         text = stringResource(
-                            R.string.reading_session_add_edit_dialog__button__cancel_text
+                            R.string.dialog__button__cancel_text
                         ),
                         style = MaterialTheme.typography.bodyLarge
                     )

@@ -4,7 +4,7 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oliinyk.yaroslav.easyreads.data.local.dao.BookDao
 import com.oliinyk.yaroslav.easyreads.data.local.entety.toModel
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSorting
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
 import com.oliinyk.yaroslav.easyreads.domain.model.toEntity
@@ -38,11 +38,11 @@ class BookRepositoryImpl @Inject constructor(
     }
 
     override fun getByShelveSorted(
-        bookShelveType: BookShelveType,
+        bookShelvesType: BookShelvesType,
         bookSorting: BookSorting
     ): Flow<List<Book>> {
         val sortingOrder = getSortingOrder(bookSorting)
-        val query = "SELECT * FROM books WHERE shelve='$bookShelveType' ORDER BY $sortingOrder"
+        val query = "SELECT * FROM books WHERE shelve='$bookShelvesType' ORDER BY $sortingOrder"
         return bookDao.getAllSortedBy(SimpleSQLiteQuery(query)).map { entities ->
             entities.map { it.toModel() }
         }

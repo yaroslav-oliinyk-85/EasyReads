@@ -3,7 +3,7 @@ package com.oliinyk.yaroslav.easyreads.presentation.book.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSorting
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
@@ -31,8 +31,8 @@ class BookListViewModel @Inject constructor(
     val bookSorting: BookSorting
         get() = stateUi.value.bookSorting
 
-    val bookShelveType: BookShelveType?
-        get() = stateUi.value.bookShelveType
+    val bookShelvesType: BookShelvesType?
+        get() = stateUi.value.bookShelvesType
 
     private var jobFetchBooks: Job? = null
 
@@ -75,16 +75,16 @@ class BookListViewModel @Inject constructor(
         }
     }
 
-    fun updateBookShelveType(updatedBookShelveType: BookShelveType) {
-        _stateUi.update { it.copy(bookShelveType = updatedBookShelveType) }
+    fun updateBookShelveType(updatedBookShelvesType: BookShelvesType) {
+        _stateUi.update { it.copy(bookShelvesType = updatedBookShelvesType) }
         loadBooks()
     }
 
     private fun loadBooks() {
         jobFetchBooks?.cancel()
         jobFetchBooks = viewModelScope.launch {
-            if (bookShelveType != null) {
-                bookRepository.getByShelveSorted(bookShelveType!!, bookSorting).collect { books ->
+            if (bookShelvesType != null) {
+                bookRepository.getByShelveSorted(bookShelvesType!!, bookSorting).collect { books ->
                     _stateUi.update { it.copy(books = books) }
                 }
             }
@@ -101,5 +101,5 @@ data class StateUiBookList(
     val books: List<Book> = emptyList(),
     val holderSize: HolderSize = HolderSize.DEFAULT,
     val bookSorting: BookSorting = BookSorting(),
-    val bookShelveType: BookShelveType? = null
+    val bookShelvesType: BookShelvesType? = null
 )

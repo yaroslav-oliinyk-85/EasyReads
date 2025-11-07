@@ -30,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
@@ -53,25 +53,29 @@ fun BookListItem(
 
     var titleMaxLines: Int
     var authorMaxLines: Int
+    var dateFormatStringResource: Int
 
     when(holderSize) {
-        HolderSize.SMALL -> {
-            coverImageWidth = 74.dp
-            bookListItemHeight = 111.dp
-            titleMaxLines = 1
-            authorMaxLines = 1
-        }
         HolderSize.LARGE -> {
             coverImageWidth = 132.dp
             bookListItemHeight = 198.dp
             titleMaxLines = 3
             authorMaxLines = 2
+            dateFormatStringResource = R.string.date_format
         }
         HolderSize.DEFAULT -> {
             coverImageWidth = 92.dp
             bookListItemHeight = 138.dp
             titleMaxLines = 2
             authorMaxLines = 1
+            dateFormatStringResource = R.string.date_and_time_format
+        }
+        HolderSize.SMALL -> {
+            coverImageWidth = 74.dp
+            bookListItemHeight = 111.dp
+            titleMaxLines = 1
+            authorMaxLines = 1
+            dateFormatStringResource = R.string.date_and_time_format
         }
     }
 
@@ -133,32 +137,32 @@ fun BookListItem(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Shelve
+                    // Shelves
                     Text(
                         modifier = Modifier
                             .padding(end = Dimens.paddingEndTiny)
                             .weight(1f),
-                        text = when (book.shelve) {
-                            BookShelveType.FINISHED -> stringResource(
-                                R.string.book_list_item__label__shelve_finished_text,
+                        text = when (book.shelf) {
+                            BookShelvesType.FINISHED -> stringResource(
+                                R.string.book_list_item__label__shelf_finished_text,
                                 book.finishedDate?.let { finishedDate ->
                                     DateFormat.format(
-                                        stringResource(R.string.date_and_time_format),
+                                        stringResource(dateFormatStringResource),
                                         finishedDate
                                     ).toString()
                                 } ?: ""
                             )
-                            BookShelveType.READING -> stringResource(
-                                R.string.book_list_item__label__shelve_reading_text,
+                            BookShelvesType.READING -> stringResource(
+                                R.string.book_list_item__label__shelf_reading_text,
                                 DateFormat.format(
-                                    stringResource(R.string.date_and_time_format),
+                                    stringResource(dateFormatStringResource),
                                     book.updatedDate
                                 ).toString()
                             )
-                            BookShelveType.WANT_TO_READ -> stringResource(
-                                R.string.book_list_item__label__shelve_want_to_read_text,
+                            BookShelvesType.WANT_TO_READ -> stringResource(
+                                R.string.book_list_item__label__shelf_want_to_read_text,
                                 DateFormat.format(
-                                    stringResource(R.string.date_and_time_format),
+                                    stringResource(dateFormatStringResource),
                                     book.addedDate
                                 ).toString()
                             )
@@ -196,7 +200,7 @@ private fun BookListItemFinishedPreview() {
             pageCurrent = 1250,
             pageAmount = 2500,
             finishedDate = Date(),
-            shelve = BookShelveType.FINISHED
+            shelf = BookShelvesType.FINISHED
         ),
         onClickedBook = {},
         holderSize = HolderSize.LARGE
@@ -211,7 +215,7 @@ private fun BookListItemReadingPreview() {
             author = "Author",
             pageCurrent = 50,
             pageAmount = 250,
-            shelve = BookShelveType.READING
+            shelf = BookShelvesType.READING
         ),
         onClickedBook = {},
         holderSize = HolderSize.DEFAULT
@@ -226,7 +230,7 @@ private fun BookListItemWantToReadPreview() {
             author = "Author",
             pageCurrent = 50,
             pageAmount = 250,
-            shelve = BookShelveType.WANT_TO_READ
+            shelf = BookShelvesType.WANT_TO_READ
         ),
         onClickedBook = {},
         holderSize = HolderSize.SMALL

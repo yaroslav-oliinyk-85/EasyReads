@@ -29,6 +29,15 @@
     <string name="menu_item__remove_text">Remove</string>
     <string name="menu_item__more_text">More</string>
 
+    <!-- Dialog Buttons Text -->
+    <string name="dialog__button__ok_text">OK</string>
+    <string name="dialog__button__save_text">Save</string>
+    <string name="dialog__button__cancel_text">Cancel</string>
+
+    <!-- Confirmation Dialog -->
+    <string name="confirmation_dialog__button__ok_text">Ok</string>
+    <string name="confirmation_dialog__button__cancel_text">Cancel</string>
+
     <!-- Book List -->
     <string name="book_list__button__sorted_by_text">Sorted by: %1$s</string>
     <string name="book_list__dropdown_menu_item__sort_by_text">Sort by: %1$s</string>
@@ -38,10 +47,10 @@
     <string name="book_list__button__sorted_by_updated_date_text">Updated Date</string>
     <string name="book_list__button__sorted_order_content_description_text">Sort Order</string>
     <!-- Book List Item -->
-    <string name="book_list_item__label__shelve_info_text">SHELVE\n%s</string>
-    <string name="book_list_item__label__shelve_want_to_read_text">WANT TO READ\n%s</string>
-    <string name="book_list_item__label__shelve_reading_text">READING\n%s</string>
-    <string name="book_list_item__label__shelve_finished_text">FINISHED\n%s</string>
+    <string name="book_list_item__label__shelf_info_text">SHELF\n%s</string>
+    <string name="book_list_item__label__shelf_want_to_read_text">WANT TO READ\n%s</string>
+    <string name="book_list_item__label__shelf_reading_text">READING\n%s</string>
+    <string name="book_list_item__label__shelf_finished_text">FINISHED\n%s</string>
 
     <!-- Book Details -->
     <string name="book_details__button__add_note_text">Add Note</string>
@@ -56,17 +65,22 @@
     <string name="book_details__tools__book_title_text">The Final Empire</string>
     <string name="book_details__label__book_pages_text">PAGES\n%1$d/%2$d</string>
     <string name="book_details__tools__book_pages_text">PAGES\n153/647</string>
-    <string name="book_details__label__book_read_time_text">READ TIME\n%1$02d:%2$02d</string>
+    <string name="book_details__label__book_total_read_time_text">TOTAL READ TIME\n%1$02d:%2$02d</string>
     <string name="book_details__tools__book_read_time_text">READ TIME\n01:35</string>
     <string name="book_details__label__book_read_average_pages_hour_text">Av. PAGES/HOUR\n%d</string>
     <string name="book_details__tools__book_read_average_pages_hour_text">Av. PAGES/HOUR\n18</string>
     <string name="book_details__label__book_read_pages_hour_text">PAGES/HOUR\n%d</string>
     <string name="book_details__tools__progress_percentage_text">100%</string>
     <string name="book_details__tools__see_all_notes_text">See All Notes (0)</string>
-    <string name="book_details__label__shelve_text">SHELVE\n%s</string>
-    <string name="book_details__label__shelve_want_to_read_text">Want To Read</string>
-    <string name="book_details__label__shelve_reading_text">Reading</string>
-    <string name="book_details__label__shelve_finished_text">Finished</string>
+    <string name="book_details__label__shelf_text">SHELF\n%s</string>
+    <string name="book_details__button__shelf_want_to_read_text">Want To Read</string>
+    <string name="book_details__button__shelf_reading_text">Reading</string>
+    <string name="book_details__button__shelf_finished_text">Finished</string>
+
+    <string name="book_details__label__shelf_want_to_read_text">ADDED DATE\n%s</string>
+    <string name="book_details__label__shelf_reading_text">LAST READ DATE\n%s</string>
+    <string name="book_details__label__shelf_finished_text">FINISHED DATE\n%s</string>
+
     <string name="book_details__label__no_reading_sessions_text">No Reading Sessions</string>
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
     <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions (%1$d)</string>
@@ -116,13 +130,7 @@
     <string name="note_add_edit_dialog__label__note_page_text">Note Page</string>
     <string name="note_add_edit_dialog__hint__enter_note_text">Enter note text</string>
     <string name="note_add_edit_dialog__hint__enter_note_page_text">Enter page</string>
-    <string name="note_add_edit_dialog__button__save_text">Save</string>
-    <string name="note_add_edit_dialog__button__cancel_text">Cancel</string>
     <string name="note_add_edit_dialog__error__message_text">Note text must not be empty!</string>
-
-    <!-- Confirmation Dialog -->
-    <string name="confirmation_dialog__button__ok_text">Ok</string>
-    <string name="confirmation_dialog__button__cancel_text">Cancel</string>
 
     <!-- Messages -->
     <string name="msg_info__image_saved">Image saved</string>
@@ -146,8 +154,6 @@
     <!-- Reading Session Add Edit Dialog -->
     <string name="reading_session_add_edit_dialog__hint__enter_start_page_text">Enter start page</string>
     <string name="reading_session_add_edit_dialog__hint__enter_end_page_text">Enter end page</string>
-    <string name="reading_session_add_edit_dialog__button__save_text">Save</string>
-    <string name="reading_session_add_edit_dialog__button__cancel_text">Cancel</string>
     <string name="reading_session_add_edit_dialog__tools__start_page_text">0</string>
     <string name="reading_session_add_edit_dialog__label__start_page_text">Start Page</string>
     <string name="reading_session_add_edit_dialog__label__end_page_text">End Page</string>
@@ -266,10 +272,10 @@
 
     <!-- My Library -->
     <string name="my_library__label__shelves_title_text">Shelves</string>
-    <string name="my_library__label__shelve_finished_text">Finished (%d)</string>
-    <string name="my_library__label__shelve_reading_text">Reading (%d)</string>
-    <string name="my_library__label__shelve_want_to_read_text">Want To Read (%d)</string>
-    <string name="my_library__label__shelve_see_all_books">See All Books (%d)</string>
+    <string name="my_library__label__shelf_finished_text">Finished (%d)</string>
+    <string name="my_library__label__shelf_reading_text">Reading (%d)</string>
+    <string name="my_library__label__shelf_want_to_read_text">Want To Read (%d)</string>
+    <string name="my_library__label__shelf_see_all_books">See All Books (%d)</string>
 
     <string name="my_library__toolbar__title_text">@string/app_name</string>
 

@@ -1,12 +1,19 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
+import android.text.format.DateFormat
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -29,14 +36,22 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
+import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.io.File
+import java.util.Date
 
 @Composable
 fun BookDetailsCoverSection(
     book: Book,
+    progressPercentage: Int,
+    uiState: BookDetailsUiState,
+    onClickShelf: (BookShelvesType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -53,90 +68,343 @@ fun BookDetailsCoverSection(
                 .padding(horizontal = Dimens.paddingHorizontalSmall),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // --- Book Cover ---
-            var isBookCoverImageScaledState by rememberSaveable { mutableStateOf(false) }
+            BookCoverImage(book = book)
 
-            val booCoverImageSize = if (!isBookCoverImageScaledState) {
-                Dimens.bookDetailsBookCoverImageSize
-            } else {
-                Dimens.bookDetailsBookCoverImageScaledSize
-            }
+            TitleText(title = book.title)
 
-            val context = LocalContext.current
-            val bookCoverImageFile: File? = if (book.coverImageFileName != null) {
-                File(context.filesDir, book.coverImageFileName)
-            } else {
-                null
-            }
-            Box(
+            AuthorText(author = book.author)
+
+            AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
+
+            ReadingStatisticInfoRow(uiState = uiState)
+
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+            DateAndProgressRow(
+                book = book,
+                progressPercentage = progressPercentage
+            )
+
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+            ShelfSelectionButtons(
+                book = book,
+                onClickShelf = onClickShelf
+            )
+        }
+    }
+}
+
+@Composable
+private fun BookCoverImage(
+    book: Book,
+    modifier: Modifier = Modifier
+) {
+    // --- Book Cover ---
+    var isBookCoverImageScaledState by rememberSaveable { mutableStateOf(false) }
+
+    val booCoverImageSize = if (!isBookCoverImageScaledState) {
+        Dimens.bookDetailsBookCoverImageSize
+    } else {
+        Dimens.bookDetailsBookCoverImageScaledSize
+    }
+
+    val context = LocalContext.current
+    val bookCoverImageFile: File? = if (book.coverImageFileName != null) {
+        File(context.filesDir, book.coverImageFileName)
+    } else {
+        null
+    }
+    Box(
+        modifier = modifier
+            .size(booCoverImageSize)
+            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+            .background(MaterialTheme.colorScheme.background)
+            .clickable(
+                onClick = {
+                    isBookCoverImageScaledState = !isBookCoverImageScaledState
+                }
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        bookCoverImageFile?.let { file ->
+            AsyncImage(
+                model = ImageRequest.Builder(context)
+                    .data(file)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
                 modifier = Modifier
                     .size(booCoverImageSize)
-                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-                    .background(MaterialTheme.colorScheme.background)
-                    .clickable(
-                        onClick = {
-                            isBookCoverImageScaledState = !isBookCoverImageScaledState
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                bookCoverImageFile?.let { file ->
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(file)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                        modifier = Modifier
-                            .size(booCoverImageSize)
-                            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
-                        contentScale = ContentScale.Crop
-                    )
+                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
+                contentScale = ContentScale.Crop
+            )
+        }
+    }
+}
+
+@Composable
+private fun TitleText(
+    title: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediumFontSize),
+        textAlign = TextAlign.Center,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                top = Dimens.paddingTopSmall,
+                bottom = Dimens.paddingTopTiny
+            )
+    )
+}
+
+@Composable
+private fun AuthorText(
+    author: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = author,
+        style = MaterialTheme.typography.bodyLarge,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = modifier
+            .fillMaxWidth()
+    )
+}
+
+@Composable
+private fun ReadingStatisticInfoRow(
+    uiState: BookDetailsUiState,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // --- Total Read Time ---
+        Text(
+            modifier = Modifier.weight(1f),
+            text = stringResource(
+                R.string.book_details__label__book_total_read_time_text,
+                uiState.readHours,
+                uiState.readMinutes
+            ),
+            style = MaterialTheme.typography.bodyMedium
+        )
+        // --- Average Read Time Per Hour ---
+        Text(
+            text = stringResource(
+                R.string.book_details__label__book_read_average_pages_hour_text,
+                uiState.readPagesHour
+            ),
+            textAlign = TextAlign.End,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.weight(1f)
+                .padding(
+                    end = Dimens.bookListItemPercentageSize + Dimens.spacerWidthSmall
+                )
+        )
+    }
+}
+
+@Composable
+private fun DateAndProgressRow(
+    book: Book,
+    progressPercentage: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // --- Shelf ---
+        Text(
+            modifier = Modifier.weight(1f),
+            text = when (book.shelf) {
+                BookShelvesType.FINISHED -> stringResource(
+                    R.string.book_details__label__shelf_finished_text,
+                    book.finishedDate?.let { finishedDate ->
+                        DateFormat.format(
+                            stringResource(R.string.date_and_time_format),
+                            finishedDate
+                        ).toString()
+                    } ?: ""
+                )
+                BookShelvesType.READING -> stringResource(
+                    R.string.book_details__label__shelf_reading_text,
+                    DateFormat.format(
+                        stringResource(R.string.date_and_time_format),
+                        book.updatedDate
+                    ).toString()
+                )
+                BookShelvesType.WANT_TO_READ -> stringResource(
+                    R.string.book_details__label__shelf_want_to_read_text,
+                    DateFormat.format(
+                        stringResource(R.string.date_and_time_format),
+                        book.addedDate
+                    ).toString()
+                )
+            },
+            style = MaterialTheme.typography.bodyMedium,
+        )
+
+        // --- Progress Indicator ---
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // --- Pages Text ---
+            Text(
+                text = stringResource(
+                    R.string.book_details__label__book_pages_text,
+                    book.pageCurrent,
+                    book.pageAmount
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.End
+            )
+
+            Spacer(Modifier.width(Dimens.spacerWidthSmall))
+
+            ReadingProgressIndicator(percentage = progressPercentage)
+        }
+    }
+}
+
+@Composable
+private fun ShelfSelectionButtons(
+    book: Book,
+    onClickShelf: (BookShelvesType) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var showAllSelvesType by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+    ) {
+        // --- FINISHED ---
+        AnimatedVisibility(
+            visible = showAllSelvesType || BookShelvesType.FINISHED == book.shelf
+        ) {
+            AppTextButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onClickShelf(BookShelvesType.FINISHED)
+                    showAllSelvesType = !showAllSelvesType
                 }
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.book_details__button__shelf_finished_text
+                    ),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
             }
-            // --- Title ---
-            Text(
-                text = book.title,
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediumFontSize),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = Dimens.paddingTopSmall,
-                        bottom = Dimens.paddingTopTiny
-                    )
-            )
-            AppDivider()
-            // --- Author ---
-            Text(
-                text = book.author,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = Dimens.paddingVerticalTiny)
-            )
-            // --- Shelf Label ---
-            Text(
-                text = when (book.shelve) {
-                    BookShelveType.WANT_TO_READ -> stringResource(R.string.book_details__label__shelve_want_to_read_text)
-                    BookShelveType.READING -> stringResource(R.string.book_details__label__shelve_reading_text)
-                    BookShelveType.FINISHED -> stringResource(R.string.book_details__label__shelve_finished_text)
-                },
-                style = MaterialTheme.typography.titleMedium,
-            )
+        }
+        // --- READING ---
+        AnimatedVisibility(
+            visible = showAllSelvesType || BookShelvesType.READING == book.shelf
+        ) {
+            AppTextButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onClickShelf(BookShelvesType.READING)
+                    showAllSelvesType = !showAllSelvesType
+                }
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.book_details__button__shelf_reading_text
+                    ),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
+        }
+        // --- WANT_TO_READ ---
+        AnimatedVisibility(
+            visible = showAllSelvesType || BookShelvesType.WANT_TO_READ == book.shelf
+        ) {
+            AppTextButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onClickShelf(BookShelvesType.WANT_TO_READ)
+                    showAllSelvesType = !showAllSelvesType
+                }
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.book_details__button__shelf_want_to_read_text
+                    ),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun BookDetailsCoverSectionPreview() {
-    BookDetailsCoverSection(
-        Book().copy(
-            title = "Book Title",
-            author = "Book Author"
+private fun BookDetailsCoverSectionFinishedPreview() {
+    EasyReadsTheme {
+        BookDetailsCoverSection(
+            Book().copy(
+                title = "Book Title",
+                author = "Book Author",
+                pageAmount = 250,
+                pageCurrent = 50,
+                shelf = BookShelvesType.FINISHED,
+                isFinished = true,
+                finishedDate = Date()
+            ),
+            progressPercentage = 50,
+            uiState = BookDetailsUiState(),
+            onClickShelf = { }
         )
-    )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsCoverSectionReadingPreview() {
+    EasyReadsTheme {
+        BookDetailsCoverSection(
+            Book().copy(
+                title = "Book Title",
+                author = "Book Author",
+                pageAmount = 250,
+                pageCurrent = 50,
+                shelf = BookShelvesType.READING
+            ),
+            progressPercentage = 50,
+            uiState = BookDetailsUiState(),
+            onClickShelf = { }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsCoverSectionWantToReadPreview() {
+    EasyReadsTheme {
+        BookDetailsCoverSection(
+            Book().copy(
+                title = "Book Title",
+                author = "Book Author",
+                pageAmount = 250,
+                pageCurrent = 50,
+                shelf = BookShelvesType.WANT_TO_READ
+            ),
+            progressPercentage = 50,
+            uiState = BookDetailsUiState(),
+            onClickShelf = { }
+        )
+    }
 }

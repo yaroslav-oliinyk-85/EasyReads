@@ -117,7 +117,7 @@ fun NoteAddEditDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(R.string.note_add_edit_dialog__button__save_text),
+                        text = stringResource(R.string.dialog__button__save_text),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
@@ -130,7 +130,7 @@ fun NoteAddEditDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(R.string.note_add_edit_dialog__button__cancel_text),
+                        text = stringResource(R.string.dialog__button__cancel_text),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

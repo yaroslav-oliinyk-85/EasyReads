@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryStateUi
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
@@ -14,7 +14,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun MyLibraryContent(
     stateUi: MyLibraryStateUi,
     onReadingGoalClick: () -> Unit,
-    onShelfClick: (BookShelveType) -> Unit,
+    onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

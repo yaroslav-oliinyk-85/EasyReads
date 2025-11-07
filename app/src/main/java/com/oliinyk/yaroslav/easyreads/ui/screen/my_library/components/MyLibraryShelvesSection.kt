@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -26,7 +26,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 @Composable
 fun MyLibraryShelvesSection(
     stateUi: MyLibraryStateUi,
-    onShelfClick: (BookShelveType) -> Unit,
+    onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -50,28 +50,28 @@ fun MyLibraryShelvesSection(
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
-            MyLibraryShelveItem(
+            MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelve_finished_text,
+                    R.string.my_library__label__shelf_finished_text,
                     stateUi.finishedCount
                 ),
-                onClick = { onShelfClick(BookShelveType.FINISHED) }
+                onClick = { onShelfClick(BookShelvesType.FINISHED) }
             )
             AppDivider()
-            MyLibraryShelveItem(
+            MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelve_reading_text,
+                    R.string.my_library__label__shelf_reading_text,
                     stateUi.readingCount
                 ),
-                onClick = { onShelfClick(BookShelveType.READING) }
+                onClick = { onShelfClick(BookShelvesType.READING) }
             )
             AppDivider()
-            MyLibraryShelveItem(
+            MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelve_want_to_read_text,
+                    R.string.my_library__label__shelf_want_to_read_text,
                     stateUi.wantToReadCount
                 ),
-                onClick = { onShelfClick(BookShelveType.WANT_TO_READ) }
+                onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) }
             )
             AppDivider()
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
@@ -82,7 +82,7 @@ fun MyLibraryShelvesSection(
             ) {
                 Text(
                     text = stringResource(
-                        R.string.my_library__label__shelve_see_all_books,
+                        R.string.my_library__label__shelf_see_all_books,
                         stateUi.allCount
                     ),
                     style = MaterialTheme.typography.bodyLarge

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import java.util.Date
 import java.util.UUID
 
@@ -53,7 +53,7 @@ fun BookEntity.toModel(): Book = Book (
     author = author,
     isbn = isbn,
     description = description,
-    shelve = BookShelveType.valueOf(shelve),
+    shelf = BookShelvesType.valueOf(shelve),
     pageAmount = pageAmount,
     pageCurrent = pageCurrent,
     addedDate = addedDate,

@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.databinding.ListItemReadingGoalBookBinding
 import com.oliinyk.yaroslav.easyreads.databinding.ListItemReadingGoalBookGridBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
 import com.oliinyk.yaroslav.easyreads.domain.util.DiffUtilCallbackHelper
 import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 

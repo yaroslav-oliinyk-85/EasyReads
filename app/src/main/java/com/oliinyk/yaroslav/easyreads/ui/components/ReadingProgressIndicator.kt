@@ -13,8 +13,8 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun ReadingProgressIndicator(
-    modifier: Modifier = Modifier,
-    percentage: Int
+    percentage: Int,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier.size(Dimens.bookListItemPercentageSize),

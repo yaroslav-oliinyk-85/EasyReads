@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.databinding.ListItemReadingGoalBookBinding
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.util.DiffUtilCallbackHelper
 import com.oliinyk.yaroslav.easyreads.domain.util.updateBookCoverImage
 
@@ -50,18 +50,18 @@ class ReadingGoalBookHolder(
             title.text = book.title
             author.text = book.author
             shelve.text = context.getString(
-                R.string.book_details__label__shelve_text,
-                when (book.shelve) {
-                    BookShelveType.WANT_TO_READ -> {
-                        context.getString(R.string.book_details__label__shelve_want_to_read_text)
+                R.string.book_details__label__shelf_text,
+                when (book.shelf) {
+                    BookShelvesType.WANT_TO_READ -> {
+                        context.getString(R.string.book_details__button__shelf_want_to_read_text)
                     }
 
-                    BookShelveType.READING -> {
-                        context.getString(R.string.book_details__label__shelve_reading_text)
+                    BookShelvesType.READING -> {
+                        context.getString(R.string.book_details__button__shelf_reading_text)
                     }
 
-                    BookShelveType.FINISHED -> {
-                        context.getString(R.string.book_details__label__shelve_finished_text)
+                    BookShelvesType.FINISHED -> {
+                        context.getString(R.string.book_details__button__shelf_finished_text)
                     }
                 }
             )

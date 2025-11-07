@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelveType
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components.MyLibraryContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components.MyLibraryTopAppBar
@@ -17,7 +17,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components.MyLibraryT
 fun MyLibraryScreen(
     viewModel: MyLibraryViewModel,
     onReadingGoalClick: () -> Unit,
-    onShelfClick: (BookShelveType) -> Unit,
+    onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
     onAddBookClick: (Book) -> Unit,
     modifier: Modifier = Modifier

@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.presentation.book.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,16 +29,16 @@ class BookDetailsViewModel @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<BookDetailsStateUi> =
-        MutableStateFlow(BookDetailsStateUi())
-    val stateUi: StateFlow<BookDetailsStateUi>
-        get() = _stateUi.asStateFlow()
+    private val _uiState: MutableStateFlow<BookDetailsUiState> =
+        MutableStateFlow(BookDetailsUiState())
+    val uiState: StateFlow<BookDetailsUiState>
+        get() = _uiState.asStateFlow()
 
     fun loadBookById(bookId: UUID) {
         viewModelScope.launch {
             bookRepository.getById(bookId).collect { bookCollected ->
                 bookCollected?.let { book ->
-                    _stateUi.update { oldUiState ->
+                    _uiState.update { oldUiState ->
                         oldUiState.copy(book = book)
                     }
                 }
@@ -44,37 +46,37 @@ class BookDetailsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->
-                _stateUi.update { it.copy(notes = notes) }
+                _uiState.update { it.copy(notes = notes) }
             }
         }
         viewModelScope.launch {
             readingSessionRepository.getAllByBookId(bookId).collect { readingSessions ->
-                _stateUi.update { it.copy(readingSessions = readingSessions) }
+                _uiState.update { it.copy(readingSessions = readingSessions) }
             }
         }
     }
 
-    fun getCurrentBook(): Book = stateUi.value.book
+    fun getCurrentBook(): Book = uiState.value.book
 
     fun removeCurrentBook() {
-        bookRepository.remove(stateUi.value.book)
-        noteRepository.remove(stateUi.value.notes)
-        readingSessionRepository.remove(stateUi.value.readingSessions)
+        bookRepository.remove(uiState.value.book)
+        noteRepository.remove(uiState.value.notes)
+        readingSessionRepository.remove(uiState.value.readingSessions)
     }
 
-    fun updateStateUi(onUpdate: (BookDetailsStateUi) -> BookDetailsStateUi) {
-        _stateUi.update {
+    fun updateStateUi(onUpdate: (BookDetailsUiState) -> BookDetailsUiState) {
+        _uiState.update {
             onUpdate(it)
         }
     }
 
     fun getNotes(): List<Note> {
-        return stateUi.value.notes
+        return uiState.value.notes
     }
 
     fun addNote(note: Note) {
         noteRepository.insert(
-            note.copy(bookId = stateUi.value.book.id)
+            note.copy(bookId = uiState.value.book.id)
         )
     }
 
@@ -83,24 +85,24 @@ class BookDetailsViewModel @Inject constructor(
     }
 
     fun getReadingSessions(): List<ReadingSession> {
-        return stateUi.value.readingSessions
+        return uiState.value.readingSessions
     }
 
     fun addReadingSession(readingSession: ReadingSession) {
         bookRepository.update(
-            stateUi.value.book.copy(pageCurrent = readingSession.endPage)
+            uiState.value.book.copy(pageCurrent = readingSession.endPage)
         )
 
         readingSessionRepository.insert(
             readingSession.copy(
-                bookId = stateUi.value.book.id
+                bookId = uiState.value.book.id
             )
         )
     }
 
     fun updateReadingSession(readingSession: ReadingSession) {
         bookRepository.update(
-            stateUi.value.book.copy(pageCurrent = readingSession.endPage)
+            uiState.value.book.copy(pageCurrent = readingSession.endPage)
         )
 
         readingSessionRepository.update(readingSession)
@@ -116,17 +118,29 @@ class BookDetailsViewModel @Inject constructor(
                 }
             }
             is BookDetailsEvent.AddNote -> {
-                addNote(event.note.copy(bookId = stateUi.value.book.id))
+                addNote(event.note.copy(bookId = uiState.value.book.id))
             }
             is BookDetailsEvent.EditNote -> {
                 updateNote(event.note)
+            }
+            is BookDetailsEvent.ShelfChanged -> {
+                if (_uiState.value.book.shelf != event.shelf) {
+                    var bookChanged = _uiState.value.book.copy(shelf = event.shelf)
+
+                    if (!bookChanged.isFinished && bookChanged.shelf == BookShelvesType.FINISHED) {
+                        bookChanged = bookChanged.copy(isFinished = true, finishedDate = Date())
+                    } else if (bookChanged.isFinished && bookChanged.shelf != BookShelvesType.FINISHED) {
+                        bookChanged = bookChanged.copy(isFinished = false, finishedDate = null)
+                    }
+                    bookRepository.update(book = bookChanged)
+                }
             }
             else -> { /* already handled in fragment */  }
         }
     }
 }
 
-data class BookDetailsStateUi(
+data class BookDetailsUiState(
     val book: Book = Book(),
     val notes: List<Note> = emptyList(),
     val readingSessions: List<ReadingSession> = emptyList()
@@ -171,6 +185,7 @@ data class BookDetailsStateUi(
 }
 
 sealed interface BookDetailsEvent {
+    data class ShelfChanged(val shelf: BookShelvesType) : BookDetailsEvent
     object SeeAllNotes : BookDetailsEvent
     data class AddNote(val note: Note) : BookDetailsEvent
     data class EditNote(val note: Note) : BookDetailsEvent

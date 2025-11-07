@@ -10,13 +10,18 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.oliinyk.yaroslav.easyreads.domain.model.Book
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsEvent
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsStateUi
+import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
+import java.util.Date
 
 @Composable
 fun BookDetailsContent(
-    stateUi: BookDetailsStateUi,
+    uiState: BookDetailsUiState,
     onEvent: (BookDetailsEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -28,26 +33,89 @@ fun BookDetailsContent(
             .padding(horizontal = Dimens.paddingHorizontalMedium, vertical = Dimens.spacerHeightMedium),
         verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
     ) {
-        BookDetailsCoverSection(book = stateUi.book)
-        BookDetailsProgressSection(
-            stateUi = stateUi,
-            onStartReadingSession = { onEvent(BookDetailsEvent.StartReadingSession) },
-            onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) }
+        BookDetailsCoverSection(
+            book = uiState.book,
+            uiState = uiState,
+            progressPercentage = uiState.percentage,
+            onClickShelf = { shelf ->
+                onEvent(BookDetailsEvent.ShelfChanged(shelf))
+            }
         )
-        if (!stateUi.book.isFinished) {
-            BookDetailsReadingSessionsSection(
-                sessions = stateUi.readingSessions,
-                onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) },
-                onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) }
-            )
-        }
+        BookDetailsReadingSessionsSection(
+            sessions = uiState.readingSessions,
+            isBookFinished = uiState.book.isFinished,
+            onStartReadingSession = { onEvent(BookDetailsEvent.StartReadingSession) },
+            onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) },
+            onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) }
+        )
         BookDetailsNotesSection(
-            notes = stateUi.notes,
+            notes = uiState.notes,
             onSeeAllNotes = { onEvent(BookDetailsEvent.SeeAllNotes) },
             onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
             onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) }
         )
-        BookDetailsIsbnSection(isbn = stateUi.book.isbn)
-        BookDetailsDescriptionSection(stateUi.book.description)
+        BookDetailsIsbnSection(isbn = uiState.book.isbn)
+        BookDetailsDescriptionSection(uiState.book.description)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsContentFinishedPreview() {
+    EasyReadsTheme {
+        BookDetailsContent(
+            uiState = BookDetailsUiState(
+                book = Book(
+                    title = "Title",
+                    author = "Author",
+                    pageAmount = 250,
+                    pageCurrent = 50,
+                    shelf = BookShelvesType.FINISHED,
+                    isFinished = true,
+                    finishedDate = Date()
+                )
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsContentReadingPreview() {
+    EasyReadsTheme {
+        BookDetailsContent(
+            uiState = BookDetailsUiState(
+                book = Book(
+                    title = "Title",
+                    author = "Author",
+                    pageAmount = 250,
+                    pageCurrent = 50,
+                    shelf = BookShelvesType.READING,
+                    isFinished = false
+                )
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsContentWantToReadPreview() {
+    EasyReadsTheme {
+        BookDetailsContent(
+            uiState = BookDetailsUiState(
+                book = Book(
+                    title = "Title",
+                    author = "Author",
+                    pageAmount = 250,
+                    pageCurrent = 50,
+                    shelf = BookShelvesType.WANT_TO_READ,
+                    isFinished = false
+                )
+            ),
+            onEvent = {}
+        )
     }
 }

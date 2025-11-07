@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class BookShelveType : Parcelable {
+enum class BookShelvesType : Parcelable {
     WANT_TO_READ, READING, FINISHED
 }
