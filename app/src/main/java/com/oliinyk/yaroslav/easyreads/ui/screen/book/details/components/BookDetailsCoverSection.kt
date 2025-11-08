@@ -15,8 +15,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -84,8 +89,6 @@ fun BookDetailsCoverSection(
                 book = book,
                 progressPercentage = progressPercentage
             )
-
-            Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
             ShelfSelectionButtons(
                 book = book,
@@ -287,18 +290,25 @@ private fun ShelfSelectionButtons(
     var showAllSelvesType by remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+        modifier = modifier
+            .fillMaxWidth()
     ) {
         // --- FINISHED ---
         AnimatedVisibility(
             visible = showAllSelvesType || BookShelvesType.FINISHED == book.shelf
         ) {
             AppTextButton(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.FINISHED)
                     showAllSelvesType = !showAllSelvesType
+                },
+                colors = if (showAllSelvesType && BookShelvesType.FINISHED == book.shelf) {
+                    ButtonDefaults.buttonColors()
+                } else {
+                    ButtonDefaults.textButtonColors()
                 }
             ) {
                 Text(
@@ -314,10 +324,17 @@ private fun ShelfSelectionButtons(
             visible = showAllSelvesType || BookShelvesType.READING == book.shelf
         ) {
             AppTextButton(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.READING)
                     showAllSelvesType = !showAllSelvesType
+                },
+                colors = if (showAllSelvesType && BookShelvesType.READING == book.shelf) {
+                    ButtonDefaults.buttonColors()
+                } else {
+                    ButtonDefaults.textButtonColors()
                 }
             ) {
                 Text(
@@ -333,10 +350,17 @@ private fun ShelfSelectionButtons(
             visible = showAllSelvesType || BookShelvesType.WANT_TO_READ == book.shelf
         ) {
             AppTextButton(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.WANT_TO_READ)
                     showAllSelvesType = !showAllSelvesType
+                },
+                colors = if (showAllSelvesType && BookShelvesType.WANT_TO_READ == book.shelf) {
+                    ButtonDefaults.buttonColors()
+                } else {
+                    ButtonDefaults.textButtonColors()
                 }
             ) {
                 Text(
