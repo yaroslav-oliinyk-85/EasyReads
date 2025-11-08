@@ -144,7 +144,7 @@ fun ReadingSessionAddEditDialog(
                     ),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next
+                        imeAction = ImeAction.Done
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
