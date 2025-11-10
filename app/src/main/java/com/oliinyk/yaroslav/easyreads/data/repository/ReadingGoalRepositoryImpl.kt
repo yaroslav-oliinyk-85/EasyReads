@@ -21,7 +21,7 @@ class ReadingGoalRepositoryImpl @Inject constructor(
     private val readingGoalDao: ReadingGoalDao
 ) : ReadingGoalRepository {
 
-    private val coroutineScope: CoroutineScope = GlobalScope
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     override fun getByYear(year: Int): Flow<ReadingGoal?> {

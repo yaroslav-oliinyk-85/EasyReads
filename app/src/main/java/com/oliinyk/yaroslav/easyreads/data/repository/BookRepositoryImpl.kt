@@ -26,7 +26,7 @@ class BookRepositoryImpl @Inject constructor(
     private val bookDao: BookDao
 ) : BookRepository {
 
-    private val coroutineScope: CoroutineScope = GlobalScope
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     override fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>> {

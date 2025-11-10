@@ -22,7 +22,7 @@ class NoteRepositoryImpl @Inject constructor(
     private val noteDao: NoteDao
 ) : NoteRepository {
 
-    private val coroutineScope: CoroutineScope = GlobalScope
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     override fun getAllByBookId(bookId: UUID): Flow<List<Note>> {

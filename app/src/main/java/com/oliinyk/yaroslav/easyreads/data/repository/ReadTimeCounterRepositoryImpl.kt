@@ -25,7 +25,7 @@ class ReadTimeCounterRepositoryImpl @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ReadTimeCounterRepository {
 
-    private val coroutineScope: CoroutineScope = GlobalScope
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     private var timeCounterJob: Job? = null

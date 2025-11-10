@@ -23,7 +23,7 @@ class ReadingSessionRepositoryImpl @Inject constructor(
     private val readingSessionDao: ReadingSessionDao
 ) : ReadingSessionRepository {
 
-    private val coroutineScope: CoroutineScope = GlobalScope
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     override fun getAllByBookId(bookId: UUID): Flow<List<ReadingSession>> {
