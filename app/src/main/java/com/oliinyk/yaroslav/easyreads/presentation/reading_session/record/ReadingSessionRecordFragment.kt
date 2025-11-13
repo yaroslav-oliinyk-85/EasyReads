@@ -55,7 +55,7 @@ class ReadingSessionRecordFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        viewModel.setup(args.book)
+//        viewModel.setup(args.book)
 
         requireActivity().startService(
             Intent(requireContext(), ReadTimeCounterService::class.java).apply {
@@ -75,6 +75,7 @@ class ReadingSessionRecordFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     ReadingSessionRecordScreen(
                         viewModel = viewModel,
                         onEvent = { event ->
@@ -121,6 +122,7 @@ class ReadingSessionRecordFragment : Fragment() {
                             }
                         }
                     )
+                    */
                 }
             }
         }

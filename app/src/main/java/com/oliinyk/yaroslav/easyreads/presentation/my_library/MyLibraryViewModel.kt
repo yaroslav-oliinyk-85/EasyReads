@@ -29,6 +29,11 @@ class MyLibraryViewModel @Inject constructor(
         get() = _stateUi.asStateFlow()
 
     init {
+        loadReadingGoal()
+        loadBooks()
+    }
+
+    private fun loadReadingGoal() {
         viewModelScope.launch {
             val currentYear: Int = Date().year + 1900
             readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
@@ -39,6 +44,9 @@ class MyLibraryViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun loadBooks() {
         viewModelScope.launch {
             bookRepository.getAll().collectLatest { books ->
                 val currentYearFinishedBooks: List<Book> = books.filter {
@@ -46,9 +54,9 @@ class MyLibraryViewModel @Inject constructor(
                 }
                 _stateUi.update {
                     it.copy(
-                        finishedCount = books.filter { it.shelf == FINISHED }.count(),
-                        readingCount = books.filter { it.shelf == READING }.count(),
-                        wantToReadCount = books.filter { it.shelf == WANT_TO_READ }.count(),
+                        finishedCount = books.count { book -> book.shelf == FINISHED },
+                        readingCount = books.count { book -> book.shelf == READING },
+                        wantToReadCount = books.count { book -> book.shelf == WANT_TO_READ },
                         allCount = books.size,
                         currentYearFinishedBooksCount = currentYearFinishedBooks.size
                     )

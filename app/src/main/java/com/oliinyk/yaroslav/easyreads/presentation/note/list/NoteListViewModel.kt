@@ -30,7 +30,11 @@ class NoteListViewModel @Inject constructor(
     val removingNote: StateFlow<Note?>
         get() = _removingNote.asStateFlow()
 
-    fun loadNotes(bookId: UUID) {
+    fun setup(bookId: UUID) {
+        loadNotes(bookId)
+    }
+
+    private fun loadNotes(bookId: UUID) {
         _stateUi.update { it.copy(bookId = bookId) }
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->

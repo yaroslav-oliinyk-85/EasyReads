@@ -31,7 +31,7 @@ class ReadingSessionListFragment : Fragment() {
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
 
-        viewModel.loadReadingSessionsByBookId(args.book)
+//        viewModel.loadReadingSessionsByBookId(args.book)
     }
 
     override fun onCreateView(
@@ -41,9 +41,11 @@ class ReadingSessionListFragment : Fragment() {
     ): View? {
         return ComposeView(requireContext()).apply {
             setContent {
+                /*
                 EasyReadsTheme {
                     ReadingSessionListScreen(viewModel = viewModel)
                 }
+                */
             }
         }
     }

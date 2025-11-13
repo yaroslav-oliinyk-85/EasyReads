@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.Note
-import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
-import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
-import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +25,7 @@ class NoteListFragment : Fragment() {
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.slide_in_from_bottom)
 
-        viewModel.loadNotes(args.bookId)
+        viewModel.setup(args.bookId)
     }
 
     override fun onCreateView(
@@ -42,7 +36,7 @@ class NoteListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
-                    NoteListScreen(viewModel = viewModel)
+                    //NoteListScreen(viewModel = viewModel)
                 }
             }
         }

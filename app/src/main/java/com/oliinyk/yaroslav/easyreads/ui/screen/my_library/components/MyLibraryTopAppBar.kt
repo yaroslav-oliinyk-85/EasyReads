@@ -17,7 +17,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Book
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyLibraryTopAppBar(
-    onAddBookClick: (Book) -> Unit
+    onAddBookClick: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -25,7 +25,7 @@ fun MyLibraryTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = { onAddBookClick(Book()) }
+                onClick = { onAddBookClick() }
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,

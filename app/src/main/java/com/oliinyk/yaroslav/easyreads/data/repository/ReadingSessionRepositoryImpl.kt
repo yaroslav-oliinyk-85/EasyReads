@@ -31,7 +31,7 @@ class ReadingSessionRepositoryImpl @Inject constructor(
             entities.map {
                 it.toModel()
             }
-        }
+        }.distinctUntilChanged()
     }
 
     override suspend fun getAllByBookIds(bookIds: List<UUID>): List<ReadingSession> {

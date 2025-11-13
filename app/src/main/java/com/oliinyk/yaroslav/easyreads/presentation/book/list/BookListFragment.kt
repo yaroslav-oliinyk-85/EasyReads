@@ -57,6 +57,7 @@ class BookListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     BookListScreen(
                         viewModel = viewModel,
                         onBookClick = { book ->
@@ -89,6 +90,7 @@ class BookListFragment : Fragment() {
                             )
                         }
                     )
+                    */
                 }
             }
         }

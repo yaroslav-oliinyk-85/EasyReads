@@ -97,6 +97,7 @@ dependencies {
     //Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     ksp "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel-compose:$hilt_compose_version"
 
     //Compose UI
     implementation(platform("androidx.compose:compose-bom:$compose_bom_version"))

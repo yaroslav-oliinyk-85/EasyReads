@@ -33,6 +33,11 @@ class ReadingGoalViewModel @Inject constructor(
         get() = _stateUi.asStateFlow()
 
     init {
+        loadReadingGoal()
+        loadBooks()
+    }
+
+    private fun loadReadingGoal() {
         viewModelScope.launch {
             val currentYear: Int = Date().year + 1900
             readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
@@ -43,16 +48,19 @@ class ReadingGoalViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun loadBooks() {
         viewModelScope.launch {
             bookRepository.getAll().collect { books ->
                 if (books.isNotEmpty()) {
                     val currentYearFinishedBooks: List<Book> = books.filter {
-                            it.isFinished && (it.finishedDate != null) && (it.finishedDate.year == Date().year)
-                        }.sortedByDescending { it.finishedDate }
+                        it.isFinished && (it.finishedDate != null) && (it.finishedDate.year == Date().year)
+                    }.sortedByDescending { it.finishedDate }
                     val readPages = if (currentYearFinishedBooks.isNotEmpty()) {
-                            currentYearFinishedBooks.map { it.pageAmount }
-                                .reduce { sum, pages -> sum + pages }
-                        } else { 0 }
+                        currentYearFinishedBooks.map { it.pageAmount }
+                            .reduce { sum, pages -> sum + pages }
+                    } else { 0 }
 
                     _stateUi.update { state ->
                         state.copy(
@@ -72,9 +80,7 @@ class ReadingGoalViewModel @Inject constructor(
 
                         _stateUi.update { state ->
                             state.copy(
-                                averagePagesHour = (
-                                        state.readPages.toDouble() / totalReadMinutes * MINUTES_IN_ONE_HOUR
-                                    ).roundToInt(),
+                                averagePagesHour = (state.readPages.toDouble() / totalReadMinutes * MINUTES_IN_ONE_HOUR).roundToInt(),
                                 readHours = (totalReadMinutes / MINUTES_IN_ONE_HOUR).toInt(),
                                 readMinutes = (totalReadMinutes % MINUTES_IN_ONE_HOUR).toInt()
                             )

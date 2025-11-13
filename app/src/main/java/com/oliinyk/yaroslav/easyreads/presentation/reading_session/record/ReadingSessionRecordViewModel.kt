@@ -1,7 +1,9 @@
 package com.oliinyk.yaroslav.easyreads.presentation.reading_session.record
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
@@ -36,10 +38,20 @@ class ReadingSessionRecordViewModel @Inject constructor(
     val currentBook: Book
         get() = checkNotNull(uiState.value.book)
 
-    fun setup(book: Book) {
-        _uiState.update { it.copy(book = book) }
-        loadLastUnfinishedByBookId(book.id)
-        loadNoteCount(book.id)
+    fun setup(bookId: UUID) {
+        loadBookById(bookId)
+        loadLastUnfinishedByBookId(bookId)
+        loadNoteCount(bookId)
+    }
+
+    private fun loadBookById(bookId: UUID) {
+        viewModelScope.launch {
+            bookRepository.getById(bookId).collect { book ->
+                book?.let {
+                    _uiState.update { it.copy(book = book) }
+                }
+            }
+        }
     }
 
     private fun loadLastUnfinishedByBookId(bookId: UUID) {

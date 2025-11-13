@@ -32,7 +32,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun BookAddEditContent(
     modifier: Modifier = Modifier,
     stateUi: BookAddEditStateUi,
-    onCoverClick: () -> Unit,
+    onClickChangeCoverImage: () -> Unit,
     onEvent: (BookAddEditEvent) -> Unit
 ) {
     Column(
@@ -62,7 +62,7 @@ fun BookAddEditContent(
                 ) {
                     BookAddEditCoverImageSection(
                         stateUi = stateUi,
-                        onCoverClick = onCoverClick
+                        onCoverClick = onClickChangeCoverImage
                     )
 
                     Spacer(Modifier.height(Dimens.spacerHeightSmall))

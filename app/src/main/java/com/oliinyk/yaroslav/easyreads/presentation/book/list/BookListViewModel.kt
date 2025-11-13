@@ -59,10 +59,6 @@ class BookListViewModel @Inject constructor(
         }
     }
 
-    fun updateStateUi(onUpdate: (StateUiBookList) -> StateUiBookList) {
-        _stateUi.update { onUpdate(it) }
-    }
-
     fun updateBookSorting(bookSorting: BookSorting) {
         viewModelScope.launch {
             preferencesRepository.setBookSorting(bookSorting.toString())

@@ -35,6 +35,7 @@ class MyLibraryFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     MyLibraryScreen(
                         viewModel = viewModel,
                         onReadingGoalClick = {
@@ -58,6 +59,7 @@ class MyLibraryFragment : Fragment() {
                             )
                         }
                     )
+                    */
                 }
             }
         }

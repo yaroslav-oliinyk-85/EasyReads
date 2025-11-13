@@ -63,6 +63,7 @@ class BookEditFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     BookAddEditScreen(
                         modifier = Modifier.fillMaxSize(),
                         viewModel = viewModel,
@@ -78,6 +79,7 @@ class BookEditFragment : Fragment() {
                             findNavController().popBackStack()
                         }
                     )
+                    */
                 }
             }
         }

@@ -4,12 +4,14 @@ import android.text.format.DateFormat
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
@@ -18,11 +20,19 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.add_edit_dialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.components.ReadingSessionListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.components.ReadingSessionListTopAppBar
+import java.util.UUID
 
 @Composable
 fun ReadingSessionListScreen(
-    viewModel: ReadingSessionListViewModel
+    bookId: String?,
+    viewModel: ReadingSessionListViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        bookId?.let { id ->
+            viewModel.setup(UUID.fromString(id))
+        }
+    }
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var addOrEditReadingSessionState: ReadingSession? by remember { mutableStateOf(null) }

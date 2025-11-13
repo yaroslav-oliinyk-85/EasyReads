@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.presentation.reading_goal.ReadingGoalViewModel
@@ -16,10 +17,9 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingG
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadingGoalScreen(
+    navToBookDetails: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ReadingGoalViewModel,
-    onChangeGoalClick: () -> Unit,
-    onBookClick: (Book) -> Unit
+    viewModel: ReadingGoalViewModel = hiltViewModel()
 ) {
     val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
     Scaffold (
@@ -30,8 +30,8 @@ fun ReadingGoalScreen(
         content = { paddingValues ->
             ReadingGoalContent(
                 stateUi = stateUi,
-                onChangeGoalClick = onChangeGoalClick,
-                onBookClick = onBookClick,
+                onChangeGoalClick = { /* TODO: implement */ },
+                onBookClick = { navToBookDetails(it.id.toString()) },
                 modifier = Modifier.padding(paddingValues)
             )
         }

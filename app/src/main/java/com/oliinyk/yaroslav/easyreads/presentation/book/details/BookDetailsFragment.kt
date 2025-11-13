@@ -6,18 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.Note
-import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
-import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
-import com.oliinyk.yaroslav.easyreads.presentation.note.add_edit.NoteAddEditDialogFragment
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,7 +28,7 @@ class BookDetailsFragment : Fragment() {
         exitTransition = inflater.inflateTransition(R.transition.fade)
         reenterTransition = inflater.inflateTransition(R.transition.fade)
 
-        viewModel.loadBookById(args.book.id)
+        viewModel.setup(args.book.id)
     }
 
     override fun onCreateView(
@@ -46,6 +39,7 @@ class BookDetailsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     BookDetailsScreen(
                         viewModel = viewModel,
                         onEvent = { event -> handleEvent(event) },
@@ -63,42 +57,43 @@ class BookDetailsFragment : Fragment() {
                             findNavController().popBackStack()
                         }
                     )
+                    */
                 }
             }
         }
     }
 
-    private fun handleEvent(event: BookDetailsEvent) {
-        when (event) {
-            is BookDetailsEvent.SeeAllNotes -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showNotes(viewModel.getCurrentBook().id)
-                )
-            }
-            is BookDetailsEvent.StartReadingSession -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showReadingSessionRecord(
-                        viewModel.getCurrentBook()
-                    )
-                )
-            }
-            is BookDetailsEvent.SeeAllReadingSessions -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showReadingSessions(
-                        viewModel.getCurrentBook()
-                    )
-                )
-            }
-            is BookDetailsEvent.AddReadingSession -> {
-                findNavController().navigate(
-                    BookDetailsFragmentDirections.showReadingSessionRecord(
-                        viewModel.getCurrentBook()
-                    )
-                )
-            }
-            else -> viewModel.handleEvent(event)
-        }
-    }
+//    private fun handleEvent(event: BookDetailsEvent) {
+//        when (event) {
+//            is BookDetailsEvent.SeeAllNotes -> {
+//                findNavController().navigate(
+//                    BookDetailsFragmentDirections.showNotes(viewModel.getCurrentBook().id)
+//                )
+//            }
+//            is BookDetailsEvent.StartReadingSession -> {
+//                findNavController().navigate(
+//                    BookDetailsFragmentDirections.showReadingSessionRecord(
+//                        viewModel.getCurrentBook()
+//                    )
+//                )
+//            }
+//            is BookDetailsEvent.SeeAllReadingSessions -> {
+//                findNavController().navigate(
+//                    BookDetailsFragmentDirections.showReadingSessions(
+//                        viewModel.getCurrentBook()
+//                    )
+//                )
+//            }
+//            is BookDetailsEvent.AddReadingSession -> {
+//                findNavController().navigate(
+//                    BookDetailsFragmentDirections.showReadingSessionRecord(
+//                        viewModel.getCurrentBook()
+//                    )
+//                )
+//            }
+//            else -> viewModel.handleEvent(event)
+//        }
+//    }
 
     /*
     private var _binding: FragmentBookDetailsBinding? = null

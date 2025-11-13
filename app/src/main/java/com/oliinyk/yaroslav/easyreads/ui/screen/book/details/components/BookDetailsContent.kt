@@ -23,6 +23,9 @@ import java.util.Date
 fun BookDetailsContent(
     uiState: BookDetailsUiState,
     onEvent: (BookDetailsEvent) -> Unit,
+    navToReadingSessionRecord: (String) -> Unit,
+    navToReadingSessionList: (String) -> Unit,
+    navToNoteList: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -44,13 +47,13 @@ fun BookDetailsContent(
         BookDetailsReadingSessionsSection(
             sessions = uiState.readingSessions,
             isBookFinished = uiState.book.isFinished,
-            onStartReadingSession = { onEvent(BookDetailsEvent.StartReadingSession) },
-            onSeeAll = { onEvent(BookDetailsEvent.SeeAllReadingSessions) },
+            onStartReadingSession = { navToReadingSessionRecord(uiState.book.id.toString()) },
+            onSeeAll = { navToReadingSessionList(uiState.book.id.toString()) },
             onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) }
         )
         BookDetailsNotesSection(
             notes = uiState.notes,
-            onSeeAllNotes = { onEvent(BookDetailsEvent.SeeAllNotes) },
+            onSeeAllNotes = { navToNoteList(uiState.book.id.toString()) },
             onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
             onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) }
         )
@@ -75,7 +78,10 @@ private fun BookDetailsContentFinishedPreview() {
                     finishedDate = Date()
                 )
             ),
-            onEvent = {}
+            onEvent = {},
+            navToNoteList = {},
+            navToReadingSessionList = {},
+            navToReadingSessionRecord = {}
         )
     }
 }
@@ -95,7 +101,10 @@ private fun BookDetailsContentReadingPreview() {
                     isFinished = false
                 )
             ),
-            onEvent = {}
+            onEvent = {},
+            navToNoteList = {},
+            navToReadingSessionList = {},
+            navToReadingSessionRecord = {}
         )
     }
 }
@@ -115,7 +124,10 @@ private fun BookDetailsContentWantToReadPreview() {
                     isFinished = false
                 )
             ),
-            onEvent = {}
+            onEvent = {},
+            navToNoteList = {},
+            navToReadingSessionList = {},
+            navToReadingSessionRecord = {}
         )
     }
 }

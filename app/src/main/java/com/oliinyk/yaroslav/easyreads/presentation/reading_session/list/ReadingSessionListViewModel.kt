@@ -9,9 +9,11 @@ import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,13 +26,27 @@ class ReadingSessionListViewModel @Inject constructor(
     val uiState
         get() = _uiState.asStateFlow()
 
-    fun loadReadingSessionsByBookId(book: Book) {
-        _uiState.update { it.copy(book = book) }
+    fun setup(bookId: UUID) {
+        loadReadingSessionsByBookId(bookId)
+    }
 
+    private fun loadReadingSessionsByBookId(bookId: UUID) {
         viewModelScope.launch {
-            readingSessionRepository.getAllByBookId(bookId = book.id).collect { readingSessions ->
-                _uiState.update { it.copy(readingSessions = readingSessions) }
-            }
+            bookRepository.getById(bookId)
+                .combine(readingSessionRepository.getAllByBookId(bookId = bookId)) { book, readingSessions ->
+                    ReadingSessionListUiState(
+                        book = book,
+                        readingSessions = readingSessions
+                    )
+                }
+                .collect { uiStateUpdated ->
+                    _uiState.update {
+                        it.copy(
+                            book = uiStateUpdated.book,
+                            readingSessions = uiStateUpdated.readingSessions
+                        )
+                    }
+                }
         }
     }
 

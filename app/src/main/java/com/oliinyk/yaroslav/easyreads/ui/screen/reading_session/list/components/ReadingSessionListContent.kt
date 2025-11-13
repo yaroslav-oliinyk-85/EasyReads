@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +24,10 @@ fun ReadingSessionListContent(
     onClickedRemove: (ReadingSession) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         if (readingSessions.isEmpty()) {
             Text(
                 text = stringResource(R.string.reading_session_list__label__list_empty_text),
@@ -31,7 +35,7 @@ fun ReadingSessionListContent(
             )
         } else {
             LazyColumn(
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(Dimens.paddingAllMedium),
                 verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
             ) {

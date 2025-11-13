@@ -49,6 +49,18 @@ class BookAddEditViewModel @Inject constructor(
         }
     }
 
+    fun setup(bookId: String) {
+        loadBookById(bookId)
+    }
+
+    private fun loadBookById(bookId: String) {
+        viewModelScope.launch {
+            bookRepository.getById(UUID.fromString(bookId)).collect { book ->
+                _stateUi.update { it.copy(book = book ?: Book()) }
+            }
+        }
+    }
+
     fun updateStateUi(onUpdate: (BookAddEditStateUi) -> BookAddEditStateUi) {
         _stateUi.update { onUpdate(it) }
     }

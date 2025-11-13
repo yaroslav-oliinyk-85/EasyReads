@@ -34,7 +34,13 @@ class BookDetailsViewModel @Inject constructor(
     val uiState: StateFlow<BookDetailsUiState>
         get() = _uiState.asStateFlow()
 
-    fun loadBookById(bookId: UUID) {
+    fun setup(bookId: UUID) {
+        loadBookById(bookId)
+        loadNotesByBookId(bookId)
+        loadReadingSessionsByBookId(bookId)
+    }
+
+    private fun loadBookById(bookId: UUID) {
         viewModelScope.launch {
             bookRepository.getById(bookId).collect { bookCollected ->
                 bookCollected?.let { book ->
@@ -44,11 +50,17 @@ class BookDetailsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun loadNotesByBookId(bookId: UUID) {
         viewModelScope.launch {
             noteRepository.getAllByBookId(bookId).collect { notes ->
                 _uiState.update { it.copy(notes = notes) }
             }
         }
+    }
+
+    private fun loadReadingSessionsByBookId(bookId: UUID) {
         viewModelScope.launch {
             readingSessionRepository.getAllByBookId(bookId).collect { readingSessions ->
                 _uiState.update { it.copy(readingSessions = readingSessions) }
@@ -56,22 +68,10 @@ class BookDetailsViewModel @Inject constructor(
         }
     }
 
-    fun getCurrentBook(): Book = uiState.value.book
-
     fun removeCurrentBook() {
         bookRepository.remove(uiState.value.book)
         noteRepository.remove(uiState.value.notes)
         readingSessionRepository.remove(uiState.value.readingSessions)
-    }
-
-    fun updateStateUi(onUpdate: (BookDetailsUiState) -> BookDetailsUiState) {
-        _uiState.update {
-            onUpdate(it)
-        }
-    }
-
-    fun getNotes(): List<Note> {
-        return uiState.value.notes
     }
 
     fun addNote(note: Note) {
@@ -82,10 +82,6 @@ class BookDetailsViewModel @Inject constructor(
 
     fun updateNote(note: Note) {
         noteRepository.update(note)
-    }
-
-    fun getReadingSessions(): List<ReadingSession> {
-        return uiState.value.readingSessions
     }
 
     fun addReadingSession(readingSession: ReadingSession) {
@@ -135,7 +131,6 @@ class BookDetailsViewModel @Inject constructor(
                     bookRepository.update(book = bookChanged)
                 }
             }
-            else -> { /* already handled in fragment */  }
         }
     }
 }
@@ -186,11 +181,7 @@ data class BookDetailsUiState(
 
 sealed interface BookDetailsEvent {
     data class ShelfChanged(val shelf: BookShelvesType) : BookDetailsEvent
-    object SeeAllNotes : BookDetailsEvent
     data class AddNote(val note: Note) : BookDetailsEvent
     data class EditNote(val note: Note) : BookDetailsEvent
-    object StartReadingSession : BookDetailsEvent
-    object SeeAllReadingSessions : BookDetailsEvent
-    object AddReadingSession : BookDetailsEvent
     data class EditReadingSession(val readingSession: ReadingSession) : BookDetailsEvent
 }

@@ -34,6 +34,7 @@ class ReadingGoalFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 EasyReadsTheme {
+                    /*
                     ReadingGoalScreen(
                         viewModel = viewModel,
                         onBookClick = { book ->
@@ -45,6 +46,7 @@ class ReadingGoalFragment : Fragment() {
                             // TODO handle goal change
                         }
                     )
+                    */
                 }
             }
         }
