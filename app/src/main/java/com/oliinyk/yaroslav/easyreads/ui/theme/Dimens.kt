@@ -78,4 +78,13 @@ object Dimens {
     val readingSessionRecordBookAuthorMaxLines = 1
 
     val bookListItemShelveTextMaxLines = 2
+
+    // ----- animation -----
+    val animationEnterDurationMillis: Int = 300
+    val animationExitDurationMillis: Int = 300
+
+    val animationPopEnterDurationMillis: Int = 300
+    val animationPopExitDurationMillis: Int = 300
+
+    val animationDelayDurationMillis: Int = 300
 }

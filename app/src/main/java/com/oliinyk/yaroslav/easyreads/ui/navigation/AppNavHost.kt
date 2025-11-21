@@ -1,6 +1,8 @@
 package com.oliinyk.yaroslav.easyreads.ui.navigation
 
 import android.util.Log
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -14,6 +16,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.ReadingSessionRecordScreen
+import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.util.UUID
 
 private const val TAG = "AppNavHost"
@@ -28,7 +31,10 @@ fun AppNavHost(
     ) {
         // ----- MyLibrary Route -----
         composable(
-            route = AppNavRoutes.MyLibrary.route
+            route = AppNavRoutes.MyLibrary.route,
+            enterTransition = AppNavTransitions.myLibraryEnterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition
         ) {
             MyLibraryScreen(
                 navToBookAdd = {
@@ -48,7 +54,11 @@ fun AppNavHost(
 
         // ----- ReadingGoal Route -----
         composable(
-            route = AppNavRoutes.ReadingGoal.route
+            route = AppNavRoutes.ReadingGoal.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) {
             ReadingGoalScreen(
                 navToBookDetails = { bookId ->
@@ -59,7 +69,11 @@ fun AppNavHost(
 
         // ----- BookListShelf Route -----
         composable(
-            route = AppNavRoutes.BookListShelf.route
+            route = AppNavRoutes.BookListShelf.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookShelvesType = backStackEntry.arguments?.getString(AppNavRoutes.BookListShelf.ARGUMENT_KEY)
 
@@ -68,14 +82,22 @@ fun AppNavHost(
 
         // ----- BookList Route -----
         composable(
-            route = AppNavRoutes.BookList.route
+            route = AppNavRoutes.BookList.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) {
             BookListRoute(navHostController)
         }
 
         // ----- BookDetails Route -----
         composable(
-            route = AppNavRoutes.BookDetails.route
+            route = AppNavRoutes.BookDetails.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
 
@@ -101,7 +123,11 @@ fun AppNavHost(
 
         // ----- BookAdd Route -----
         composable(
-            route = AppNavRoutes.BookAdd.route
+            route = AppNavRoutes.BookAdd.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) {
             BookAddEditScreen(
                 navBack = {
@@ -112,7 +138,11 @@ fun AppNavHost(
 
         // ----- BookEdit Route -----
         composable(
-            route = AppNavRoutes.BookEdit.route
+            route = AppNavRoutes.BookEdit.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookEdit.ARGUMENT_KEY)
 
@@ -126,7 +156,11 @@ fun AppNavHost(
 
         // ----- NoteList Route -----
         composable(
-            route = AppNavRoutes.NoteList.route
+            route = AppNavRoutes.NoteList.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
 
@@ -135,7 +169,11 @@ fun AppNavHost(
 
         // ----- ReadingSessionList Route -----
         composable(
-            route = AppNavRoutes.ReadingSessionList.route
+            route = AppNavRoutes.ReadingSessionList.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionList.ARGUMENT_KEY)
 
@@ -144,7 +182,11 @@ fun AppNavHost(
 
         // ----- ReadingSessionRecord Route -----
         composable(
-            route = AppNavRoutes.ReadingSessionRecord.route
+            route = AppNavRoutes.ReadingSessionRecord.route,
+            enterTransition = AppNavTransitions.enterTransition,
+            exitTransition = AppNavTransitions.exitTransition,
+            popEnterTransition = AppNavTransitions.popEnterTransition,
+            popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
 
