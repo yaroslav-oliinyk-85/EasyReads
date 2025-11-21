@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.MyLibraryScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.MyLibraryViewModel
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 

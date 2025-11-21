@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditStateUi
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.io.File
 

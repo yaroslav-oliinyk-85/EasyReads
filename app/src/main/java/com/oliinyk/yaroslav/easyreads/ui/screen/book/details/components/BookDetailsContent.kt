@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsEvent
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsUiState
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsEvent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.util.Date

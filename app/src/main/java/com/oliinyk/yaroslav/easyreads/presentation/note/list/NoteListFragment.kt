@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListViewModel
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import dagger.hilt.android.AndroidEntryPoint
 

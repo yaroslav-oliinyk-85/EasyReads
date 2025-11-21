@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.presentation.note.list
+package com.oliinyk.yaroslav.easyreads.ui.screen.note.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

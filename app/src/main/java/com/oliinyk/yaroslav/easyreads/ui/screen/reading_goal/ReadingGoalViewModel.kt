@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.presentation.reading_goal
+package com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

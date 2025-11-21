@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.presentation.reading_goal.ReadingGoalStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalStateUi
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable

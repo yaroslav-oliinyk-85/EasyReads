@@ -11,8 +11,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
-import com.oliinyk.yaroslav.easyreads.presentation.note.list.NoteListStateUi
-import com.oliinyk.yaroslav.easyreads.presentation.note.list.NoteListViewModel
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit_dialog.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListContent

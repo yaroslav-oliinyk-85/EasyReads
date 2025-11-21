@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditAppTopBar
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditBottomBar
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.components.BookAddEditContent

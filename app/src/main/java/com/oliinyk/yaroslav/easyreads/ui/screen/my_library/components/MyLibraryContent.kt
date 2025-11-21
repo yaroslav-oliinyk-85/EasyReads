@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.MyLibraryStateUi
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable

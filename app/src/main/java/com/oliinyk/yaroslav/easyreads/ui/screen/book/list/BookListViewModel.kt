@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.presentation.book.list
+package com.oliinyk.yaroslav.easyreads.ui.screen.book.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

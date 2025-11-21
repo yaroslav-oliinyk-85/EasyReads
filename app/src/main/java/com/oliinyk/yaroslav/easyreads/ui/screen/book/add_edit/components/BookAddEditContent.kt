@@ -23,8 +23,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditEvent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppEditField
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 

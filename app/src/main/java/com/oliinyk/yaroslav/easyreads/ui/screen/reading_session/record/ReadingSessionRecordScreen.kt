@@ -13,9 +13,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
 import com.oliinyk.yaroslav.easyreads.domain.service.ReadTimeCounterService
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordEvent
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordUiState
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.record.ReadingSessionRecordViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.components.ReadingSessionRecordContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.components.ReadingSessionRecordTopAppBar
 import java.util.UUID

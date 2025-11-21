@@ -8,7 +8,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.list.ReadingSessionListUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

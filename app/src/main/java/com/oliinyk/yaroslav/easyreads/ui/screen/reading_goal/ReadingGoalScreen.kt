@@ -9,8 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.presentation.reading_goal.ReadingGoalViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingGoalContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingGoalTopAppBar
 

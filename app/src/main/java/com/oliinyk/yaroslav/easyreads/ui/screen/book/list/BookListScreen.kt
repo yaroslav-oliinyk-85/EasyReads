@@ -8,12 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingOrderType
-import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
-import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
-import com.oliinyk.yaroslav.easyreads.presentation.book.list.BookListViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components.BookListTopAppBar
 

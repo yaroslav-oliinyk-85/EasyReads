@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.oliinyk.yaroslav.easyreads.presentation.my_library.MyLibraryViewModel
 import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components.MyLibraryContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.components.MyLibraryTopAppBar
 

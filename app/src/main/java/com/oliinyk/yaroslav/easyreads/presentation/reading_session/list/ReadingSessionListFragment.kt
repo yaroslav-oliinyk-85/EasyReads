@@ -6,17 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
-import com.oliinyk.yaroslav.easyreads.domain.util.AlertDialogHelper
-import com.oliinyk.yaroslav.easyreads.presentation.reading_session.add_edit.ReadingSessionAddEditDialogFragment
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListScreen
-import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

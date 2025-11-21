@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.presentation.reading_session.list
+package com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

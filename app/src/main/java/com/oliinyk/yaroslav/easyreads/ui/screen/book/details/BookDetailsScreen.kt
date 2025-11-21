@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.presentation.book.details.BookDetailsViewModel
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components.BookDetailsContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components.BookDetailsTopAppBar

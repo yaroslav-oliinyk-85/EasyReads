@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditEvent
-import com.oliinyk.yaroslav.easyreads.presentation.book.add_edit.BookAddEditStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditEvent
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditStateUi
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 
 @Composable

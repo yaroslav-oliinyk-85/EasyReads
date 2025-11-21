@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.presentation.book.list.StateUiBookList
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.StateUiBookList
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable

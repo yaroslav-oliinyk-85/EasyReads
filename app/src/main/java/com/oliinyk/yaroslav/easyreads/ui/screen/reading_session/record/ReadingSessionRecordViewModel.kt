@@ -1,9 +1,7 @@
-package com.oliinyk.yaroslav.easyreads.presentation.reading_session.record
+package com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record
 
-import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession

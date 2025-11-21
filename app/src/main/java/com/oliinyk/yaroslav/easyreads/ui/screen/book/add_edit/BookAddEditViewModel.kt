@@ -1,4 +1,4 @@
-package com.oliinyk.yaroslav.easyreads.presentation.book.add_edit
+package com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit
 
 import android.content.Context
 import android.net.Uri
