@@ -289,6 +289,10 @@
     <string name="reading_goal__label__summery_read_average_pages_hour_text">Av. PAGES/HOUR\n%d</string>
     <string name="reading_goal__label__summery_books_title_text">Books (%d)</string>
 
+    <!-- Reading Goal Change Dialog -->
+    <string name="reading_goal_change_dialog__label__goal_text">Goal</string>
+    <string name="reading_goal_change_dialog__hint__enter_goal_text">Enter goal</string>
+
     <string name="reading_goal__toolbar__title_text">@string/reading_goal__label__goal_title_text</string>
 
 </resources>

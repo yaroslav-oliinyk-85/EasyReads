@@ -6,9 +6,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingGoalChangeDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingGoalContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.components.ReadingGoalTopAppBar
 
@@ -19,7 +23,10 @@ fun ReadingGoalScreen(
     modifier: Modifier = Modifier,
     viewModel: ReadingGoalViewModel = hiltViewModel()
 ) {
-    val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    var showReadingGoalChangeDialog by remember { mutableStateOf(false) }
+
     Scaffold (
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -27,11 +34,27 @@ fun ReadingGoalScreen(
         },
         content = { paddingValues ->
             ReadingGoalContent(
-                stateUi = stateUi,
-                onChangeGoalClick = { /* TODO: implement */ },
+                uiState = uiState,
+                onChangeGoalClick = {
+                    showReadingGoalChangeDialog = true
+                },
                 onBookClick = { navToBookDetails(it.id.toString()) },
                 modifier = Modifier.padding(paddingValues)
             )
         }
     )
+
+    // ----- Dialogs -----
+
+    if (showReadingGoalChangeDialog) {
+        ReadingGoalChangeDialog(
+            readingGoal = uiState.readingGoal,
+            onDismissRequest = {
+                showReadingGoalChangeDialog = false
+            },
+            onSave = {
+                viewModel.updateReadingGoal(it)
+            }
+        )
+    }
 }

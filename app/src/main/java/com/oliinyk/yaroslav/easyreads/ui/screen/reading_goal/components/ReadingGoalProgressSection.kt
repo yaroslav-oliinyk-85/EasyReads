@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
@@ -27,7 +27,7 @@ import java.util.Locale
 
 @Composable
 fun ReadingGoalProgressSection(
-    stateUi: ReadingGoalStateUi,
+    uiState: ReadingGoalUiState,
     modifier: Modifier = Modifier,
     isVisibleChangeGoalButton: Boolean = true,
     onChangeGoalClick: () -> Unit = { /* optional */ },
@@ -67,18 +67,18 @@ fun ReadingGoalProgressSection(
             Text(
                 text = stringResource(
                     R.string.reading_goal__label__goal_reading_progress_text,
-                    stateUi.currentYearFinishedBooksCount,
-                    stateUi.readingGoals
+                    uiState.currentYearFinishedBooksCount,
+                    uiState.readingGoal.goal
                 ),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             LinearProgressIndicator(
-                progress = if (stateUi.readingGoals > 0) {
-                    stateUi.currentYearFinishedBooksCount.toFloat() / stateUi.readingGoals
+                progress = if (uiState.readingGoal.goal > 0) {
+                    uiState.currentYearFinishedBooksCount.toFloat() / uiState.readingGoal.goal
                 } else {
-                    stateUi.readingGoals.toFloat()
+                    uiState.readingGoal.goal.toFloat()
                 },
                 modifier = Modifier
                     .fillMaxWidth()

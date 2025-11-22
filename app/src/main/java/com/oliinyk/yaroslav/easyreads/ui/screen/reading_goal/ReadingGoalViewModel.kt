@@ -27,10 +27,10 @@ class ReadingGoalViewModel @Inject constructor(
     private val readingSessionRepository: ReadingSessionRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<ReadingGoalStateUi> =
-        MutableStateFlow(ReadingGoalStateUi())
-    val stateUi: StateFlow<ReadingGoalStateUi>
-        get() = _stateUi.asStateFlow()
+    private val _uiState: MutableStateFlow<ReadingGoalUiState> =
+        MutableStateFlow(ReadingGoalUiState())
+    val uiState: StateFlow<ReadingGoalUiState>
+        get() = _uiState.asStateFlow()
 
     init {
         loadReadingGoal()
@@ -42,7 +42,7 @@ class ReadingGoalViewModel @Inject constructor(
             val currentYear: Int = Date().year + 1900
             readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
                 if (readingGoal != null) {
-                    _stateUi.update { it.copy(readingGoals = readingGoal.goal) }
+                    _uiState.update { it.copy(readingGoal = readingGoal) }
                 } else {
                     readingGoalRepository.insert(ReadingGoal(year = currentYear))
                 }
@@ -62,7 +62,7 @@ class ReadingGoalViewModel @Inject constructor(
                             .reduce { sum, pages -> sum + pages }
                     } else { 0 }
 
-                    _stateUi.update { state ->
+                    _uiState.update { state ->
                         state.copy(
                             books = currentYearFinishedBooks,
                             currentYearFinishedBooksCount = currentYearFinishedBooks.size,
@@ -78,7 +78,7 @@ class ReadingGoalViewModel @Inject constructor(
                             .reduce { acc, value -> acc + value }
                         val totalReadMinutes = totalReadTimeInMilliseconds / MILLISECONDS_IN_ONE_MINUTE
 
-                        _stateUi.update { state ->
+                        _uiState.update { state ->
                             state.copy(
                                 averagePagesHour = (state.readPages.toDouble() / totalReadMinutes * MINUTES_IN_ONE_HOUR).roundToInt(),
                                 readHours = (totalReadMinutes / MINUTES_IN_ONE_HOUR).toInt(),
@@ -90,12 +90,18 @@ class ReadingGoalViewModel @Inject constructor(
             }
         }
     }
+
+    fun updateReadingGoal(readingGoal: ReadingGoal) {
+        if (_uiState.value.readingGoal.goal != readingGoal.goal) {
+            readingGoalRepository.update(readingGoal)
+        }
+    }
 }
 
-data class ReadingGoalStateUi(
+data class ReadingGoalUiState(
     val books: List<Book> = emptyList(),
     val currentYearFinishedBooksCount: Int = 0,
-    val readingGoals: Int = 0,
+    val readingGoal: ReadingGoal = ReadingGoal(),
     val readPages: Int = 0,
     val averagePagesHour: Int = 0,
     val readHours: Int = 0,

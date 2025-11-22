@@ -17,13 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun ReadingGoalReadingSummarySection(
-    stateUi: ReadingGoalStateUi,
+    uiState: ReadingGoalUiState,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -52,8 +52,8 @@ fun ReadingGoalReadingSummarySection(
                 Text(
                     text = stringResource(
                         R.string.reading_goal__label__summery_read_time_text,
-                        stateUi.readHours,
-                        stateUi.readMinutes
+                        uiState.readHours,
+                        uiState.readMinutes
                     ),
                     textAlign = TextAlign.Left,
                     style = MaterialTheme.typography.bodyMedium
@@ -61,7 +61,7 @@ fun ReadingGoalReadingSummarySection(
                 Text(
                     text = stringResource(
                         R.string.reading_goal__label__summery_read_average_pages_hour_text,
-                        stateUi.averagePagesHour
+                        uiState.averagePagesHour
                     ),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium
@@ -69,7 +69,7 @@ fun ReadingGoalReadingSummarySection(
                 Text(
                     text = stringResource(
                         R.string.reading_goal__label__summery_read_pages_text,
-                        stateUi.readPages
+                        uiState.readPages
                     ),
                     textAlign = TextAlign.Right,
                     style = MaterialTheme.typography.bodyMedium

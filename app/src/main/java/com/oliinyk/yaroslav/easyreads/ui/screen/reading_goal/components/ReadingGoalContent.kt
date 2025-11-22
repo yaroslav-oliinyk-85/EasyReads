@@ -10,12 +10,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun ReadingGoalContent(
-    stateUi: ReadingGoalStateUi,
+    uiState: ReadingGoalUiState,
     onChangeGoalClick: () -> Unit,
     onBookClick: (Book) -> Unit,
     modifier: Modifier = Modifier
@@ -23,7 +23,6 @@ fun ReadingGoalContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-//                    .verticalScroll(rememberScrollState())
             .padding(
                 horizontal = Dimens.paddingHorizontalMedium,
                 vertical = Dimens.paddingVerticalSmall
@@ -31,16 +30,16 @@ fun ReadingGoalContent(
             .background(MaterialTheme.colorScheme.background)
     ) {
         ReadingGoalProgressSection(
-            stateUi = stateUi,
+            uiState = uiState,
             onChangeGoalClick = onChangeGoalClick
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalReadingSummarySection(
-            stateUi = stateUi
+            uiState = uiState
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalFinishedBooksSection(
-            books = stateUi.books,
+            books = uiState.books,
             onBookClick = onBookClick
         )
     }
