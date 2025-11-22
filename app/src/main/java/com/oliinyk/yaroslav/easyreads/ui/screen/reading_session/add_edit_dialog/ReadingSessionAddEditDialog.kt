@@ -42,7 +42,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ReadingSessionAddEditUiState(
+data class ReadingSessionAddEditUiStateDialog(
     val startPage: Int = 0,
     val endPage: Int = 0,
     val readPages: Int = 0,
@@ -75,9 +75,9 @@ fun ReadingSessionAddEditDialog(
         )
 
         // --- State ---
-        var uiState by rememberSaveable {
+        var uiStateDialog by rememberSaveable {
             mutableStateOf(
-                ReadingSessionAddEditUiState(
+                ReadingSessionAddEditUiStateDialog(
                     startPage = readingSession.startPage,
                     endPage = readingSession.endPage,
                     readPages = readingSession.readPages,
@@ -103,16 +103,16 @@ fun ReadingSessionAddEditDialog(
                     label = stringResource(
                         R.string.reading_session_add_edit_dialog__label__start_page_text
                     ),
-                    labelError = uiState.startPageInputErrorMessage,
-                    value = uiState.startPage.toString(),
+                    labelError = uiStateDialog.startPageInputErrorMessage,
+                    value = uiStateDialog.startPage.toString(),
                     onValueChange = { value ->
                         val startPageValue = value.toBookPage()
-                        uiState = uiState.copy(startPage =  startPageValue)
+                        uiStateDialog = uiStateDialog.copy(startPage =  startPageValue)
                     },
                     hint = stringResource(
                         R.string.reading_session_add_edit_dialog__hint__enter_start_page_text
                     ),
-                    readOnly = uiState.startPageReadOnly,
+                    readOnly = uiStateDialog.startPageReadOnly,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number,
                         imeAction = ImeAction.Next
@@ -125,14 +125,14 @@ fun ReadingSessionAddEditDialog(
                     label = stringResource(
                         R.string.reading_session_add_edit_dialog__label__end_page_text
                     ),
-                    labelError = uiState.endPageInputErrorMessage,
-                    value = if(uiState.endPage == 0) "" else uiState.endPage.toString(),
+                    labelError = uiStateDialog.endPageInputErrorMessage,
+                    value = if(uiStateDialog.endPage == 0) "" else uiStateDialog.endPage.toString(),
                     onValueChange = { value ->
                         val endPageValue = value.toBookPage()
-                        uiState = uiState.copy(
+                        uiStateDialog = uiStateDialog.copy(
                             endPage = endPageValue,
-                            readPages = endPageValue - uiState.startPage,
-                            endPageInputErrorMessage = if (endPageValue <= uiState.startPage) {
+                            readPages = endPageValue - uiStateDialog.startPage,
+                            endPageInputErrorMessage = if (endPageValue <= uiStateDialog.startPage) {
                                     endPageInputErrorMessageText
                                 } else {
                                     ""
@@ -165,9 +165,9 @@ fun ReadingSessionAddEditDialog(
                         ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
-                        value = if (uiState.hours == 0) "" else uiState.hours.toString(),
+                        value = if (uiStateDialog.hours == 0) "" else uiStateDialog.hours.toString(),
                         onValueChange = { value ->
-                            uiState = uiState.copy(hours = value.takeFirstTwoDigits())
+                            uiStateDialog = uiStateDialog.copy(hours = value.takeFirstTwoDigits())
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number,
@@ -185,9 +185,9 @@ fun ReadingSessionAddEditDialog(
                         ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
-                        value = if (uiState.minutes == 0) "" else uiState.minutes.toString(),
+                        value = if (uiStateDialog.minutes == 0) "" else uiStateDialog.minutes.toString(),
                         onValueChange = { value ->
-                            uiState = uiState.copy(
+                            uiStateDialog = uiStateDialog.copy(
                                 minutes = value.takeFirstTwoDigits()
                                     .coerceIn(AppConstants.MINUTES_ALLOWED_RANGE)
                             )
@@ -208,9 +208,9 @@ fun ReadingSessionAddEditDialog(
                         ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
-                        value = if (uiState.seconds == 0) "" else uiState.seconds.toString(),
+                        value = if (uiStateDialog.seconds == 0) "" else uiStateDialog.seconds.toString(),
                         onValueChange = { value ->
-                            uiState = uiState.copy(
+                            uiStateDialog = uiStateDialog.copy(
                                 seconds = value.takeFirstTwoDigits()
                                     .coerceIn(AppConstants.SECONDS_ALLOWED_RANGE)
                             )
@@ -228,22 +228,22 @@ fun ReadingSessionAddEditDialog(
                 // --- Buttons Save ---
                 AppButton(
                     onClick = {
-                        if (uiState.endPage <= uiState.startPage) {
-                            uiState = uiState.copy(
+                        if (uiStateDialog.endPage <= uiStateDialog.startPage) {
+                            uiStateDialog = uiStateDialog.copy(
                                 endPageInputErrorMessage = endPageInputErrorMessageText
                             )
                         } else {
-                            uiState = uiState.copy(endPageInputErrorMessage = "")
+                            uiStateDialog = uiStateDialog.copy(endPageInputErrorMessage = "")
                             onSave(
                                 readingSession.copy(
-                                    startPage = uiState.startPage,
-                                    endPage = uiState.endPage,
-                                    readPages = uiState.readPages,
+                                    startPage = uiStateDialog.startPage,
+                                    endPage = uiStateDialog.endPage,
+                                    readPages = uiStateDialog.readPages,
                                     readTimeInMilliseconds = ReadingSession
                                         .toReadTimeInMilliseconds(
-                                            uiState.hours,
-                                            uiState.minutes,
-                                            uiState.seconds
+                                            uiStateDialog.hours,
+                                            uiStateDialog.minutes,
+                                            uiStateDialog.seconds
                                         )
                                 )
                             )
