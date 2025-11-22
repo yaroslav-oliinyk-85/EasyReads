@@ -1,5 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components
 
+import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -19,9 +20,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
+import com.oliinyk.yaroslav.easyreads.ui.components.AppIconTopBarButton
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,15 +62,11 @@ fun BookListTopAppBar(
         },
         actions = {
 
-            IconButton(
+            AppIconTopBarButton(
+                imageVector = Icons.Default.Add,
+                contentDescription = stringResource(R.string.menu_item__add_text),
                 onClick = { onAddBookClick() }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.menu_item__add_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+            )
 
             IconButton(
                 onClick = { menuExpanded = true }
@@ -158,4 +158,37 @@ fun BookListTopAppBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
     )
+}
+
+@Preview(
+    showBackground = true
+)
+@Composable
+private fun BookListTopAppBarPreview() {
+    EasyReadsTheme {
+        BookListTopAppBar(
+            booksCount = 5,
+            bookShelvesType = BookShelvesType.READING,
+            holderSize = HolderSize.SMALL,
+            onAddBookClick = {},
+            onHolderSizeChange ={}
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun BookListTopAppBarDarkPreview() {
+    EasyReadsTheme {
+        BookListTopAppBar(
+            booksCount = 5,
+            bookShelvesType = BookShelvesType.READING,
+            holderSize = HolderSize.SMALL,
+            onAddBookClick = {},
+            onHolderSizeChange ={}
+        )
+    }
 }
