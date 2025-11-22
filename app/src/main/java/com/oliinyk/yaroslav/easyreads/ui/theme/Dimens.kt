@@ -80,11 +80,11 @@ object Dimens {
     val bookListItemShelveTextMaxLines = 2
 
     // ----- animation -----
-    val animationEnterDurationMillis: Int = 300
-    val animationExitDurationMillis: Int = 300
+    val animationEnterDurationMillis: Int = 200
+    val animationExitDurationMillis: Int = animationEnterDurationMillis
 
     val animationPopEnterDurationMillis: Int = 300
-    val animationPopExitDurationMillis: Int = 300
+    val animationPopExitDurationMillis: Int = animationPopEnterDurationMillis
 
-    val animationDelayDurationMillis: Int = 300
+    val animationDelayDurationMillis: Int = 200
 }
