@@ -52,7 +52,7 @@ fun BookDetailsReadingSessionsSection(
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
-            onSave = { it
+            onSave = {
                 onEdit(it)
                 editingReadingSession = null
             },

@@ -1,8 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.navigation
 
 import android.util.Log
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -16,7 +14,6 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.ReadingSessionRecordScreen
-import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.util.UUID
 
 private const val TAG = "AppNavHost"
@@ -99,10 +96,10 @@ fun AppNavHost(
             popEnterTransition = AppNavTransitions.popEnterTransition,
             popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
-            val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
+            val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
 
             BookDetailsScreen(
-                bookId = UUID.fromString(bookId),
+                bookId = UUID.fromString(bookIdString),
                 navBack = {
                     navHostController.popBackStack()
                 },
@@ -188,10 +185,10 @@ fun AppNavHost(
             popEnterTransition = AppNavTransitions.popEnterTransition,
             popExitTransition = AppNavTransitions.popExitTransition
         ) { backStackEntry ->
-            val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
+            val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
 
             ReadingSessionRecordScreen(
-                bookId = bookId,
+                bookId = bookIdString,
                 navBack = {
                     navHostController.popBackStack()
                 },

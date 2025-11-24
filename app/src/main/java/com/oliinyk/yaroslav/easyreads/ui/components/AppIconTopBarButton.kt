@@ -1,8 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.border
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -15,7 +13,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
-import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
@@ -42,20 +39,15 @@ fun AppIconTopBarButton(
 ) {
     IconButton(
         onClick = onClick,
-//        modifier = modifier.border(
-//            width = Dimens.buttonBorderWith,
-//            color = MaterialTheme.colorScheme.onPrimary,
-//            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-//        )
         colors = IconButtonDefaults.iconButtonColors(
             containerColor = MaterialTheme.colorScheme.onPrimary,
             contentColor = MaterialTheme.colorScheme.primary
-        )
+        ),
+        modifier = modifier
     ) {
         Icon(
             painter = painter,
-            contentDescription = contentDescription,
-//            tint = MaterialTheme.colorScheme.primary
+            contentDescription = contentDescription
         )
     }
 }

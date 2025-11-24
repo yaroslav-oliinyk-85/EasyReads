@@ -219,17 +219,6 @@ fun EasyReadsTheme(
         darkTheme -> darkScheme
         else -> lightScheme
     }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val activity = view.context.findActivity()
-            activity?.window?.let { window ->
-                window.statusBarColor = colorScheme.primary.toArgb()
-                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                    darkTheme
-            }
-        }
-    }
 
     MaterialTheme(
         colorScheme = colorScheme,

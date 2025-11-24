@@ -33,7 +33,7 @@ fun ReadingSessionRecordContent(
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
-            onSave = { it
+            onSave = {
                 onEvent(ReadingSessionRecordEvent.OnFinish(it))
                 editingReadingSession = null
             },
