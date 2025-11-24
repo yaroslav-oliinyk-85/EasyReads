@@ -11,7 +11,7 @@
     <string name="book_cover_image__content_description__text">Book Cover Image</string>
 
     <!-- Toolbar -->
-    <string name="note_list__toolbar__title_text">Notes (%1$d)</string>
+    <string name="note_list__toolbar__title_text">Notes</string>
     <string name="book_details__toolbar__title_test">Book Details</string>
     <string name="book_list__toolbar__title_all_text">All Books</string>
     <string name="book_list__toolbar__title_finished_text">Finished Books</string>
