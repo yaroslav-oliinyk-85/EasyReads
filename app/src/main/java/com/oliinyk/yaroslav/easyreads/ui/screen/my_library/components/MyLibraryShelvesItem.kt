@@ -42,8 +42,7 @@ fun MyLibraryShelvesItem(
         )
         AppBadge(
             text = itemCount,
-            style = MaterialTheme.typography.titleMedium,
-            borderColor = MaterialTheme.colorScheme.background
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(Modifier.weight(1f))
         Icon(
