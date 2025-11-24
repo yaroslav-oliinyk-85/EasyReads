@@ -263,7 +263,7 @@
     <string name="reading_session_list_item__label__read_end_page_text">From %1$d To %2$d Page</string>
     <string name="reading_session_list_item__label__read_pages_hour_text">PAGES/HOUR\n%d</string>
     <string name="reading_session_list_item__label__read_pages_text">READ PAGES\n%d</string>
-    <string name="reading_session_list__toolbar__title_text">Reading Sessions (%d)</string>
+    <string name="reading_session_list__toolbar__title_text">Reading Sessions</string>
 
     <!-- Read Time Counter Notification -->
     <string name="read_time_counter_notification_channel_name">Read Time Counter</string>
