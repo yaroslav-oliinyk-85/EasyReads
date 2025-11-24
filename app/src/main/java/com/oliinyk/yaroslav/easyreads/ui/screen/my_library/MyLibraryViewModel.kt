@@ -23,10 +23,10 @@ class MyLibraryViewModel @Inject constructor(
     private val readingGoalRepository: ReadingGoalRepository
 ) : ViewModel() {
 
-    private val _stateUi: MutableStateFlow<MyLibraryStateUi> =
-        MutableStateFlow(MyLibraryStateUi())
-    val stateUi: StateFlow<MyLibraryStateUi>
-        get() = _stateUi.asStateFlow()
+    private val _uiState: MutableStateFlow<MyLibraryUiState> =
+        MutableStateFlow(MyLibraryUiState())
+    val uiState: StateFlow<MyLibraryUiState>
+        get() = _uiState.asStateFlow()
 
     init {
         loadReadingGoal()
@@ -38,7 +38,7 @@ class MyLibraryViewModel @Inject constructor(
             val currentYear: Int = Date().year + 1900
             readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
                 if (readingGoal != null) {
-                    _stateUi.update { it.copy(readingGoals = readingGoal.goal) }
+                    _uiState.update { it.copy(readingGoals = readingGoal.goal) }
                 } else {
                     readingGoalRepository.insert(ReadingGoal(year = currentYear))
                 }
@@ -52,7 +52,7 @@ class MyLibraryViewModel @Inject constructor(
                 val currentYearFinishedBooks: List<Book> = books.filter {
                     it.isFinished && (it.finishedDate != null) && (it.finishedDate.year == Date().year)
                 }
-                _stateUi.update {
+                _uiState.update {
                     it.copy(
                         finishedCount = books.count { book -> book.shelf == FINISHED },
                         readingCount = books.count { book -> book.shelf == READING },
@@ -66,7 +66,7 @@ class MyLibraryViewModel @Inject constructor(
     }
 }
 
-data class MyLibraryStateUi(
+data class MyLibraryUiState(
     val finishedCount: Int = 0,
     val readingCount: Int = 0,
     val wantToReadCount: Int = 0,

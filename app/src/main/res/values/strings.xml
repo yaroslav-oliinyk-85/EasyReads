@@ -272,10 +272,10 @@
 
     <!-- My Library -->
     <string name="my_library__label__shelves_title_text">Shelves</string>
-    <string name="my_library__label__shelf_finished_text">Finished (%d)</string>
-    <string name="my_library__label__shelf_reading_text">Reading (%d)</string>
-    <string name="my_library__label__shelf_want_to_read_text">Want To Read (%d)</string>
-    <string name="my_library__label__shelf_see_all_books">See All Books (%d)</string>
+    <string name="my_library__label__shelf_finished_text">Finished</string>
+    <string name="my_library__label__shelf_reading_text">Reading</string>
+    <string name="my_library__label__shelf_want_to_read_text">Want To Read</string>
+    <string name="my_library__label__shelf_see_all_books">See All Books</string>
 
     <string name="my_library__toolbar__title_text">@string/app_name</string>
 

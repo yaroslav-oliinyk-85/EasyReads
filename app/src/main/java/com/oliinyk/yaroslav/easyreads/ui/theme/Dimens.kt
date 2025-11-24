@@ -14,6 +14,7 @@ object Dimens {
     val spacerWidthSmall = 8.dp
 
     val roundedCornerShapeSize = 8.dp
+    val appBadgeRoundedCornerShapeSize = 8.dp
 
     val paddingHorizontalSmall = 8.dp
     val paddingHorizontalMedium = 16.dp
@@ -42,6 +43,7 @@ object Dimens {
     val buttonContentPaddingVertical = 12.dp
     val buttonContentPaddingHorizontal = 12.dp
     val buttonBorderWith = 1.dp
+    val appBadgeBorderWith = 1.dp
 
     val arrangementHorizontalSpaceTiny = 4.dp
     val arrangementHorizontalSpaceSmall = 8.dp
@@ -71,13 +73,17 @@ object Dimens {
 
     val appDividerThickness = 2.dp
 
+
     // ----- text -----
     val appTitleMediumFontSize = 18.sp
+
+    val appBadgeFontSize = 16.sp
 
     val readingSessionRecordBookTitleMaxLines = 3
     val readingSessionRecordBookAuthorMaxLines = 1
 
     val bookListItemShelveTextMaxLines = 2
+
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

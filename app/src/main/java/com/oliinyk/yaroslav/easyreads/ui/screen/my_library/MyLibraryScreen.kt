@@ -20,7 +20,7 @@ fun MyLibraryScreen(
     modifier: Modifier = Modifier,
     viewModel: MyLibraryViewModel = hiltViewModel()
 ) {
-    val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -29,7 +29,7 @@ fun MyLibraryScreen(
         },
         content = { paddingValues ->
             MyLibraryContent(
-                stateUi = stateUi,
+                uiState = uiState,
                 onReadingGoalClick = navToReadingGoal,
                 onShelfClick = { navToBookListByShelvesType(it.toString()) },
                 onSeeAllClick = { navToBookList() },
