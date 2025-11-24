@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
+import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -80,7 +81,7 @@ fun BookDetailsNotesSection(
             AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
 
             BottomActionButtonsRow(
-                notesCount = notes.size,
+                noteCount = notes.size,
                 onClickSeeAllNotes = onSeeAllNotes,
                 onClickAddNote = { editingNote = it }
             )
@@ -146,7 +147,7 @@ private fun ShowLatestNoteInfoRow(
 
 @Composable
 private fun BottomActionButtonsRow(
-    notesCount: Int,
+    noteCount: Int,
     onClickSeeAllNotes: () -> Unit,
     onClickAddNote: (Note) -> Unit,
     modifier: Modifier = Modifier
@@ -163,9 +164,13 @@ private fun BottomActionButtonsRow(
         ) {
             Text(
                 text = stringResource(
-                    R.string.book_details__button__see_all_notes_text,
-                    notesCount
+                    R.string.book_details__button__see_all_notes_text
                 ),
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Spacer(Modifier.width(Dimens.spacerWidthSmall))
+            AppBadge(
+                text = noteCount.toString(),
                 style = MaterialTheme.typography.bodyLarge
             )
         }

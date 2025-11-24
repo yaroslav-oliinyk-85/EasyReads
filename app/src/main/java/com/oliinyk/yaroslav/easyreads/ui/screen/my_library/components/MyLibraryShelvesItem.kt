@@ -42,6 +42,7 @@ fun MyLibraryShelvesItem(
         )
         AppBadge(
             text = itemCount,
+            fontSize = Dimens.appTitleMediumFontSize,
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(Modifier.weight(1f))

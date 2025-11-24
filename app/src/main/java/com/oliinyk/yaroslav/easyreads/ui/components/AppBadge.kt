@@ -21,7 +21,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun AppBadge(
     text: String,
     modifier: Modifier = Modifier,
-    fontSize: TextUnit = Dimens.appBadgeFontSize,
+    fontSize: TextUnit = TextUnit.Unspecified,
     style: TextStyle = LocalTextStyle.current,
     borderColor: Color = MaterialTheme.colorScheme.background
 ) {
@@ -45,10 +45,7 @@ fun AppBadge(
             fontSize = fontSize,
             style = style,
             modifier = Modifier
-                .padding(
-                    horizontal = Dimens.paddingHorizontalSmall,
-                    vertical = Dimens.paddingVerticalTiny
-                )
+                .padding(horizontal = Dimens.paddingHorizontalSmall)
         )
     }
 }

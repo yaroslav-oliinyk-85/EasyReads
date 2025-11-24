@@ -54,7 +54,7 @@
 
     <!-- Book Details -->
     <string name="book_details__button__add_note_text">Add Note</string>
-    <string name="book_details__button__see_all_notes_text">See All Notes (%1$d)</string>
+    <string name="book_details__button__see_all_notes_text">See All Notes</string>
     <string name="book_details__label__book_description_text">Description</string>
     <string name="book_details__label__book_isbn_text">ISBN:</string>
     <string name="book_details__label__no_notes_text">No Notes</string>
@@ -83,7 +83,7 @@
 
     <string name="book_details__label__no_reading_sessions_text">No Reading Sessions</string>
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
-    <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions (%1$d)</string>
+    <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions</string>
 
     <string name="book_details__confirmation_dialog__title_book_remove_text">Remove Book</string>
     <string name="book_details__confirmation_dialog__message_book_remove_text">Book will be removed!</string>

@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
+import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -231,9 +232,13 @@ private fun SeeAllReadingSessionButton(
     ) {
         Text(
             text = stringResource(
-                R.string.book_details__button__see_all_reading_sessions_text,
-                quantity
+                R.string.book_details__button__see_all_reading_sessions_text
             ),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Spacer(Modifier.width(Dimens.spacerWidthSmall))
+        AppBadge(
+            text = quantity.toString(),
             style = MaterialTheme.typography.bodyLarge
         )
     }
