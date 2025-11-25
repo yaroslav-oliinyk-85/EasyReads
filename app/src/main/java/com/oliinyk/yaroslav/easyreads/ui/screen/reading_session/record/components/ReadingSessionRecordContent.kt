@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +30,7 @@ fun ReadingSessionRecordContent(
     onEvent: (ReadingSessionRecordEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var editingReadingSession: ReadingSession? by remember { mutableStateOf(null) }
+    var editingReadingSession: ReadingSession? by rememberSaveable { mutableStateOf(null) }
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
@@ -41,7 +42,7 @@ fun ReadingSessionRecordContent(
         )
     }
 
-    var addingNote: Note? by remember { mutableStateOf(null) }
+    var addingNote: Note? by rememberSaveable { mutableStateOf(null) }
     addingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
