@@ -45,7 +45,7 @@ fun AppBadge(
             fontSize = fontSize,
             style = style,
             modifier = Modifier
-                .padding(horizontal = Dimens.paddingHorizontalSmall)
+                .padding(horizontal = Dimens.paddingHorizontalTiny)
         )
     }
 }

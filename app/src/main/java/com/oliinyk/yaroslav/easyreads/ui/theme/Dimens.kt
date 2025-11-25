@@ -16,6 +16,7 @@ object Dimens {
     val roundedCornerShapeSize = 8.dp
     val appBadgeRoundedCornerShapeSize = 8.dp
 
+    val paddingHorizontalTiny = 4.dp
     val paddingHorizontalSmall = 8.dp
     val paddingHorizontalMedium = 16.dp
 
