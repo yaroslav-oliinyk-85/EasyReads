@@ -21,16 +21,16 @@ fun NoteListContent(
     notes: List<Note>,
     onEdit: (Note) -> Unit,
     onRemove: (Note) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         if (notes.isEmpty()) {
             Text(
                 text = stringResource(R.string.note_list__label__no_notes_text),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
             )
         } else {
             LazyColumn(
@@ -42,7 +42,7 @@ fun NoteListContent(
                     NoteListItemCell(
                         note = note,
                         onEdit = onEdit,
-                        onRemove = onRemove
+                        onRemove = onRemove,
                     )
                 }
             }

@@ -11,22 +11,22 @@ import com.oliinyk.yaroslav.easyreads.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookAddEditAppTopBar(
-    bookTitle: String
-) {
+fun BookAddEditAppTopBar(bookTitle: String) {
     TopAppBar(
         title = {
             Text(
-                text = if (bookTitle.isBlank()) {
-                    stringResource(R.string.book_add_edit__title__add_text)
-                } else {
-                    stringResource(R.string.book_add_edit__title__edit_text)
-                }
+                text =
+                    if (bookTitle.isBlank()) {
+                        stringResource(R.string.book_add_edit__title__add_text)
+                    } else {
+                        stringResource(R.string.book_add_edit__title__edit_text)
+                    },
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }

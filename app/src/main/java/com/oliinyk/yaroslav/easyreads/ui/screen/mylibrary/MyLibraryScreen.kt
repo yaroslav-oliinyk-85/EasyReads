@@ -18,7 +18,7 @@ fun MyLibraryScreen(
     navToBookListByShelvesType: (String) -> Unit,
     navToBookList: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MyLibraryViewModel = hiltViewModel()
+    viewModel: MyLibraryViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -33,8 +33,8 @@ fun MyLibraryScreen(
                 onReadingGoalClick = navToReadingGoal,
                 onShelfClick = { navToBookListByShelvesType(it.toString()) },
                 onSeeAllClick = { navToBookList() },
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             )
-        }
+        },
     )
 }

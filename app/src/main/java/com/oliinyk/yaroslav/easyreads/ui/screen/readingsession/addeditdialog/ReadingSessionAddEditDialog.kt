@@ -46,33 +46,32 @@ data class ReadingSessionAddEditUiStateDialog(
     val startPage: Int = 0,
     val endPage: Int = 0,
     val readPages: Int = 0,
-
     val hours: Int = 0,
     val minutes: Int = 0,
     val seconds: Int = 0,
-
     val startPageReadOnly: Boolean = true,
-
     val startPageInputErrorMessage: String = "",
-    val endPageInputErrorMessage: String = ""
+    val endPageInputErrorMessage: String = "",
 ) : Parcelable
 
 @Composable
 fun ReadingSessionAddEditDialog(
     readingSession: ReadingSession,
     onSave: (ReadingSession) -> Unit,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
 ) {
     Dialog(
-        onDismissRequest = onDismissRequest
+        onDismissRequest = onDismissRequest,
     ) {
         // --- Error Messages ---
-        val startPageInputErrorMessageText = stringResource(
-            R.string.reading_session_add_edit_dialog__error__start_page_message_text
-        )
-        val endPageInputErrorMessageText = stringResource(
-            R.string.reading_session_add_edit_dialog__error__end_page_message_text
-        )
+        val startPageInputErrorMessageText =
+            stringResource(
+                R.string.reading_session_add_edit_dialog__error__start_page_message_text,
+            )
+        val endPageInputErrorMessageText =
+            stringResource(
+                R.string.reading_session_add_edit_dialog__error__end_page_message_text,
+            )
 
         // --- State ---
         var uiStateDialog by rememberSaveable {
@@ -83,143 +82,166 @@ fun ReadingSessionAddEditDialog(
                     readPages = readingSession.readPages,
                     hours = readingSession.readHours,
                     minutes = readingSession.readMinutes,
-                    seconds = readingSession.readSeconds
-                )
+                    seconds = readingSession.readSeconds,
+                ),
             )
         }
 
         Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(Dimens.paddingAllMedium)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(Dimens.paddingAllMedium),
             ) {
                 // --- Start Page ---
                 AppEditField(
-                    label = stringResource(
-                        R.string.reading_session_add_edit_dialog__label__start_page_text
-                    ),
+                    label =
+                        stringResource(
+                            R.string.reading_session_add_edit_dialog__label__start_page_text,
+                        ),
                     labelError = uiStateDialog.startPageInputErrorMessage,
                     value = uiStateDialog.startPage.toString(),
                     onValueChange = { value ->
                         val startPageValue = value.toBookPage()
-                        uiStateDialog = uiStateDialog.copy(startPage =  startPageValue)
+                        uiStateDialog = uiStateDialog.copy(startPage = startPageValue)
                     },
-                    hint = stringResource(
-                        R.string.reading_session_add_edit_dialog__hint__enter_start_page_text
-                    ),
+                    hint =
+                        stringResource(
+                            R.string.reading_session_add_edit_dialog__hint__enter_start_page_text,
+                        ),
                     readOnly = uiStateDialog.startPageReadOnly,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Next
-                    ),
+                    keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Next,
+                        ),
                     modifier = Modifier.fillMaxWidth(),
                 )
 
                 // --- End Page ---
                 AppEditField(
-                    label = stringResource(
-                        R.string.reading_session_add_edit_dialog__label__end_page_text
-                    ),
+                    label =
+                        stringResource(
+                            R.string.reading_session_add_edit_dialog__label__end_page_text,
+                        ),
                     labelError = uiStateDialog.endPageInputErrorMessage,
-                    value = if(uiStateDialog.endPage == 0) "" else uiStateDialog.endPage.toString(),
+                    value = if (uiStateDialog.endPage == 0) "" else uiStateDialog.endPage.toString(),
                     onValueChange = { value ->
                         val endPageValue = value.toBookPage()
-                        uiStateDialog = uiStateDialog.copy(
-                            endPage = endPageValue,
-                            readPages = endPageValue - uiStateDialog.startPage,
-                            endPageInputErrorMessage = if (endPageValue <= uiStateDialog.startPage) {
-                                    endPageInputErrorMessageText
-                                } else {
-                                    ""
-                                }
-                        )
+                        uiStateDialog =
+                            uiStateDialog.copy(
+                                endPage = endPageValue,
+                                readPages = endPageValue - uiStateDialog.startPage,
+                                endPageInputErrorMessage =
+                                    if (endPageValue <= uiStateDialog.startPage) {
+                                        endPageInputErrorMessageText
+                                    } else {
+                                        ""
+                                    },
+                            )
                     },
-                    hint = stringResource(
-                        R.string.reading_session_add_edit_dialog__hint__enter_end_page_text
-                    ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Dimens.paddingTopMedium),
+                    hint =
+                        stringResource(
+                            R.string.reading_session_add_edit_dialog__hint__enter_end_page_text,
+                        ),
+                    keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = Dimens.paddingTopMedium),
                 )
 
                 // --- Hours/Minutes/Seconds ---
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Dimens.paddingTopMedium),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = Dimens.paddingTopMedium),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     // --- Hours ---
                     AppEditField(
-                        label = stringResource(
-                            R.string.reading_session_add_edit_dialog__label__read_hour_text
-                        ),
+                        label =
+                            stringResource(
+                                R.string.reading_session_add_edit_dialog__label__read_hour_text,
+                            ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
                         value = if (uiStateDialog.hours == 0) "" else uiStateDialog.hours.toString(),
                         onValueChange = { value ->
                             uiStateDialog = uiStateDialog.copy(hours = value.takeFirstTwoDigits())
                         },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier.weight(1f)
+                        keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next,
+                            ),
+                        modifier = Modifier.weight(1f),
                     )
 
                     Spacer(Modifier.width(Dimens.spacerWidthSmall))
 
                     // --- Minutes ---
                     AppEditField(
-                        label = stringResource(
-                            R.string.reading_session_add_edit_dialog__label__read_minutes_text
-                        ),
+                        label =
+                            stringResource(
+                                R.string.reading_session_add_edit_dialog__label__read_minutes_text,
+                            ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
                         value = if (uiStateDialog.minutes == 0) "" else uiStateDialog.minutes.toString(),
                         onValueChange = { value ->
-                            uiStateDialog = uiStateDialog.copy(
-                                minutes = value.takeFirstTwoDigits()
-                                    .coerceIn(AppConstants.MINUTES_ALLOWED_RANGE)
-                            )
+                            uiStateDialog =
+                                uiStateDialog.copy(
+                                    minutes =
+                                        value
+                                            .takeFirstTwoDigits()
+                                            .coerceIn(AppConstants.MINUTES_ALLOWED_RANGE),
+                                )
                         },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Next
-                        ),
-                        modifier = Modifier.weight(1f)
+                        keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Next,
+                            ),
+                        modifier = Modifier.weight(1f),
                     )
 
                     Spacer(Modifier.width(Dimens.spacerWidthSmall))
 
                     // --- Seconds ---
                     AppEditField(
-                        label = stringResource(
-                            R.string.reading_session_add_edit_dialog__label__read_seconds_text
-                        ),
+                        label =
+                            stringResource(
+                                R.string.reading_session_add_edit_dialog__label__read_seconds_text,
+                            ),
                         labelTextAlign = TextAlign.Center,
                         hint = "0",
                         value = if (uiStateDialog.seconds == 0) "" else uiStateDialog.seconds.toString(),
                         onValueChange = { value ->
-                            uiStateDialog = uiStateDialog.copy(
-                                seconds = value.takeFirstTwoDigits()
-                                    .coerceIn(AppConstants.SECONDS_ALLOWED_RANGE)
-                            )
+                            uiStateDialog =
+                                uiStateDialog.copy(
+                                    seconds =
+                                        value
+                                            .takeFirstTwoDigits()
+                                            .coerceIn(AppConstants.SECONDS_ALLOWED_RANGE),
+                                )
                         },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
-                        ),
-                        modifier = Modifier.weight(1f)
+                        keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done,
+                            ),
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
@@ -229,9 +251,10 @@ fun ReadingSessionAddEditDialog(
                 AppButton(
                     onClick = {
                         if (uiStateDialog.endPage <= uiStateDialog.startPage) {
-                            uiStateDialog = uiStateDialog.copy(
-                                endPageInputErrorMessage = endPageInputErrorMessageText
-                            )
+                            uiStateDialog =
+                                uiStateDialog.copy(
+                                    endPageInputErrorMessage = endPageInputErrorMessageText,
+                                )
                         } else {
                             uiStateDialog = uiStateDialog.copy(endPageInputErrorMessage = "")
                             onSave(
@@ -239,23 +262,25 @@ fun ReadingSessionAddEditDialog(
                                     startPage = uiStateDialog.startPage,
                                     endPage = uiStateDialog.endPage,
                                     readPages = uiStateDialog.readPages,
-                                    readTimeInMilliseconds = ReadingSession
-                                        .toReadTimeInMilliseconds(
-                                            uiStateDialog.hours,
-                                            uiStateDialog.minutes,
-                                            uiStateDialog.seconds
-                                        )
-                                )
+                                    readTimeInMilliseconds =
+                                        ReadingSession
+                                            .toReadTimeInMilliseconds(
+                                                uiStateDialog.hours,
+                                                uiStateDialog.minutes,
+                                                uiStateDialog.seconds,
+                                            ),
+                                ),
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(
-                            R.string.dialog__button__save_text
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
+                        text =
+                            stringResource(
+                                R.string.dialog__button__save_text,
+                            ),
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
 
@@ -264,13 +289,14 @@ fun ReadingSessionAddEditDialog(
                 // --- Buttons Cancel ---
                 AppTextButton(
                     onClick = onDismissRequest,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(
-                            R.string.dialog__button__cancel_text
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
+                        text =
+                            stringResource(
+                                R.string.dialog__button__cancel_text,
+                            ),
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
             }
@@ -285,7 +311,7 @@ fun ReadingSessionAddEditDialogPreview() {
         ReadingSessionAddEditDialog(
             readingSession = ReadingSession(startPage = 25),
             onSave = { },
-            onDismissRequest = { }
+            onDismissRequest = { },
         )
     }
 }

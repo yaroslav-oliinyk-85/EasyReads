@@ -20,13 +20,13 @@ fun AppIconTopBarButton(
     imageVector: ImageVector,
     contentDescription: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AppIconTopBarButton(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -35,19 +35,20 @@ fun AppIconTopBarButton(
     painter: Painter,
     contentDescription: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     IconButton(
         onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = MaterialTheme.colorScheme.onPrimary,
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
-        modifier = modifier
+        colors =
+            IconButtonDefaults.iconButtonColors(
+                containerColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = MaterialTheme.colorScheme.primary,
+            ),
+        modifier = modifier,
     ) {
         Icon(
             painter = painter,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
         )
     }
 }
@@ -59,7 +60,7 @@ private fun AppIconTopBarButtonPreview() {
         AppIconTopBarButton(
             imageVector = Icons.Default.Add,
             contentDescription = "",
-            onClick = { }
+            onClick = { },
         )
     }
 }
@@ -71,7 +72,7 @@ private fun AppIconTopBarButtonDarkPreview() {
         AppIconTopBarButton(
             imageVector = Icons.Default.Add,
             contentDescription = "",
-            onClick = { }
+            onClick = { },
         )
     }
 }

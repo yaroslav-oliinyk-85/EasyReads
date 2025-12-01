@@ -22,7 +22,7 @@ fun ReadingSessionRecordScreen(
     bookId: String?,
     navBack: () -> Unit,
     navToNoteList: (String) -> Unit,
-    viewModel: ReadingSessionRecordViewModel = hiltViewModel()
+    viewModel: ReadingSessionRecordViewModel = hiltViewModel(),
 ) {
     val uiState: ReadingSessionRecordUiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -40,7 +40,7 @@ fun ReadingSessionRecordScreen(
                     putExtra("bookId", book.id.toString())
                     putExtra("bookTitle", book.title)
                     putExtra("pageCurrent", book.pageCurrent)
-                }
+                },
             )
         }
     }
@@ -49,7 +49,7 @@ fun ReadingSessionRecordScreen(
         context.startService(
             Intent(context, ReadTimeCounterService::class.java).apply {
                 action = ReadTimeCounterService.Actions.STOP.toString()
-            }
+            },
         )
         viewModel.removeUnfinishedReadingSession()
         navBack()
@@ -58,7 +58,7 @@ fun ReadingSessionRecordScreen(
     Scaffold(
         topBar = {
             ReadingSessionRecordTopAppBar()
-        }
+        },
     ) { paddingValues ->
         ReadingSessionRecordContent(
             stateUi = uiState,
@@ -69,7 +69,7 @@ fun ReadingSessionRecordScreen(
                             context.startService(
                                 Intent(context, ReadTimeCounterService::class.java).apply {
                                     action = resumeOrPauseAction.toString()
-                                }
+                                },
                             )
                         }
                     }
@@ -80,10 +80,10 @@ fun ReadingSessionRecordScreen(
                                 context.startService(
                                     Intent(
                                         context,
-                                        ReadTimeCounterService::class.java
+                                        ReadTimeCounterService::class.java,
                                     ).apply {
                                         action = ReadTimeCounterService.Actions.PAUSE.toString()
-                                    }
+                                    },
                                 )
                             }
                         }
@@ -103,14 +103,14 @@ fun ReadingSessionRecordScreen(
                         context.startService(
                             Intent(context, ReadTimeCounterService::class.java).apply {
                                 action = ReadTimeCounterService.Actions.STOP.toString()
-                            }
+                            },
                         )
                         viewModel.save(event.readingSession)
                         navBack()
                     }
                 }
             },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         )
     }
 }

@@ -14,23 +14,23 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 @Composable
 fun ReadingProgressIndicator(
     percentage: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.size(Dimens.bookListItemPercentageSize),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator(
             modifier = Modifier.fillMaxSize(),
             progress = percentage / 100f,
             strokeWidth = Dimens.bookListItemPercentageStrokeWidth,
             color = MaterialTheme.colorScheme.primary,
-            trackColor = MaterialTheme.colorScheme.background
+            trackColor = MaterialTheme.colorScheme.background,
         )
         Text(
             text = "$percentage%",
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
     }
 }

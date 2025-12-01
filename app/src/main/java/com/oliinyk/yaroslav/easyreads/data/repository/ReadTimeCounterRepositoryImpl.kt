@@ -2,13 +2,12 @@ package com.oliinyk.yaroslav.easyreads.data.repository
 
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
-import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadTimeCounterRepository
+import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -21,104 +20,115 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ReadTimeCounterRepositoryImpl @Inject constructor(
-    private val readingSessionRepository: ReadingSessionRepository
-) : ReadTimeCounterRepository {
+class ReadTimeCounterRepositoryImpl
+    @Inject
+    constructor(
+        private val readingSessionRepository: ReadingSessionRepository,
+    ) : ReadTimeCounterRepository {
+        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+        private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+        private var timeCounterJob: Job? = null
+        private var _readingSession: ReadingSession = ReadingSession()
 
-    private var timeCounterJob: Job? = null
-    private var _readingSession: ReadingSession = ReadingSession()
-
-    private var onTick: (Date) -> Unit = { date ->
-        if (timeCounterJob?.isActive == true) {
-            val timeDifference = date.time - _readingSession.updatedDate.time
-            _readingSession = _readingSession.copy(
-                updatedDate = date,
-                readTimeInMilliseconds = _readingSession.readTimeInMilliseconds + timeDifference
-            )
-            readingSessionRepository.update(_readingSession)
+        private var onTick: (Date) -> Unit = { date ->
+            if (timeCounterJob?.isActive == true) {
+                val timeDifference = date.time - _readingSession.updatedDate.time
+                _readingSession =
+                    _readingSession.copy(
+                        updatedDate = date,
+                        readTimeInMilliseconds = _readingSession.readTimeInMilliseconds + timeDifference,
+                    )
+                readingSessionRepository.update(_readingSession)
+            }
         }
-    }
 
-    private fun updateReadingSession(readingSession: ReadingSession) {
-        timeCounterJob?.cancel()
+        private fun updateReadingSession(readingSession: ReadingSession) {
+            timeCounterJob?.cancel()
 
-        _readingSession = if (_readingSession.recordStatus == ReadingSessionRecordStatusType.STARTED) {
-            readingSession.copy()
-        } else {
-            readingSession.copy(
-                updatedDate = Date()
-            )
+            _readingSession =
+                if (_readingSession.recordStatus == ReadingSessionRecordStatusType.STARTED) {
+                    readingSession.copy()
+                } else {
+                    readingSession.copy(
+                        updatedDate = Date(),
+                    )
+                }
         }
-    }
 
-    override fun getReadingSession(): ReadingSession {
-        return _readingSession.copy()
-    }
+        override fun getReadingSession(): ReadingSession = _readingSession.copy()
 
-    override fun start(bookId: UUID, pageCurrent: Int) {
-        timeCounterJob?.cancel()
+        override fun start(
+            bookId: UUID,
+            pageCurrent: Int,
+        ) {
+            timeCounterJob?.cancel()
 
-        coroutineScope.launch(coroutineDispatcher) {
-            readingSessionRepository.getLastUnfinishedByBookId(bookId)
-                .take(1)
-                .collect { readingSession ->
-                    if (readingSession == null) {
-                        _readingSession = ReadingSession(
-                                bookId = bookId,
-                                startPage = pageCurrent
-                            )
-                        readingSessionRepository.insert(_readingSession)
-                    } else {
-                        updateReadingSession(readingSession)
+            coroutineScope.launch(coroutineDispatcher) {
+                readingSessionRepository
+                    .getLastUnfinishedByBookId(bookId)
+                    .take(1)
+                    .collect { readingSession ->
+                        if (readingSession == null) {
+                            _readingSession =
+                                ReadingSession(
+                                    bookId = bookId,
+                                    startPage = pageCurrent,
+                                )
+                            readingSessionRepository.insert(_readingSession)
+                        } else {
+                            updateReadingSession(readingSession)
+                        }
+                    }
+            }
+
+            timeCounterJob =
+                coroutineScope.launch(coroutineDispatcher) {
+                    createTimeCounter().collect { date ->
+                        onTick(date)
                     }
                 }
         }
 
-        timeCounterJob = coroutineScope.launch(coroutineDispatcher) {
-            createTimeCounter().collect { date ->
-                onTick(date)
+        override fun resume() {
+            timeCounterJob?.cancel()
+
+            _readingSession =
+                _readingSession.copy(
+                    updatedDate = Date(),
+                    recordStatus = ReadingSessionRecordStatusType.STARTED,
+                )
+            readingSessionRepository.update(_readingSession)
+
+            timeCounterJob =
+                coroutineScope.launch(coroutineDispatcher) {
+                    createTimeCounter().collect { date ->
+                        onTick(date)
+                    }
+                }
+        }
+
+        override fun pause() {
+            timeCounterJob?.cancel()
+
+            _readingSession =
+                _readingSession.copy(
+                    recordStatus = ReadingSessionRecordStatusType.PAUSED,
+                )
+            readingSessionRepository.update(_readingSession)
+        }
+
+        override fun stop() {
+            timeCounterJob?.cancel()
+            timeCounterJob = null
+            _readingSession = ReadingSession()
+        }
+
+        private fun createTimeCounter(): Flow<Date> =
+            flow {
+                while (true) {
+                    delay(AppConstants.MILLISECONDS_IN_ONE_SECOND)
+                    emit(Date())
+                }
             }
-        }
     }
-
-    override fun resume() {
-        timeCounterJob?.cancel()
-
-        _readingSession = _readingSession.copy(
-            updatedDate = Date(),
-            recordStatus = ReadingSessionRecordStatusType.STARTED
-        )
-        readingSessionRepository.update(_readingSession)
-
-        timeCounterJob = coroutineScope.launch(coroutineDispatcher) {
-            createTimeCounter().collect { date ->
-                onTick(date)
-            }
-        }
-    }
-
-    override fun pause() {
-        timeCounterJob?.cancel()
-
-        _readingSession = _readingSession.copy(
-            recordStatus = ReadingSessionRecordStatusType.PAUSED
-        )
-        readingSessionRepository.update(_readingSession)
-    }
-
-    override fun stop() {
-        timeCounterJob?.cancel()
-        timeCounterJob = null
-        _readingSession = ReadingSession()
-    }
-
-    private fun createTimeCounter(): Flow<Date> = flow {
-        while (true) {
-            delay(AppConstants.MILLISECONDS_IN_ONE_SECOND)
-            emit(Date())
-        }
-    }
-}

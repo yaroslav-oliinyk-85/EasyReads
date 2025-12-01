@@ -26,15 +26,16 @@ fun BookDetailsContent(
     navToReadingSessionRecord: (String) -> Unit,
     navToReadingSessionList: (String) -> Unit,
     navToNoteList: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = Dimens.paddingHorizontalMedium, vertical = Dimens.spacerHeightMedium),
-        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = Dimens.paddingHorizontalMedium, vertical = Dimens.spacerHeightMedium),
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
     ) {
         BookDetailsCoverSection(
             book = uiState.book,
@@ -42,20 +43,20 @@ fun BookDetailsContent(
             progressPercentage = uiState.percentage,
             onClickShelf = { shelf ->
                 onEvent(BookDetailsEvent.ShelfChanged(shelf))
-            }
+            },
         )
         BookDetailsReadingSessionsSection(
             sessions = uiState.readingSessions,
             isBookFinished = uiState.book.isFinished,
             onStartReadingSession = { navToReadingSessionRecord(uiState.book.id.toString()) },
             onSeeAll = { navToReadingSessionList(uiState.book.id.toString()) },
-            onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) }
+            onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) },
         )
         BookDetailsNotesSection(
             notes = uiState.notes,
             onSeeAllNotes = { navToNoteList(uiState.book.id.toString()) },
             onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
-            onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) }
+            onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) },
         )
         BookDetailsIsbnSection(isbn = uiState.book.isbn)
         BookDetailsDescriptionSection(uiState.book.description)
@@ -67,21 +68,23 @@ fun BookDetailsContent(
 private fun BookDetailsContentFinishedPreview() {
     EasyReadsTheme {
         BookDetailsContent(
-            uiState = BookDetailsUiState(
-                book = Book(
-                    title = "Title",
-                    author = "Author",
-                    pageAmount = 250,
-                    pageCurrent = 50,
-                    shelf = BookShelvesType.FINISHED,
-                    isFinished = true,
-                    finishedDate = Date()
-                )
-            ),
+            uiState =
+                BookDetailsUiState(
+                    book =
+                        Book(
+                            title = "Title",
+                            author = "Author",
+                            pageAmount = 250,
+                            pageCurrent = 50,
+                            shelf = BookShelvesType.FINISHED,
+                            isFinished = true,
+                            finishedDate = Date(),
+                        ),
+                ),
             onEvent = {},
             navToNoteList = {},
             navToReadingSessionList = {},
-            navToReadingSessionRecord = {}
+            navToReadingSessionRecord = {},
         )
     }
 }
@@ -91,20 +94,22 @@ private fun BookDetailsContentFinishedPreview() {
 private fun BookDetailsContentReadingPreview() {
     EasyReadsTheme {
         BookDetailsContent(
-            uiState = BookDetailsUiState(
-                book = Book(
-                    title = "Title",
-                    author = "Author",
-                    pageAmount = 250,
-                    pageCurrent = 50,
-                    shelf = BookShelvesType.READING,
-                    isFinished = false
-                )
-            ),
+            uiState =
+                BookDetailsUiState(
+                    book =
+                        Book(
+                            title = "Title",
+                            author = "Author",
+                            pageAmount = 250,
+                            pageCurrent = 50,
+                            shelf = BookShelvesType.READING,
+                            isFinished = false,
+                        ),
+                ),
             onEvent = {},
             navToNoteList = {},
             navToReadingSessionList = {},
-            navToReadingSessionRecord = {}
+            navToReadingSessionRecord = {},
         )
     }
 }
@@ -114,20 +119,22 @@ private fun BookDetailsContentReadingPreview() {
 private fun BookDetailsContentWantToReadPreview() {
     EasyReadsTheme {
         BookDetailsContent(
-            uiState = BookDetailsUiState(
-                book = Book(
-                    title = "Title",
-                    author = "Author",
-                    pageAmount = 250,
-                    pageCurrent = 50,
-                    shelf = BookShelvesType.WANT_TO_READ,
-                    isFinished = false
-                )
-            ),
+            uiState =
+                BookDetailsUiState(
+                    book =
+                        Book(
+                            title = "Title",
+                            author = "Author",
+                            pageAmount = 250,
+                            pageCurrent = 50,
+                            shelf = BookShelvesType.WANT_TO_READ,
+                            isFinished = false,
+                        ),
+                ),
             onEvent = {},
             navToNoteList = {},
             navToReadingSessionList = {},
-            navToReadingSessionRecord = {}
+            navToReadingSessionRecord = {},
         )
     }
 }

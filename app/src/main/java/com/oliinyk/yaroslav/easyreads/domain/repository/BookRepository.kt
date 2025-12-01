@@ -7,10 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface BookRepository {
-
     fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>>
 
-    fun getByShelveSorted(bookShelvesType: BookShelvesType, bookSorting: BookSorting): Flow<List<Book>>
+    fun getByShelveSorted(
+        bookShelvesType: BookShelvesType,
+        bookSorting: BookSorting,
+    ): Flow<List<Book>>
 
     fun getAll(): Flow<List<Book>>
 

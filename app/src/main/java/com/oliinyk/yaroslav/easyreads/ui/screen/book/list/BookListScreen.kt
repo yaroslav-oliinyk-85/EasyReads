@@ -18,7 +18,7 @@ fun BookListScreen(
     navToBookAdd: () -> Unit,
     navToBookDetails: (String) -> Unit,
     bookShelvesType: BookShelvesType? = null,
-    viewModel: BookListViewModel = hiltViewModel()
+    viewModel: BookListViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         bookShelvesType?.let { type ->
@@ -35,7 +35,7 @@ fun BookListScreen(
                 bookShelvesType = stateUi.bookShelvesType,
                 holderSize = stateUi.holderSize,
                 onAddBookClick = navToBookAdd,
-                onHolderSizeChange = { viewModel.updateHolderSize(it) }
+                onHolderSizeChange = { viewModel.updateHolderSize(it) },
             )
         },
         content = { paddingValues ->
@@ -45,23 +45,24 @@ fun BookListScreen(
                 onBookClick = { navToBookDetails(it.id.toString()) },
                 onSortingChange = {
                     viewModel.updateBookSorting(
-                        stateUi.bookSorting.copy(bookSortingType = it)
+                        stateUi.bookSorting.copy(bookSortingType = it),
                     )
                 },
                 onSortingOrderChange = {
                     viewModel.updateBookSorting(
                         stateUi.bookSorting.copy(
-                            bookSortingOrderType = if (
-                                viewModel.bookSorting.bookSortingOrderType == BookSortingOrderType.DESC
-                            ) {
-                                BookSortingOrderType.ASC
-                            } else {
-                                BookSortingOrderType.DESC
-                            }
-                        )
+                            bookSortingOrderType =
+                                if (
+                                    viewModel.bookSorting.bookSortingOrderType == BookSortingOrderType.DESC
+                                ) {
+                                    BookSortingOrderType.ASC
+                                } else {
+                                    BookSortingOrderType.DESC
+                                },
+                        ),
                     )
-                }
+                },
             )
-        }
+        },
     )
 }

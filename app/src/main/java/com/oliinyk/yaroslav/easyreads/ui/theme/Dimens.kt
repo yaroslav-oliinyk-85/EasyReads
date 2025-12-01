@@ -6,7 +6,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 object Dimens {
-
     // ----- dp -----
     val spacerHeightSmall = 8.dp
     val spacerHeightMedium = 16.dp
@@ -62,10 +61,11 @@ object Dimens {
     val bookListItemSortOrderSize = 42.dp
     val bookListItemPercentageStrokeWidth = 4.dp
 
-    val dropdownMenuItemContentPaddingMedium = PaddingValues(
-        horizontal = 16.dp,
-        vertical = 0.dp
-    )
+    val dropdownMenuItemContentPaddingMedium =
+        PaddingValues(
+            horizontal = 16.dp,
+            vertical = 0.dp,
+        )
 
     val startReadingSessionButtonSize = 96.dp
     val startReadingSessionIconSize = 64.dp
@@ -73,7 +73,6 @@ object Dimens {
     val linearProgressIndicatorHeight = 5.dp
 
     val appDividerThickness = 2.dp
-
 
     // ----- text -----
     val appTitleMediumFontSize = 18.sp
@@ -84,7 +83,6 @@ object Dimens {
     val readingSessionRecordBookAuthorMaxLines = 1
 
     val bookListItemShelveTextMaxLines = 2
-
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

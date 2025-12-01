@@ -30,30 +30,32 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun ReadingGoalFinishedBooksSection(
     books: List<Book>,
     onBookClick: (Book) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxSize(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         val gridCellsCount = 4
         Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = Dimens.paddingHorizontalMedium,
-                    vertical = Dimens.paddingVerticalSmall
-                )
+            modifier =
+                Modifier
+                    .padding(
+                        horizontal = Dimens.paddingHorizontalMedium,
+                        vertical = Dimens.paddingVerticalSmall,
+                    ),
         ) {
             Row(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.reading_goal__label__summery_books_title_text,
-                        books.size
-                    ),
-                    style = MaterialTheme.typography.titleLarge
+                    text =
+                        stringResource(
+                            R.string.reading_goal__label__summery_books_title_text,
+                            books.size,
+                        ),
+                    style = MaterialTheme.typography.titleLarge,
                 )
             }
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
@@ -69,10 +71,10 @@ fun ReadingGoalFinishedBooksSection(
                     items(books) { book ->
                         ReadingGoalFinishedBooksItemCell(
                             book = book,
-                            onBookClick = onBookClick
+                            onBookClick = onBookClick,
                         )
                     }
-                }
+                },
             )
         }
     }
@@ -84,7 +86,7 @@ fun ReadingGoalFinishedBooksSectionPreview() {
     EasyReadsTheme {
         ReadingGoalFinishedBooksSection(
             books = emptyList(),
-            onBookClick = {}
+            onBookClick = {},
         )
     }
 }

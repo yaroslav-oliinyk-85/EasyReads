@@ -12,7 +12,6 @@ import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -22,78 +21,76 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookRepositoryImpl @Inject constructor(
-    private val bookDao: BookDao
-) : BookRepository {
+class BookRepositoryImpl
+    @Inject
+    constructor(
+        private val bookDao: BookDao,
+    ) : BookRepository {
+        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+        private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
-
-    override fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>> {
-        val sortingOrder = getSortingOrder(bookSorting)
-        val query = "SELECT * FROM books ORDER BY $sortingOrder"
-        return bookDao.getAllSortedBy(SimpleSQLiteQuery(query)).map { entities ->
-            entities.map { it.toModel() }
-        }
-    }
-
-    override fun getByShelveSorted(
-        bookShelvesType: BookShelvesType,
-        bookSorting: BookSorting
-    ): Flow<List<Book>> {
-        val sortingOrder = getSortingOrder(bookSorting)
-        val query = "SELECT * FROM books WHERE shelve='$bookShelvesType' ORDER BY $sortingOrder"
-        return bookDao.getAllSortedBy(SimpleSQLiteQuery(query)).map { entities ->
-            entities.map { it.toModel() }
-        }
-    }
-
-    private fun getSortingOrder(bookSorting: BookSorting) =
-        when (bookSorting.bookSortingType) {
-            BookSortingType.AUTHOR -> {
-                "${
-                    BookSortingType.AUTHOR.toString().lowercase()
-                } ${
-                    bookSorting.bookSortingOrderType
-                }, ${BookSortingType.TITLE.toString().lowercase()} ASC"
-            }
-            else -> {
-                "${
-                    bookSorting.bookSortingType.toString().lowercase()
-                } ${
-                    bookSorting.bookSortingOrderType
-                }"
+        override fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>> {
+            val sortingOrder = getSortingOrder(bookSorting)
+            val query = "SELECT * FROM books ORDER BY $sortingOrder"
+            return bookDao.getAllSortedBy(SimpleSQLiteQuery(query)).map { entities ->
+                entities.map { it.toModel() }
             }
         }
 
-    override fun getAll(): Flow<List<Book>> {
-        return bookDao.getAll().map { entities -> entities.map { it.toModel() } }
-    }
+        override fun getByShelveSorted(
+            bookShelvesType: BookShelvesType,
+            bookSorting: BookSorting,
+        ): Flow<List<Book>> {
+            val sortingOrder = getSortingOrder(bookSorting)
+            val query = "SELECT * FROM books WHERE shelve='$bookShelvesType' ORDER BY $sortingOrder"
+            return bookDao.getAllSortedBy(SimpleSQLiteQuery(query)).map { entities ->
+                entities.map { it.toModel() }
+            }
+        }
 
-    override fun getById(id: UUID): Flow<Book?> {
-        return bookDao.getById(id).map { entity -> entity?.toModel() }
-            .distinctUntilChanged()
-    }
+        private fun getSortingOrder(bookSorting: BookSorting) =
+            when (bookSorting.bookSortingType) {
+                BookSortingType.AUTHOR -> {
+                    "${
+                        BookSortingType.AUTHOR.toString().lowercase()
+                    } ${
+                        bookSorting.bookSortingOrderType
+                    }, ${BookSortingType.TITLE.toString().lowercase()} ASC"
+                }
+                else -> {
+                    "${
+                        bookSorting.bookSortingType.toString().lowercase()
+                    } ${
+                        bookSorting.bookSortingOrderType
+                    }"
+                }
+            }
 
-    override fun getAuthors(): Flow<List<String>> {
-        return bookDao.getAuthors().distinctUntilChanged()
-    }
+        override fun getAll(): Flow<List<Book>> = bookDao.getAll().map { entities -> entities.map { it.toModel() } }
 
-    override fun save(book: Book) {
-        coroutineScope.launch(coroutineDispatcher) {
-            bookDao.save(book.toEntity())
+        override fun getById(id: UUID): Flow<Book?> =
+            bookDao
+                .getById(id)
+                .map { entity -> entity?.toModel() }
+                .distinctUntilChanged()
+
+        override fun getAuthors(): Flow<List<String>> = bookDao.getAuthors().distinctUntilChanged()
+
+        override fun save(book: Book) {
+            coroutineScope.launch(coroutineDispatcher) {
+                bookDao.save(book.toEntity())
+            }
+        }
+
+        override fun update(book: Book) {
+            coroutineScope.launch(coroutineDispatcher) {
+                bookDao.update(book.toEntity())
+            }
+        }
+
+        override fun remove(book: Book) {
+            coroutineScope.launch(coroutineDispatcher) {
+                bookDao.remove(book.toEntity())
+            }
         }
     }
-
-    override fun update(book: Book) {
-        coroutineScope.launch(coroutineDispatcher) {
-            bookDao.update(book.toEntity())
-        }
-    }
-
-    override fun remove(book: Book) {
-        coroutineScope.launch(coroutineDispatcher) {
-            bookDao.remove(book.toEntity())
-        }
-    }
-}

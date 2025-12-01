@@ -37,7 +37,7 @@ fun BookAddEditScreen(
     navBack: () -> Unit,
     modifier: Modifier = Modifier,
     bookId: String? = null,
-    viewModel: BookAddEditViewModel = hiltViewModel()
+    viewModel: BookAddEditViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         bookId?.let { id ->
@@ -57,18 +57,20 @@ fun BookAddEditScreen(
     }
 
     // ----- Pick Image Launcher -----
-    val pickBookCoverImageLauncher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.PickVisualMedia()
+    val pickBookCoverImageLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
         ) { uri: Uri? ->
             if (uri != null) {
                 coroutineScope.launch {
                     viewModel.updateCoverImage(
                         context.applicationContext,
-                        uri
+                        uri,
                     )
                 }
             }
         }
+
     fun launchBookCoverImagePicker() {
         val request = PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
         val intent = pickBookCoverImageLauncher.contract.createIntent(context, request)
@@ -78,7 +80,7 @@ fun BookAddEditScreen(
         } else {
             coroutineScope.launch {
                 snackbarHostState.showSnackbar(
-                    snackbarMessage
+                    snackbarMessage,
                 )
             }
         }
@@ -88,7 +90,7 @@ fun BookAddEditScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             BookAddEditAppTopBar(
-                bookTitle = stateUi.book.title
+                bookTitle = stateUi.book.title,
             )
         },
         content = { paddingValues ->
@@ -96,7 +98,7 @@ fun BookAddEditScreen(
                 modifier = modifier.padding(paddingValues),
                 stateUi = stateUi,
                 onClickChangeCoverImage = { launchBookCoverImagePicker() },
-                onEvent = { viewModel.onEvent(it) }
+                onEvent = { viewModel.onEvent(it) },
             )
         },
         snackbarHost = {
@@ -110,21 +112,24 @@ fun BookAddEditScreen(
                 },
                 onClickCancel = {
                     viewModel.removeUnusedCoverImage(
-                        context.applicationContext
+                        context.applicationContext,
                     )
                     navBack()
-                }
+                },
             )
-        }
+        },
     )
 }
 
-private fun canResolveIntent(context: Context, intent: Intent): Boolean {
+private fun canResolveIntent(
+    context: Context,
+    intent: Intent,
+): Boolean {
     val packageManager: PackageManager = context.packageManager
     val resolvedActivity: ResolveInfo? =
         packageManager.resolveActivity(
             intent,
-            PackageManager.MATCH_DEFAULT_ONLY
+            PackageManager.MATCH_DEFAULT_ONLY,
         )
     return resolvedActivity != null
 }

@@ -32,11 +32,12 @@ fun NoteListItemCell(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            Modifier.fillMaxWidth()
-                .padding(Dimens.paddingAllSmall)
+            Modifier
+                .fillMaxWidth()
+                .padding(Dimens.paddingAllSmall),
         ) {
             // --- note text ---
             Text(
@@ -46,28 +47,33 @@ fun NoteListItemCell(
 
             // --- added date + page ---
             Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = Dimens.paddingTopMedium),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = Dimens.paddingTopMedium),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 // --- added date ---
                 Text(
-                    text = DateFormat.format(
-                        stringResource(R.string.date_and_time_format),
-                        note.addedDate
-                    ).toString(),
-                    style = MaterialTheme.typography.labelMedium
+                    text =
+                        DateFormat
+                            .format(
+                                stringResource(R.string.date_and_time_format),
+                                note.addedDate,
+                            ).toString(),
+                    style = MaterialTheme.typography.labelMedium,
                 )
 
                 // --- page ---
                 if (note.page != null) {
                     Text(
-                        text = stringResource(
-                            R.string.note_list_item__label__page_text,
-                            note.page
-                        ),
-                        style = MaterialTheme.typography.labelMedium
+                        text =
+                            stringResource(
+                                R.string.note_list_item__label__page_text,
+                                note.page,
+                            ),
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 }
             }
@@ -79,20 +85,20 @@ fun NoteListItemCell(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 // --- remove button ---
                 AppIconButton(
                     imageVector = Icons.Default.Delete,
                     contentDescription = stringResource(R.string.menu_item__remove_text),
-                    onClick = { onRemove(note) }
+                    onClick = { onRemove(note) },
                 )
 
                 // --- edit button ---
                 AppIconButton(
                     imageVector = Icons.Default.Edit,
                     contentDescription = stringResource(R.string.menu_item__edit_text),
-                    onClick = { onEdit(note) }
+                    onClick = { onEdit(note) },
                 )
             }
         }

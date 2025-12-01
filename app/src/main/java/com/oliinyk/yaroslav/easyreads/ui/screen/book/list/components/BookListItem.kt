@@ -42,11 +42,14 @@ fun BookListItem(
     book: Book,
     onClickedBook: (Book) -> Unit,
     modifier: Modifier = Modifier,
-    holderSize: HolderSize = HolderSize.DEFAULT
+    holderSize: HolderSize = HolderSize.DEFAULT,
 ) {
-    val percentage = if (book.pageAmount != 0) {
-        (book.pageCurrent * 100 / book.pageAmount)
-    } else { 0 }
+    val percentage =
+        if (book.pageAmount != 0) {
+            (book.pageCurrent * 100 / book.pageAmount)
+        } else {
+            0
+        }
 
     var coverImageWidth: Dp
     var bookListItemHeight: Dp
@@ -55,7 +58,7 @@ fun BookListItem(
     var authorMaxLines: Int
     var dateFormatStringResource: Int
 
-    when(holderSize) {
+    when (holderSize) {
         HolderSize.LARGE -> {
             coverImageWidth = 132.dp
             bookListItemHeight = 198.dp
@@ -81,107 +84,124 @@ fun BookListItem(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Row(
-            modifier = modifier.fillMaxWidth()
-                .clickable { onClickedBook(book) }
-                .padding(Dimens.paddingAllSmall)
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .clickable { onClickedBook(book) }
+                    .padding(Dimens.paddingAllSmall),
         ) {
             // Book Cover Image
             val context = LocalContext.current
-            val file: File? = if (book.coverImageFileName != null) {
-                File(context.filesDir, book.coverImageFileName)
-            } else {
-                null
-            }
+            val file: File? =
+                if (book.coverImageFileName != null) {
+                    File(context.filesDir, book.coverImageFileName)
+                } else {
+                    null
+                }
             AsyncImage(
-                modifier = Modifier
-                    .width(coverImageWidth)
-                    .height(bookListItemHeight)
-                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-                    .background(MaterialTheme.colorScheme.background),
-                model = ImageRequest.Builder(context)
-                    .data(file)
-                    .crossfade(true)
-                    .build(),
+                modifier =
+                    Modifier
+                        .width(coverImageWidth)
+                        .height(bookListItemHeight)
+                        .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                        .background(MaterialTheme.colorScheme.background),
+                model =
+                    ImageRequest
+                        .Builder(context)
+                        .data(file)
+                        .crossfade(true)
+                        .build(),
                 contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             Spacer(modifier = Modifier.width(Dimens.spacerWidthSmall))
 
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(bookListItemHeight)
-                    .align(Alignment.Top)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .height(bookListItemHeight)
+                        .align(Alignment.Top),
             ) {
                 Text(
                     text = book.title,
                     style = MaterialTheme.typography.titleMedium,
                     maxLines = titleMaxLines,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = book.author,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = authorMaxLines,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = Dimens.paddingTopTiny)
+                    modifier = Modifier.padding(top = Dimens.paddingTopTiny),
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     // Shelves
                     Text(
-                        modifier = Modifier
-                            .padding(end = Dimens.paddingEndTiny)
-                            .weight(1f),
-                        text = when (book.shelf) {
-                            BookShelvesType.FINISHED -> stringResource(
-                                R.string.book_list_item__label__shelf_finished_text,
-                                book.finishedDate?.let { finishedDate ->
-                                    DateFormat.format(
-                                        stringResource(dateFormatStringResource),
-                                        finishedDate
-                                    ).toString()
-                                } ?: ""
-                            )
-                            BookShelvesType.READING -> stringResource(
-                                R.string.book_list_item__label__shelf_reading_text,
-                                DateFormat.format(
-                                    stringResource(dateFormatStringResource),
-                                    book.updatedDate
-                                ).toString()
-                            )
-                            BookShelvesType.WANT_TO_READ -> stringResource(
-                                R.string.book_list_item__label__shelf_want_to_read_text,
-                                DateFormat.format(
-                                    stringResource(dateFormatStringResource),
-                                    book.addedDate
-                                ).toString()
-                            )
-                        },
+                        modifier =
+                            Modifier
+                                .padding(end = Dimens.paddingEndTiny)
+                                .weight(1f),
+                        text =
+                            when (book.shelf) {
+                                BookShelvesType.FINISHED ->
+                                    stringResource(
+                                        R.string.book_list_item__label__shelf_finished_text,
+                                        book.finishedDate?.let { finishedDate ->
+                                            DateFormat
+                                                .format(
+                                                    stringResource(dateFormatStringResource),
+                                                    finishedDate,
+                                                ).toString()
+                                        } ?: "",
+                                    )
+                                BookShelvesType.READING ->
+                                    stringResource(
+                                        R.string.book_list_item__label__shelf_reading_text,
+                                        DateFormat
+                                            .format(
+                                                stringResource(dateFormatStringResource),
+                                                book.updatedDate,
+                                            ).toString(),
+                                    )
+                                BookShelvesType.WANT_TO_READ ->
+                                    stringResource(
+                                        R.string.book_list_item__label__shelf_want_to_read_text,
+                                        DateFormat
+                                            .format(
+                                                stringResource(dateFormatStringResource),
+                                                book.addedDate,
+                                            ).toString(),
+                                    )
+                            },
                         maxLines = Dimens.bookListItemShelveTextMaxLines,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                     // Pages
                     Text(
-                        modifier = Modifier
-                            .padding(end = Dimens.paddingEndSmall),
-                        text = stringResource(
-                            R.string.book_details__label__book_pages_text,
-                            book.pageCurrent,
-                            book.pageAmount
-                        ),
+                        modifier =
+                            Modifier
+                                .padding(end = Dimens.paddingEndSmall),
+                        text =
+                            stringResource(
+                                R.string.book_details__label__book_pages_text,
+                                book.pageCurrent,
+                                book.pageAmount,
+                            ),
                         style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.End
+                        textAlign = TextAlign.End,
                     )
                     ReadingProgressIndicator(percentage = percentage)
                 }
@@ -194,45 +214,50 @@ fun BookListItem(
 @Composable
 private fun BookListItemFinishedPreview() {
     BookListItem(
-        book = Book().copy(
-            title = "Title",
-            author = "Author",
-            pageCurrent = 1250,
-            pageAmount = 2500,
-            finishedDate = Date(),
-            shelf = BookShelvesType.FINISHED
-        ),
+        book =
+            Book().copy(
+                title = "Title",
+                author = "Author",
+                pageCurrent = 1250,
+                pageAmount = 2500,
+                finishedDate = Date(),
+                shelf = BookShelvesType.FINISHED,
+            ),
         onClickedBook = {},
-        holderSize = HolderSize.LARGE
+        holderSize = HolderSize.LARGE,
     )
 }
+
 @Preview
 @Composable
 private fun BookListItemReadingPreview() {
     BookListItem(
-        book = Book().copy(
-            title = "Title",
-            author = "Author",
-            pageCurrent = 50,
-            pageAmount = 250,
-            shelf = BookShelvesType.READING
-        ),
+        book =
+            Book().copy(
+                title = "Title",
+                author = "Author",
+                pageCurrent = 50,
+                pageAmount = 250,
+                shelf = BookShelvesType.READING,
+            ),
         onClickedBook = {},
-        holderSize = HolderSize.DEFAULT
+        holderSize = HolderSize.DEFAULT,
     )
 }
+
 @Preview
 @Composable
 private fun BookListItemWantToReadPreview() {
     BookListItem(
-        book = Book().copy(
-            title = "Title",
-            author = "Author",
-            pageCurrent = 50,
-            pageAmount = 250,
-            shelf = BookShelvesType.WANT_TO_READ
-        ),
+        book =
+            Book().copy(
+                title = "Title",
+                author = "Author",
+                pageCurrent = 50,
+                pageAmount = 250,
+                shelf = BookShelvesType.WANT_TO_READ,
+            ),
         onClickedBook = {},
-        holderSize = HolderSize.SMALL
+        holderSize = HolderSize.SMALL,
     )
 }

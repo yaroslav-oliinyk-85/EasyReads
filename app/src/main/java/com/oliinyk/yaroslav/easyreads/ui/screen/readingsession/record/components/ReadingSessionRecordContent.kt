@@ -16,10 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
-import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordEvent
-import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordUiState
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.addeditdialog.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.addeditdialog.ReadingSessionAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordEvent
+import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
@@ -27,7 +27,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun ReadingSessionRecordContent(
     stateUi: ReadingSessionRecordUiState,
     onEvent: (ReadingSessionRecordEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editingReadingSession: ReadingSession? by rememberSaveable { mutableStateOf(null) }
     editingReadingSession?.let { readingSession ->
@@ -37,7 +37,7 @@ fun ReadingSessionRecordContent(
                 onEvent(ReadingSessionRecordEvent.OnFinish(it))
                 editingReadingSession = null
             },
-            onDismissRequest = { editingReadingSession = null }
+            onDismissRequest = { editingReadingSession = null },
         )
     }
 
@@ -49,19 +49,20 @@ fun ReadingSessionRecordContent(
                 onEvent(ReadingSessionRecordEvent.OnAddNote(it))
                 addingNote = null
             },
-            onDismissRequest = { addingNote = null }
+            onDismissRequest = { addingNote = null },
         )
     }
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(Dimens.paddingAllMedium),
-        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(Dimens.paddingAllMedium),
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
     ) {
         ReadingSessionRecordBookCoverSection(
-            book = stateUi.book ?: Book()
+            book = stateUi.book ?: Book(),
         )
 
         ReadingSessionRecordSection(
@@ -83,15 +84,17 @@ fun ReadingSessionRecordContent(
 private fun ReadingSessionRecordContentPreview() {
     EasyReadsTheme {
         ReadingSessionRecordContent(
-            stateUi = ReadingSessionRecordUiState(
-                book = Book(
-                    title = "Title",
-                    author = "Author"
+            stateUi =
+                ReadingSessionRecordUiState(
+                    book =
+                        Book(
+                            title = "Title",
+                            author = "Author",
+                        ),
+                    readingSession = ReadingSession(),
+                    notesCount = 5,
                 ),
-                readingSession = ReadingSession(),
-                notesCount = 5
-            ),
-            onEvent = {}
+            onEvent = {},
         )
     }
 }

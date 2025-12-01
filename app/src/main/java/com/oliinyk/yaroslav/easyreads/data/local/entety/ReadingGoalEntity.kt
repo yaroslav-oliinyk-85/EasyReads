@@ -6,14 +6,13 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingGoal
 
 @Entity("reading_goals")
 data class ReadingGoalEntity(
-
     @PrimaryKey
     val year: Int,
-
-    val goal: Int
+    val goal: Int,
 )
 
-fun ReadingGoalEntity.toModel(): ReadingGoal = ReadingGoal(
-    year = year,
-    goal = goal
-)
+fun ReadingGoalEntity.toModel(): ReadingGoal =
+    ReadingGoal(
+        year = year,
+        goal = goal,
+    )

@@ -22,20 +22,22 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun BookAddEditBottomBar(
     onClickSave: () -> Unit,
     onClickCancel: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
-            .padding(
-                horizontal = Dimens.paddingHorizontalMedium,
-                vertical = Dimens.paddingVerticalSmall
-            )
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        modifier =
+            modifier
+                .padding(
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall,
+                ).fillMaxWidth(),
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Row(
-            modifier = Modifier.padding(Dimens.paddingAllMedium)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .padding(Dimens.paddingAllMedium)
+                    .fillMaxWidth(),
         ) {
             AppTextButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
@@ -43,9 +45,9 @@ fun BookAddEditBottomBar(
                 content = {
                     Text(
                         text = stringResource(R.string.book_add_edit__button__cancel_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
-                }
+                },
             )
 
             Spacer(Modifier.width(Dimens.spacerHeightMedium))
@@ -56,9 +58,9 @@ fun BookAddEditBottomBar(
                 content = {
                     Text(
                         text = stringResource(R.string.book_add_edit__button__save_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
-                }
+                },
             )
         }
     }
@@ -69,6 +71,6 @@ fun BookAddEditBottomBar(
 private fun BookAddEditBottomButtonsPreview() {
     BookAddEditBottomBar(
         onClickSave = {},
-        onClickCancel = {}
+        onClickCancel = {},
     )
 }

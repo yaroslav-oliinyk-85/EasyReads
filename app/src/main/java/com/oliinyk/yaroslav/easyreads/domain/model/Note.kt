@@ -10,17 +10,17 @@ import java.util.UUID
 data class Note(
     override val id: UUID = UUID.randomUUID(),
     val bookId: UUID? = null,
-
     val text: String = "",
     val page: Int? = null,
+    val addedDate: Date = Date(),
+) : BaseModel(),
+    Parcelable
 
-    val addedDate: Date = Date()
-) : BaseModel(), Parcelable
-
-fun Note.toEntity(): NoteEntity = NoteEntity(
-    id = id,
-    bookId = bookId,
-    text = text,
-    page = page,
-    addedDate = addedDate
-)
+fun Note.toEntity(): NoteEntity =
+    NoteEntity(
+        id = id,
+        bookId = bookId,
+        text = text,
+        page = page,
+        addedDate = addedDate,
+    )

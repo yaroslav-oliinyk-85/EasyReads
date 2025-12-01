@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface NoteRepository {
-
     fun getAllByBookId(bookId: UUID): Flow<List<Note>>
 
     fun getLastAddedByBookId(bookId: UUID): Flow<Note?>

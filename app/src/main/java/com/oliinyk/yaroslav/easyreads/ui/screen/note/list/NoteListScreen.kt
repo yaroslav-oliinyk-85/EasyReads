@@ -20,7 +20,7 @@ import java.util.UUID
 @Composable
 fun NoteListScreen(
     bookId: String?,
-    viewModel: NoteListViewModel = hiltViewModel()
+    viewModel: NoteListViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         bookId?.let { id ->
@@ -38,9 +38,9 @@ fun NoteListScreen(
                 noteSize = stateUi.notes.size,
                 onAdd = {
                     viewModel.openAddDialog()
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         NoteListContent(
             notes = stateUi.notes,
@@ -50,7 +50,7 @@ fun NoteListScreen(
             onRemove = { note ->
                 viewModel.openRemoveDialog(note)
             },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         )
 
         editingNote?.let { note ->
@@ -60,7 +60,7 @@ fun NoteListScreen(
                     viewModel.save(it)
                     viewModel.dismissAddEditDialog()
                 },
-                onDismissRequest = { viewModel.dismissAddEditDialog() }
+                onDismissRequest = { viewModel.dismissAddEditDialog() },
             )
         }
 
@@ -72,7 +72,7 @@ fun NoteListScreen(
                     viewModel.remove(note)
                     viewModel.dismissRemoveDialog()
                 },
-                onDismiss = { viewModel.dismissRemoveDialog() }
+                onDismiss = { viewModel.dismissRemoveDialog() },
             )
         }
     }

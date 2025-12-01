@@ -28,37 +28,29 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+    @Provides
+    fun provideBookDao(database: AppDatabase): BookDao = database.bookDao()
 
     @Provides
-    fun provideBookDao(database: AppDatabase): BookDao {
-        return database.bookDao()
-    }
+    fun provideNoteDao(database: AppDatabase): NoteDao = database.noteDao()
 
     @Provides
-    fun provideNoteDao(database: AppDatabase): NoteDao {
-        return database.noteDao()
-    }
+    fun provideReadingSessionDao(database: AppDatabase): ReadingSessionDao = database.readingSessionDao()
 
     @Provides
-    fun provideReadingSessionDao(database: AppDatabase): ReadingSessionDao {
-        return database.readingSessionDao()
-    }
-
-    @Provides
-    fun provideReadingGoalDao(database: AppDatabase): ReadingGoalDao {
-        return database.readingGoalDao()
-    }
+    fun provideReadingGoalDao(database: AppDatabase): ReadingGoalDao = database.readingGoalDao()
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+    ): AppDatabase =
+        Room
             .databaseBuilder(
                 context,
                 AppDatabase::class.java,
-                AppDatabase.DATABASE_NAME
-            )
-            .addMigrations(
+                AppDatabase.DATABASE_NAME,
+            ).addMigrations(
                 migration_1_2,
                 migration_2_3,
                 migration_3_4,
@@ -69,8 +61,6 @@ object DatabaseModule {
                 migration_8_9,
                 migration_9_10,
                 migration_10_11,
-                migration_11_12
-            )
-            .build()
-    }
+                migration_11_12,
+            ).build()
 }

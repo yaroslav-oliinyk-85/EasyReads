@@ -21,13 +21,13 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGo
 fun ReadingGoalScreen(
     navToBookDetails: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ReadingGoalViewModel = hiltViewModel()
+    viewModel: ReadingGoalViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var showReadingGoalChangeDialog by rememberSaveable { mutableStateOf(false) }
 
-    Scaffold (
+    Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
             ReadingGoalTopAppBar()
@@ -39,9 +39,9 @@ fun ReadingGoalScreen(
                     showReadingGoalChangeDialog = true
                 },
                 onBookClick = { navToBookDetails(it.id.toString()) },
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
             )
-        }
+        },
     )
 
     // ----- Dialogs -----
@@ -54,7 +54,7 @@ fun ReadingGoalScreen(
             },
             onSave = {
                 viewModel.updateReadingGoal(it)
-            }
+            },
         )
     }
 }

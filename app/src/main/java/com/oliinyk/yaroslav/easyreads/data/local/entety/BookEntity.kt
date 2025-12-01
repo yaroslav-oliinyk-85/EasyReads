@@ -12,53 +12,46 @@ import java.util.UUID
 data class BookEntity(
     @PrimaryKey
     val id: UUID,
-
     val title: String,
     val author: String,
     val description: String,
-
     @ColumnInfo(name = "isbn", defaultValue = "")
     val isbn: String = "",
-
     @ColumnInfo(defaultValue = "WANT_TO_READ")
     val shelve: String,
-
     @ColumnInfo("page_amount")
     val pageAmount: Int,
     @ColumnInfo("page_current")
     val pageCurrent: Int,
-
     @ColumnInfo("added_date")
     val addedDate: Date,
     @ColumnInfo("updated_date")
     val updatedDate: Date,
-
     @ColumnInfo("finished_date")
     val finishedDate: Date? = null,
     @ColumnInfo(name = "is_finished", defaultValue = "FALSE")
     val isFinished: String,
-
     @ColumnInfo("read_minutes_count", defaultValue = "0")
-    val readMinutesCount: Int = 0,  //TODO: remove
+    val readMinutesCount: Int = 0, // TODO: remove
     @ColumnInfo("read_sessions_count", defaultValue = "0")
-    val readSessionsCount: Int = 0, //TODO: remove
-
+    val readSessionsCount: Int = 0, // TODO: remove
     @ColumnInfo("cover_image_file_name")
-    val coverImageFileName: String? = null
+    val coverImageFileName: String? = null,
 )
 
-fun BookEntity.toModel(): Book = Book (
-    id = id,
-    title = title,
-    author = author,
-    isbn = isbn,
-    description = description,
-    shelf = BookShelvesType.valueOf(shelve),
-    pageAmount = pageAmount,
-    pageCurrent = pageCurrent,
-    addedDate = addedDate,
-    updatedDate = updatedDate,
-    finishedDate = finishedDate,
-    isFinished = isFinished.toBoolean(),
-    coverImageFileName = coverImageFileName
-)
+fun BookEntity.toModel(): Book =
+    Book(
+        id = id,
+        title = title,
+        author = author,
+        isbn = isbn,
+        description = description,
+        shelf = BookShelvesType.valueOf(shelve),
+        pageAmount = pageAmount,
+        pageCurrent = pageCurrent,
+        addedDate = addedDate,
+        updatedDate = updatedDate,
+        finishedDate = finishedDate,
+        isFinished = isFinished.toBoolean(),
+        coverImageFileName = coverImageFileName,
+    )

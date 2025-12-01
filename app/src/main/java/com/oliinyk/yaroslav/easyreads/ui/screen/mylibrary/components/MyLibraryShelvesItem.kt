@@ -21,27 +21,30 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun MyLibraryShelvesItem(
     label: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
-            .clickable(onClick = onClick),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = label,
             fontSize = Dimens.appTitleMediumFontSize,
             style = MaterialTheme.typography.titleMedium,
-            modifier = modifier
-                .padding(
-                    vertical = Dimens.paddingVerticalMedium,
-                    horizontal = Dimens.paddingHorizontalSmall
-                )
+            modifier =
+                modifier
+                    .padding(
+                        vertical = Dimens.paddingVerticalMedium,
+                        horizontal = Dimens.paddingHorizontalSmall,
+                    ),
         )
         Spacer(Modifier.weight(1f))
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
-            contentDescription = label
+            contentDescription = label,
         )
     }
 }
@@ -52,7 +55,7 @@ private fun MyLibraryShelvesItemPreview() {
     EasyReadsTheme {
         MyLibraryShelvesItem(
             label = "Finished 24",
-            onClick = { }
+            onClick = { },
         )
     }
 }

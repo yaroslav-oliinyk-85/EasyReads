@@ -28,39 +28,45 @@ import java.io.File
 fun BookAddEditCoverImageSection(
     modifier: Modifier = Modifier,
     stateUi: BookAddEditStateUi,
-    onCoverClick: () -> Unit
+    onCoverClick: () -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .size(Dimens.bookAddEditBookCoverImageSize)
-            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-            .border(
-                width = Dimens.buttonBorderWith,
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            )
-            .clickable { onCoverClick() },
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .size(Dimens.bookAddEditBookCoverImageSize)
+                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                .border(
+                    width = Dimens.buttonBorderWith,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+                ).clickable { onCoverClick() },
+        contentAlignment = Alignment.Center,
     ) {
         val context = LocalContext.current
-        val bookCoverImageFile: File? = if (stateUi.pickedImageName != null) {
-            File(context.filesDir, stateUi.pickedImageName)
-        } else if (stateUi.book.coverImageFileName != null) {
-            File(context.filesDir, stateUi.book.coverImageFileName)
-        } else { null }
+        val bookCoverImageFile: File? =
+            if (stateUi.pickedImageName != null) {
+                File(context.filesDir, stateUi.pickedImageName)
+            } else if (stateUi.book.coverImageFileName != null) {
+                File(context.filesDir, stateUi.book.coverImageFileName)
+            } else {
+                null
+            }
 
         bookCoverImageFile?.let {
             if (it.exists()) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize().alpha(0.25f),
-                    model = ImageRequest.Builder(context)
-                        .data(bookCoverImageFile)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = stringResource(
-                        R.string.book_cover_image__content_description__text
-                    ),
-                    contentScale = ContentScale.Crop
+                    model =
+                        ImageRequest
+                            .Builder(context)
+                            .data(bookCoverImageFile)
+                            .crossfade(true)
+                            .build(),
+                    contentDescription =
+                        stringResource(
+                            R.string.book_cover_image__content_description__text,
+                        ),
+                    contentScale = ContentScale.Crop,
                 )
             }
         }
@@ -68,7 +74,7 @@ fun BookAddEditCoverImageSection(
             text = stringResource(R.string.book_add_edit__label__change_cover_image_text),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
     }
 }

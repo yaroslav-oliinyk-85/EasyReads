@@ -14,7 +14,6 @@ import java.util.UUID
 
 @Dao
 interface BookDao {
-
     @RawQuery(observedEntities = [BookEntity::class])
     fun getAllSortedBy(query: SupportSQLiteQuery): Flow<List<BookEntity>>
 

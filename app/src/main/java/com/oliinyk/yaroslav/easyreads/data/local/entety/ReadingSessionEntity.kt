@@ -8,19 +8,16 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusTyp
 import java.util.Date
 import java.util.UUID
 
-
 @Entity("reading_sessions")
 data class ReadingSessionEntity(
     @PrimaryKey
     val id: UUID,
     @ColumnInfo("book_id")
     val bookId: UUID?,
-
     @ColumnInfo("started_date")
     val startedDate: Date,
     @ColumnInfo("updated_date")
     val updatedDate: Date,
-
     @ColumnInfo("read_time_in_milliseconds")
     val readTimeInMilliseconds: Long,
     @ColumnInfo("start_page")
@@ -29,19 +26,19 @@ data class ReadingSessionEntity(
     val endPage: Int,
     @ColumnInfo("read_pages")
     val readPages: Int,
-
     @ColumnInfo("record_status")
-    val recordStatus: String
+    val recordStatus: String,
 )
 
-fun ReadingSessionEntity.toModel(): ReadingSession = ReadingSession(
-    id = id,
-    bookId = bookId,
-    startedDate = startedDate,
-    updatedDate = updatedDate,
-    readTimeInMilliseconds = readTimeInMilliseconds,
-    startPage = startPage,
-    endPage = endPage,
-    readPages = readPages,
-    recordStatus = ReadingSessionRecordStatusType.valueOf(recordStatus)
-)
+fun ReadingSessionEntity.toModel(): ReadingSession =
+    ReadingSession(
+        id = id,
+        bookId = bookId,
+        startedDate = startedDate,
+        updatedDate = updatedDate,
+        readTimeInMilliseconds = readTimeInMilliseconds,
+        startPage = startPage,
+        endPage = endPage,
+        readPages = readPages,
+        recordStatus = ReadingSessionRecordStatusType.valueOf(recordStatus),
+    )

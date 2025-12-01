@@ -10,11 +10,8 @@ import android.os.Handler
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.data.repository.ReadTimeCounterRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadTimeCounterRepository
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MILLISECONDS_IN_ONE_SECOND
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.READ_TIME_COUNTER_NOTIFICATION_CHANNEL_ID
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 import javax.inject.Inject
@@ -24,7 +21,6 @@ private const val NOTIFICATION_UPDATE_DELAY = 1000L
 
 @AndroidEntryPoint
 class ReadTimeCounterService : Service() {
-
     @Inject
     lateinit var readTimeCounterRepository: ReadTimeCounterRepository
 
@@ -39,11 +35,13 @@ class ReadTimeCounterService : Service() {
         handler = Handler(mainLooper)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         intent?.let {
             it.action?.let { action ->
                 when (Actions.valueOf(action)) {
@@ -60,27 +58,29 @@ class ReadTimeCounterService : Service() {
                                 readTimeCounterRepository.start(UUID.fromString(id), pageCurrent)
                             }
 
-                            handler.post(object : Runnable {
-                                override fun run() {
-                                    if (isServiceRunning) {
-                                        if (isServiceResumed) {
-                                            updateNotification(getContentText())
+                            handler.post(
+                                object : Runnable {
+                                    override fun run() {
+                                        if (isServiceRunning) {
+                                            if (isServiceResumed) {
+                                                updateNotification(getContentText())
+                                            }
+                                            handler.postDelayed(this, NOTIFICATION_UPDATE_DELAY)
                                         }
-                                        handler.postDelayed(this, NOTIFICATION_UPDATE_DELAY)
                                     }
-                                }
-                            })
+                                },
+                            )
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                                 startForeground(
                                     READ_TIME_COUNTER_SERVICE_ID,
                                     createNotification(),
-                                    FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                                    FOREGROUND_SERVICE_TYPE_DATA_SYNC,
                                 )
                             } else {
                                 startForeground(
                                     READ_TIME_COUNTER_SERVICE_ID,
-                                    createNotification()
+                                    createNotification(),
                                 )
                             }
                         }
@@ -105,8 +105,8 @@ class ReadTimeCounterService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun createNotification(contentText: String = "00:00"): Notification {
-        return NotificationCompat
+    private fun createNotification(contentText: String = "00:00"): Notification =
+        NotificationCompat
             .Builder(this, READ_TIME_COUNTER_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
 //            .setContentTitle(getString(R.string.read_time_counter_notification_content_title_text))
@@ -115,7 +115,6 @@ class ReadTimeCounterService : Service() {
             .setPriority(Notification.PRIORITY_LOW)
             .setOngoing(true)
             .build()
-    }
 
     private fun updateNotification(content: String) {
         val notification = createNotification(content)
@@ -129,7 +128,7 @@ class ReadTimeCounterService : Service() {
             R.string.read_time_counter_notification_content_text,
             readingSession.readHours,
             readingSession.readMinutes,
-            readingSession.readSeconds
+            readingSession.readSeconds,
         )
     }
 
@@ -141,6 +140,9 @@ class ReadTimeCounterService : Service() {
     }
 
     enum class Actions {
-        START, RESUME, PAUSE, STOP
+        START,
+        RESUME,
+        PAUSE,
+        STOP,
     }
 }

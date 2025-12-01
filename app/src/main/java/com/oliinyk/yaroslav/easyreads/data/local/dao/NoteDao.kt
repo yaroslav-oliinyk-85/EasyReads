@@ -11,7 +11,6 @@ import java.util.UUID
 
 @Dao
 interface NoteDao {
-
     @Query("SELECT * FROM notes WHERE book_id = :bookId ORDER BY added_date DESC")
     fun getAllByBookId(bookId: UUID): Flow<List<NoteEntity>>
 
@@ -26,6 +25,7 @@ interface NoteDao {
 
     @Delete
     suspend fun delete(note: NoteEntity)
+
     @Delete
     suspend fun delete(notes: List<NoteEntity>)
 }

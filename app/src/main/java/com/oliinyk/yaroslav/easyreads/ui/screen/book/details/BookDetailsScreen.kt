@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -27,7 +26,7 @@ fun BookDetailsScreen(
     navToReadingSessionRecord: (String) -> Unit,
     navToReadingSessionList: (String) -> Unit,
     navToNoteList: (String) -> Unit,
-    viewModel: BookDetailsViewModel = hiltViewModel()
+    viewModel: BookDetailsViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         viewModel.setup(bookId)
@@ -46,7 +45,7 @@ fun BookDetailsScreen(
                 showBookDeletingConfirmDialog = false
                 navBack()
             },
-            onDismiss = { showBookDeletingConfirmDialog = false }
+            onDismiss = { showBookDeletingConfirmDialog = false },
         )
     }
 
@@ -55,9 +54,9 @@ fun BookDetailsScreen(
             BookDetailsTopAppBar(
                 title = stringResource(R.string.book_details__toolbar__title_test),
                 onEditBook = { navToBookEdit(uiState.book.id.toString()) },
-                onRemoveBook = { showBookDeletingConfirmDialog = true }
+                onRemoveBook = { showBookDeletingConfirmDialog = true },
             )
-        }
+        },
     ) { paddingValues ->
         BookDetailsContent(
             uiState = uiState,
@@ -65,7 +64,7 @@ fun BookDetailsScreen(
             navToReadingSessionList = navToReadingSessionList,
             navToNoteList = navToNoteList,
             onEvent = { viewModel.handleEvent(it) },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         )
     }
 }

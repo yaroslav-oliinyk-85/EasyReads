@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReadingGoalDao {
-
     @Query("SELECT * FROM reading_goals WHERE year = :year")
     fun getByYear(year: Int): Flow<ReadingGoalEntity?>
 

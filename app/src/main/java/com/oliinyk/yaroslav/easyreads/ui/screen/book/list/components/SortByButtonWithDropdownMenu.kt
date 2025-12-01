@@ -38,70 +38,76 @@ fun SortByButtonWithDropdownMenu(
     var expanded by remember { mutableStateOf(false) }
 
     Box(
-        modifier = modifier
-            .height(Dimens.bookListItemSortOrderSize)
-            .clickable { expanded = !expanded }
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            )
-            .border(
-                width = Dimens.buttonBorderWith,
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            ),
-        contentAlignment = Alignment.CenterStart
+        modifier =
+            modifier
+                .height(Dimens.bookListItemSortOrderSize)
+                .clickable { expanded = !expanded }
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+                ).border(
+                    width = Dimens.buttonBorderWith,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+                ),
+        contentAlignment = Alignment.CenterStart,
     ) {
         Text(
             modifier = Modifier.padding(start = Dimens.paddingStartSmall),
-            text = stringResource(
-                R.string.book_list__button__sorted_by_text,
+            text =
                 stringResource(
-                    when (currentSorting.bookSortingType) {
-                        BookSortingType.TITLE -> R.string.book_list__button__sorted_by_title_text
-                        BookSortingType.AUTHOR -> R.string.book_list__button__sorted_by_author_text
-                        BookSortingType.ADDED_DATE -> R.string.book_list__button__sorted_by_added_date_text
-                        BookSortingType.UPDATED_DATE -> R.string.book_list__button__sorted_by_updated_date_text
-                    }
-                )
-            ),
+                    R.string.book_list__button__sorted_by_text,
+                    stringResource(
+                        when (currentSorting.bookSortingType) {
+                            BookSortingType.TITLE -> R.string.book_list__button__sorted_by_title_text
+                            BookSortingType.AUTHOR -> R.string.book_list__button__sorted_by_author_text
+                            BookSortingType.ADDED_DATE -> R.string.book_list__button__sorted_by_added_date_text
+                            BookSortingType.UPDATED_DATE -> R.string.book_list__button__sorted_by_updated_date_text
+                        },
+                    ),
+                ),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         )
         Icon(
             imageVector = Icons.Default.ArrowDropDown,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.align(Alignment.CenterEnd).padding(end = Dimens.paddingEndTiny)
+            modifier = Modifier.align(Alignment.CenterEnd).padding(end = Dimens.paddingEndTiny),
         )
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
         ) {
             BookSortingType.entries.forEach { type ->
                 DropdownMenuItem(
                     contentPadding = Dimens.dropdownMenuItemContentPaddingMedium,
                     text = {
                         Text(
-                            text = stringResource(
-                                R.string.book_list__dropdown_menu_item__sort_by_text,
+                            text =
                                 stringResource(
-                                    when (type) {
-                                        BookSortingType.TITLE -> R.string.book_list__button__sorted_by_title_text
-                                        BookSortingType.AUTHOR -> R.string.book_list__button__sorted_by_author_text
-                                        BookSortingType.ADDED_DATE -> R.string.book_list__button__sorted_by_added_date_text
-                                        BookSortingType.UPDATED_DATE -> R.string.book_list__button__sorted_by_updated_date_text
-                                    }
-                                )
-                            ),
+                                    R.string.book_list__dropdown_menu_item__sort_by_text,
+                                    stringResource(
+                                        when (type) {
+                                            BookSortingType.TITLE ->
+                                                R.string.book_list__button__sorted_by_title_text
+                                            BookSortingType.AUTHOR ->
+                                                R.string.book_list__button__sorted_by_author_text
+                                            BookSortingType.ADDED_DATE ->
+                                                R.string.book_list__button__sorted_by_added_date_text
+                                            BookSortingType.UPDATED_DATE ->
+                                                R.string.book_list__button__sorted_by_updated_date_text
+                                        },
+                                    ),
+                                ),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
                         expanded = false
                         onSortingChange(type)
-                    }
+                    },
                 )
             }
         }

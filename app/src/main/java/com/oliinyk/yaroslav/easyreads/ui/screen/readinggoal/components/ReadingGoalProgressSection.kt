@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,71 +31,80 @@ fun ReadingGoalProgressSection(
     modifier: Modifier = Modifier,
     isVisibleChangeGoalButton: Boolean = true,
     onChangeGoalClick: () -> Unit = { /* optional */ },
-    onClick: () -> Unit = { /* optional */ }
+    onClick: () -> Unit = { /* optional */ },
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(
-            Dimens.roundedCornerShapeSize
-        )
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
+        shape =
+            RoundedCornerShape(
+                Dimens.roundedCornerShapeSize,
+            ),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = Dimens.paddingHorizontalMedium,
-                    vertical = Dimens.paddingVerticalSmall
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Dimens.paddingHorizontalMedium,
+                        vertical = Dimens.paddingVerticalSmall,
+                    ),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = stringResource(
-                    R.string.reading_goal__label__goal_title_text,
-                    SimpleDateFormat(
-                        stringResource(R.string.date_year_format),
-                        Locale.getDefault()
-                    ).format(Date())
-                ),
+                text =
+                    stringResource(
+                        R.string.reading_goal__label__goal_title_text,
+                        SimpleDateFormat(
+                            stringResource(R.string.date_year_format),
+                            Locale.getDefault(),
+                        ).format(Date()),
+                    ),
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
             Spacer(Modifier.height(Dimens.spacerHeightMedium))
             Text(
-                text = stringResource(
-                    R.string.reading_goal__label__goal_reading_progress_text,
-                    uiState.currentYearFinishedBooksCount,
-                    uiState.readingGoal.goal
-                ),
+                text =
+                    stringResource(
+                        R.string.reading_goal__label__goal_reading_progress_text,
+                        uiState.currentYearFinishedBooksCount,
+                        uiState.readingGoal.goal,
+                    ),
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             LinearProgressIndicator(
-                progress = if (uiState.readingGoal.goal > 0) {
-                    uiState.currentYearFinishedBooksCount.toFloat() / uiState.readingGoal.goal
-                } else {
-                    uiState.readingGoal.goal.toFloat()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(Dimens.linearProgressIndicatorHeight),
+                progress =
+                    if (uiState.readingGoal.goal > 0) {
+                        uiState.currentYearFinishedBooksCount.toFloat() / uiState.readingGoal.goal
+                    } else {
+                        uiState.readingGoal.goal.toFloat()
+                    },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(Dimens.linearProgressIndicatorHeight),
                 color = MaterialTheme.colorScheme.primary,
-                trackColor = MaterialTheme.colorScheme.background
+                trackColor = MaterialTheme.colorScheme.background,
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             if (isVisibleChangeGoalButton) {
                 AppTextButton(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(vertical = Dimens.paddingVerticalSmall),
-                    onClick = onChangeGoalClick
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = Dimens.paddingVerticalSmall),
+                    onClick = onChangeGoalClick,
                 ) {
                     Text(
                         text = stringResource(R.string.reading_goal__label__goal_change_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
             }

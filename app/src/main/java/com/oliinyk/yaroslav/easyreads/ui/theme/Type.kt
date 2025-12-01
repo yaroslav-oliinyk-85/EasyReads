@@ -3,7 +3,8 @@ package com.oliinyk.yaroslav.easyreads.ui.theme
 import androidx.compose.material3.Typography
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val Typography =
+    Typography(
     /* Other default text styles to override
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
@@ -26,5 +27,5 @@ val Typography = Typography(
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
     )
-    */
-)
+     */
+    )

@@ -15,26 +15,26 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReadingSessionListTopAppBar(
-    sessionsCount: Int
-) {
+fun ReadingSessionListTopAppBar(sessionsCount: Int) {
     TopAppBar(
         title = {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_list__toolbar__title_text,
-                        sessionsCount
-                    )
+                    text =
+                        stringResource(
+                            R.string.reading_session_list__toolbar__title_text,
+                            sessionsCount,
+                        ),
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }
 
@@ -43,7 +43,7 @@ fun ReadingSessionListTopAppBar(
 fun ReadingSessionListTopAppBarPreview() {
     EasyReadsTheme {
         ReadingSessionListTopAppBar(
-            sessionsCount = 5
+            sessionsCount = 5,
         )
     }
 }

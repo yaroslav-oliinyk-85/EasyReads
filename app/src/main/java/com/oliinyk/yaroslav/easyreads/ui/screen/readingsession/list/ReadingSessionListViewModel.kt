@@ -17,92 +17,93 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class ReadingSessionListViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val readingSessionRepository: ReadingSessionRepository
-) : ViewModel() {
+class ReadingSessionListViewModel
+    @Inject
+    constructor(
+        private val bookRepository: BookRepository,
+        private val readingSessionRepository: ReadingSessionRepository,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(ReadingSessionListUiState())
+        val uiState
+            get() = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(ReadingSessionListUiState())
-    val uiState
-        get() = _uiState.asStateFlow()
+        fun setup(bookId: UUID) {
+            loadReadingSessionsByBookId(bookId)
+        }
 
-    fun setup(bookId: UUID) {
-        loadReadingSessionsByBookId(bookId)
-    }
+        private fun loadReadingSessionsByBookId(bookId: UUID) {
+            viewModelScope.launch {
+                bookRepository
+                    .getById(bookId)
+                    .combine(readingSessionRepository.getAllByBookId(bookId = bookId)) { book, readingSessions ->
+                        ReadingSessionListUiState(
+                            book = book,
+                            readingSessions = readingSessions,
+                        )
+                    }.collect { uiStateUpdated ->
+                        _uiState.update {
+                            it.copy(
+                                book = uiStateUpdated.book,
+                                readingSessions = uiStateUpdated.readingSessions,
+                            )
+                        }
+                    }
+            }
+        }
 
-    private fun loadReadingSessionsByBookId(bookId: UUID) {
-        viewModelScope.launch {
-            bookRepository.getById(bookId)
-                .combine(readingSessionRepository.getAllByBookId(bookId = bookId)) { book, readingSessions ->
-                    ReadingSessionListUiState(
-                        book = book,
-                        readingSessions = readingSessions
+        private fun addReadingSession(readingSession: ReadingSession) {
+            uiState.value.book?.let { book ->
+                bookRepository.update(
+                    book.copy(
+                        pageCurrent = readingSession.endPage,
+                        updatedDate = Date(),
+                    ),
+                )
+
+                readingSessionRepository.insert(
+                    readingSession.copy(
+                        bookId = book.id,
+                    ),
+                )
+            }
+        }
+
+        private fun updateReadingSession(readingSession: ReadingSession) {
+            uiState.value.book?.let { book ->
+
+                if (_uiState.value.readingSessions[0].id == readingSession.id) {
+                    bookRepository.update(
+                        book.copy(pageCurrent = readingSession.endPage),
                     )
                 }
-                .collect { uiStateUpdated ->
-                    _uiState.update {
-                        it.copy(
-                            book = uiStateUpdated.book,
-                            readingSessions = uiStateUpdated.readingSessions
-                        )
-                    }
+
+                readingSessionRepository.update(readingSession)
+            }
+        }
+
+        fun save(readingSession: ReadingSession) {
+            if (readingSession.bookId == null) {
+                addReadingSession(readingSession)
+            } else {
+                updateReadingSession(readingSession)
+            }
+        }
+
+        fun remove(readingSession: ReadingSession) {
+            uiState.value.book?.let { book ->
+
+                if (book.pageCurrent == readingSession.endPage) {
+                    bookRepository.update(
+                        book.copy(pageCurrent = readingSession.startPage),
+                    )
                 }
-        }
-    }
 
-    private fun addReadingSession(readingSession: ReadingSession) {
-        uiState.value.book?.let { book ->
-            bookRepository.update(
-                book.copy(
-                    pageCurrent = readingSession.endPage,
-                    updatedDate = Date()
-                )
-            )
-
-            readingSessionRepository.insert(
-                readingSession.copy(
-                    bookId = book.id
-                )
-            )
-        }
-    }
-
-    private fun updateReadingSession(readingSession: ReadingSession) {
-        uiState.value.book?.let { book ->
-
-            if (_uiState.value.readingSessions[0].id == readingSession.id) {
-                bookRepository.update(
-                    book.copy(pageCurrent = readingSession.endPage)
-                )
+                readingSessionRepository.remove(readingSession)
             }
-
-            readingSessionRepository.update(readingSession)
         }
     }
-
-    fun save(readingSession: ReadingSession) {
-        if (readingSession.bookId == null) {
-            addReadingSession(readingSession)
-        } else {
-            updateReadingSession(readingSession)
-        }
-    }
-
-    fun remove(readingSession: ReadingSession) {
-        uiState.value.book?.let { book ->
-
-            if (book.pageCurrent == readingSession.endPage) {
-                bookRepository.update(
-                    book.copy(pageCurrent = readingSession.startPage)
-                )
-            }
-
-            readingSessionRepository.remove(readingSession)
-        }
-    }
-}
 
 data class ReadingSessionListUiState(
     val book: Book? = null,
-    val readingSessions: List<ReadingSession> = emptyList()
+    val readingSessions: List<ReadingSession> = emptyList(),
 )

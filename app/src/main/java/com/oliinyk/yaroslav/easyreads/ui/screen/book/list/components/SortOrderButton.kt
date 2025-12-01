@@ -19,29 +19,29 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 @Composable
 fun SortOrderButton(
     modifier: Modifier = Modifier,
-    onSortingOrderChange: () -> Unit
-
+    onSortingOrderChange: () -> Unit,
 ) {
     Box(
-        modifier = modifier
-            .size(Dimens.bookListItemSortOrderSize)
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            ).border(
-                width = Dimens.buttonBorderWith,
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
-            )
+        modifier =
+            modifier
+                .size(Dimens.bookListItemSortOrderSize)
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+                ).border(
+                    width = Dimens.buttonBorderWith,
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+                ),
     ) {
         IconButton(
             modifier = Modifier.fillMaxSize(),
-            onClick = onSortingOrderChange
+            onClick = onSortingOrderChange,
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_button_sort_order),
                 contentDescription = stringResource(R.string.book_list__button__sorted_order_content_description_text),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }

@@ -20,18 +20,18 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 @Composable
 fun NoteListTopAppBar(
     noteSize: Int,
-    onAdd: () -> Unit
+    onAdd: () -> Unit,
 ) {
     TopAppBar(
         title = {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     stringResource(
                         R.string.note_list__toolbar__title_text,
-                        noteSize
-                    )
+                        noteSize,
+                    ),
                 )
             }
         },
@@ -39,13 +39,14 @@ fun NoteListTopAppBar(
             AppIconTopBarButton(
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(R.string.menu_item__add_text),
-                onClick = onAdd
+                onClick = onAdd,
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }
 
@@ -55,7 +56,7 @@ private fun NoteListTopAppBarPreview() {
     EasyReadsTheme {
         NoteListTopAppBar(
             noteSize = 5,
-            onAdd = {}
+            onAdd = {},
         )
     }
 }

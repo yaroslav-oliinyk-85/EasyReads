@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
+import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
@@ -28,51 +28,55 @@ fun ReadingGoalReadingSummarySection(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier
-                .padding(
-                    horizontal = Dimens.paddingHorizontalMedium,
-                    vertical = Dimens.paddingVerticalSmall
-                )
+            modifier =
+                Modifier
+                    .padding(
+                        horizontal = Dimens.paddingHorizontalMedium,
+                        vertical = Dimens.paddingVerticalSmall,
+                    ),
         ) {
             Text(
                 text = stringResource(R.string.reading_goal__label__summery_title_text),
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.reading_goal__label__summery_read_time_text,
-                        uiState.readHours,
-                        uiState.readMinutes
-                    ),
+                    text =
+                        stringResource(
+                            R.string.reading_goal__label__summery_read_time_text,
+                            uiState.readHours,
+                            uiState.readMinutes,
+                        ),
                     textAlign = TextAlign.Left,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = stringResource(
-                        R.string.reading_goal__label__summery_read_average_pages_hour_text,
-                        uiState.averagePagesHour
-                    ),
+                    text =
+                        stringResource(
+                            R.string.reading_goal__label__summery_read_average_pages_hour_text,
+                            uiState.averagePagesHour,
+                        ),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
-                    text = stringResource(
-                        R.string.reading_goal__label__summery_read_pages_text,
-                        uiState.readPages
-                    ),
+                    text =
+                        stringResource(
+                            R.string.reading_goal__label__summery_read_pages_text,
+                            uiState.readPages,
+                        ),
                     textAlign = TextAlign.Right,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }

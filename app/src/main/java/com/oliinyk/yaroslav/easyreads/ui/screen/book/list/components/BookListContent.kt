@@ -18,22 +18,23 @@ fun BookListContent(
     stateUi: StateUiBookList,
     onBookClick: (Book) -> Unit,
     onSortingChange: (BookSortingType) -> Unit,
-    onSortingOrderChange: () -> Unit
+    onSortingOrderChange: () -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = Dimens.paddingHorizontalMedium)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = Dimens.paddingHorizontalMedium),
     ) {
         BookListSortControlSection(
             currentSorting = stateUi.bookSorting,
             onSortingChange = onSortingChange,
-            onSortingOrderChange = onSortingOrderChange
+            onSortingOrderChange = onSortingOrderChange,
         )
         BookListSection(
             stateUi = stateUi,
-            onBookClick = onBookClick
+            onBookClick = onBookClick,
         )
     }
 }

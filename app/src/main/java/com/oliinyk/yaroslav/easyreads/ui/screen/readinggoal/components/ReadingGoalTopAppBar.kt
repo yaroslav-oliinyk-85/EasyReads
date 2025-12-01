@@ -12,25 +12,26 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadingGoalTopAppBar() {
     TopAppBar(
         title = {
             Text(
-                text = stringResource(
-                    R.string.reading_goal__toolbar__title_text,
-                    SimpleDateFormat(
-                        stringResource(R.string.date_year_format),
-                        Locale.getDefault()
-                    ).format(Date())
-                )
+                text =
+                    stringResource(
+                        R.string.reading_goal__toolbar__title_text,
+                        SimpleDateFormat(
+                            stringResource(R.string.date_year_format),
+                            Locale.getDefault(),
+                        ).format(Date()),
+                    ),
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }

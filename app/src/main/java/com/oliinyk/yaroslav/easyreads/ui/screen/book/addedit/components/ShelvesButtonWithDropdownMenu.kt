@@ -14,61 +14,63 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
+import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.BookAddEditEvent
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.BookAddEditStateUi
-import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 
 @Composable
 fun ShelvesButtonWithDropdownMenu(
     modifier: Modifier = Modifier,
     stateUi: BookAddEditStateUi,
-    onEvent: (BookAddEditEvent) -> Unit
+    onEvent: (BookAddEditEvent) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         AppTextButton(
             modifier = modifier,
-            onClick = { expanded = true }
+            onClick = { expanded = true },
         ) {
             Text(
-                text = when (stateUi.book.shelf) {
-                    BookShelvesType.FINISHED ->
-                        stringResource(R.string.book_details__button__shelf_finished_text)
+                text =
+                    when (stateUi.book.shelf) {
+                        BookShelvesType.FINISHED ->
+                            stringResource(R.string.book_details__button__shelf_finished_text)
 
-                    BookShelvesType.READING ->
-                        stringResource(R.string.book_details__button__shelf_reading_text)
+                        BookShelvesType.READING ->
+                            stringResource(R.string.book_details__button__shelf_reading_text)
 
-                    BookShelvesType.WANT_TO_READ ->
-                        stringResource(R.string.book_details__button__shelf_want_to_read_text)
-                }
+                        BookShelvesType.WANT_TO_READ ->
+                            stringResource(R.string.book_details__button__shelf_want_to_read_text)
+                    },
             )
         }
         DropdownMenu(
             modifier = modifier,
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
         ) {
             BookShelvesType.entries.forEach { shelf ->
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = when(shelf) {
-                                BookShelvesType.FINISHED ->
-                                    stringResource(R.string.book_details__button__shelf_finished_text)
-                                BookShelvesType.READING ->
-                                    stringResource(R.string.book_details__button__shelf_reading_text)
-                                BookShelvesType.WANT_TO_READ ->
-                                    stringResource(R.string.book_details__button__shelf_want_to_read_text)
-                            },
-                            color = MaterialTheme.colorScheme.primary
+                            text =
+                                when (shelf) {
+                                    BookShelvesType.FINISHED ->
+                                        stringResource(R.string.book_details__button__shelf_finished_text)
+                                    BookShelvesType.READING ->
+                                        stringResource(R.string.book_details__button__shelf_reading_text)
+                                    BookShelvesType.WANT_TO_READ ->
+                                        stringResource(R.string.book_details__button__shelf_want_to_read_text)
+                                },
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
                         expanded = false
                         onEvent(BookAddEditEvent.ShelveChanged(shelf))
-                    }
+                    },
                 )
             }
         }

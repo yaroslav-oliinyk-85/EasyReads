@@ -1,12 +1,10 @@
 package com.oliinyk.yaroslav.easyreads.domain.repository
 
-import com.oliinyk.yaroslav.easyreads.data.local.entety.ReadingSessionEntity
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface ReadingSessionRepository {
-
     fun getAllByBookId(bookId: UUID): Flow<List<ReadingSession>>
 
     suspend fun getAllByBookIds(bookIds: List<UUID>): List<ReadingSession>
@@ -18,5 +16,6 @@ interface ReadingSessionRepository {
     fun update(readingSession: ReadingSession)
 
     fun remove(readingSession: ReadingSession)
+
     fun remove(readingSessions: List<ReadingSession>)
 }

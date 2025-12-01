@@ -38,10 +38,10 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun NoteAddEditDialog(
     note: Note,
     onSave: (Note) -> Unit,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
 ) {
     Dialog(
-        onDismissRequest = onDismissRequest
+        onDismissRequest = onDismissRequest,
     ) {
         val noteTextMinLines = 3
         val errorMessageText = stringResource(R.string.note_add_edit_dialog__error__message_text)
@@ -51,33 +51,36 @@ fun NoteAddEditDialog(
 
         Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(Dimens.paddingAllMedium)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(Dimens.paddingAllMedium),
             ) {
                 // --- note text ---
                 AppEditField(
                     label = stringResource(R.string.note_add_edit_dialog__label__note_text),
                     value = noteText,
                     hint = stringResource(R.string.note_add_edit_dialog__hint__enter_note_text),
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next
-                    ),
+                    keyboardOptions =
+                        KeyboardOptions(
+                            imeAction = ImeAction.Next,
+                        ),
                     singleLine = false,
                     minLines = noteTextMinLines,
                     onValueChange = { value ->
                         noteText = value
-                        noteTextLabelError = if (noteText.isBlank()) {
-                            errorMessageText
-                        } else {
-                            ""
-                        }
+                        noteTextLabelError =
+                            if (noteText.isBlank()) {
+                                errorMessageText
+                            } else {
+                                ""
+                            }
                     },
-                    labelError = noteTextLabelError
+                    labelError = noteTextLabelError,
                 )
 
                 Spacer(Modifier.height(Dimens.spacerHeightSmall))
@@ -87,15 +90,16 @@ fun NoteAddEditDialog(
                     label = stringResource(R.string.note_add_edit_dialog__label__note_page_text),
                     value = notePageNumberText,
                     hint = stringResource(R.string.note_add_edit_dialog__hint__enter_note_page_text),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
+                    keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
                     onValueChange = { value ->
                         if (value.isBlank() || value.isDigitsOnly()) {
                             notePageNumberText = value.take(BOOK_PAGE_AMOUNT_MAX_LENGTH)
                         }
-                    }
+                    },
                 )
 
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
@@ -109,16 +113,16 @@ fun NoteAddEditDialog(
                             onSave(
                                 note.copy(
                                     text = noteText.trim(),
-                                    page = if (notePageNumberText.isNotBlank()) notePageNumberText.toInt() else null
-                                )
+                                    page = if (notePageNumberText.isNotBlank()) notePageNumberText.toInt() else null,
+                                ),
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = stringResource(R.string.dialog__button__save_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
 
@@ -127,11 +131,11 @@ fun NoteAddEditDialog(
                 // --- cancel button ---
                 AppTextButton(
                     onClick = onDismissRequest,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = stringResource(R.string.dialog__button__cancel_text),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
             }
@@ -146,7 +150,7 @@ fun NoteAddEditDialogPreview() {
         NoteAddEditDialog(
             note = Note(),
             onSave = {},
-            onDismissRequest = {}
+            onDismissRequest = {},
         )
     }
 }

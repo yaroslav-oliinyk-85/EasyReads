@@ -22,28 +22,28 @@ fun ReadingSessionListContent(
     readingSessions: List<ReadingSession>,
     onClickedEdit: (ReadingSession) -> Unit,
     onClickedRemove: (ReadingSession) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         if (readingSessions.isEmpty()) {
             Text(
                 text = stringResource(R.string.reading_session_list__label__list_empty_text),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
             )
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(Dimens.paddingAllMedium),
-                verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+                verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
             ) {
                 items(readingSessions) { readingSession ->
                     ReadingSessionListItem(
                         readingSession = readingSession,
                         onClickedEdit = onClickedEdit,
-                        onClickedRemove = onClickedRemove
+                        onClickedRemove = onClickedRemove,
                     )
                 }
             }
@@ -57,6 +57,6 @@ fun ReadingSessionListContentPreview() {
     ReadingSessionListContent(
         readingSessions = listOf(ReadingSession(), ReadingSession()),
         onClickedEdit = {},
-        onClickedRemove = {}
+        onClickedRemove = {},
     )
 }

@@ -16,17 +16,17 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun BookListSection(
     modifier: Modifier = Modifier,
     stateUi: StateUiBookList,
-    onBookClick: (Book) -> Unit
+    onBookClick: (Book) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
     ) {
         items(stateUi.books) { book ->
             BookListItem(
                 book = book,
                 holderSize = stateUi.holderSize,
-                onClickedBook = onBookClick
+                onClickedBook = onBookClick,
             )
         }
         item {

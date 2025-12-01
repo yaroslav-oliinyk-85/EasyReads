@@ -19,83 +19,84 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookListViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val preferencesRepository: PreferencesRepository
-) : ViewModel() {
+class BookListViewModel
+    @Inject
+    constructor(
+        private val bookRepository: BookRepository,
+        private val preferencesRepository: PreferencesRepository,
+    ) : ViewModel() {
+        private val _stateUi: MutableStateFlow<StateUiBookList> = MutableStateFlow(StateUiBookList())
+        val stateUi: StateFlow<StateUiBookList>
+            get() = _stateUi.asStateFlow()
 
-    private val _stateUi: MutableStateFlow<StateUiBookList> = MutableStateFlow(StateUiBookList())
-    val stateUi: StateFlow<StateUiBookList>
-        get() = _stateUi.asStateFlow()
+        val bookSorting: BookSorting
+            get() = stateUi.value.bookSorting
 
-    val bookSorting: BookSorting
-        get() = stateUi.value.bookSorting
+        val bookShelvesType: BookShelvesType?
+            get() = stateUi.value.bookShelvesType
 
-    val bookShelvesType: BookShelvesType?
-        get() = stateUi.value.bookShelvesType
+        private var jobFetchBooks: Job? = null
 
-    private var jobFetchBooks: Job? = null
-
-    init {
-        viewModelScope.launch {
-            preferencesRepository.getBookListCellHolderSize().collectLatest { holderSizeString ->
-                if (holderSizeString.isNotEmpty()) {
-                    _stateUi.update {
-                        it.copy(
-                            holderSize = HolderSize.valueOf(holderSizeString)
-                        )
+        init {
+            viewModelScope.launch {
+                preferencesRepository.getBookListCellHolderSize().collectLatest { holderSizeString ->
+                    if (holderSizeString.isNotEmpty()) {
+                        _stateUi.update {
+                            it.copy(
+                                holderSize = HolderSize.valueOf(holderSizeString),
+                            )
+                        }
                     }
                 }
             }
-        }
-        viewModelScope.launch {
-            preferencesRepository.getBookSorting().collectLatest { bookSortingString ->
-                if (bookSortingString.isNotEmpty()) {
-                    val bookSorting = BookSorting.fromString(bookSortingString)
-                    _stateUi.update { it.copy(bookSorting = bookSorting) }
-                }
-                loadBooks()
-            }
-        }
-    }
-
-    fun updateBookSorting(bookSorting: BookSorting) {
-        viewModelScope.launch {
-            preferencesRepository.setBookSorting(bookSorting.toString())
-        }
-    }
-
-    fun updateHolderSize(holderSize: HolderSize) {
-        viewModelScope.launch {
-            preferencesRepository.setBookListCellHolderSize(holderSize.toString())
-        }
-    }
-
-    fun updateBookShelveType(updatedBookShelvesType: BookShelvesType) {
-        _stateUi.update { it.copy(bookShelvesType = updatedBookShelvesType) }
-        loadBooks()
-    }
-
-    private fun loadBooks() {
-        jobFetchBooks?.cancel()
-        jobFetchBooks = viewModelScope.launch {
-            if (bookShelvesType != null) {
-                bookRepository.getByShelveSorted(bookShelvesType!!, bookSorting).collect { books ->
-                    _stateUi.update { it.copy(books = books) }
-                }
-            }
-            else {
-                bookRepository.getAllSorted(bookSorting).collect { books ->
-                    _stateUi.update { it.copy(books = books) }
+            viewModelScope.launch {
+                preferencesRepository.getBookSorting().collectLatest { bookSortingString ->
+                    if (bookSortingString.isNotEmpty()) {
+                        val bookSorting = BookSorting.fromString(bookSortingString)
+                        _stateUi.update { it.copy(bookSorting = bookSorting) }
+                    }
+                    loadBooks()
                 }
             }
         }
+
+        fun updateBookSorting(bookSorting: BookSorting) {
+            viewModelScope.launch {
+                preferencesRepository.setBookSorting(bookSorting.toString())
+            }
+        }
+
+        fun updateHolderSize(holderSize: HolderSize) {
+            viewModelScope.launch {
+                preferencesRepository.setBookListCellHolderSize(holderSize.toString())
+            }
+        }
+
+        fun updateBookShelveType(updatedBookShelvesType: BookShelvesType) {
+            _stateUi.update { it.copy(bookShelvesType = updatedBookShelvesType) }
+            loadBooks()
+        }
+
+        private fun loadBooks() {
+            jobFetchBooks?.cancel()
+            jobFetchBooks =
+                viewModelScope.launch {
+                    if (bookShelvesType != null) {
+                        bookRepository.getByShelveSorted(bookShelvesType!!, bookSorting).collect { books ->
+                            _stateUi.update { it.copy(books = books) }
+                        }
+                    } else {
+                        bookRepository.getAllSorted(bookSorting).collect { books ->
+                            _stateUi.update { it.copy(books = books) }
+                        }
+                    }
+                }
+        }
     }
-}
 
 data class StateUiBookList(
     val books: List<Book> = emptyList(),
     val holderSize: HolderSize = HolderSize.DEFAULT,
     val bookSorting: BookSorting = BookSorting(),
-    val bookShelvesType: BookShelvesType? = null
+    val bookShelvesType: BookShelvesType? = null,
 )

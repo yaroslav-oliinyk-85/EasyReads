@@ -16,9 +16,10 @@ fun ReadingSessionRecordTopAppBar() {
         title = {
             Text(stringResource(R.string.reading_session_record__toolbar__title_text))
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }

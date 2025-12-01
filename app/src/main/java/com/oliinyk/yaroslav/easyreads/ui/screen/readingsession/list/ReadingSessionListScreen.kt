@@ -24,7 +24,7 @@ import java.util.UUID
 @Composable
 fun ReadingSessionListScreen(
     bookId: String?,
-    viewModel: ReadingSessionListViewModel = hiltViewModel()
+    viewModel: ReadingSessionListViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
         bookId?.let { id ->
@@ -40,15 +40,15 @@ fun ReadingSessionListScreen(
     Scaffold(
         topBar = {
             ReadingSessionListTopAppBar(
-                sessionsCount = uiState.readingSessions.size
+                sessionsCount = uiState.readingSessions.size,
             )
-        }
+        },
     ) { paddingValues ->
         ReadingSessionListContent(
             readingSessions = uiState.readingSessions,
-            onClickedEdit = { addOrEditReadingSessionState = it},
+            onClickedEdit = { addOrEditReadingSessionState = it },
             onClickedRemove = { removeReadingSessionState = it },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         )
     }
 
@@ -61,30 +61,33 @@ fun ReadingSessionListScreen(
                 viewModel.save(it)
                 addOrEditReadingSessionState = null
             },
-            onDismissRequest = { addOrEditReadingSessionState = null }
+            onDismissRequest = { addOrEditReadingSessionState = null },
         )
     }
 
     removeReadingSessionState?.let { readingSession ->
         AppConfirmDialog(
-            title = stringResource(
-                R.string.reading_session_list__confirmation_dialog__title_text
-            ),
-            message = stringResource(
-                R.string.reading_session_list__confirmation_dialog__message_text,
-                DateFormat.format(
-                    stringResource(R.string.date_and_time_format),
-                    readingSession.startedDate
-                ).toString(),
-                readingSession.readPages,
-                readingSession.startPage,
-                readingSession.endPage
-            ),
+            title =
+                stringResource(
+                    R.string.reading_session_list__confirmation_dialog__title_text,
+                ),
+            message =
+                stringResource(
+                    R.string.reading_session_list__confirmation_dialog__message_text,
+                    DateFormat
+                        .format(
+                            stringResource(R.string.date_and_time_format),
+                            readingSession.startedDate,
+                        ).toString(),
+                    readingSession.readPages,
+                    readingSession.startPage,
+                    readingSession.endPage,
+                ),
             onConfirm = {
                 viewModel.remove(readingSession)
                 removeReadingSessionState = null
             },
-            onDismiss = { removeReadingSessionState = null }
+            onDismiss = { removeReadingSessionState = null },
         )
     }
 }

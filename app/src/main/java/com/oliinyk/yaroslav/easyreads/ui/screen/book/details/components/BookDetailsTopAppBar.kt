@@ -26,7 +26,7 @@ import com.oliinyk.yaroslav.easyreads.R
 fun BookDetailsTopAppBar(
     title: String,
     onEditBook: () -> Unit,
-    onRemoveBook: () -> Unit
+    onRemoveBook: () -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
     TopAppBar(
@@ -35,24 +35,24 @@ fun BookDetailsTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = { menuExpanded = true }
+                onClick = { menuExpanded = true },
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = stringResource(R.string.menu_item__more_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
             DropdownMenu(
                 expanded = menuExpanded,
-                onDismissRequest = { menuExpanded = false }
+                onDismissRequest = { menuExpanded = false },
             ) {
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__edit_text),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
@@ -63,16 +63,16 @@ fun BookDetailsTopAppBar(
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = stringResource(R.string.menu_item__edit_text),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = MaterialTheme.colorScheme.primary,
                         )
-                    }
+                    },
                 )
                 DropdownMenuItem(
                     text = {
                         Text(
                             text = stringResource(R.string.menu_item__remove_text),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
@@ -83,15 +83,16 @@ fun BookDetailsTopAppBar(
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = stringResource(R.string.menu_item__remove_text),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = MaterialTheme.colorScheme.primary,
                         )
-                    }
+                    },
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }

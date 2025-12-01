@@ -19,26 +19,26 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 @Composable
 fun BookDetailsIsbnSection(
     modifier: Modifier = Modifier,
-    isbn: String
+    isbn: String,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Row(
             modifier = Modifier.padding(Dimens.paddingAllSmall),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             // --- Label ---
             Text(
                 text = stringResource(R.string.book_details__label__book_isbn_text),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
             Spacer(Modifier.width(Dimens.spacerWidthSmall))
             // --- ISBN text ---
             Text(
                 text = isbn,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }

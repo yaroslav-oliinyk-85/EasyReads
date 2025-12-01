@@ -17,17 +17,19 @@ fun BookListSortControlSection(
     modifier: Modifier = Modifier,
     currentSorting: BookSorting,
     onSortingChange: (BookSortingType) -> Unit,
-    onSortingOrderChange: () -> Unit
+    onSortingOrderChange: () -> Unit,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth()
-            .padding(vertical = Dimens.paddingVerticalSmall),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = Dimens.paddingVerticalSmall),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         SortByButtonWithDropdownMenu(
             modifier = Modifier.weight(1f),
             currentSorting = currentSorting,
-            onSortingChange = onSortingChange
+            onSortingChange = onSortingChange,
         )
 
         Spacer(modifier = Modifier.width(Dimens.spacerWidthSmall))

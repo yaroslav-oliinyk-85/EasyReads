@@ -27,19 +27,20 @@ fun BookEditFieldWithDropdownMenu(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     singleLine: Boolean = true,
     minLines: Int = 1,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val filteredSuggestions = remember(value) {
-        if (value.length <= 1) {
-            emptyList()
-        } else {
-            suggestions.filter { it.contains(value, true) }
+    val filteredSuggestions =
+        remember(value) {
+            if (value.length <= 1) {
+                emptyList()
+            } else {
+                suggestions.filter { it.contains(value, true) }
+            }
         }
-    }
 
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         AppEditField(
             label = label,
@@ -51,12 +52,12 @@ fun BookEditFieldWithDropdownMenu(
             onValueChange = { newValue ->
                 onValueChange(newValue)
                 expanded = true
-            }
+            },
         )
         DropdownMenu(
             expanded = expanded && filteredSuggestions.isNotEmpty(),
             onDismissRequest = { expanded = false },
-            properties = PopupProperties(focusable = false)
+            properties = PopupProperties(focusable = false),
         ) {
             filteredSuggestions.forEach { item ->
                 DropdownMenuItem(
@@ -64,7 +65,7 @@ fun BookEditFieldWithDropdownMenu(
                     onClick = {
                         onValueChange(item)
                         expanded = false
-                    }
+                    },
                 )
             }
         }

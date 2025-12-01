@@ -16,44 +16,48 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferencesRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context
-) : PreferencesRepository {
+class PreferencesRepositoryImpl
+    @Inject
+    constructor(
+        @ApplicationContext private val context: Context,
+    ) : PreferencesRepository {
+        private val dataStore: DataStore<Preferences> =
+            PreferenceDataStoreFactory.create {
+                context.preferencesDataStoreFile("settings")
+            }
 
-    private val dataStore: DataStore<Preferences> = PreferenceDataStoreFactory.create {
-        context.preferencesDataStoreFile("settings")
-    }
+        override fun getBookListCellHolderSize(): Flow<String> =
+            dataStore.data
+                .map {
+                    it[PREF_BOOK_LIST_CELL_HOLDER_SIZE] ?: ""
+                }.distinctUntilChanged()
 
-    override fun getBookListCellHolderSize(): Flow<String> {
-        return dataStore.data.map {
-            it[PREF_BOOK_LIST_CELL_HOLDER_SIZE] ?: ""
-        }.distinctUntilChanged()
-    }
+        override suspend fun setBookListCellHolderSize(holderSize: String) {
+            dataStore.edit {
+                it[PREF_BOOK_LIST_CELL_HOLDER_SIZE] = holderSize
+            }
+        }
 
-    override suspend fun setBookListCellHolderSize(holderSize: String) {
-        dataStore.edit {
-            it[PREF_BOOK_LIST_CELL_HOLDER_SIZE] = holderSize
+        override fun getBookSorting(): Flow<String> =
+            dataStore.data
+                .map {
+                    it[PREF_BOOK_SORTING] ?: ""
+                }.distinctUntilChanged()
+
+        override suspend fun setBookSorting(bookSorting: String) {
+            dataStore.edit {
+                it[PREF_BOOK_SORTING] = bookSorting
+            }
+        }
+
+        companion object {
+            private val PREF_BOOK_LIST_CELL_HOLDER_SIZE =
+                stringPreferencesKey(
+                    "PREF_BOOK_LIST_CELL_HOLDER_SIZE",
+                )
+            private val PREF_BOOK_SORTING =
+                stringPreferencesKey(
+                    "PREF_BOOK_SORTING",
+                )
         }
     }
-
-    override fun getBookSorting(): Flow<String> {
-        return dataStore.data.map {
-            it[PREF_BOOK_SORTING] ?: ""
-        }.distinctUntilChanged()
-    }
-
-    override suspend fun setBookSorting(bookSorting: String) {
-        dataStore.edit {
-            it[PREF_BOOK_SORTING] = bookSorting
-        }
-    }
-
-    companion object {
-        private val PREF_BOOK_LIST_CELL_HOLDER_SIZE = stringPreferencesKey(
-            "PREF_BOOK_LIST_CELL_HOLDER_SIZE"
-        )
-        private val PREF_BOOK_SORTING = stringPreferencesKey(
-            "PREF_BOOK_SORTING"
-        )
-    }
-}

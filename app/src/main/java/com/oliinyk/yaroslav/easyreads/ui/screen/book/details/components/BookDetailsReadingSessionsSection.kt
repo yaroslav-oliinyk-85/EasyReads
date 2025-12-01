@@ -45,7 +45,7 @@ fun BookDetailsReadingSessionsSection(
     onStartReadingSession: () -> Unit,
     onSeeAll: () -> Unit,
     onEdit: (ReadingSession) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var editingReadingSession: ReadingSession? by rememberSaveable { mutableStateOf(null) }
     editingReadingSession?.let { readingSession ->
@@ -55,36 +55,37 @@ fun BookDetailsReadingSessionsSection(
                 onEdit(it)
                 editingReadingSession = null
             },
-            onDismissRequest = { editingReadingSession = null }
+            onDismissRequest = { editingReadingSession = null },
         )
     }
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.paddingAllSmall),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.paddingAllSmall),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (sessions.isEmpty()) {
                 Text(
                     modifier = Modifier.align(Alignment.Start),
                     text = stringResource(R.string.book_details__label__no_reading_sessions_text),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             } else {
                 ShowLatestReadingSessionInfoRow(
                     latestReadingSession = sessions.first(),
                     onClickEditReadingSession = { latestReadingSession ->
                         editingReadingSession = latestReadingSession
-                    }
+                    },
                 )
             }
 
-            if(!isBookFinished) {
+            if (!isBookFinished) {
                 AppDivider(modifier = Modifier.padding(vertical = Dimens.paddingVerticalSmall))
 
                 StartReadingSessionButton(onStartReadingSession)
@@ -95,7 +96,7 @@ fun BookDetailsReadingSessionsSection(
             SeeAllReadingSessionButton(
                 quantity = sessions.size,
                 onSeeAll = onSeeAll,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -105,71 +106,77 @@ fun BookDetailsReadingSessionsSection(
 private fun ShowLatestReadingSessionInfoRow(
     latestReadingSession: ReadingSession,
     onClickEditReadingSession: (ReadingSession) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             // --- reading summery row ---
             Row {
                 // --- read time ---
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_list_item__label__read_time_text,
-                        latestReadingSession.readHours,
-                        latestReadingSession.readMinutes
-                    ),
-                    style = MaterialTheme.typography.bodyMedium
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__read_time_text,
+                            latestReadingSession.readHours,
+                            latestReadingSession.readMinutes,
+                        ),
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 // --- read pages hour ---
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = stringResource(
-                        R.string.book_details__label__book_read_pages_hour_text,
-                        latestReadingSession.readPagesHour
-                    ),
+                    text =
+                        stringResource(
+                            R.string.book_details__label__book_read_pages_hour_text,
+                            latestReadingSession.readPagesHour,
+                        ),
                     style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
                 // --- read pages ---
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_list_item__label__read_pages_text,
-                        latestReadingSession.readPages
-                    ),
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__read_pages_text,
+                            latestReadingSession.readPages,
+                        ),
                     style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Right
+                    textAlign = TextAlign.Right,
                 )
             }
 
             // --- secondary row (date + page range) ---
             Row(
                 modifier = Modifier.padding(top = Dimens.paddingTopTiny),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 // --- started date + time ---
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_list_item__label__date_text,
-                        DateFormat.format(
-                            stringResource(R.string.date_and_time_format),
-                            latestReadingSession.startedDate
-                        ).toString()
-                    ),
-                    style = MaterialTheme.typography.bodySmall
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__date_text,
+                            DateFormat
+                                .format(
+                                    stringResource(R.string.date_and_time_format),
+                                    latestReadingSession.startedDate,
+                                ).toString(),
+                        ),
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 Spacer(Modifier.weight(1f))
                 // --- start/end page ---
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_list_item__label__read_end_page_text,
-                        latestReadingSession.startPage,
-                        latestReadingSession.endPage
-                    ),
-                    style = MaterialTheme.typography.bodySmall
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__read_end_page_text,
+                            latestReadingSession.startPage,
+                            latestReadingSession.endPage,
+                        ),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
@@ -178,7 +185,7 @@ private fun ShowLatestReadingSessionInfoRow(
         AppIconButton(
             imageVector = Icons.Default.Edit,
             contentDescription = stringResource(R.string.menu_item__edit_text),
-            onClick = { onClickEditReadingSession(latestReadingSession) }
+            onClick = { onClickEditReadingSession(latestReadingSession) },
         )
     }
 }
@@ -186,35 +193,37 @@ private fun ShowLatestReadingSessionInfoRow(
 @Composable
 private fun StartReadingSessionButton(
     onStartReadingSession: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         IconButton(
             onClick = onStartReadingSession,
-            modifier = Modifier
-                .size(Dimens.startReadingSessionButtonSize)
-                .background(
-                    color = MaterialTheme.colorScheme.background,
-                    shape = CircleShape
-                )
+            modifier =
+                Modifier
+                    .size(Dimens.startReadingSessionButtonSize)
+                    .background(
+                        color = MaterialTheme.colorScheme.background,
+                        shape = CircleShape,
+                    ),
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_button_record_start),
                 contentDescription = stringResource(R.string.book_details__label__start_reading_session_text),
                 modifier = Modifier.size(Dimens.startReadingSessionIconSize),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
         Text(
             text = stringResource(R.string.book_details__label__start_reading_session_text),
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Dimens.paddingTopSmall),
-            textAlign = TextAlign.Center
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.paddingTopSmall),
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -223,18 +232,19 @@ private fun StartReadingSessionButton(
 private fun SeeAllReadingSessionButton(
     quantity: Int,
     onSeeAll: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AppTextButton(
         onClick = onSeeAll,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
-            text = stringResource(
-                R.string.book_details__button__see_all_reading_sessions_text,
-                quantity
-            ),
-            style = MaterialTheme.typography.bodyLarge
+            text =
+                stringResource(
+                    R.string.book_details__button__see_all_reading_sessions_text,
+                    quantity,
+                ),
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -247,7 +257,7 @@ private fun BookDetailsReadingSessionsSectionReadingPreview() {
         isBookFinished = false,
         onStartReadingSession = {},
         onSeeAll = {},
-        onEdit = {}
+        onEdit = {},
     )
 }
 
@@ -259,7 +269,7 @@ private fun BookDetailsReadingSessionsSectionReadingEmptyPreview() {
         isBookFinished = false,
         onStartReadingSession = {},
         onSeeAll = {},
-        onEdit = {}
+        onEdit = {},
     )
 }
 
@@ -271,7 +281,7 @@ private fun BookDetailsReadingSessionsSectionFinishedPreview() {
         isBookFinished = true,
         onStartReadingSession = {},
         onSeeAll = {},
-        onEdit = {}
+        onEdit = {},
     )
 }
 
@@ -283,6 +293,6 @@ private fun BookDetailsReadingSessionsSectionFinishedEmptyPreview() {
         isBookFinished = true,
         onStartReadingSession = {},
         onSeeAll = {},
-        onEdit = {}
+        onEdit = {},
     )
 }

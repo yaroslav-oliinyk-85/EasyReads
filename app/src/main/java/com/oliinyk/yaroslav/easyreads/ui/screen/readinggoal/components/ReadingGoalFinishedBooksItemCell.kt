@@ -26,26 +26,29 @@ fun ReadingGoalFinishedBooksItemCell(
     book: Book,
     onBookClick: (Book) -> Unit,
     modifier: Modifier = Modifier,
-    size: DpSize = Dimens.readingGoalBookCoverImageSize
+    size: DpSize = Dimens.readingGoalBookCoverImageSize,
 ) {
     Box(
-        modifier = modifier
-            .size(size)
-            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .clickable { onBookClick(book) }
+        modifier =
+            modifier
+                .size(size)
+                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .clickable { onBookClick(book) },
     ) {
         val context = LocalContext.current
         book.coverImageFileName?.let { coverImageFileName ->
             val file = File(context.filesDir, coverImageFileName)
             AsyncImage(
                 modifier = Modifier.fillMaxSize(),
-                model = ImageRequest.Builder(context)
-                    .data(file)
-                    .crossfade(true)
-                    .build(),
+                model =
+                    ImageRequest
+                        .Builder(context)
+                        .data(file)
+                        .crossfade(true)
+                        .build(),
                 contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
         }
     }

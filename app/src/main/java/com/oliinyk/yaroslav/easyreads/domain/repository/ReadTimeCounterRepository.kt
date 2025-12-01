@@ -4,8 +4,10 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import java.util.UUID
 
 interface ReadTimeCounterRepository {
-
-    fun start(bookId: UUID, pageCurrent: Int)
+    fun start(
+        bookId: UUID,
+        pageCurrent: Int,
+    )
 
     fun resume()
 

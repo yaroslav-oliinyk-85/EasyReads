@@ -13,7 +13,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
@@ -24,7 +23,7 @@ fun AppTextButton(
     colors: ButtonColors = ButtonDefaults.textButtonColors(),
     elevation: ButtonElevation? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     TextButton(
         modifier = modifier,
@@ -34,15 +33,17 @@ fun AppTextButton(
         elevation = elevation,
         interactionSource = interactionSource,
         content = content,
-        //CST
+        // CST
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
-        contentPadding = PaddingValues(
-            horizontal = Dimens.buttonContentPaddingHorizontal,
-            vertical = Dimens.buttonContentPaddingVertical
-        ),
-        border = BorderStroke(
-            width = Dimens.buttonBorderWith,
-            color = MaterialTheme.colorScheme.primary
-        )
+        contentPadding =
+            PaddingValues(
+                horizontal = Dimens.buttonContentPaddingHorizontal,
+                vertical = Dimens.buttonContentPaddingVertical,
+            ),
+        border =
+            BorderStroke(
+                width = Dimens.buttonBorderWith,
+                color = MaterialTheme.colorScheme.primary,
+            ),
     )
 }

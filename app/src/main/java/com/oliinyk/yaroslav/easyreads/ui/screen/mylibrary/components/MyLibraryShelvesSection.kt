@@ -17,9 +17,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.MyLibraryUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.MyLibraryUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
@@ -28,64 +28,71 @@ fun MyLibraryShelvesSection(
     uiState: MyLibraryUiState,
     onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = Dimens.paddingHorizontalMedium,
-                    vertical = Dimens.paddingVerticalSmall)
-            ,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = Dimens.paddingHorizontalMedium,
+                        vertical = Dimens.paddingVerticalSmall,
+                    ),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(R.string.my_library__label__shelves_title_text),
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppDivider()
             MyLibraryShelvesItem(
-                label = stringResource(
-                    R.string.my_library__label__shelf_finished_text,
-                    uiState.finishedCount
-                ),
-                onClick = { onShelfClick(BookShelvesType.FINISHED) }
+                label =
+                    stringResource(
+                        R.string.my_library__label__shelf_finished_text,
+                        uiState.finishedCount,
+                    ),
+                onClick = { onShelfClick(BookShelvesType.FINISHED) },
             )
             AppDivider()
             MyLibraryShelvesItem(
-                label = stringResource(
-                    R.string.my_library__label__shelf_reading_text,
-                    uiState.readingCount
-                ),
-                onClick = { onShelfClick(BookShelvesType.READING) }
+                label =
+                    stringResource(
+                        R.string.my_library__label__shelf_reading_text,
+                        uiState.readingCount,
+                    ),
+                onClick = { onShelfClick(BookShelvesType.READING) },
             )
             AppDivider()
             MyLibraryShelvesItem(
-                label = stringResource(
-                    R.string.my_library__label__shelf_want_to_read_text,
-                    uiState.wantToReadCount
-                ),
-                onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) }
+                label =
+                    stringResource(
+                        R.string.my_library__label__shelf_want_to_read_text,
+                        uiState.wantToReadCount,
+                    ),
+                onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) },
             )
             AppDivider()
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppTextButton(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(vertical = Dimens.paddingVerticalSmall),
-                onClick = onSeeAllClick
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimens.paddingVerticalSmall),
+                onClick = onSeeAllClick,
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.my_library__label__shelf_see_all_books,
-                        uiState.allCount
-                    ),
-                    style = MaterialTheme.typography.bodyLarge
+                    text =
+                        stringResource(
+                            R.string.my_library__label__shelf_see_all_books,
+                            uiState.allCount,
+                        ),
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
@@ -99,7 +106,7 @@ private fun MyLibraryShelvesSectionPreview() {
         MyLibraryShelvesSection(
             uiState = MyLibraryUiState(),
             onShelfClick = { },
-            onSeeAllClick = {}
+            onSeeAllClick = {},
         )
     }
 }

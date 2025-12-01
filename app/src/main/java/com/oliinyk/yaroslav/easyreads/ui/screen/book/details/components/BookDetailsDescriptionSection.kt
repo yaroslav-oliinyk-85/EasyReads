@@ -17,27 +17,27 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 @Composable
 fun BookDetailsDescriptionSection(
     description: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val descriptionMinLines = 5
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier.padding(Dimens.paddingAllSmall)
+            modifier = Modifier.padding(Dimens.paddingAllSmall),
         ) {
             // --- Label ---
             Text(
                 text = stringResource(R.string.book_details__label__book_description_text),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
             AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
             // --- Description text ---
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
-                minLines = descriptionMinLines
+                minLines = descriptionMinLines,
             )
         }
     }

@@ -18,29 +18,29 @@ fun ReadingGoalContent(
     uiState: ReadingGoalUiState,
     onChangeGoalClick: () -> Unit,
     onBookClick: (Book) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(
-                horizontal = Dimens.paddingHorizontalMedium,
-                vertical = Dimens.paddingVerticalSmall
-            )
-            .background(MaterialTheme.colorScheme.background)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall,
+                ).background(MaterialTheme.colorScheme.background),
     ) {
         ReadingGoalProgressSection(
             uiState = uiState,
-            onChangeGoalClick = onChangeGoalClick
+            onChangeGoalClick = onChangeGoalClick,
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalReadingSummarySection(
-            uiState = uiState
+            uiState = uiState,
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalFinishedBooksSection(
             books = uiState.books,
-            onBookClick = onBookClick
+            onBookClick = onBookClick,
         )
     }
 }

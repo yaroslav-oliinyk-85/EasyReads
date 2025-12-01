@@ -27,7 +27,7 @@ fun AppEditField(
     readOnly: Boolean = false,
     minLines: Int = 1,
     labelError: String = "",
-    labelTextAlign: TextAlign = TextAlign.Start
+    labelTextAlign: TextAlign = TextAlign.Start,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         if (label.isNotBlank()) {
@@ -35,13 +35,15 @@ fun AppEditField(
                 modifier = Modifier.fillMaxWidth().padding(bottom = Dimens.paddingBottomTiny),
                 text = label,
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = labelTextAlign
+                textAlign = labelTextAlign,
             )
         }
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth()
-                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-                .background(MaterialTheme.colorScheme.background),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                    .background(MaterialTheme.colorScheme.background),
             value = value,
             onValueChange = onValueChange,
             placeholder = { Text(hint) },
@@ -50,13 +52,13 @@ fun AppEditField(
             keyboardOptions = keyboardOptions,
             shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
             isError = labelError.isNotBlank(),
-            readOnly = readOnly
+            readOnly = readOnly,
         )
         if (labelError.isNotBlank()) {
             Text(
                 text = labelError,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error
+                color = MaterialTheme.colorScheme.error,
             )
         }
     }

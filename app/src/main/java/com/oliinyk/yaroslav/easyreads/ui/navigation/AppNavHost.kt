@@ -19,19 +19,17 @@ import java.util.UUID
 private const val TAG = "AppNavHost"
 
 @Composable
-fun AppNavHost(
-    navHostController: NavHostController
-) {
+fun AppNavHost(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = AppNavRoutes.MyLibrary.createRoute()
+        startDestination = AppNavRoutes.MyLibrary.createRoute(),
     ) {
         // ----- MyLibrary Route -----
         composable(
             route = AppNavRoutes.MyLibrary.route,
             enterTransition = AppNavTransitions.myLibraryEnterTransition,
             exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition
+            popEnterTransition = AppNavTransitions.popEnterTransition,
         ) {
             MyLibraryScreen(
                 navToBookAdd = {
@@ -45,7 +43,7 @@ fun AppNavHost(
                 },
                 navToBookList = {
                     navHostController.navigate(route = AppNavRoutes.BookList.createRoute())
-                }
+                },
             )
         }
 
@@ -55,12 +53,12 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             ReadingGoalScreen(
                 navToBookDetails = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.BookDetails.createRoute(bookId))
-                }
+                },
             )
         }
 
@@ -70,7 +68,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookShelvesType = backStackEntry.arguments?.getString(AppNavRoutes.BookListShelf.ARGUMENT_KEY)
 
@@ -83,7 +81,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             BookListRoute(navHostController)
         }
@@ -94,7 +92,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
 
@@ -124,12 +122,12 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             BookAddEditScreen(
                 navBack = {
                     navHostController.popBackStack()
-                }
+                },
             )
         }
 
@@ -139,7 +137,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookEdit.ARGUMENT_KEY)
 
@@ -147,7 +145,7 @@ fun AppNavHost(
                 navBack = {
                     navHostController.popBackStack()
                 },
-                bookId = bookId
+                bookId = bookId,
             )
         }
 
@@ -157,7 +155,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
 
@@ -170,7 +168,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionList.ARGUMENT_KEY)
 
@@ -183,7 +181,7 @@ fun AppNavHost(
             enterTransition = AppNavTransitions.enterTransition,
             exitTransition = AppNavTransitions.exitTransition,
             popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition
+            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
 
@@ -194,7 +192,7 @@ fun AppNavHost(
                 },
                 navToNoteList = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.NoteList.createRoute(bookId))
-                }
+                },
             )
         }
     }
@@ -203,7 +201,7 @@ fun AppNavHost(
 @Composable
 private fun BookListRoute(
     navHostController: NavHostController,
-    bookShelvesType: String? = null
+    bookShelvesType: String? = null,
 ) {
     BookListScreen(
         navToBookAdd = {
@@ -212,15 +210,16 @@ private fun BookListRoute(
         navToBookDetails = { bookId ->
             navHostController.navigate(route = AppNavRoutes.BookDetails.createRoute(bookId))
         },
-        bookShelvesType = if (bookShelvesType != null) {
-            try {
-                BookShelvesType.valueOf(bookShelvesType)
-            } catch (e: Exception) {
-                Log.w(TAG, e.toString())
+        bookShelvesType =
+            if (bookShelvesType != null) {
+                try {
+                    BookShelvesType.valueOf(bookShelvesType)
+                } catch (e: Exception) {
+                    Log.w(TAG, e.toString())
+                    null
+                }
+            } else {
                 null
-            }
-        } else {
-            null
-        }
+            },
     )
 }

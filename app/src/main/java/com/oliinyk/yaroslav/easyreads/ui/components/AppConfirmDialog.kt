@@ -17,7 +17,7 @@ fun AppConfirmDialog(
     title: String,
     message: String,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     val messageMaxLine = 5
     AlertDialog(
@@ -27,13 +27,16 @@ fun AppConfirmDialog(
                 Text(
                     text = stringResource(R.string.confirmation_dialog__button__ok_text),
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(horizontal = Dimens.paddingHorizontalMedium)
+                    modifier = Modifier.padding(horizontal = Dimens.paddingHorizontalMedium),
                 )
             }
         },
         dismissButton = {
             AppTextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.confirmation_dialog__button__cancel_text), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    stringResource(R.string.confirmation_dialog__button__cancel_text),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
             }
         },
         title = {
@@ -41,7 +44,7 @@ fun AppConfirmDialog(
         },
         text = {
             Text(text = message, maxLines = messageMaxLine, overflow = TextOverflow.Ellipsis)
-        }
+        },
     )
 }
 
@@ -52,6 +55,6 @@ private fun AppConfirmDialogPreview() {
         title = "Remove Note Dialog",
         message = "Note will be removed!",
         onConfirm = {},
-        onDismiss = {}
+        onDismiss = {},
     )
 }

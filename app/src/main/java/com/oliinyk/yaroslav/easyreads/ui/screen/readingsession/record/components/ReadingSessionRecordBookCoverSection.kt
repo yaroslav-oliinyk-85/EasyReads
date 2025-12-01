@@ -37,42 +37,48 @@ fun ReadingSessionRecordBookCoverSection(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimens.paddingAllSmall),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.paddingAllSmall),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             val context = LocalContext.current
-            val bookCoverImageFile: File? = if (book.coverImageFileName != null) {
-                File(context.filesDir, book.coverImageFileName)
-            } else {
-                null
-            }
+            val bookCoverImageFile: File? =
+                if (book.coverImageFileName != null) {
+                    File(context.filesDir, book.coverImageFileName)
+                } else {
+                    null
+                }
             if (bookCoverImageFile != null) {
                 AsyncImage(
-                    model = ImageRequest.Builder(context)
-                        .data(bookCoverImageFile)
-                        .crossfade(true)
-                        .build(),
+                    model =
+                        ImageRequest
+                            .Builder(context)
+                            .data(bookCoverImageFile)
+                            .crossfade(true)
+                            .build(),
                     contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                    modifier = Modifier
-                        .padding(vertical = Dimens.paddingVerticalSmall)
-                        .size(Dimens.readingSessionRecordBookCoverImageSize)
-                        .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
-                    contentScale = ContentScale.Crop
+                    modifier =
+                        Modifier
+                            .padding(vertical = Dimens.paddingVerticalSmall)
+                            .size(Dimens.readingSessionRecordBookCoverImageSize)
+                            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
+                    contentScale = ContentScale.Crop,
                 )
             } else {
                 Image(
                     painter = painterResource(android.R.drawable.ic_menu_gallery),
                     contentDescription = stringResource(R.string.book_cover_image__content_description__text),
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .padding(vertical = Dimens.paddingVerticalSmall)
-                        .size(Dimens.readingSessionRecordBookCoverImageSize)
-                        .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
+                    modifier =
+                        Modifier
+                            .padding(vertical = Dimens.paddingVerticalSmall)
+                            .size(Dimens.readingSessionRecordBookCoverImageSize)
+                            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
                 )
             }
 
@@ -89,7 +95,7 @@ fun ReadingSessionRecordBookCoverSection(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = book.author,
@@ -100,13 +106,14 @@ fun ReadingSessionRecordBookCoverSection(
                 )
                 // --- Pages ---
                 Text(
-                    text = stringResource(
-                        R.string.reading_session_record__label__read_pages_text,
-                        book.pageCurrent,
-                        book.pageAmount
-                    ),
+                    text =
+                        stringResource(
+                            R.string.reading_session_record__label__read_pages_text,
+                            book.pageCurrent,
+                            book.pageAmount,
+                        ),
                     style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
             }
         }
@@ -119,11 +126,15 @@ private fun ReadingSessionRecordBookCoverSectionPreview() {
     EasyReadsTheme {
         ReadingSessionRecordBookCoverSection(
             Book().copy(
-                title = "Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title Book title",
+                title =
+                    """
+                    Book title Book title Book title Book title Book title Book title Book title
+                    Book title Book title Book title Book title Book title Book title Book title
+                    """.trimIndent(),
                 author = "Author Author Author Author Author",
                 pageCurrent = 50,
-                pageAmount = 250
-            )
+                pageAmount = 250,
+            ),
         )
     }
 }

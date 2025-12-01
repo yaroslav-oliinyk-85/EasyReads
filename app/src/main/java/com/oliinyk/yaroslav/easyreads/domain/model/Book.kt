@@ -13,33 +13,30 @@ data class Book(
     val author: String = "",
     val description: String = "",
     val isbn: String = "",
-
     val shelf: BookShelvesType = BookShelvesType.WANT_TO_READ,
-
     val pageAmount: Int = 0,
     val pageCurrent: Int = 0,
-
     val addedDate: Date = Date(),
     val updatedDate: Date = Date(),
-
     val finishedDate: Date? = null,
     val isFinished: Boolean = false,
+    val coverImageFileName: String? = null,
+) : BaseModel(),
+    Parcelable
 
-    val coverImageFileName: String? = null
-) : BaseModel(), Parcelable
-
-fun Book.toEntity(): BookEntity = BookEntity(
-    id = id,
-    title = title,
-    author = author,
-    isbn = isbn,
-    description = description,
-    shelve = shelf.toString(),
-    pageAmount = pageAmount,
-    pageCurrent = pageCurrent,
-    addedDate = addedDate,
-    updatedDate = updatedDate,
-    finishedDate = finishedDate,
-    isFinished = isFinished.toString(),
-    coverImageFileName = coverImageFileName
-)
+fun Book.toEntity(): BookEntity =
+    BookEntity(
+        id = id,
+        title = title,
+        author = author,
+        isbn = isbn,
+        description = description,
+        shelve = shelf.toString(),
+        pageAmount = pageAmount,
+        pageCurrent = pageCurrent,
+        addedDate = addedDate,
+        updatedDate = updatedDate,
+        finishedDate = finishedDate,
+        isFinished = isFinished.toString(),
+        coverImageFileName = coverImageFileName,
+    )

@@ -12,17 +12,18 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun AppButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
         content = content,
-        //CST
+        // CST
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
-        contentPadding = PaddingValues(
-            horizontal = Dimens.buttonContentPaddingHorizontal,
-            vertical = Dimens.buttonContentPaddingVertical
-        )
+        contentPadding =
+            PaddingValues(
+                horizontal = Dimens.buttonContentPaddingHorizontal,
+                vertical = Dimens.buttonContentPaddingVertical,
+            ),
     )
 }

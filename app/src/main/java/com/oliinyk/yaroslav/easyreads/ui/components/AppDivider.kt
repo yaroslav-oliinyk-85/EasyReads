@@ -7,13 +7,11 @@ import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun AppDivider(
-    modifier: Modifier = Modifier
-) {
+fun AppDivider(modifier: Modifier = Modifier) {
     Divider(
         modifier = modifier,
-        //CST
+        // CST
         thickness = Dimens.appDividerThickness,
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     )
 }

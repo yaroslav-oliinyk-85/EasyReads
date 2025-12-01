@@ -20,116 +20,125 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class ReadingSessionRecordViewModel @Inject constructor(
-    private val bookRepository: BookRepository,
-    private val noteRepository: NoteRepository,
-    private val readingSessionRepository: ReadingSessionRepository
-) : ViewModel() {
+class ReadingSessionRecordViewModel
+    @Inject
+    constructor(
+        private val bookRepository: BookRepository,
+        private val noteRepository: NoteRepository,
+        private val readingSessionRepository: ReadingSessionRepository,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(ReadingSessionRecordUiState())
+        val uiState
+            get() = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(ReadingSessionRecordUiState())
-    val uiState
-        get() = _uiState.asStateFlow()
+        val currentReadingSession
+            get() = uiState.value.readingSession
 
-    val currentReadingSession
-        get() = uiState.value.readingSession
+        val currentBook: Book
+            get() = checkNotNull(uiState.value.book)
 
-    val currentBook: Book
-        get() = checkNotNull(uiState.value.book)
+        fun setup(bookId: UUID) {
+            loadBookById(bookId)
+            loadLastUnfinishedByBookId(bookId)
+            loadNoteCount(bookId)
+        }
 
-    fun setup(bookId: UUID) {
-        loadBookById(bookId)
-        loadLastUnfinishedByBookId(bookId)
-        loadNoteCount(bookId)
-    }
-
-    private fun loadBookById(bookId: UUID) {
-        viewModelScope.launch {
-            bookRepository.getById(bookId).collect { book ->
-                book?.let {
-                    _uiState.update { it.copy(book = book) }
+        private fun loadBookById(bookId: UUID) {
+            viewModelScope.launch {
+                bookRepository.getById(bookId).collect { book ->
+                    book?.let {
+                        _uiState.update { it.copy(book = book) }
+                    }
                 }
             }
         }
-    }
 
-    private fun loadLastUnfinishedByBookId(bookId: UUID) {
-        viewModelScope.launch {
-            readingSessionRepository.getLastUnfinishedByBookId(bookId).collect { readingSessionFromDB ->
-                readingSessionFromDB?.let {
-                    _uiState.update { it.copy(readingSession = readingSessionFromDB) }
+        private fun loadLastUnfinishedByBookId(bookId: UUID) {
+            viewModelScope.launch {
+                readingSessionRepository.getLastUnfinishedByBookId(bookId).collect { readingSessionFromDB ->
+                    readingSessionFromDB?.let {
+                        _uiState.update { it.copy(readingSession = readingSessionFromDB) }
+                    }
                 }
             }
         }
-    }
 
-    private fun loadNoteCount(bookId: UUID) {
-        viewModelScope.launch {
-            noteRepository.getAllByBookId(bookId).collect { notes ->
-                _uiState.update { it.copy(notesCount = notes.size) }
-            }
-        }
-    }
-
-    fun updateStateUi(onUpdate: (ReadingSessionRecordUiState) -> ReadingSessionRecordUiState) {
-        _uiState.update { onUpdate(it) }
-    }
-
-    fun resumeOrPause(onUpdate: (ReadTimeCounterService.Actions) -> Unit) {
-        _uiState.value.readingSession?.let { readingSession ->
-            when (readingSession.recordStatus) {
-                ReadingSessionRecordStatusType.PAUSED -> {
-                    onUpdate(ReadTimeCounterService.Actions.RESUME)
-                }
-
-                ReadingSessionRecordStatusType.STARTED -> {
-                    onUpdate(ReadTimeCounterService.Actions.PAUSE)
-                }
-
-                else -> {
-                    onUpdate(ReadTimeCounterService.Actions.PAUSE)
+        private fun loadNoteCount(bookId: UUID) {
+            viewModelScope.launch {
+                noteRepository.getAllByBookId(bookId).collect { notes ->
+                    _uiState.update { it.copy(notesCount = notes.size) }
                 }
             }
         }
-    }
 
-    fun removeUnfinishedReadingSession() {
-        _uiState.value.readingSession?.let { readingSession ->
-            readingSessionRepository.remove(readingSession)
+        fun updateStateUi(onUpdate: (ReadingSessionRecordUiState) -> ReadingSessionRecordUiState) {
+            _uiState.update { onUpdate(it) }
         }
-        updateStateUi { it.copy(readingSession = null) }
-    }
 
-    fun save(readingSession: ReadingSession) {
-        uiState.value.book?.let { book ->
-            bookRepository.update(
-                book.copy(
-                    pageCurrent = readingSession.endPage,
-                    updatedDate = Date()
+        fun resumeOrPause(onUpdate: (ReadTimeCounterService.Actions) -> Unit) {
+            _uiState.value.readingSession?.let { readingSession ->
+                when (readingSession.recordStatus) {
+                    ReadingSessionRecordStatusType.PAUSED -> {
+                        onUpdate(ReadTimeCounterService.Actions.RESUME)
+                    }
+
+                    ReadingSessionRecordStatusType.STARTED -> {
+                        onUpdate(ReadTimeCounterService.Actions.PAUSE)
+                    }
+
+                    else -> {
+                        onUpdate(ReadTimeCounterService.Actions.PAUSE)
+                    }
+                }
+            }
+        }
+
+        fun removeUnfinishedReadingSession() {
+            _uiState.value.readingSession?.let { readingSession ->
+                readingSessionRepository.remove(readingSession)
+            }
+            updateStateUi { it.copy(readingSession = null) }
+        }
+
+        fun save(readingSession: ReadingSession) {
+            uiState.value.book?.let { book ->
+                bookRepository.update(
+                    book.copy(
+                        pageCurrent = readingSession.endPage,
+                        updatedDate = Date(),
+                    ),
                 )
-            )
 
-            readingSessionRepository.update(
-                readingSession.copy(recordStatus = ReadingSessionRecordStatusType.FINISHED)
-            )
+                readingSessionRepository.update(
+                    readingSession.copy(recordStatus = ReadingSessionRecordStatusType.FINISHED),
+                )
+            }
+            updateStateUi { it.copy(readingSession = null) }
         }
-        updateStateUi { it.copy(readingSession = null) }
-    }
 
-    fun addNote(note: Note) {
-        noteRepository.insert(note)
+        fun addNote(note: Note) {
+            noteRepository.insert(note)
+        }
     }
-}
 
 data class ReadingSessionRecordUiState(
     val book: Book? = null,
     val readingSession: ReadingSession? = null,
-    val notesCount: Int = 0
+    val notesCount: Int = 0,
 )
 
 sealed interface ReadingSessionRecordEvent {
     object OnStartPause : ReadingSessionRecordEvent
+
     object OnPause : ReadingSessionRecordEvent
-    data class OnFinish(val readingSession: ReadingSession) : ReadingSessionRecordEvent
+
+    data class OnFinish(
+        val readingSession: ReadingSession,
+    ) : ReadingSessionRecordEvent
+
     object OnShowNotes : ReadingSessionRecordEvent
-    data class OnAddNote(val note: Note) : ReadingSessionRecordEvent
+
+    data class OnAddNote(
+        val note: Note,
+    ) : ReadingSessionRecordEvent
 }

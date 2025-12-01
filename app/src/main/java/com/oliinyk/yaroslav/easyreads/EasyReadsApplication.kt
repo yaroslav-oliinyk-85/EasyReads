@@ -9,16 +9,16 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class EasyReadsApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                READ_TIME_COUNTER_NOTIFICATION_CHANNEL_ID,
-                getString(R.string.read_time_counter_notification_channel_name),
-                NotificationManager.IMPORTANCE_LOW
-            )
+            val channel =
+                NotificationChannel(
+                    READ_TIME_COUNTER_NOTIFICATION_CHANNEL_ID,
+                    getString(R.string.read_time_counter_notification_channel_name),
+                    NotificationManager.IMPORTANCE_LOW,
+                )
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }

@@ -36,57 +36,61 @@ fun BookListTopAppBar(
     bookShelvesType: BookShelvesType?,
     holderSize: HolderSize,
     onAddBookClick: () -> Unit,
-    onHolderSizeChange: (HolderSize) -> Unit
+    onHolderSizeChange: (HolderSize) -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
     TopAppBar(
         title = {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = when(bookShelvesType) {
-                        BookShelvesType.WANT_TO_READ -> stringResource(
-                            R.string.book_list__toolbar__title_want_to_read_text,
-                            booksCount
-                        )
-                        BookShelvesType.READING -> stringResource(
-                            R.string.book_list__toolbar__title_reading_text,
-                            booksCount
-                        )
-                        BookShelvesType.FINISHED -> stringResource(
-                            R.string.book_list__toolbar__title_finished_text,
-                            booksCount
-                        )
-                        else -> stringResource(
-                            R.string.book_list__toolbar__title_all_text,
-                            booksCount
-                        )
-                    }
+                    text =
+                        when (bookShelvesType) {
+                            BookShelvesType.WANT_TO_READ ->
+                                stringResource(
+                                    R.string.book_list__toolbar__title_want_to_read_text,
+                                    booksCount,
+                                )
+                            BookShelvesType.READING ->
+                                stringResource(
+                                    R.string.book_list__toolbar__title_reading_text,
+                                    booksCount,
+                                )
+                            BookShelvesType.FINISHED ->
+                                stringResource(
+                                    R.string.book_list__toolbar__title_finished_text,
+                                    booksCount,
+                                )
+                            else ->
+                                stringResource(
+                                    R.string.book_list__toolbar__title_all_text,
+                                    booksCount,
+                                )
+                        },
                 )
             }
         },
         actions = {
-
             AppIconTopBarButton(
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(R.string.menu_item__add_text),
-                onClick = { onAddBookClick() }
+                onClick = { onAddBookClick() },
             )
 
             IconButton(
-                onClick = { menuExpanded = true }
+                onClick = { menuExpanded = true },
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = stringResource(R.string.menu_item__more_text),
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
 
             DropdownMenu(
                 expanded = menuExpanded,
-                onDismissRequest = { menuExpanded = false }
+                onDismissRequest = { menuExpanded = false },
             ) {
                 // Size Large
                 DropdownMenuItem(
@@ -94,7 +98,7 @@ fun BookListTopAppBar(
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_large_text),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
@@ -105,11 +109,14 @@ fun BookListTopAppBar(
                         if (holderSize == HolderSize.LARGE) {
                             Icon(
                                 imageVector = Icons.Default.Check,
-                                contentDescription = stringResource(R.string.menu_item__book_list__image_size_large_text),
-                                tint = MaterialTheme.colorScheme.primary
+                                contentDescription =
+                                    stringResource(
+                                        R.string.menu_item__book_list__image_size_large_text,
+                                    ),
+                                tint = MaterialTheme.colorScheme.primary,
                             )
                         }
-                    }
+                    },
                 )
                 // Size Default
                 DropdownMenuItem(
@@ -117,7 +124,7 @@ fun BookListTopAppBar(
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_default_text),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
@@ -128,11 +135,14 @@ fun BookListTopAppBar(
                         if (holderSize == HolderSize.DEFAULT) {
                             Icon(
                                 imageVector = Icons.Default.Check,
-                                contentDescription = stringResource(R.string.menu_item__book_list__image_size_default_text),
-                                tint = MaterialTheme.colorScheme.primary
+                                contentDescription =
+                                    stringResource(
+                                        R.string.menu_item__book_list__image_size_default_text,
+                                    ),
+                                tint = MaterialTheme.colorScheme.primary,
                             )
                         }
-                    }
+                    },
                 )
                 // Size Small
                 DropdownMenuItem(
@@ -140,7 +150,7 @@ fun BookListTopAppBar(
                         Text(
                             text = stringResource(R.string.menu_item__book_list__image_size_small_text),
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     },
                     onClick = {
@@ -151,23 +161,27 @@ fun BookListTopAppBar(
                         if (holderSize == HolderSize.SMALL) {
                             Icon(
                                 imageVector = Icons.Default.Check,
-                                contentDescription = stringResource(R.string.menu_item__book_list__image_size_small_text),
-                                tint = MaterialTheme.colorScheme.primary
+                                contentDescription =
+                                    stringResource(
+                                        R.string.menu_item__book_list__image_size_small_text,
+                                    ),
+                                tint = MaterialTheme.colorScheme.primary,
                             )
                         }
-                    }
+                    },
                 )
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }
 
 @Preview(
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun BookListTopAppBarPreview() {
@@ -177,14 +191,14 @@ private fun BookListTopAppBarPreview() {
             bookShelvesType = BookShelvesType.READING,
             holderSize = HolderSize.SMALL,
             onAddBookClick = {},
-            onHolderSizeChange ={}
+            onHolderSizeChange = {},
         )
     }
 }
 
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun BookListTopAppBarDarkPreview() {
@@ -194,7 +208,7 @@ private fun BookListTopAppBarDarkPreview() {
             bookShelvesType = BookShelvesType.READING,
             holderSize = HolderSize.SMALL,
             onAddBookClick = {},
-            onHolderSizeChange ={}
+            onHolderSizeChange = {},
         )
     }
 }

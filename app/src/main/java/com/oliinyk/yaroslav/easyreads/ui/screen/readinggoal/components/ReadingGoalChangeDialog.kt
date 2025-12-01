@@ -37,37 +37,41 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun ReadingGoalChangeDialog(
     readingGoal: ReadingGoal,
     onDismissRequest: () -> Unit,
-    onSave: (ReadingGoal) -> Unit
+    onSave: (ReadingGoal) -> Unit,
 ) {
     var goalTextState by rememberSaveable { mutableStateOf(readingGoal.goal) }
     Dialog(
-        onDismissRequest = onDismissRequest
+        onDismissRequest = onDismissRequest,
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+            shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(Dimens.paddingAllMedium)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                        .padding(Dimens.paddingAllMedium),
             ) {
                 AppEditField(
-                    label = stringResource(
-                        R.string.reading_goal_change_dialog__label__goal_text
-                    ),
+                    label =
+                        stringResource(
+                            R.string.reading_goal_change_dialog__label__goal_text,
+                        ),
                     value = if (goalTextState == 0) "" else goalTextState.toString(),
                     onValueChange = { value ->
                         goalTextState = value.toBookPage()
                     },
-                    hint = stringResource(
-                        R.string.reading_goal_change_dialog__hint__enter_goal_text
-                    ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
+                    hint =
+                        stringResource(
+                            R.string.reading_goal_change_dialog__hint__enter_goal_text,
+                        ),
+                    keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        ),
                     modifier = Modifier.fillMaxWidth(),
                 )
 
@@ -79,13 +83,14 @@ fun ReadingGoalChangeDialog(
                         onSave(readingGoal.copy(goal = goalTextState))
                         onDismissRequest()
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(
-                            R.string.dialog__button__save_text
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
+                        text =
+                            stringResource(
+                                R.string.dialog__button__save_text,
+                            ),
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
 
@@ -94,13 +99,14 @@ fun ReadingGoalChangeDialog(
                 // --- Buttons Cancel ---
                 AppTextButton(
                     onClick = onDismissRequest,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(
-                            R.string.dialog__button__cancel_text
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
+                        text =
+                            stringResource(
+                                R.string.dialog__button__cancel_text,
+                            ),
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
             }
@@ -115,7 +121,7 @@ private fun ReadingGoalChangeDialogPreview() {
         ReadingGoalChangeDialog(
             readingGoal = ReadingGoal().copy(goal = 12),
             onSave = {},
-            onDismissRequest = {}
+            onDismissRequest = {},
         )
     }
 }

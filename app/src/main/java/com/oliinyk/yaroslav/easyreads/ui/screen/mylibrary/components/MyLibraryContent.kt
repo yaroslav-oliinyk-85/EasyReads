@@ -18,28 +18,30 @@ fun MyLibraryContent(
     onReadingGoalClick: () -> Unit,
     onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(
-                horizontal = Dimens.paddingHorizontalMedium,
-                vertical = Dimens.paddingVerticalSmall),
-        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = Dimens.paddingHorizontalMedium,
+                    vertical = Dimens.paddingVerticalSmall,
+                ),
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
     ) {
         item {
             MyLibraryReadingGoalProgressSection(
                 uiState = uiState,
                 isVisibleChangeGoalButton = false,
-                onClick = onReadingGoalClick
+                onClick = onReadingGoalClick,
             )
         }
         item {
             MyLibraryShelvesSection(
                 uiState = uiState,
                 onShelfClick = onShelfClick,
-                onSeeAllClick = onSeeAllClick
+                onSeeAllClick = onSeeAllClick,
             )
         }
     }
@@ -53,7 +55,7 @@ private fun MyLibraryContentPreView() {
             uiState = MyLibraryUiState(),
             onReadingGoalClick = {},
             onShelfClick = {},
-            onSeeAllClick = {}
+            onSeeAllClick = {},
         )
     }
 }

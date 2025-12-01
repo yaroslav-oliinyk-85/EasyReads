@@ -13,18 +13,17 @@ data class NoteEntity(
     val id: UUID,
     @ColumnInfo("book_id")
     val bookId: UUID?,
-
     val text: String,
     val page: Int?,
-
     @ColumnInfo("added_date")
-    val addedDate: Date
+    val addedDate: Date,
 )
 
-fun NoteEntity.toModel(): Note = Note(
-    id = id,
-    bookId = bookId,
-    text = text,
-    page = page,
-    addedDate = addedDate
-)
+fun NoteEntity.toModel(): Note =
+    Note(
+        id = id,
+        bookId = bookId,
+        text = text,
+        page = page,
+        addedDate = addedDate,
+    )

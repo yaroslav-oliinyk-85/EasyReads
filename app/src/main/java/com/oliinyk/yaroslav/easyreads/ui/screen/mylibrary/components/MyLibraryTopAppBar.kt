@@ -17,9 +17,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyLibraryTopAppBar(
-    onAddBookClick: () -> Unit
-) {
+fun MyLibraryTopAppBar(onAddBookClick: () -> Unit) {
     TopAppBar(
         title = {
             Text(text = stringResource(R.string.my_library__toolbar__title_text))
@@ -28,13 +26,14 @@ fun MyLibraryTopAppBar(
             AppIconTopBarButton(
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(R.string.menu_item__add_text),
-                onClick = { onAddBookClick() }
+                onClick = { onAddBookClick() },
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }
 
@@ -43,20 +42,20 @@ fun MyLibraryTopAppBar(
 private fun MyLibraryTopAppBarPreview() {
     EasyReadsTheme {
         MyLibraryTopAppBar(
-            onAddBookClick = {}
+            onAddBookClick = {},
         )
     }
 }
 
 @Preview(
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 private fun MyLibraryTopAppBarDarkPreview() {
     EasyReadsTheme {
         MyLibraryTopAppBar(
-            onAddBookClick = {}
+            onAddBookClick = {},
         )
     }
 }

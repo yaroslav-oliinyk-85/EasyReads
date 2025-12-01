@@ -39,10 +39,10 @@ import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.io.File
@@ -54,21 +54,21 @@ fun BookDetailsCoverSection(
     progressPercentage: Int,
     uiState: BookDetailsUiState,
     onClickShelf: (BookShelvesType) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize)
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = Dimens.paddingTopMedium,
-                    bottom = Dimens.paddingBottomSmall
-                )
-                .padding(horizontal = Dimens.paddingHorizontalSmall),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = Dimens.paddingTopMedium,
+                        bottom = Dimens.paddingBottomSmall,
+                    ).padding(horizontal = Dimens.paddingHorizontalSmall),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             BookCoverImage(book = book)
 
@@ -84,12 +84,12 @@ fun BookDetailsCoverSection(
 
             DateAndProgressRow(
                 book = book,
-                progressPercentage = progressPercentage
+                progressPercentage = progressPercentage,
             )
 
             ShelfSelectionButtons(
                 book = book,
-                onClickShelf = onClickShelf
+                onClickShelf = onClickShelf,
             )
         }
     }
@@ -98,48 +98,54 @@ fun BookDetailsCoverSection(
 @Composable
 private fun BookCoverImage(
     book: Book,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     // --- Book Cover ---
     var isBookCoverImageScaledState by rememberSaveable { mutableStateOf(false) }
 
-    val booCoverImageSize = if (!isBookCoverImageScaledState) {
-        Dimens.bookDetailsBookCoverImageSize
-    } else {
-        Dimens.bookDetailsBookCoverImageScaledSize
-    }
+    val booCoverImageSize =
+        if (!isBookCoverImageScaledState) {
+            Dimens.bookDetailsBookCoverImageSize
+        } else {
+            Dimens.bookDetailsBookCoverImageScaledSize
+        }
 
     val context = LocalContext.current
-    val bookCoverImageFile: File? = if (book.coverImageFileName != null) {
-        File(context.filesDir, book.coverImageFileName)
-    } else {
-        null
-    }
+    val bookCoverImageFile: File? =
+        if (book.coverImageFileName != null) {
+            File(context.filesDir, book.coverImageFileName)
+        } else {
+            null
+        }
     Box(
-        modifier = modifier
-            .size(booCoverImageSize)
-            .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-            .background(MaterialTheme.colorScheme.background)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onDoubleTap = {
-                        isBookCoverImageScaledState = !isBookCoverImageScaledState
-                    }
-                )
-            },
-        contentAlignment = Alignment.Center
+        modifier =
+            modifier
+                .size(booCoverImageSize)
+                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                .background(MaterialTheme.colorScheme.background)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onDoubleTap = {
+                            isBookCoverImageScaledState = !isBookCoverImageScaledState
+                        },
+                    )
+                },
+        contentAlignment = Alignment.Center,
     ) {
         bookCoverImageFile?.let { file ->
             AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data(file)
-                    .crossfade(true)
-                    .build(),
+                model =
+                    ImageRequest
+                        .Builder(context)
+                        .data(file)
+                        .crossfade(true)
+                        .build(),
                 contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                modifier = Modifier
-                    .size(booCoverImageSize)
-                    .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .size(booCoverImageSize)
+                        .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize)),
+                contentScale = ContentScale.Crop,
             )
         }
     }
@@ -148,68 +154,74 @@ private fun BookCoverImage(
 @Composable
 private fun TitleText(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium.copy(fontSize = Dimens.appTitleMediumFontSize),
         textAlign = TextAlign.Center,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                top = Dimens.paddingTopSmall,
-                bottom = Dimens.paddingTopTiny
-            )
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(
+                    top = Dimens.paddingTopSmall,
+                    bottom = Dimens.paddingTopTiny,
+                ),
     )
 }
 
 @Composable
 private fun AuthorText(
     author: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = author,
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     )
 }
 
 @Composable
 private fun ReadingStatisticInfoRow(
     uiState: BookDetailsUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         // --- Total Read Time ---
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(
-                R.string.book_details__label__book_total_read_time_text,
-                uiState.readHours,
-                uiState.readMinutes
-            ),
-            style = MaterialTheme.typography.bodyMedium
+            text =
+                stringResource(
+                    R.string.book_details__label__book_total_read_time_text,
+                    uiState.readHours,
+                    uiState.readMinutes,
+                ),
+            style = MaterialTheme.typography.bodyMedium,
         )
         // --- Average Read Time Per Hour ---
         Text(
-            text = stringResource(
-                R.string.book_details__label__book_read_average_pages_hour_text,
-                uiState.readPagesHour
-            ),
+            text =
+                stringResource(
+                    R.string.book_details__label__book_read_average_pages_hour_text,
+                    uiState.readPagesHour,
+                ),
             textAlign = TextAlign.End,
             style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.weight(1f)
-                .padding(
-                    end = Dimens.bookListItemPercentageSize + Dimens.spacerWidthSmall
-                )
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .padding(
+                        end = Dimens.bookListItemPercentageSize + Dimens.spacerWidthSmall,
+                    ),
         )
     }
 }
@@ -218,41 +230,48 @@ private fun ReadingStatisticInfoRow(
 private fun DateAndProgressRow(
     book: Book,
     progressPercentage: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         // --- Shelf ---
         Text(
             modifier = Modifier.weight(1f),
-            text = when (book.shelf) {
-                BookShelvesType.FINISHED -> stringResource(
-                    R.string.book_details__label__shelf_finished_text,
-                    book.finishedDate?.let { finishedDate ->
-                        DateFormat.format(
-                            stringResource(R.string.date_and_time_format),
-                            finishedDate
-                        ).toString()
-                    } ?: ""
-                )
-                BookShelvesType.READING -> stringResource(
-                    R.string.book_details__label__shelf_reading_text,
-                    DateFormat.format(
-                        stringResource(R.string.date_and_time_format),
-                        book.updatedDate
-                    ).toString()
-                )
-                BookShelvesType.WANT_TO_READ -> stringResource(
-                    R.string.book_details__label__shelf_want_to_read_text,
-                    DateFormat.format(
-                        stringResource(R.string.date_and_time_format),
-                        book.addedDate
-                    ).toString()
-                )
-            },
+            text =
+                when (book.shelf) {
+                    BookShelvesType.FINISHED ->
+                        stringResource(
+                            R.string.book_details__label__shelf_finished_text,
+                            book.finishedDate?.let { finishedDate ->
+                                DateFormat
+                                    .format(
+                                        stringResource(R.string.date_and_time_format),
+                                        finishedDate,
+                                    ).toString()
+                            } ?: "",
+                        )
+                    BookShelvesType.READING ->
+                        stringResource(
+                            R.string.book_details__label__shelf_reading_text,
+                            DateFormat
+                                .format(
+                                    stringResource(R.string.date_and_time_format),
+                                    book.updatedDate,
+                                ).toString(),
+                        )
+                    BookShelvesType.WANT_TO_READ ->
+                        stringResource(
+                            R.string.book_details__label__shelf_want_to_read_text,
+                            DateFormat
+                                .format(
+                                    stringResource(R.string.date_and_time_format),
+                                    book.addedDate,
+                                ).toString(),
+                        )
+                },
             style = MaterialTheme.typography.bodyMedium,
         )
 
@@ -260,17 +279,18 @@ private fun DateAndProgressRow(
         Row(
             modifier = Modifier.weight(1f),
             horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             // --- Pages Text ---
             Text(
-                text = stringResource(
-                    R.string.book_details__label__book_pages_text,
-                    book.pageCurrent,
-                    book.pageAmount
-                ),
+                text =
+                    stringResource(
+                        R.string.book_details__label__book_pages_text,
+                        book.pageCurrent,
+                        book.pageAmount,
+                    ),
                 style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
 
             Spacer(Modifier.width(Dimens.spacerWidthSmall))
@@ -284,88 +304,98 @@ private fun DateAndProgressRow(
 private fun ShelfSelectionButtons(
     book: Book,
     onClickShelf: (BookShelvesType) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showAllSelvesType by remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     ) {
         // --- FINISHED ---
         AnimatedVisibility(
-            visible = showAllSelvesType || BookShelvesType.FINISHED == book.shelf
+            visible = showAllSelvesType || BookShelvesType.FINISHED == book.shelf,
         ) {
             AppTextButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = Dimens.paddingTopSmall),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.FINISHED)
                     showAllSelvesType = !showAllSelvesType
                 },
-                colors = if (showAllSelvesType && BookShelvesType.FINISHED == book.shelf) {
-                    ButtonDefaults.buttonColors()
-                } else {
-                    ButtonDefaults.textButtonColors()
-                }
+                colors =
+                    if (showAllSelvesType && BookShelvesType.FINISHED == book.shelf) {
+                        ButtonDefaults.buttonColors()
+                    } else {
+                        ButtonDefaults.textButtonColors()
+                    },
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.book_details__button__shelf_finished_text
-                    ),
+                    text =
+                        stringResource(
+                            R.string.book_details__button__shelf_finished_text,
+                        ),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
         // --- READING ---
         AnimatedVisibility(
-            visible = showAllSelvesType || BookShelvesType.READING == book.shelf
+            visible = showAllSelvesType || BookShelvesType.READING == book.shelf,
         ) {
             AppTextButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = Dimens.paddingTopSmall),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.READING)
                     showAllSelvesType = !showAllSelvesType
                 },
-                colors = if (showAllSelvesType && BookShelvesType.READING == book.shelf) {
-                    ButtonDefaults.buttonColors()
-                } else {
-                    ButtonDefaults.textButtonColors()
-                }
+                colors =
+                    if (showAllSelvesType && BookShelvesType.READING == book.shelf) {
+                        ButtonDefaults.buttonColors()
+                    } else {
+                        ButtonDefaults.textButtonColors()
+                    },
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.book_details__button__shelf_reading_text
-                    ),
+                    text =
+                        stringResource(
+                            R.string.book_details__button__shelf_reading_text,
+                        ),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
         // --- WANT_TO_READ ---
         AnimatedVisibility(
-            visible = showAllSelvesType || BookShelvesType.WANT_TO_READ == book.shelf
+            visible = showAllSelvesType || BookShelvesType.WANT_TO_READ == book.shelf,
         ) {
             AppTextButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = Dimens.paddingTopSmall),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = Dimens.paddingTopSmall),
                 onClick = {
                     onClickShelf(BookShelvesType.WANT_TO_READ)
                     showAllSelvesType = !showAllSelvesType
                 },
-                colors = if (showAllSelvesType && BookShelvesType.WANT_TO_READ == book.shelf) {
-                    ButtonDefaults.buttonColors()
-                } else {
-                    ButtonDefaults.textButtonColors()
-                }
+                colors =
+                    if (showAllSelvesType && BookShelvesType.WANT_TO_READ == book.shelf) {
+                        ButtonDefaults.buttonColors()
+                    } else {
+                        ButtonDefaults.textButtonColors()
+                    },
             ) {
                 Text(
-                    text = stringResource(
-                        R.string.book_details__button__shelf_want_to_read_text
-                    ),
+                    text =
+                        stringResource(
+                            R.string.book_details__button__shelf_want_to_read_text,
+                        ),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
@@ -385,11 +415,11 @@ private fun BookDetailsCoverSectionFinishedPreview() {
                 pageCurrent = 50,
                 shelf = BookShelvesType.FINISHED,
                 isFinished = true,
-                finishedDate = Date()
+                finishedDate = Date(),
             ),
             progressPercentage = 50,
             uiState = BookDetailsUiState(),
-            onClickShelf = { }
+            onClickShelf = { },
         )
     }
 }
@@ -404,11 +434,11 @@ private fun BookDetailsCoverSectionReadingPreview() {
                 author = "Book Author",
                 pageAmount = 250,
                 pageCurrent = 50,
-                shelf = BookShelvesType.READING
+                shelf = BookShelvesType.READING,
             ),
             progressPercentage = 50,
             uiState = BookDetailsUiState(),
-            onClickShelf = { }
+            onClickShelf = { },
         )
     }
 }
@@ -423,11 +453,11 @@ private fun BookDetailsCoverSectionWantToReadPreview() {
                 author = "Book Author",
                 pageAmount = 250,
                 pageCurrent = 50,
-                shelf = BookShelvesType.WANT_TO_READ
+                shelf = BookShelvesType.WANT_TO_READ,
             ),
             progressPercentage = 50,
             uiState = BookDetailsUiState(),
-            onClickShelf = { }
+            onClickShelf = { },
         )
     }
 }

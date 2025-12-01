@@ -8,11 +8,11 @@ import java.util.Date
 @Parcelize
 data class ReadingGoal(
     val year: Int = Date().year + 1900,
+    val goal: Int = 0,
+) : Parcelable
 
-    val goal: Int = 0
-): Parcelable
-
-fun ReadingGoal.toEntity(): ReadingGoalEntity = ReadingGoalEntity(
-    year = year,
-    goal = goal
-)
+fun ReadingGoal.toEntity(): ReadingGoalEntity =
+    ReadingGoalEntity(
+        year = year,
+        goal = goal,
+    )
