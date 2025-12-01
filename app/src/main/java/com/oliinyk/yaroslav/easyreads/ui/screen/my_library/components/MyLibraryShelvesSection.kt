@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.MyLibraryUiState
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -54,25 +52,25 @@ fun MyLibraryShelvesSection(
             AppDivider()
             MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelf_finished_text
+                    R.string.my_library__label__shelf_finished_text,
+                    uiState.finishedCount
                 ),
-                itemCount = uiState.finishedCount.toString(),
                 onClick = { onShelfClick(BookShelvesType.FINISHED) }
             )
             AppDivider()
             MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelf_reading_text
+                    R.string.my_library__label__shelf_reading_text,
+                    uiState.readingCount
                 ),
-                itemCount = uiState.readingCount.toString(),
                 onClick = { onShelfClick(BookShelvesType.READING) }
             )
             AppDivider()
             MyLibraryShelvesItem(
                 label = stringResource(
-                    R.string.my_library__label__shelf_want_to_read_text
+                    R.string.my_library__label__shelf_want_to_read_text,
+                    uiState.wantToReadCount
                 ),
-                itemCount = uiState.wantToReadCount.toString(),
                 onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) }
             )
             AppDivider()
@@ -84,13 +82,9 @@ fun MyLibraryShelvesSection(
             ) {
                 Text(
                     text = stringResource(
-                        R.string.my_library__label__shelf_see_all_books
+                        R.string.my_library__label__shelf_see_all_books,
+                        uiState.allCount
                     ),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Spacer(Modifier.width(Dimens.spacerWidthSmall))
-                AppBadge(
-                    text = uiState.allCount.toString(),
                     style = MaterialTheme.typography.bodyLarge
                 )
             }

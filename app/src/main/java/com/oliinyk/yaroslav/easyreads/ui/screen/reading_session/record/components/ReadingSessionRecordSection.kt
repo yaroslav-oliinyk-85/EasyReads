@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
-import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.components.AppButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -123,13 +122,9 @@ fun ReadingSessionRecordSection(
                 ) {
                     Text(
                         text = stringResource(
-                            R.string.reading_session_record__button__show_notes_text
+                            R.string.reading_session_record__button__show_notes_text,
+                            notesCount
                         ),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Spacer(Modifier.width(Dimens.spacerWidthSmall))
-                    AppBadge(
-                        text = notesCount.toString(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

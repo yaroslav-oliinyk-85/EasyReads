@@ -14,14 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun MyLibraryShelvesItem(
     label: String,
-    itemCount: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -40,11 +38,6 @@ fun MyLibraryShelvesItem(
                     horizontal = Dimens.paddingHorizontalSmall
                 )
         )
-        AppBadge(
-            text = itemCount,
-            fontSize = Dimens.appTitleMediumFontSize,
-            style = MaterialTheme.typography.titleMedium
-        )
         Spacer(Modifier.weight(1f))
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
@@ -58,8 +51,7 @@ fun MyLibraryShelvesItem(
 private fun MyLibraryShelvesItemPreview() {
     EasyReadsTheme {
         MyLibraryShelvesItem(
-            label = "Finished",
-            itemCount = "24",
+            label = "Finished 24",
             onClick = { }
         )
     }

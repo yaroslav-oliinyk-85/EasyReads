@@ -11,12 +11,12 @@
     <string name="book_cover_image__content_description__text">Book Cover Image</string>
 
     <!-- Toolbar -->
-    <string name="note_list__toolbar__title_text">Notes</string>
+    <string name="note_list__toolbar__title_text">Notes %d</string>
     <string name="book_details__toolbar__title_test">Book Details</string>
-    <string name="book_list__toolbar__title_all_text">All Books</string>
-    <string name="book_list__toolbar__title_finished_text">Finished Books</string>
-    <string name="book_list__toolbar__title_reading_text">Reading Books</string>
-    <string name="book_list__toolbar__title_want_to_read_text">Want To Read Books</string>
+    <string name="book_list__toolbar__title_all_text">All Books %d</string>
+    <string name="book_list__toolbar__title_finished_text">Finished Books %d</string>
+    <string name="book_list__toolbar__title_reading_text">Reading Books %d</string>
+    <string name="book_list__toolbar__title_want_to_read_text">Want To Read Books %d</string>
 
     <!-- Menu Items Text -->
     <string name="menu_item__book_list__image_size_large_text">Size Large</string>
@@ -54,7 +54,7 @@
 
     <!-- Book Details -->
     <string name="book_details__button__add_note_text">Add Note</string>
-    <string name="book_details__button__see_all_notes_text">See All Notes</string>
+    <string name="book_details__button__see_all_notes_text">See All Notes %d</string>
     <string name="book_details__label__book_description_text">Description</string>
     <string name="book_details__label__book_isbn_text">ISBN:</string>
     <string name="book_details__label__no_notes_text">No Notes</string>
@@ -83,7 +83,7 @@
 
     <string name="book_details__label__no_reading_sessions_text">No Reading Sessions</string>
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
-    <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions</string>
+    <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions %d</string>
 
     <string name="book_details__confirmation_dialog__title_book_remove_text">Remove Book</string>
     <string name="book_details__confirmation_dialog__message_book_remove_text">Book will be removed!</string>
@@ -145,7 +145,7 @@
     <string name="reading_session_record__label__record_status_started_text">Reading</string>
     <string name="reading_session_record__label__record_status_paused_text">Paused</string>
     <string name="reading_session_record__button__finish_recording_text">Finish</string>
-    <string name="reading_session_record__button__show_notes_text">See All Notes</string>
+    <string name="reading_session_record__button__show_notes_text">See All Notes %d</string>
     <string name="reading_session_record__button__add_note_text">Add Note</string>
     <string name="reading_session_record__tools__read_pages_text">Pages: 153/647</string>
     <string name="reading_session_record__label__read_pages_text">Pages: %1$d/%2$d</string>
@@ -263,7 +263,7 @@
     <string name="reading_session_list_item__label__read_end_page_text">From %1$d To %2$d Page</string>
     <string name="reading_session_list_item__label__read_pages_hour_text">PAGES/HOUR\n%d</string>
     <string name="reading_session_list_item__label__read_pages_text">READ PAGES\n%d</string>
-    <string name="reading_session_list__toolbar__title_text">Reading Sessions</string>
+    <string name="reading_session_list__toolbar__title_text">Reading Sessions %d</string>
 
     <!-- Read Time Counter Notification -->
     <string name="read_time_counter_notification_channel_name">Read Time Counter</string>
@@ -272,10 +272,10 @@
 
     <!-- My Library -->
     <string name="my_library__label__shelves_title_text">Shelves</string>
-    <string name="my_library__label__shelf_finished_text">Finished</string>
-    <string name="my_library__label__shelf_reading_text">Reading</string>
-    <string name="my_library__label__shelf_want_to_read_text">Want To Read</string>
-    <string name="my_library__label__shelf_see_all_books">See All Books</string>
+    <string name="my_library__label__shelf_finished_text">Finished %d</string>
+    <string name="my_library__label__shelf_reading_text">Reading %d</string>
+    <string name="my_library__label__shelf_want_to_read_text">Want To Read %d</string>
+    <string name="my_library__label__shelf_see_all_books">See All Books %d</string>
 
     <string name="my_library__toolbar__title_text">@string/app_name</string>
 
@@ -287,7 +287,7 @@
     <string name="reading_goal__label__summery_read_pages_text">READ PAGES\n%d</string>
     <string name="reading_goal__label__summery_read_time_text">READ TIME\n%1$02dh %2$02dm</string>
     <string name="reading_goal__label__summery_read_average_pages_hour_text">Av. PAGES/HOUR\n%d</string>
-    <string name="reading_goal__label__summery_books_title_text">Finished Books</string>
+    <string name="reading_goal__label__summery_books_title_text">Finished Books %d</string>
 
     <!-- Reading Goal Change Dialog -->
     <string name="reading_goal_change_dialog__label__goal_text">Goal</string>

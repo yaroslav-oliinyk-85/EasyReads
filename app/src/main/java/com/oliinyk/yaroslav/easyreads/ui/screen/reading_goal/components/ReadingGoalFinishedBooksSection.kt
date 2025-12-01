@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -20,11 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun ReadingGoalFinishedBooksSection(
@@ -50,13 +50,9 @@ fun ReadingGoalFinishedBooksSection(
             ) {
                 Text(
                     text = stringResource(
-                        R.string.reading_goal__label__summery_books_title_text, books.size
+                        R.string.reading_goal__label__summery_books_title_text,
+                        books.size
                     ),
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(Modifier.width(Dimens.spacerWidthSmall))
-                AppBadge(
-                    text = books.size.toString(),
                     style = MaterialTheme.typography.titleLarge
                 )
             }
@@ -79,5 +75,16 @@ fun ReadingGoalFinishedBooksSection(
                 }
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReadingGoalFinishedBooksSectionPreview() {
+    EasyReadsTheme {
+        ReadingGoalFinishedBooksSection(
+            books = emptyList(),
+            onBookClick = {}
+        )
     }
 }

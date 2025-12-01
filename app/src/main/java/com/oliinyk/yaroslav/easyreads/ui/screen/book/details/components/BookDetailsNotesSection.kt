@@ -18,7 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
-import com.oliinyk.yaroslav.easyreads.ui.components.AppBadge
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -165,13 +163,9 @@ private fun BottomActionButtonsRow(
         ) {
             Text(
                 text = stringResource(
-                    R.string.book_details__button__see_all_notes_text
+                    R.string.book_details__button__see_all_notes_text,
+                    noteCount
                 ),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(Modifier.width(Dimens.spacerWidthSmall))
-            AppBadge(
-                text = noteCount.toString(),
                 style = MaterialTheme.typography.bodyLarge
             )
         }
