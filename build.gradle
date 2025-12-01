@@ -9,10 +9,12 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin' version '2.5.3' apply false
     id 'com.google.dagger.hilt.android' version '2.51.1' apply false
     id 'org.jlleitschuh.gradle.ktlint' version '14.0.1'
+    id 'io.gitlab.arturbosch.detekt' version '1.23.1'
 }
 
 subprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint" // Version should be inherited from parent
+    apply plugin: "io.gitlab.arturbosch.detekt" // Version should be inherited from parent
 
     ktlint {
         verbose.set(true)
@@ -20,6 +22,10 @@ subprojects {
         filter {
             exclude("**/generated/**")
         }
+    }
+    detekt {
+        parallel = true
+        config.setFrom(files("${project.rootDir}/config/detekt/detekt.yml"))
     }
 }
 
