@@ -6,14 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.add_edit.BookAddEditScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.BookAddEditScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.BookListScreen
-import com.oliinyk.yaroslav.easyreads.ui.screen.my_library.MyLibraryScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.MyLibraryScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_goal.ReadingGoalScreen
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.list.ReadingSessionListScreen
-import com.oliinyk.yaroslav.easyreads.ui.screen.reading_session.record.ReadingSessionRecordScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.ReadingSessionListScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordScreen
 import java.util.UUID
 
 private const val TAG = "AppNavHost"

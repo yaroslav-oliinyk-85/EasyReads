@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
-import com.oliinyk.yaroslav.easyreads.ui.screen.note.add_edit_dialog.NoteAddEditDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.note.addeditdialog.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListTopAppBar
 import java.util.UUID
