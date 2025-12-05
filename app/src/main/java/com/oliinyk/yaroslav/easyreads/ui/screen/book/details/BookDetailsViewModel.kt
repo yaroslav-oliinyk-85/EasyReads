@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
@@ -125,9 +125,9 @@ class BookDetailsViewModel
                         var bookChanged = _uiState.value.book.copy(shelf = event.shelf)
 
                         if (!bookChanged.isFinished && bookChanged.shelf == BookShelvesType.FINISHED) {
-                            bookChanged = bookChanged.copy(isFinished = true, finishedDate = Date())
+                            bookChanged = bookChanged.copy(isFinished = true, finishedAt = LocalDateTime.now())
                         } else if (bookChanged.isFinished && bookChanged.shelf != BookShelvesType.FINISHED) {
-                            bookChanged = bookChanged.copy(isFinished = false, finishedDate = null)
+                            bookChanged = bookChanged.copy(isFinished = false, finishedAt = null)
                         }
                         bookRepository.update(book = bookChanged)
                     }

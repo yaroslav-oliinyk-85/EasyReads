@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.Date
+import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
@@ -115,9 +115,9 @@ class BookAddEditViewModel
                 deleteBookCoverImage(contextApplication, _stateUi.value.pickedImageName)
             }
             if (!saveBook.isFinished && saveBook.shelf == BookShelvesType.FINISHED) {
-                saveBook = saveBook.copy(isFinished = true, finishedDate = Date())
+                saveBook = saveBook.copy(isFinished = true, finishedAt = LocalDateTime.now())
             } else if (saveBook.isFinished && saveBook.shelf != BookShelvesType.FINISHED) {
-                saveBook = saveBook.copy(isFinished = false, finishedDate = null)
+                saveBook = saveBook.copy(isFinished = false, finishedAt = null)
             }
 
             bookRepository.save(saveBook)

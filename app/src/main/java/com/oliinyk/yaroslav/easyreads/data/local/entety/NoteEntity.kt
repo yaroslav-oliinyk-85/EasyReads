@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
-import java.util.Date
+import java.time.Instant
+import java.time.ZoneId
 import java.util.UUID
 
 @Entity("notes")
@@ -16,7 +17,7 @@ data class NoteEntity(
     val text: String,
     val page: Int?,
     @ColumnInfo("added_date")
-    val addedDate: Date,
+    val addedAt: Instant,
 )
 
 fun NoteEntity.toModel(): Note =
@@ -25,5 +26,5 @@ fun NoteEntity.toModel(): Note =
         bookId = bookId,
         text = text,
         page = page,
-        addedDate = addedDate,
+        addedAt = addedAt.atZone(ZoneId.systemDefault()).toLocalDateTime(),
     )

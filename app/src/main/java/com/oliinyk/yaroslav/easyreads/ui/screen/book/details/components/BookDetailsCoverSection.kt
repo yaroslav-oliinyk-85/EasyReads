@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
-import android.text.format.DateFormat
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -46,7 +45,8 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.io.File
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookDetailsCoverSection(
@@ -245,31 +245,29 @@ private fun DateAndProgressRow(
                     BookShelvesType.FINISHED ->
                         stringResource(
                             R.string.book_details__label__shelf_finished_text,
-                            book.finishedDate?.let { finishedDate ->
-                                DateFormat
-                                    .format(
-                                        stringResource(R.string.date_and_time_format),
-                                        finishedDate,
-                                    ).toString()
-                            } ?: "",
+                            book.finishedAt?.format(
+                                DateTimeFormatter.ofPattern(
+                                    stringResource(R.string.date_and_time_format),
+                                ),
+                            ) ?: "",
                         )
                     BookShelvesType.READING ->
                         stringResource(
                             R.string.book_details__label__shelf_reading_text,
-                            DateFormat
-                                .format(
+                            book.updatedAt.format(
+                                DateTimeFormatter.ofPattern(
                                     stringResource(R.string.date_and_time_format),
-                                    book.updatedDate,
-                                ).toString(),
+                                ),
+                            ),
                         )
                     BookShelvesType.WANT_TO_READ ->
                         stringResource(
                             R.string.book_details__label__shelf_want_to_read_text,
-                            DateFormat
-                                .format(
+                            book.addedAt.format(
+                                DateTimeFormatter.ofPattern(
                                     stringResource(R.string.date_and_time_format),
-                                    book.addedDate,
-                                ).toString(),
+                                ),
+                            ),
                         )
                 },
             style = MaterialTheme.typography.bodyMedium,
@@ -415,7 +413,7 @@ private fun BookDetailsCoverSectionFinishedPreview() {
                 pageCurrent = 50,
                 shelf = BookShelvesType.FINISHED,
                 isFinished = true,
-                finishedDate = Date(),
+                finishedAt = LocalDateTime.now(),
             ),
             progressPercentage = 50,
             uiState = BookDetailsUiState(),

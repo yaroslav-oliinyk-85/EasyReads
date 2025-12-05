@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +36,7 @@ class MyLibraryViewModel
 
         private fun loadReadingGoal() {
             viewModelScope.launch {
-                val currentYear: Int = Date().year + 1900
+                val currentYear: Int = LocalDate.now().year
                 readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
                     if (readingGoal != null) {
                         _uiState.update { it.copy(readingGoals = readingGoal.goal) }
@@ -52,7 +52,7 @@ class MyLibraryViewModel
                 bookRepository.getAll().collectLatest { books ->
                     val currentYearFinishedBooks: List<Book> =
                         books.filter {
-                            it.isFinished && (it.finishedDate != null) && (it.finishedDate.year == Date().year)
+                            it.isFinished && (it.finishedAt != null) && (it.finishedAt.year == LocalDate.now().year)
                         }
                     _uiState.update {
                         it.copy(

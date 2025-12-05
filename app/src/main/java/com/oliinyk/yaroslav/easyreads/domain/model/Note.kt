@@ -3,7 +3,8 @@ package com.oliinyk.yaroslav.easyreads.domain.model
 import android.os.Parcelable
 import com.oliinyk.yaroslav.easyreads.data.local.entety.NoteEntity
 import kotlinx.parcelize.Parcelize
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 
 @Parcelize
@@ -12,7 +13,7 @@ data class Note(
     val bookId: UUID? = null,
     val text: String = "",
     val page: Int? = null,
-    val addedDate: Date = Date(),
+    val addedAt: LocalDateTime = LocalDateTime.now(),
 ) : BaseModel(),
     Parcelable
 
@@ -22,5 +23,5 @@ fun Note.toEntity(): NoteEntity =
         bookId = bookId,
         text = text,
         page = page,
-        addedDate = addedDate,
+        addedAt = addedAt.atZone(ZoneId.systemDefault()).toInstant(),
     )

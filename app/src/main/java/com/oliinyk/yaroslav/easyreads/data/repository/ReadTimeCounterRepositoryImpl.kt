@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.time.Duration
+import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,12 +32,12 @@ class ReadTimeCounterRepositoryImpl
         private var timeCounterJob: Job? = null
         private var _readingSession: ReadingSession = ReadingSession()
 
-        private var onTick: (Date) -> Unit = { date ->
+        private var onTick: (LocalDateTime) -> Unit = { dateTime ->
             if (timeCounterJob?.isActive == true) {
-                val timeDifference = date.time - _readingSession.updatedDate.time
+                val timeDifference = Duration.between(_readingSession.updatedAt, dateTime).toMillis()
                 _readingSession =
                     _readingSession.copy(
-                        updatedDate = date,
+                        updatedAt = dateTime,
                         readTimeInMilliseconds = _readingSession.readTimeInMilliseconds + timeDifference,
                     )
                 readingSessionRepository.update(_readingSession)
@@ -51,7 +52,7 @@ class ReadTimeCounterRepositoryImpl
                     readingSession.copy()
                 } else {
                     readingSession.copy(
-                        updatedDate = Date(),
+                        updatedAt = LocalDateTime.now(),
                     )
                 }
         }
@@ -95,7 +96,7 @@ class ReadTimeCounterRepositoryImpl
 
             _readingSession =
                 _readingSession.copy(
-                    updatedDate = Date(),
+                    updatedAt = LocalDateTime.now(),
                     recordStatus = ReadingSessionRecordStatusType.STARTED,
                 )
             readingSessionRepository.update(_readingSession)
@@ -124,11 +125,11 @@ class ReadTimeCounterRepositoryImpl
             _readingSession = ReadingSession()
         }
 
-        private fun createTimeCounter(): Flow<Date> =
+        private fun createTimeCounter(): Flow<LocalDateTime> =
             flow {
                 while (true) {
                     delay(AppConstants.MILLISECONDS_IN_ONE_SECOND)
-                    emit(Date())
+                    emit(LocalDateTime.now())
                 }
             }
     }

@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +21,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun NoteListItemCell(
@@ -57,11 +57,11 @@ fun NoteListItemCell(
                 // --- added date ---
                 Text(
                     text =
-                        DateFormat
-                            .format(
+                        note.addedAt.format(
+                            DateTimeFormatter.ofPattern(
                                 stringResource(R.string.date_and_time_format),
-                                note.addedDate,
-                            ).toString(),
+                            ),
+                        ),
                     style = MaterialTheme.typography.labelMedium,
                 )
 

@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,6 +36,7 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.addeditdialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookDetailsReadingSessionsSection(
@@ -159,11 +159,11 @@ private fun ShowLatestReadingSessionInfoRow(
                     text =
                         stringResource(
                             R.string.reading_session_list_item__label__date_text,
-                            DateFormat
-                                .format(
+                            latestReadingSession.startedAt.format(
+                                DateTimeFormatter.ofPattern(
                                     stringResource(R.string.date_and_time_format),
-                                    latestReadingSession.startedDate,
-                                ).toString(),
+                                ),
+                            ),
                         ),
                     style = MaterialTheme.typography.bodySmall,
                 )

@@ -5,7 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
-import java.util.Date
+import java.time.Instant
+import java.time.ZoneId
 import java.util.UUID
 
 @Entity("reading_sessions")
@@ -15,9 +16,9 @@ data class ReadingSessionEntity(
     @ColumnInfo("book_id")
     val bookId: UUID?,
     @ColumnInfo("started_date")
-    val startedDate: Date,
+    val startedAt: Instant,
     @ColumnInfo("updated_date")
-    val updatedDate: Date,
+    val updatedAt: Instant,
     @ColumnInfo("read_time_in_milliseconds")
     val readTimeInMilliseconds: Long,
     @ColumnInfo("start_page")
@@ -34,8 +35,8 @@ fun ReadingSessionEntity.toModel(): ReadingSession =
     ReadingSession(
         id = id,
         bookId = bookId,
-        startedDate = startedDate,
-        updatedDate = updatedDate,
+        startedAt = startedAt.atZone(ZoneId.systemDefault()).toLocalDateTime(),
+        updatedAt = updatedAt.atZone(ZoneId.systemDefault()).toLocalDateTime(),
         readTimeInMilliseconds = readTimeInMilliseconds,
         startPage = startPage,
         endPage = endPage,

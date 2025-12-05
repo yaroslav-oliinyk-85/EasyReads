@@ -17,7 +17,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsEvent
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
-import java.util.Date
+import java.time.LocalDateTime
 
 @Composable
 fun BookDetailsContent(
@@ -78,7 +78,7 @@ private fun BookDetailsContentFinishedPreview() {
                             pageCurrent = 50,
                             shelf = BookShelvesType.FINISHED,
                             isFinished = true,
-                            finishedDate = Date(),
+                            finishedAt = LocalDateTime.now(),
                         ),
                 ),
             onEvent = {},

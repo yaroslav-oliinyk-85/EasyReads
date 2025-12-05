@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.time.LocalDateTime
 import java.util.UUID
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ class ReadingSessionListViewModel
                 bookRepository.update(
                     book.copy(
                         pageCurrent = readingSession.endPage,
-                        updatedDate = Date(),
+                        updatedAt = LocalDateTime.now(),
                     ),
                 )
 

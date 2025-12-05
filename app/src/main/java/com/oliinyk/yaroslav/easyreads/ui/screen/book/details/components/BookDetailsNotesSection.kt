@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +31,7 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.addeditdialog.NoteAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookDetailsNotesSection(
@@ -117,11 +117,11 @@ private fun ShowLatestNoteInfoRow(
                 // --- note added date text ---
                 Text(
                     text =
-                        DateFormat
-                            .format(
+                        latestNote.addedAt.format(
+                            DateTimeFormatter.ofPattern(
                                 stringResource(R.string.date_and_time_format),
-                                latestNote.addedDate,
-                            ).toString(),
+                            ),
+                        ),
                     style = MaterialTheme.typography.bodySmall,
                 )
                 Spacer(Modifier.weight(1f))

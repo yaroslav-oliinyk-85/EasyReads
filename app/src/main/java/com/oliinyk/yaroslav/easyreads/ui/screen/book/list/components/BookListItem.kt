@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -34,7 +33,8 @@ import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.io.File
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookListItem(
@@ -157,31 +157,29 @@ fun BookListItem(
                                 BookShelvesType.FINISHED ->
                                     stringResource(
                                         R.string.book_list_item__label__shelf_finished_text,
-                                        book.finishedDate?.let { finishedDate ->
-                                            DateFormat
-                                                .format(
-                                                    stringResource(dateFormatStringResource),
-                                                    finishedDate,
-                                                ).toString()
-                                        } ?: "",
+                                        book.finishedAt?.format(
+                                            DateTimeFormatter.ofPattern(
+                                                stringResource(dateFormatStringResource),
+                                            ),
+                                        ) ?: "",
                                     )
                                 BookShelvesType.READING ->
                                     stringResource(
                                         R.string.book_list_item__label__shelf_reading_text,
-                                        DateFormat
-                                            .format(
+                                        book.updatedAt.format(
+                                            DateTimeFormatter.ofPattern(
                                                 stringResource(dateFormatStringResource),
-                                                book.updatedDate,
-                                            ).toString(),
+                                            ),
+                                        ),
                                     )
                                 BookShelvesType.WANT_TO_READ ->
                                     stringResource(
                                         R.string.book_list_item__label__shelf_want_to_read_text,
-                                        DateFormat
-                                            .format(
+                                        book.addedAt.format(
+                                            DateTimeFormatter.ofPattern(
                                                 stringResource(dateFormatStringResource),
-                                                book.addedDate,
-                                            ).toString(),
+                                            ),
+                                        ),
                                     )
                             },
                         maxLines = Dimens.bookListItemShelveTextMaxLines,
@@ -219,7 +217,7 @@ private fun BookListItemFinishedPreview() {
                 author = "Author",
                 pageCurrent = 1250,
                 pageAmount = 2500,
-                finishedDate = Date(),
+                finishedAt = LocalDateTime.now(),
                 shelf = BookShelvesType.FINISHED,
             ),
         onClickedBook = {},

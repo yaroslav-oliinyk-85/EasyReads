@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.components
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +24,7 @@ import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ReadingSessionListItem(
@@ -88,11 +88,11 @@ fun ReadingSessionListItem(
                     text =
                         stringResource(
                             R.string.reading_session_list_item__label__date_text,
-                            DateFormat
-                                .format(
+                            readingSession.startedAt.format(
+                                DateTimeFormatter.ofPattern(
                                     stringResource(R.string.date_and_time_format),
-                                    readingSession.startedDate,
-                                ).toString(),
+                                ),
+                            ),
                         ),
                     style = MaterialTheme.typography.bodySmall,
                 )

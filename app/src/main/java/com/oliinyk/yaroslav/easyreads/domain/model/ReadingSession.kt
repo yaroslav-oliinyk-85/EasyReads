@@ -7,7 +7,8 @@ import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HO
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_HOUR
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
 import kotlinx.parcelize.Parcelize
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 import kotlin.math.roundToInt
 
@@ -15,8 +16,8 @@ import kotlin.math.roundToInt
 data class ReadingSession(
     override val id: UUID = UUID.randomUUID(),
     val bookId: UUID? = null,
-    val startedDate: Date = Date(),
-    val updatedDate: Date = Date(),
+    val startedAt: LocalDateTime = LocalDateTime.now(),
+    val updatedAt: LocalDateTime = LocalDateTime.now(),
     val readTimeInMilliseconds: Long = 0,
     val startPage: Int = 0,
     val endPage: Int = 0,
@@ -62,8 +63,8 @@ fun ReadingSession.toEntity(): ReadingSessionEntity =
     ReadingSessionEntity(
         id = id,
         bookId = bookId,
-        startedDate = startedDate,
-        updatedDate = updatedDate,
+        startedAt = startedAt.atZone(ZoneId.systemDefault()).toInstant(),
+        updatedAt = updatedAt.atZone(ZoneId.systemDefault()).toInstant(),
         readTimeInMilliseconds = readTimeInMilliseconds,
         endPage = endPage,
         startPage = startPage,

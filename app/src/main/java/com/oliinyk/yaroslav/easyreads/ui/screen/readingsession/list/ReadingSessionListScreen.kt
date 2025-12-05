@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.addeditdialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.components.ReadingSessionListContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.components.ReadingSessionListTopAppBar
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @Composable
@@ -74,11 +74,11 @@ fun ReadingSessionListScreen(
             message =
                 stringResource(
                     R.string.reading_session_list__confirmation_dialog__message_text,
-                    DateFormat
-                        .format(
+                    readingSession.startedAt.format(
+                        DateTimeFormatter.ofPattern(
                             stringResource(R.string.date_and_time_format),
-                            readingSession.startedDate,
-                        ).toString(),
+                        ),
+                    ),
                     readingSession.readPages,
                     readingSession.startPage,
                     readingSession.endPage,

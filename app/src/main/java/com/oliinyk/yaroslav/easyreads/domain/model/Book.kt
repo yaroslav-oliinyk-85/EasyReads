@@ -3,7 +3,8 @@ package com.oliinyk.yaroslav.easyreads.domain.model
 import android.os.Parcelable
 import com.oliinyk.yaroslav.easyreads.data.local.entety.BookEntity
 import kotlinx.parcelize.Parcelize
-import java.util.Date
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.UUID
 
 @Parcelize
@@ -16,9 +17,9 @@ data class Book(
     val shelf: BookShelvesType = BookShelvesType.WANT_TO_READ,
     val pageAmount: Int = 0,
     val pageCurrent: Int = 0,
-    val addedDate: Date = Date(),
-    val updatedDate: Date = Date(),
-    val finishedDate: Date? = null,
+    val addedAt: LocalDateTime = LocalDateTime.now(),
+    val updatedAt: LocalDateTime = LocalDateTime.now(),
+    val finishedAt: LocalDateTime? = null,
     val isFinished: Boolean = false,
     val coverImageFileName: String? = null,
 ) : BaseModel(),
@@ -34,9 +35,9 @@ fun Book.toEntity(): BookEntity =
         shelve = shelf.toString(),
         pageAmount = pageAmount,
         pageCurrent = pageCurrent,
-        addedDate = addedDate,
-        updatedDate = updatedDate,
-        finishedDate = finishedDate,
+        addedAt = addedAt.atZone(ZoneId.systemDefault()).toInstant(),
+        updatedAt = updatedAt.atZone(ZoneId.systemDefault()).toInstant(),
+        finishedAt = finishedAt?.atZone(ZoneId.systemDefault())?.toInstant(),
         isFinished = isFinished.toString(),
         coverImageFileName = coverImageFileName,
     )

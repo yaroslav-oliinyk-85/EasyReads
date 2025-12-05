@@ -21,9 +21,7 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.MyLibraryUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.time.LocalDate
 
 @Composable
 fun MyLibraryReadingGoalProgressSection(
@@ -57,10 +55,7 @@ fun MyLibraryReadingGoalProgressSection(
                 text =
                     stringResource(
                         R.string.reading_goal__label__goal_title_text,
-                        SimpleDateFormat(
-                            stringResource(R.string.date_year_format),
-                            Locale.getDefault(),
-                        ).format(Date()),
+                        LocalDate.now().year,
                     ),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
