@@ -21,7 +21,5 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        working-directory: ./EasyReads
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-        working-directory: ./EasyReads
