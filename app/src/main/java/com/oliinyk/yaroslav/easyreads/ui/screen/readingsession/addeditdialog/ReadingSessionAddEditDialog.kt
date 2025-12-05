@@ -41,19 +41,6 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class ReadingSessionAddEditUiStateDialog(
-    val startPage: Int = 0,
-    val endPage: Int = 0,
-    val readPages: Int = 0,
-    val hours: Int = 0,
-    val minutes: Int = 0,
-    val seconds: Int = 0,
-    val startPageReadOnly: Boolean = true,
-    val startPageInputErrorMessage: String = "",
-    val endPageInputErrorMessage: String = "",
-) : Parcelable
-
 @Composable
 fun ReadingSessionAddEditDialog(
     readingSession: ReadingSession,
@@ -64,10 +51,6 @@ fun ReadingSessionAddEditDialog(
         onDismissRequest = onDismissRequest,
     ) {
         // --- Error Messages ---
-        val startPageInputErrorMessageText =
-            stringResource(
-                R.string.reading_session_add_edit_dialog__error__start_page_message_text,
-            )
         val endPageInputErrorMessageText =
             stringResource(
                 R.string.reading_session_add_edit_dialog__error__end_page_message_text,
@@ -303,6 +286,19 @@ fun ReadingSessionAddEditDialog(
         }
     }
 }
+
+@Parcelize
+data class ReadingSessionAddEditUiStateDialog(
+    val startPage: Int = 0,
+    val endPage: Int = 0,
+    val readPages: Int = 0,
+    val hours: Int = 0,
+    val minutes: Int = 0,
+    val seconds: Int = 0,
+    val startPageReadOnly: Boolean = true,
+    val startPageInputErrorMessage: String = "",
+    val endPageInputErrorMessage: String = "",
+) : Parcelable
 
 @Preview(showBackground = true)
 @Composable

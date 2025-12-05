@@ -19,7 +19,6 @@ fun BookDetailsDescriptionSection(
     description: String,
     modifier: Modifier = Modifier,
 ) {
-    val descriptionMinLines = 5
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
@@ -37,7 +36,7 @@ fun BookDetailsDescriptionSection(
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
-                minLines = descriptionMinLines,
+                minLines = Dimens.descriptionMinLines,
             )
         }
     }

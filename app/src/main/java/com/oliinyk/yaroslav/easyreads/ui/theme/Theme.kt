@@ -76,7 +76,7 @@ private val darkScheme =
         inverseOnSurface = inverseOnSurfaceDark,
         inversePrimary = inversePrimaryDark,
     )
-
+/* tmp not used
 private val mediumContrastLightColorScheme =
     lightColorScheme(
         primary = primaryLightMediumContrast,
@@ -204,6 +204,7 @@ private val highContrastDarkColorScheme =
         inverseOnSurface = inverseOnSurfaceDarkHighContrast,
         inversePrimary = inversePrimaryDarkHighContrast,
     )
+*/
 
 @Composable
 fun EasyReadsTheme(

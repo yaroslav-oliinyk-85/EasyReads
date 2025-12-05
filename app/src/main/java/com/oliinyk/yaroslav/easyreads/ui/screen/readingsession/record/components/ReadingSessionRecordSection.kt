@@ -128,7 +128,7 @@ fun ReadingSessionRecordSection(
                     onClick = onClickShowNotes,
                     modifier =
                         Modifier
-                            .weight(.5f),
+                            .weight(1f),
                 ) {
                     Text(
                         text =
@@ -145,7 +145,7 @@ fun ReadingSessionRecordSection(
                 // --- Add Note Button ---
                 AppTextButton(
                     onClick = onClickAddNote,
-                    modifier = Modifier.weight(.5f),
+                    modifier = Modifier.weight(1f),
                 ) {
                     Text(
                         text = stringResource(R.string.reading_session_record__button__add_note_text),

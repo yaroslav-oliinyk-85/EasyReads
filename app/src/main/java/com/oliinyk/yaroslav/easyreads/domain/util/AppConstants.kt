@@ -15,4 +15,6 @@ object AppConstants {
 
     const val BOOK_PAGE_AMOUNT_MAX_LENGTH = 4
     const val BOOK_ISBN_MAX_LENGTH = 13
+
+    const val COPY_IMAGE_BUFFER_SIZE = 1024 * 8
 }

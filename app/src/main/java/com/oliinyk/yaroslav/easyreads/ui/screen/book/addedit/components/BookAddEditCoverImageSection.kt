@@ -55,7 +55,7 @@ fun BookAddEditCoverImageSection(
         bookCoverImageFile?.let {
             if (it.exists()) {
                 AsyncImage(
-                    modifier = Modifier.fillMaxSize().alpha(0.25f),
+                    modifier = Modifier.fillMaxSize().alpha(Dimens.bookCoverImageAlpha),
                     model =
                         ImageRequest
                             .Builder(context)

@@ -1,7 +1,10 @@
 package com.oliinyk.yaroslav.easyreads.ui.navigation
 
 import android.util.Log
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,12 +51,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- ReadingGoal Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.ReadingGoal.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             ReadingGoalScreen(
                 navToBookDetails = { bookId ->
@@ -63,12 +62,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookListShelf Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.BookListShelf.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookShelvesType = backStackEntry.arguments?.getString(AppNavRoutes.BookListShelf.ARGUMENT_KEY)
 
@@ -76,23 +71,15 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookList Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.BookList.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             BookListRoute(navHostController)
         }
 
         // ----- BookDetails Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.BookDetails.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
 
@@ -117,12 +104,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookAdd Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.BookAdd.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) {
             BookAddEditScreen(
                 navBack = {
@@ -132,12 +115,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookEdit Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.BookEdit.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookEdit.ARGUMENT_KEY)
 
@@ -150,12 +129,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- NoteList Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.NoteList.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
 
@@ -163,12 +138,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- ReadingSessionList Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.ReadingSessionList.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionList.ARGUMENT_KEY)
 
@@ -176,12 +147,8 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- ReadingSessionRecord Route -----
-        composable(
+        composableApp(
             route = AppNavRoutes.ReadingSessionRecord.route,
-            enterTransition = AppNavTransitions.enterTransition,
-            exitTransition = AppNavTransitions.exitTransition,
-            popEnterTransition = AppNavTransitions.popEnterTransition,
-            popExitTransition = AppNavTransitions.popExitTransition,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
 
@@ -196,6 +163,20 @@ fun AppNavHost(navHostController: NavHostController) {
             )
         }
     }
+}
+
+private fun NavGraphBuilder.composableApp(
+    route: String,
+    content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
+) {
+    composable(
+        route = route,
+        enterTransition = AppNavTransitions.enterTransition,
+        exitTransition = AppNavTransitions.exitTransition,
+        popEnterTransition = AppNavTransitions.popEnterTransition,
+        popExitTransition = AppNavTransitions.popExitTransition,
+        content = content,
+    )
 }
 
 @Composable
@@ -214,7 +195,7 @@ private fun BookListRoute(
             if (bookShelvesType != null) {
                 try {
                     BookShelvesType.valueOf(bookShelvesType)
-                } catch (e: Exception) {
+                } catch (e: IllegalArgumentException) {
                     Log.w(TAG, e.toString())
                     null
                 }

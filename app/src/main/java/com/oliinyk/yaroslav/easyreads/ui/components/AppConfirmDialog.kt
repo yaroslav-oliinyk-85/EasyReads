@@ -19,7 +19,6 @@ fun AppConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val messageMaxLine = 5
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
@@ -43,7 +42,11 @@ fun AppConfirmDialog(
             Text(text = title)
         },
         text = {
-            Text(text = message, maxLines = messageMaxLine, overflow = TextOverflow.Ellipsis)
+            Text(
+                text = message,
+                maxLines = Dimens.confirmDialogMessageMaxLine,
+                overflow = TextOverflow.Ellipsis,
+            )
         },
     )
 }

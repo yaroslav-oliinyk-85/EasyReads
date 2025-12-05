@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
@@ -59,26 +58,26 @@ fun BookListItem(
     var dateFormatStringResource: Int
 
     when (holderSize) {
-        HolderSize.LARGE -> {
-            coverImageWidth = 132.dp
-            bookListItemHeight = 198.dp
-            titleMaxLines = 3
-            authorMaxLines = 2
-            dateFormatStringResource = R.string.date_format
+        HolderSize.SMALL -> {
+            coverImageWidth = Dimens.sizeSmallBookListItemCoverImageWidth
+            bookListItemHeight = Dimens.sizeSmallBookListItemHeight
+            titleMaxLines = Dimens.sizeSmallBookListItemTitleMaxLines
+            authorMaxLines = Dimens.sizeSmallBookListItemAuthorMaxLines
+            dateFormatStringResource = R.string.date_and_time_format
         }
         HolderSize.DEFAULT -> {
-            coverImageWidth = 92.dp
-            bookListItemHeight = 138.dp
-            titleMaxLines = 2
-            authorMaxLines = 1
+            coverImageWidth = Dimens.sizeMediumBookListItemCoverImageWidth
+            bookListItemHeight = Dimens.sizeMediumBookListItemHeight
+            titleMaxLines = Dimens.sizeMediumBookListItemTitleMaxLines
+            authorMaxLines = Dimens.sizeMediumBookListItemAuthorMaxLines
             dateFormatStringResource = R.string.date_and_time_format
         }
-        HolderSize.SMALL -> {
-            coverImageWidth = 74.dp
-            bookListItemHeight = 111.dp
-            titleMaxLines = 1
-            authorMaxLines = 1
-            dateFormatStringResource = R.string.date_and_time_format
+        HolderSize.LARGE -> {
+            coverImageWidth = Dimens.sizeLargeBookListItemCoverImageWidth
+            bookListItemHeight = Dimens.sizeLargeBookListItemHeight
+            titleMaxLines = Dimens.sizeLargeBookListItemTitleMaxLines
+            authorMaxLines = Dimens.sizeLargeBookListItemAuthorMaxLines
+            dateFormatStringResource = R.string.date_format
         }
     }
 

@@ -32,9 +32,9 @@ data class BookEntity(
     @ColumnInfo(name = "is_finished", defaultValue = "FALSE")
     val isFinished: String,
     @ColumnInfo("read_minutes_count", defaultValue = "0")
-    val readMinutesCount: Int = 0, // TODO: remove
+    val readMinutesCount: Int = 0, // to remove
     @ColumnInfo("read_sessions_count", defaultValue = "0")
-    val readSessionsCount: Int = 0, // TODO: remove
+    val readSessionsCount: Int = 0, // to remove
     @ColumnInfo("cover_image_file_name")
     val coverImageFileName: String? = null,
 )

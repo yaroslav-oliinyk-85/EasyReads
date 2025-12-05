@@ -36,7 +36,6 @@ fun ReadingGoalFinishedBooksSection(
         modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
-        val gridCellsCount = 4
         Column(
             modifier =
                 Modifier
@@ -63,7 +62,7 @@ fun ReadingGoalFinishedBooksSection(
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
             LazyVerticalGrid(
-                columns = GridCells.Fixed(gridCellsCount),
+                columns = GridCells.Fixed(Dimens.gridCellsCount),
                 modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceTiny),
                 horizontalArrangement = Arrangement.spacedBy(Dimens.arrangementHorizontalSpaceTiny),

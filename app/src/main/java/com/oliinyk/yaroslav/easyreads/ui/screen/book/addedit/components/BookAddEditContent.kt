@@ -142,7 +142,6 @@ fun BookAddEditContent(
                 )
 
                 // Description
-                val descriptionMinLines = 5
                 AppEditField(
                     label = stringResource(R.string.book_add_edit__label__book_description_text),
                     value = stateUi.book.description,
@@ -152,7 +151,7 @@ fun BookAddEditContent(
                             imeAction = ImeAction.Done,
                         ),
                     singleLine = false,
-                    minLines = descriptionMinLines,
+                    minLines = Dimens.descriptionMinLines,
                     onValueChange = { description ->
                         onEvent(
                             BookAddEditEvent.DescriptionChanged(

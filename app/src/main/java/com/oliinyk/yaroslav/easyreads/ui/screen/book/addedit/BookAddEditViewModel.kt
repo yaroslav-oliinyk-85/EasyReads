@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.COPY_IMAGE_BUFFER_SIZE
 import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -148,7 +149,7 @@ class BookAddEditViewModel
             val destinationFile = File(applicationContext.filesDir, pickedImageName)
             applicationContext.contentResolver.openInputStream(pickedImageUri)?.use { inputStream ->
                 FileOutputStream(destinationFile).use { outputStream ->
-                    val buffer = ByteArray(1024 * 8)
+                    val buffer = ByteArray(COPY_IMAGE_BUFFER_SIZE)
                     var length: Int
                     while (inputStream.read(buffer).also { length = it } > 0) {
                         outputStream.write(buffer, 0, length)

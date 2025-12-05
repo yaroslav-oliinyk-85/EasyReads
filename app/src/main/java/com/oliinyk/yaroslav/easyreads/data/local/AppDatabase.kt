@@ -50,6 +50,7 @@ val migration_1_2 =
 
 val migration_2_3 =
     object : Migration(2, 3) {
+        @Suppress("detekt.MaxLineLength")
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 "CREATE TABLE IF NOT EXISTS `notes` (`id` BLOB NOT NULL, `book_id` BLOB, `text` TEXT NOT NULL, `page` INTEGER, `added_date` INTEGER NOT NULL, PRIMARY KEY(`id`))",
@@ -68,6 +69,7 @@ val migration_3_4 =
 
 val migration_4_5 =
     object : Migration(4, 5) {
+        @Suppress("detekt.MaxLineLength")
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 "CREATE TABLE IF NOT EXISTS `reading_sessions` (`id` BLOB NOT NULL, `book_id` BLOB, `started_date` INTEGER NOT NULL, `read_time_in_seconds` INTEGER NOT NULL, `start_page` INTEGER NOT NULL, `end_page` INTEGER NOT NULL, `read_pages` INTEGER NOT NULL, `record_status` TEXT NOT NULL, PRIMARY KEY(`id`))",
@@ -112,6 +114,7 @@ val migration_8_9 =
 
 val migration_9_10 =
     object : Migration(9, 10) {
+        @Suppress("detekt.MaxLineLength")
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 "CREATE TABLE IF NOT EXISTS `reading_goals` (`year` INTEGER NOT NULL, `goal` INTEGER NOT NULL, PRIMARY KEY(`year`))",

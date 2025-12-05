@@ -74,6 +74,21 @@ object Dimens {
 
     val appDividerThickness = 2.dp
 
+    val sizeSmallBookListItemCoverImageWidth = 74.dp
+    val sizeSmallBookListItemHeight = 111.dp
+    val sizeSmallBookListItemTitleMaxLines = 1
+    val sizeSmallBookListItemAuthorMaxLines = 1
+
+    val sizeMediumBookListItemCoverImageWidth = 92.dp
+    val sizeMediumBookListItemHeight = 138.dp
+    val sizeMediumBookListItemTitleMaxLines = 2
+    val sizeMediumBookListItemAuthorMaxLines = 1
+
+    val sizeLargeBookListItemCoverImageWidth = 132.dp
+    val sizeLargeBookListItemHeight = 198.dp
+    val sizeLargeBookListItemTitleMaxLines = 3
+    val sizeLargeBookListItemAuthorMaxLines = 2
+
     // ----- text -----
     val appTitleMediumFontSize = 18.sp
 
@@ -83,6 +98,16 @@ object Dimens {
     val readingSessionRecordBookAuthorMaxLines = 1
 
     val bookListItemShelveTextMaxLines = 2
+
+    val descriptionMinLines = 5
+
+    val confirmDialogMessageMaxLine = 5
+
+    val bookCoverImageAlpha = 0.25f
+
+    val gridCellsCount = 4
+
+    val noteTextMinLines = 3
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

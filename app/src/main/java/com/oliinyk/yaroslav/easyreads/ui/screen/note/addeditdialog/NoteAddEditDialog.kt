@@ -43,7 +43,6 @@ fun NoteAddEditDialog(
     Dialog(
         onDismissRequest = onDismissRequest,
     ) {
-        val noteTextMinLines = 3
         val errorMessageText = stringResource(R.string.note_add_edit_dialog__error__message_text)
         var noteText by rememberSaveable { mutableStateOf(note.text) }
         var notePageNumberText by rememberSaveable { mutableStateOf(note.page?.toString() ?: "") }
@@ -70,7 +69,7 @@ fun NoteAddEditDialog(
                             imeAction = ImeAction.Next,
                         ),
                     singleLine = false,
-                    minLines = noteTextMinLines,
+                    minLines = Dimens.noteTextMinLines,
                     onValueChange = { value ->
                         noteText = value
                         noteTextLabelError =

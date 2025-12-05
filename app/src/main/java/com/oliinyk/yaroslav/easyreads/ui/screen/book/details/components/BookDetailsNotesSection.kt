@@ -163,7 +163,7 @@ private fun BottomActionButtonsRow(
         // --- see all notes button ---
         AppTextButton(
             onClick = onClickSeeAllNotes,
-            modifier = Modifier.weight(.5f),
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text =
@@ -179,7 +179,7 @@ private fun BottomActionButtonsRow(
             onClick = {
                 onClickAddNote(Note())
             },
-            modifier = Modifier.weight(.5f),
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = stringResource(R.string.book_details__button__add_note_text),
