@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDateTime
@@ -66,21 +66,21 @@ class ReadTimeCounterRepositoryImpl
             timeCounterJob?.cancel()
 
             coroutineScope.launch(coroutineDispatcher) {
-                readingSessionRepository
-                    .getLastUnfinishedByBookId(bookId)
-                    .take(1)
-                    .collect { readingSession ->
-                        if (readingSession == null) {
-                            _readingSession =
-                                ReadingSession(
-                                    bookId = bookId,
-                                    startPage = pageCurrent,
-                                )
-                            readingSessionRepository.insert(_readingSession)
-                        } else {
-                            updateReadingSession(readingSession)
-                        }
-                    }
+                val readingSession =
+                    readingSessionRepository
+                        .getLastUnfinishedByBookId(bookId)
+                        .firstOrNull()
+
+                if (readingSession == null) {
+                    _readingSession =
+                        ReadingSession(
+                            bookId = bookId,
+                            startPage = pageCurrent,
+                        )
+                    readingSessionRepository.insert(_readingSession)
+                } else {
+                    updateReadingSession(readingSession)
+                }
             }
 
             timeCounterJob =
