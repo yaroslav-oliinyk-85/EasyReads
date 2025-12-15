@@ -1,5 +1,7 @@
 package com.oliinyk.yaroslav.easyreads.data.repository
 
+import com.oliinyk.yaroslav.easyreads.di.AppCoroutineScope
+import com.oliinyk.yaroslav.easyreads.di.DispatcherIO
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadTimeCounterRepository
@@ -7,7 +9,6 @@ import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -25,10 +26,9 @@ class ReadTimeCounterRepositoryImpl
     @Inject
     constructor(
         private val readingSessionRepository: ReadingSessionRepository,
+        @AppCoroutineScope private val coroutineScope: CoroutineScope,
+        @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     ) : ReadTimeCounterRepository {
-        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
-        private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
-
         private var timeCounterJob: Job? = null
         private var _readingSession: ReadingSession = ReadingSession()
 
@@ -65,7 +65,7 @@ class ReadTimeCounterRepositoryImpl
         ) {
             timeCounterJob?.cancel()
 
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 val readingSession =
                     readingSessionRepository
                         .getLastUnfinishedByBookId(bookId)
@@ -84,7 +84,7 @@ class ReadTimeCounterRepositoryImpl
             }
 
             timeCounterJob =
-                coroutineScope.launch(coroutineDispatcher) {
+                coroutineScope.launch(ioDispatcher) {
                     createTimeCounter().collect { date ->
                         onTick(date)
                     }
@@ -102,7 +102,7 @@ class ReadTimeCounterRepositoryImpl
             readingSessionRepository.update(_readingSession)
 
             timeCounterJob =
-                coroutineScope.launch(coroutineDispatcher) {
+                coroutineScope.launch(ioDispatcher) {
                     createTimeCounter().collect { date ->
                         onTick(date)
                     }

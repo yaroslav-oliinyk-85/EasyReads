@@ -3,6 +3,8 @@ package com.oliinyk.yaroslav.easyreads.data.repository
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oliinyk.yaroslav.easyreads.data.local.dao.BookDao
 import com.oliinyk.yaroslav.easyreads.data.local.entety.toModel
+import com.oliinyk.yaroslav.easyreads.di.AppCoroutineScope
+import com.oliinyk.yaroslav.easyreads.di.DispatcherIO
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSorting
@@ -11,7 +13,6 @@ import com.oliinyk.yaroslav.easyreads.domain.model.toEntity
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -25,10 +26,9 @@ class BookRepositoryImpl
     @Inject
     constructor(
         private val bookDao: BookDao,
+        @AppCoroutineScope private val coroutineScope: CoroutineScope,
+        @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     ) : BookRepository {
-        private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Main)
-        private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
-
         override fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>> {
             val sortingOrder = getSortingOrder(bookSorting)
             val query = "SELECT * FROM books ORDER BY $sortingOrder"
@@ -77,19 +77,19 @@ class BookRepositoryImpl
         override fun getAuthors(): Flow<List<String>> = bookDao.getAuthors().distinctUntilChanged()
 
         override fun save(book: Book) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 bookDao.save(book.toEntity())
             }
         }
 
         override fun update(book: Book) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 bookDao.update(book.toEntity())
             }
         }
 
         override fun remove(book: Book) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 bookDao.remove(book.toEntity())
             }
         }
