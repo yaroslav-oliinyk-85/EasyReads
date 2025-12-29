@@ -5,6 +5,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +30,7 @@ fun BookListScreen(
     }
 
     val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -34,7 +38,12 @@ fun BookListScreen(
                 booksCount = stateUi.books.size,
                 bookShelvesType = stateUi.bookShelvesType,
                 holderSize = stateUi.holderSize,
-                onAddBookClick = navToBookAdd,
+                onAddBookClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookAdd()
+                    }
+                },
                 onHolderSizeChange = { viewModel.updateHolderSize(it) },
             )
         },
@@ -42,7 +51,12 @@ fun BookListScreen(
             BookListContent(
                 modifier = Modifier.padding(paddingValues),
                 stateUi = stateUi,
-                onBookClick = { navToBookDetails(it.id.toString()) },
+                onBookClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookDetails(it.id.toString())
+                    }
+                },
                 onSortingChange = {
                     viewModel.updateBookSorting(
                         stateUi.bookSorting.copy(bookSortingType = it),

@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,6 +27,7 @@ fun ReadingGoalScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var showReadingGoalChangeDialog by rememberSaveable { mutableStateOf(false) }
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -38,7 +40,12 @@ fun ReadingGoalScreen(
                 onChangeGoalClick = {
                     showReadingGoalChangeDialog = true
                 },
-                onBookClick = { navToBookDetails(it.id.toString()) },
+                onBookClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookDetails(it.id.toString())
+                    }
+                },
                 modifier = Modifier.padding(paddingValues),
             )
         },

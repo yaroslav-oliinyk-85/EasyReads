@@ -7,6 +7,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -26,6 +29,7 @@ fun ReadingSessionRecordScreen(
 ) {
     val uiState: ReadingSessionRecordUiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         bookId?.let { id ->
@@ -91,7 +95,10 @@ fun ReadingSessionRecordScreen(
 
                     ReadingSessionRecordEvent.OnShowNotes -> {
                         uiState.book?.let { book ->
-                            navToNoteList(book.id.toString())
+                            if (!isTriggeredNavTo) {
+                                isTriggeredNavTo = true
+                                navToNoteList(book.id.toString())
+                            }
                         }
                     }
 

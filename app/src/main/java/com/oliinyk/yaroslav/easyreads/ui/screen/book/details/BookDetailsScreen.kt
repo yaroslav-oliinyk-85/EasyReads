@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,6 +36,7 @@ fun BookDetailsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var showBookDeletingConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     if (showBookDeletingConfirmDialog) {
         AppConfirmDialog(
@@ -53,16 +55,36 @@ fun BookDetailsScreen(
         topBar = {
             BookDetailsTopAppBar(
                 title = stringResource(R.string.book_details__toolbar__title_test),
-                onEditBook = { navToBookEdit(uiState.book.id.toString()) },
+                onEditBook = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookEdit(uiState.book.id.toString())
+                    }
+                },
                 onRemoveBook = { showBookDeletingConfirmDialog = true },
             )
         },
     ) { paddingValues ->
         BookDetailsContent(
             uiState = uiState,
-            navToReadingSessionRecord = navToReadingSessionRecord,
-            navToReadingSessionList = navToReadingSessionList,
-            navToNoteList = navToNoteList,
+            navToReadingSessionRecord = {
+                if (!isTriggeredNavTo) {
+                    isTriggeredNavTo = true
+                    navToReadingSessionRecord(it)
+                }
+            },
+            navToReadingSessionList = {
+                if (!isTriggeredNavTo) {
+                    isTriggeredNavTo = true
+                    navToReadingSessionList(it)
+                }
+            },
+            navToNoteList = {
+                if (!isTriggeredNavTo) {
+                    isTriggeredNavTo = true
+                    navToNoteList(it)
+                }
+            },
             onEvent = { viewModel.handleEvent(it) },
             modifier = Modifier.padding(paddingValues),
         )

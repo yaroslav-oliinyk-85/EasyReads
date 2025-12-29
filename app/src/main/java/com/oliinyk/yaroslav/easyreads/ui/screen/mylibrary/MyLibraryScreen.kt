@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,18 +24,41 @@ fun MyLibraryScreen(
     viewModel: MyLibraryViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            MyLibraryTopAppBar(onAddBookClick = navToBookAdd)
+            MyLibraryTopAppBar(
+                onAddBookClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookAdd()
+                    }
+                },
+            )
         },
         content = { paddingValues ->
             MyLibraryContent(
                 uiState = uiState,
-                onReadingGoalClick = navToReadingGoal,
-                onShelfClick = { navToBookListByShelvesType(it.toString()) },
-                onSeeAllClick = { navToBookList() },
+                onReadingGoalClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToReadingGoal()
+                    }
+                },
+                onShelfClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookListByShelvesType(it.toString())
+                    }
+                },
+                onSeeAllClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToBookList()
+                    }
+                },
                 modifier = Modifier.padding(paddingValues),
             )
         },
