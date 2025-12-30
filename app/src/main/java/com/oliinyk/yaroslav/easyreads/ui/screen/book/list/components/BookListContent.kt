@@ -9,13 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookSortingType
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.StateUiBookList
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.BookListUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
 fun BookListContent(
     modifier: Modifier = Modifier,
-    stateUi: StateUiBookList,
+    stateUi: BookListUiState,
     onBookClick: (Book) -> Unit,
     onSortingChange: (BookSortingType) -> Unit,
     onSortingOrderChange: () -> Unit,
@@ -33,7 +33,7 @@ fun BookListContent(
             onSortingOrderChange = onSortingOrderChange,
         )
         BookListSection(
-            stateUi = stateUi,
+            uiState = stateUi,
             onBookClick = onBookClick,
         )
     }

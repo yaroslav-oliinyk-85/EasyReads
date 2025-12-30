@@ -53,7 +53,7 @@ fun ReadingSessionListContent(
 
 @Preview(showBackground = true)
 @Composable
-fun ReadingSessionListContentPreview() {
+private fun ReadingSessionListContentPreview() {
     ReadingSessionListContent(
         readingSessions = listOf(ReadingSession(), ReadingSession()),
         onClickedEdit = {},

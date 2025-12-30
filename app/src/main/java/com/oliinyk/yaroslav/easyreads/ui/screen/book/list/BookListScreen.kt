@@ -29,7 +29,7 @@ fun BookListScreen(
         }
     }
 
-    val stateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val stateUi by viewModel.uiState.collectAsStateWithLifecycle()
     var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     Scaffold(

@@ -25,15 +25,15 @@ class BookListViewModel
         private val bookRepository: BookRepository,
         private val preferencesRepository: PreferencesRepository,
     ) : ViewModel() {
-        private val _stateUi: MutableStateFlow<StateUiBookList> = MutableStateFlow(StateUiBookList())
-        val stateUi: StateFlow<StateUiBookList>
-            get() = _stateUi.asStateFlow()
+        private val _uiState: MutableStateFlow<BookListUiState> = MutableStateFlow(BookListUiState())
+        val uiState: StateFlow<BookListUiState>
+            get() = _uiState.asStateFlow()
 
         val bookSorting: BookSorting
-            get() = stateUi.value.bookSorting
+            get() = uiState.value.bookSorting
 
         val bookShelvesType: BookShelvesType?
-            get() = stateUi.value.bookShelvesType
+            get() = uiState.value.bookShelvesType
 
         private var jobFetchBooks: Job? = null
 
@@ -41,7 +41,7 @@ class BookListViewModel
             viewModelScope.launch {
                 preferencesRepository.getBookListCellHolderSize().collectLatest { holderSizeString ->
                     if (holderSizeString.isNotEmpty()) {
-                        _stateUi.update {
+                        _uiState.update {
                             it.copy(
                                 holderSize = HolderSize.valueOf(holderSizeString),
                             )
@@ -53,7 +53,7 @@ class BookListViewModel
                 preferencesRepository.getBookSorting().collectLatest { bookSortingString ->
                     if (bookSortingString.isNotEmpty()) {
                         val bookSorting = BookSorting.fromString(bookSortingString)
-                        _stateUi.update { it.copy(bookSorting = bookSorting) }
+                        _uiState.update { it.copy(bookSorting = bookSorting) }
                     }
                     loadBooks()
                 }
@@ -73,7 +73,7 @@ class BookListViewModel
         }
 
         fun updateBookShelveType(updatedBookShelvesType: BookShelvesType) {
-            _stateUi.update { it.copy(bookShelvesType = updatedBookShelvesType) }
+            _uiState.update { it.copy(bookShelvesType = updatedBookShelvesType) }
             loadBooks()
         }
 
@@ -83,18 +83,18 @@ class BookListViewModel
                 viewModelScope.launch {
                     if (bookShelvesType != null) {
                         bookRepository.getByShelveSorted(bookShelvesType!!, bookSorting).collect { books ->
-                            _stateUi.update { it.copy(books = books) }
+                            _uiState.update { it.copy(books = books) }
                         }
                     } else {
                         bookRepository.getAllSorted(bookSorting).collect { books ->
-                            _stateUi.update { it.copy(books = books) }
+                            _uiState.update { it.copy(books = books) }
                         }
                     }
                 }
         }
     }
 
-data class StateUiBookList(
+data class BookListUiState(
     val books: List<Book> = emptyList(),
     val holderSize: HolderSize = HolderSize.DEFAULT,
     val bookSorting: BookSorting = BookSorting(),

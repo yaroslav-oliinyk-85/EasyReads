@@ -302,7 +302,7 @@ data class ReadingSessionAddEditUiStateDialog(
 
 @Preview(showBackground = true)
 @Composable
-fun ReadingSessionAddEditDialogPreview() {
+private fun ReadingSessionAddEditDialogPreview() {
     EasyReadsTheme {
         ReadingSessionAddEditDialog(
             readingSession = ReadingSession(startPage = 25),

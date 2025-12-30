@@ -40,7 +40,7 @@ fun ReadingSessionListTopAppBar(sessionsCount: Int) {
 
 @Preview
 @Composable
-fun ReadingSessionListTopAppBarPreview() {
+private fun ReadingSessionListTopAppBarPreview() {
     EasyReadsTheme {
         ReadingSessionListTopAppBar(
             sessionsCount = 5,
