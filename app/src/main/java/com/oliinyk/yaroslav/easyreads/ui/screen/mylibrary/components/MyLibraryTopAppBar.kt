@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.components
 import android.content.res.Configuration
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +18,10 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyLibraryTopAppBar(onAddBookClick: () -> Unit) {
+fun MyLibraryTopAppBar(
+    onAddBookClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+) {
     TopAppBar(
         title = {
             Text(text = stringResource(R.string.my_library__toolbar__title_text))
@@ -27,6 +31,11 @@ fun MyLibraryTopAppBar(onAddBookClick: () -> Unit) {
                 imageVector = Icons.Default.Add,
                 contentDescription = stringResource(R.string.menu_item__add_text),
                 onClick = { onAddBookClick() },
+            )
+            AppIconTopBarButton(
+                imageVector = Icons.Default.Settings,
+                contentDescription = stringResource(R.string.menu_item__settings_text),
+                onClick = { onSettingsClick() },
             )
         },
         colors =
@@ -43,6 +52,7 @@ private fun MyLibraryTopAppBarPreview() {
     EasyReadsTheme {
         MyLibraryTopAppBar(
             onAddBookClick = {},
+            onSettingsClick = {},
         )
     }
 }
@@ -56,6 +66,7 @@ private fun MyLibraryTopAppBarDarkPreview() {
     EasyReadsTheme {
         MyLibraryTopAppBar(
             onAddBookClick = {},
+            onSettingsClick = {},
         )
     }
 }

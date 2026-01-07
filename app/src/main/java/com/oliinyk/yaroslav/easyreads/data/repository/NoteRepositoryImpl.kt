@@ -23,8 +23,15 @@ class NoteRepositoryImpl
     constructor(
         private val noteDao: NoteDao,
         @AppCoroutineScope private val coroutineScope: CoroutineScope,
-        @DispatcherIO private val coroutineDispatcher: CoroutineDispatcher,
+        @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     ) : NoteRepository {
+        override suspend fun getAll(): List<Note> =
+            noteDao
+                .getAll()
+                .map { entity ->
+                    entity.toModel()
+                }
+
         override fun getAllByBookId(bookId: UUID): Flow<List<Note>> =
             noteDao
                 .getAllByBookId(bookId)
@@ -38,22 +45,28 @@ class NoteRepositoryImpl
                 .map { it?.toModel() }
                 .distinctUntilChanged()
 
-        override fun insert(note: Note) {
-            coroutineScope.launch(coroutineDispatcher) { noteDao.insert(note.toEntity()) }
+        override fun save(note: Note) {
+            coroutineScope.launch(ioDispatcher) { noteDao.insert(note.toEntity()) }
+        }
+
+        override fun saveAll(notes: List<Note>) {
+            coroutineScope.launch(ioDispatcher) {
+                noteDao.upsertAll(notes.map { it.toEntity() })
+            }
         }
 
         override fun update(note: Note) {
-            coroutineScope.launch(coroutineDispatcher) { noteDao.update(note.toEntity()) }
+            coroutineScope.launch(ioDispatcher) { noteDao.update(note.toEntity()) }
         }
 
         override fun remove(note: Note) {
-            coroutineScope.launch(coroutineDispatcher) { noteDao.delete(note.toEntity()) }
+            coroutineScope.launch(ioDispatcher) { noteDao.delete(note.toEntity()) }
         }
 
         override fun remove(notes: List<Note>) {
             if (notes.isEmpty()) {
                 return
             }
-            coroutineScope.launch(coroutineDispatcher) { noteDao.delete(notes.map { it.toEntity() }) }
+            coroutineScope.launch(ioDispatcher) { noteDao.delete(notes.map { it.toEntity() }) }
         }
     }

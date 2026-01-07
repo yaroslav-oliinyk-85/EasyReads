@@ -46,7 +46,7 @@ class ReadingGoalViewModel
                     if (readingGoal != null) {
                         _uiState.update { it.copy(readingGoal = readingGoal) }
                     } else {
-                        readingGoalRepository.insert(ReadingGoal(year = currentYear))
+                        readingGoalRepository.save(ReadingGoal(year = currentYear))
                     }
                 }
             }
@@ -54,7 +54,7 @@ class ReadingGoalViewModel
 
         private fun loadBooks() {
             viewModelScope.launch {
-                bookRepository.getAll().collect { books ->
+                bookRepository.getAllAsFlow().collect { books ->
                     if (books.isNotEmpty()) {
                         val currentYearFinishedBooks: List<Book> =
                             books

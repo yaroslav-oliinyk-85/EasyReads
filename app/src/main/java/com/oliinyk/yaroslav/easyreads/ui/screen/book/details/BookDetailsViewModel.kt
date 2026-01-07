@@ -76,7 +76,7 @@ class BookDetailsViewModel
         }
 
         fun addNote(note: Note) {
-            noteRepository.insert(
+            noteRepository.save(
                 note.copy(bookId = uiState.value.book.id),
             )
         }
@@ -90,7 +90,7 @@ class BookDetailsViewModel
                 uiState.value.book.copy(pageCurrent = readingSession.endPage),
             )
 
-            readingSessionRepository.insert(
+            readingSessionRepository.save(
                 readingSession.copy(
                     bookId = uiState.value.book.id,
                 ),

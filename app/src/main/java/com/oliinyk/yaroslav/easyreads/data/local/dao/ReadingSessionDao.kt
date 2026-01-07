@@ -5,12 +5,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.oliinyk.yaroslav.easyreads.data.local.entety.ReadingSessionEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface ReadingSessionDao {
+    @Query("SELECT * FROM reading_sessions")
+    suspend fun getAll(): List<ReadingSessionEntity>
+
     @Query("SELECT * FROM reading_sessions WHERE book_id = :bookId ORDER BY started_date DESC")
     fun getAllByBookId(bookId: UUID): Flow<List<ReadingSessionEntity>>
 
@@ -30,6 +34,9 @@ interface ReadingSessionDao {
 
     @Update
     suspend fun update(readingSessionEntity: ReadingSessionEntity)
+
+    @Upsert
+    suspend fun upsertAll(readingSessionEntities: List<ReadingSessionEntity>)
 
     @Delete
     suspend fun delete(readingSessionEntity: ReadingSessionEntity)

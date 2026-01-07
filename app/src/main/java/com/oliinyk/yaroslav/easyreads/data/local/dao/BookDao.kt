@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.Update
+import androidx.room.Upsert
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.oliinyk.yaroslav.easyreads.data.local.entety.BookEntity
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,10 @@ interface BookDao {
     fun getAllSortedBy(query: SupportSQLiteQuery): Flow<List<BookEntity>>
 
     @Query("SELECT * FROM books")
-    fun getAll(): Flow<List<BookEntity>>
+    suspend fun getAll(): List<BookEntity>
+
+    @Query("SELECT * FROM books")
+    fun getAllAsFlow(): Flow<List<BookEntity>>
 
     @Query("SELECT * FROM books WHERE id = (:id)")
     fun getById(id: UUID): Flow<BookEntity?>
@@ -27,10 +31,13 @@ interface BookDao {
     fun getAuthors(): Flow<List<String>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(book: BookEntity)
+    suspend fun insert(book: BookEntity)
 
     @Update
     suspend fun update(book: BookEntity)
+
+    @Upsert
+    suspend fun upsertAll(books: List<BookEntity>)
 
     @Delete
     suspend fun remove(book: BookEntity)

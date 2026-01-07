@@ -60,7 +60,7 @@ class ReadingSessionListViewModel
                     ),
                 )
 
-                readingSessionRepository.insert(
+                readingSessionRepository.save(
                     readingSession.copy(
                         bookId = book.id,
                     ),

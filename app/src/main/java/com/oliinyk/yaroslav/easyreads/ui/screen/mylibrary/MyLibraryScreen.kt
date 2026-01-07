@@ -20,6 +20,7 @@ fun MyLibraryScreen(
     navToReadingGoal: () -> Unit,
     navToBookListByShelvesType: (String) -> Unit,
     navToBookList: () -> Unit,
+    navToSettings: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MyLibraryViewModel = hiltViewModel(),
 ) {
@@ -34,6 +35,12 @@ fun MyLibraryScreen(
                     if (!isTriggeredNavTo) {
                         isTriggeredNavTo = true
                         navToBookAdd()
+                    }
+                },
+                onSettingsClick = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navToSettings()
                     }
                 },
             )

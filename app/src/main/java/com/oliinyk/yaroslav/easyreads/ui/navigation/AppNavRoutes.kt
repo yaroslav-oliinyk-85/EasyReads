@@ -54,4 +54,8 @@ sealed class AppNavRoutes(
 
         fun createRoute(bookId: String): String = "ReadingSessionRecord/$bookId"
     }
+
+    object Settings : AppNavRoutes("Settings") {
+        fun createRoute(): String = route
+    }
 }

@@ -5,12 +5,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.oliinyk.yaroslav.easyreads.data.local.entety.NoteEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface NoteDao {
+    @Query("SELECT * FROM notes")
+    fun getAll(): List<NoteEntity>
+
     @Query("SELECT * FROM notes WHERE book_id = :bookId ORDER BY added_date DESC")
     fun getAllByBookId(bookId: UUID): Flow<List<NoteEntity>>
 
@@ -22,6 +26,9 @@ interface NoteDao {
 
     @Update
     suspend fun update(note: NoteEntity)
+
+    @Upsert
+    suspend fun upsertAll(notes: List<NoteEntity>)
 
     @Delete
     suspend fun delete(note: NoteEntity)

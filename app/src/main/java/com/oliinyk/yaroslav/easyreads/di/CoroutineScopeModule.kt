@@ -25,7 +25,7 @@ annotation class AppCoroutineScope
 
 @Module
 @InstallIn(SingletonComponent::class)
-class CoroutineScopeModule {
+object CoroutineScopeModule {
     @Provides
     @AppCoroutineScope
     @Singleton

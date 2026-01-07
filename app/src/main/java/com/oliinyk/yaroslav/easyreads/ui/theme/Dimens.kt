@@ -98,7 +98,7 @@ object Dimens {
     val readingSessionRecordBookAuthorMaxLines = 1
 
     val bookListItemShelveTextMaxLines = 2
-    val readingGoalFinishedBooksItemCellTextMaxLines = 4
+    val readingGoalFinishedBooksItemCellTextMaxLines = 5
 
     val descriptionMinLines = 5
 

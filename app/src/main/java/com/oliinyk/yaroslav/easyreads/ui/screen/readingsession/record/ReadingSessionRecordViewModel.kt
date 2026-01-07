@@ -117,7 +117,7 @@ class ReadingSessionRecordViewModel
         }
 
         fun addNote(note: Note) {
-            noteRepository.insert(note)
+            noteRepository.save(note)
         }
     }
 

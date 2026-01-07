@@ -17,4 +17,9 @@ object AppConstants {
     const val BOOK_ISBN_MAX_LENGTH = 13
 
     const val COPY_IMAGE_BUFFER_SIZE = 1024 * 8
+
+    const val DATABASE_VERSION = 12
+    const val MIME_TYPE_APPLICATION_ZIP = "application/zip"
+
+    const val BACKUP_FILE_NAME = "backup-data.json"
 }

@@ -5,11 +5,15 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface NoteRepository {
+    suspend fun getAll(): List<Note>
+
     fun getAllByBookId(bookId: UUID): Flow<List<Note>>
 
     fun getLastAddedByBookId(bookId: UUID): Flow<Note?>
 
-    fun insert(note: Note)
+    fun save(note: Note)
+
+    fun saveAll(notes: List<Note>)
 
     fun update(note: Note)
 

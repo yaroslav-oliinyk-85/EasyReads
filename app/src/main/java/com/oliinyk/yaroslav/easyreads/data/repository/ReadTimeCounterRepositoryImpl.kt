@@ -77,7 +77,7 @@ class ReadTimeCounterRepositoryImpl
                             bookId = bookId,
                             startPage = pageCurrent,
                         )
-                    readingSessionRepository.insert(_readingSession)
+                    readingSessionRepository.save(_readingSession)
                 } else {
                     updateReadingSession(readingSession)
                 }

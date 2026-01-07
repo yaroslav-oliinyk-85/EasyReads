@@ -1,11 +1,13 @@
 package com.oliinyk.yaroslav.easyreads.di
 
+import com.oliinyk.yaroslav.easyreads.data.repository.BackupRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.BookRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.NoteRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.PreferencesRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.ReadTimeCounterRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.ReadingGoalRepositoryImpl
 import com.oliinyk.yaroslav.easyreads.data.repository.ReadingSessionRepositoryImpl
+import com.oliinyk.yaroslav.easyreads.domain.repository.BackupRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.NoteRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.PreferencesRepository
@@ -37,4 +39,7 @@ abstract class RepositoriesModule {
 
     @Binds
     abstract fun bindReadTimeCounterRepository(impl: ReadTimeCounterRepositoryImpl): ReadTimeCounterRepository
+
+    @Binds
+    abstract fun bindBackupRepository(impl: BackupRepositoryImpl): BackupRepository
 }

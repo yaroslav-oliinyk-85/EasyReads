@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun AppConfirmDialog(
@@ -54,10 +55,12 @@ fun AppConfirmDialog(
 @Preview(showBackground = true)
 @Composable
 private fun AppConfirmDialogPreview() {
-    AppConfirmDialog(
-        title = "Remove Note Dialog",
-        message = "Note will be removed!",
-        onConfirm = {},
-        onDismiss = {},
-    )
+    EasyReadsTheme {
+        AppConfirmDialog(
+            title = "Remove Note Dialog",
+            message = "Note will be removed!",
+            onConfirm = {},
+            onDismiss = {},
+        )
+    }
 }

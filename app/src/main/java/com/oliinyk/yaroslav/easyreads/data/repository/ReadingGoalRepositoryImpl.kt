@@ -24,15 +24,26 @@ class ReadingGoalRepositoryImpl
         @AppCoroutineScope private val coroutineScope: CoroutineScope,
         @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     ) : ReadingGoalRepository {
+        override suspend fun getAll(): List<ReadingGoal> =
+            readingGoalDao
+                .getAll()
+                .map { entity -> entity.toModel() }
+
         override fun getByYear(year: Int): Flow<ReadingGoal?> =
             readingGoalDao
                 .getByYear(year)
                 .map { it?.toModel() }
                 .distinctUntilChanged()
 
-        override fun insert(readingGoal: ReadingGoal) {
+        override fun save(readingGoal: ReadingGoal) {
             coroutineScope.launch(ioDispatcher) {
                 readingGoalDao.insert(readingGoal.toEntity())
+            }
+        }
+
+        override fun saveAll(readingGoals: List<ReadingGoal>) {
+            coroutineScope.launch(ioDispatcher) {
+                readingGoalDao.upsertAll(readingGoals.map { it.toEntity() })
             }
         }
 

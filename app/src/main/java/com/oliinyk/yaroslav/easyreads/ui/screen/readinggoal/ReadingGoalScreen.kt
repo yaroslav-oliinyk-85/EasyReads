@@ -2,7 +2,6 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +16,6 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGo
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGoalContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGoalTopAppBar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReadingGoalScreen(
     navToBookDetails: (String) -> Unit,

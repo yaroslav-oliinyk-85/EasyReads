@@ -66,7 +66,12 @@ class BookRepositoryImpl
                 }
             }
 
-        override fun getAll(): Flow<List<Book>> = bookDao.getAll().map { entities -> entities.map { it.toModel() } }
+        override suspend fun getAll(): List<Book> = bookDao.getAll().map { entity -> entity.toModel() }
+
+        override fun getAllAsFlow(): Flow<List<Book>> =
+            bookDao
+                .getAllAsFlow()
+                .map { entities -> entities.map { it.toModel() } }
 
         override fun getById(id: UUID): Flow<Book?> =
             bookDao
@@ -78,7 +83,13 @@ class BookRepositoryImpl
 
         override fun save(book: Book) {
             coroutineScope.launch(ioDispatcher) {
-                bookDao.save(book.toEntity())
+                bookDao.insert(book.toEntity())
+            }
+        }
+
+        override fun saveAll(books: List<Book>) {
+            coroutineScope.launch(ioDispatcher) {
+                bookDao.upsertAll(books.map { it.toEntity() })
             }
         }
 

@@ -17,6 +17,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.ReadingSessionListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordScreen
+import com.oliinyk.yaroslav.easyreads.ui.screen.settings.SettingsScreen
 import java.util.UUID
 
 private const val TAG = "AppNavHost"
@@ -47,11 +48,14 @@ fun AppNavHost(navHostController: NavHostController) {
                 navToBookList = {
                     navHostController.navigate(route = AppNavRoutes.BookList.createRoute())
                 },
+                navToSettings = {
+                    navHostController.navigate(route = AppNavRoutes.Settings.createRoute())
+                },
             )
         }
 
         // ----- ReadingGoal Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.ReadingGoal.route,
         ) {
             ReadingGoalScreen(
@@ -62,7 +66,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookListShelf Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.BookListShelf.route,
         ) { backStackEntry ->
             val bookShelvesType = backStackEntry.arguments?.getString(AppNavRoutes.BookListShelf.ARGUMENT_KEY)
@@ -71,14 +75,14 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookList Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.BookList.route,
         ) {
             BookListRoute(navHostController)
         }
 
         // ----- BookDetails Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.BookDetails.route,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.BookDetails.ARGUMENT_KEY)
@@ -104,7 +108,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookAdd Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.BookAdd.route,
         ) {
             BookAddEditScreen(
@@ -115,7 +119,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- BookEdit Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.BookEdit.route,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.BookEdit.ARGUMENT_KEY)
@@ -129,7 +133,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- NoteList Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.NoteList.route,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
@@ -138,7 +142,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- ReadingSessionList Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.ReadingSessionList.route,
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionList.ARGUMENT_KEY)
@@ -147,7 +151,7 @@ fun AppNavHost(navHostController: NavHostController) {
         }
 
         // ----- ReadingSessionRecord Route -----
-        composableApp(
+        appComposable(
             route = AppNavRoutes.ReadingSessionRecord.route,
         ) { backStackEntry ->
             val bookIdString = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionRecord.ARGUMENT_KEY)
@@ -162,10 +166,17 @@ fun AppNavHost(navHostController: NavHostController) {
                 },
             )
         }
+
+        // ----- Settings Route -----
+        appComposable(
+            route = AppNavRoutes.Settings.route,
+        ) {
+            SettingsScreen()
+        }
     }
 }
 
-private fun NavGraphBuilder.composableApp(
+private fun NavGraphBuilder.appComposable(
     route: String,
     content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit,
 ) {

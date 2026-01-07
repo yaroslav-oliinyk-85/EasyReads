@@ -54,7 +54,7 @@ class NoteListViewModel
 
         fun add(note: Note) {
             stateUi.value.bookId?.let { bookId ->
-                noteRepository.insert(note.copy(bookId = bookId))
+                noteRepository.save(note.copy(bookId = bookId))
             }
         }
 

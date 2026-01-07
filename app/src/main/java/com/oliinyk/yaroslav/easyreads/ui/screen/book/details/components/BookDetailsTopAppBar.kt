@@ -59,7 +59,7 @@ fun BookDetailsTopAppBar(
                         menuExpanded = false
                         onEditBook()
                     },
-                    trailingIcon = {
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Edit,
                             contentDescription = stringResource(R.string.menu_item__edit_text),
@@ -79,7 +79,7 @@ fun BookDetailsTopAppBar(
                         menuExpanded = false
                         onRemoveBook()
                     },
-                    trailingIcon = {
+                    leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = stringResource(R.string.menu_item__remove_text),

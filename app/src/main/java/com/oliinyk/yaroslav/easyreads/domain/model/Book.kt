@@ -2,13 +2,18 @@ package com.oliinyk.yaroslav.easyreads.domain.model
 
 import android.os.Parcelable
 import com.oliinyk.yaroslav.easyreads.data.local.entety.BookEntity
+import com.oliinyk.yaroslav.easyreads.domain.serializer.UUIDSerializer
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.UUID
 
+@Serializable
 @Parcelize
 data class Book(
+    @Serializable(with = UUIDSerializer::class)
     override val id: UUID = UUID.randomUUID(),
     val title: String = "",
     val author: String = "",
@@ -17,8 +22,11 @@ data class Book(
     val shelf: BookShelvesType = BookShelvesType.WANT_TO_READ,
     val pageAmount: Int = 0,
     val pageCurrent: Int = 0,
+    @Contextual
     val addedAt: LocalDateTime = LocalDateTime.now(),
+    @Contextual
     val updatedAt: LocalDateTime = LocalDateTime.now(),
+    @Contextual
     val finishedAt: LocalDateTime? = null,
     val isFinished: Boolean = false,
     val coverImageFileName: String? = null,

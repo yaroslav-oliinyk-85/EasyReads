@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
-import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.COPY_IMAGE_BUFFER_SIZE
 import com.oliinyk.yaroslav.easyreads.domain.util.deleteBookCoverImage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,7 +40,7 @@ class BookAddEditViewModel
 
         init {
             viewModelScope.launch {
-                bookRepository.getAll().collectLatest { books ->
+                bookRepository.getAllAsFlow().collectLatest { books ->
                     _stateUi.update {
                         it.copy(
                             suggestionTitles = books.map { book -> book.title }.toList(),
@@ -130,7 +129,7 @@ class BookAddEditViewModel
             _stateUi.value.pickedImageName?.let {
                 deleteBookCoverImage(applicationContext, it)
             }
-            val pickedImageName = "BOOK_COVER_IMG_${UUID.randomUUID()}.JPG"
+            val pickedImageName = "IMG_${UUID.randomUUID()}.JPG"
             try {
                 copyImageToAppFolder(applicationContext, pickedImageUri, pickedImageName)
                 _stateUi.update {
@@ -149,11 +148,7 @@ class BookAddEditViewModel
             val destinationFile = File(applicationContext.filesDir, pickedImageName)
             applicationContext.contentResolver.openInputStream(pickedImageUri)?.use { inputStream ->
                 FileOutputStream(destinationFile).use { outputStream ->
-                    val buffer = ByteArray(COPY_IMAGE_BUFFER_SIZE)
-                    var length: Int
-                    while (inputStream.read(buffer).also { length = it } > 0) {
-                        outputStream.write(buffer, 0, length)
-                    }
+                    inputStream.copyTo(outputStream)
                 }
             }
         }
@@ -202,8 +197,4 @@ sealed interface BookAddEditEvent {
     data class DescriptionChanged(
         val value: String,
     ) : BookAddEditEvent
-
-//    object SaveClicked : BookAddEditEvent
-//    object BackClicked : BookAddEditEvent
-//    object CoverClicked : BookAddEditEvent
 }

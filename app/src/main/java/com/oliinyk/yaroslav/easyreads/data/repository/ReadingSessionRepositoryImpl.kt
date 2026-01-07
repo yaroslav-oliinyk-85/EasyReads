@@ -23,8 +23,13 @@ class ReadingSessionRepositoryImpl
     constructor(
         private val readingSessionDao: ReadingSessionDao,
         @AppCoroutineScope private val coroutineScope: CoroutineScope,
-        @DispatcherIO private val coroutineDispatcher: CoroutineDispatcher,
+        @DispatcherIO private val ioDispatcher: CoroutineDispatcher,
     ) : ReadingSessionRepository {
+        override suspend fun getAll(): List<ReadingSession> =
+            readingSessionDao.getAll().map {
+                it.toModel()
+            }
+
         override fun getAllByBookId(bookId: UUID): Flow<List<ReadingSession>> =
             readingSessionDao
                 .getAllByBookId(bookId)
@@ -46,26 +51,32 @@ class ReadingSessionRepositoryImpl
                     it?.toModel()
                 }.distinctUntilChanged()
 
-        override fun insert(readingSession: ReadingSession) {
-            coroutineScope.launch(coroutineDispatcher) {
+        override fun save(readingSession: ReadingSession) {
+            coroutineScope.launch(ioDispatcher) {
                 readingSessionDao.insert(readingSession.toEntity())
             }
         }
 
+        override fun saveAll(readingSessions: List<ReadingSession>) {
+            coroutineScope.launch(ioDispatcher) {
+                readingSessionDao.upsertAll(readingSessions.map { it.toEntity() })
+            }
+        }
+
         override fun update(readingSession: ReadingSession) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 readingSessionDao.update(readingSession.toEntity())
             }
         }
 
         override fun remove(readingSession: ReadingSession) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 readingSessionDao.delete(readingSession.toEntity())
             }
         }
 
         override fun remove(readingSessions: List<ReadingSession>) {
-            coroutineScope.launch(coroutineDispatcher) {
+            coroutineScope.launch(ioDispatcher) {
                 readingSessionDao.delete(
                     readingSessions.map { it.toEntity() },
                 )

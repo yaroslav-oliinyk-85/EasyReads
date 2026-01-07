@@ -41,27 +41,31 @@ fun ReadingGoalFinishedBooksItemCell(
                 .clickable { onBookClick(book) },
         contentAlignment = Alignment.Center,
     ) {
-        val context = LocalContext.current
-        book.coverImageFileName?.let { coverImageFileName ->
-            val file = File(context.filesDir, coverImageFileName)
-            AsyncImage(
-                modifier = Modifier.fillMaxSize(),
-                model =
-                    ImageRequest
-                        .Builder(context)
-                        .data(file)
-                        .crossfade(true)
-                        .build(),
-                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                contentScale = ContentScale.Crop,
-            )
-        } ?: Text(
+        Text(
             text = book.title,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyMedium,
             overflow = TextOverflow.Ellipsis,
             maxLines = Dimens.readingGoalFinishedBooksItemCellTextMaxLines,
             modifier = Modifier.padding(Dimens.paddingAllTiny),
         )
+
+        val context = LocalContext.current
+        book.coverImageFileName?.let { coverImageFileName ->
+            val file = File(context.filesDir, coverImageFileName)
+            if (file.isFile && file.exists()) {
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    model =
+                        ImageRequest
+                            .Builder(context)
+                            .data(file)
+                            .crossfade(true)
+                            .build(),
+                    contentDescription = stringResource(R.string.book_cover_image__content_description__text),
+                    contentScale = ContentScale.Crop,
+                )
+            }
+        }
     }
 }
 

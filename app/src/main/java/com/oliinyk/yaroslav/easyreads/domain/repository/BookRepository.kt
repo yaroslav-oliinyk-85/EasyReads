@@ -14,13 +14,17 @@ interface BookRepository {
         bookSorting: BookSorting,
     ): Flow<List<Book>>
 
-    fun getAll(): Flow<List<Book>>
+    suspend fun getAll(): List<Book>
+
+    fun getAllAsFlow(): Flow<List<Book>>
 
     fun getById(id: UUID): Flow<Book?>
 
     fun getAuthors(): Flow<List<String>>
 
     fun save(book: Book)
+
+    fun saveAll(books: List<Book>)
 
     fun update(book: Book)
 

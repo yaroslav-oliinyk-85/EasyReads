@@ -14,6 +14,7 @@ import com.oliinyk.yaroslav.easyreads.data.local.entety.BookEntity
 import com.oliinyk.yaroslav.easyreads.data.local.entety.NoteEntity
 import com.oliinyk.yaroslav.easyreads.data.local.entety.ReadingGoalEntity
 import com.oliinyk.yaroslav.easyreads.data.local.entety.ReadingSessionEntity
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
 
 @Database(
     entities = [
@@ -22,7 +23,7 @@ import com.oliinyk.yaroslav.easyreads.data.local.entety.ReadingSessionEntity
         ReadingSessionEntity::class,
         ReadingGoalEntity::class,
     ],
-    version = 12,
+    version = AppConstants.DATABASE_VERSION,
 )
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
