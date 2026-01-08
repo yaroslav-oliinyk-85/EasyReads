@@ -7,6 +7,8 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 ksp {
@@ -77,6 +79,8 @@ composeCompiler {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-crashlytics:20.0.3'
+
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"
 
     implementation 'androidx.core:core-ktx:1.17.0'
