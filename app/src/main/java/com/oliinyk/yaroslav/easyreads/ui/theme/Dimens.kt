@@ -9,6 +9,7 @@ object Dimens {
     // ----- dp -----
     val spacerHeightSmall = 8.dp
     val spacerHeightMedium = 16.dp
+    val spacerHeightExtraLarge = 64.dp
 
     val spacerWidthSmall = 8.dp
 
@@ -109,6 +110,8 @@ object Dimens {
     val gridCellsCount = 4
 
     val noteTextMinLines = 3
+
+    val bookDetailsTabTitleMaxLines = 1
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

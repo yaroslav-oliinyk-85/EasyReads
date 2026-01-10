@@ -43,12 +43,6 @@ sealed class AppNavRoutes(
         fun createRoute(bookId: String): String = "NoteList/$bookId"
     }
 
-    object ReadingSessionList : AppNavRoutes("ReadingSessionList/{bookId}") {
-        const val ARGUMENT_KEY = "bookId"
-
-        fun createRoute(bookId: String): String = "ReadingSessionList/$bookId"
-    }
-
     object ReadingSessionRecord : AppNavRoutes("ReadingSessionRecord/{bookId}") {
         const val ARGUMENT_KEY = "bookId"
 

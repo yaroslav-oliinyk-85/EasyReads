@@ -1,18 +1,17 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,36 +30,127 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
-import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
-import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
-import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
+import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.addeditdialog.ReadingSessionAddEditDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
+import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookDetailsReadingSessionsSection(
-    sessions: List<ReadingSession>,
-    isBookFinished: Boolean,
+    uiState: BookDetailsUiState,
+    isReading: Boolean,
     onStartReadingSession: () -> Unit,
-    onSeeAll: () -> Unit,
-    onEdit: (ReadingSession) -> Unit,
+    onEditClicked: (ReadingSession) -> Unit,
+    onRemoveClicked: (ReadingSession) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var editingReadingSession: ReadingSession? by rememberSaveable { mutableStateOf(null) }
+    var removeReadingSessionState: ReadingSession? by rememberSaveable { mutableStateOf(null) }
+
+    // ----- Layout -----
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        if (isReading) {
+            StartReadingSessionButton(onStartReadingSession)
+
+            Spacer(Modifier.height(Dimens.spacerHeightSmall))
+        }
+
+        ReadingStatisticInfoRow(uiState = uiState)
+
+        Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+        ReadingSessionList(
+            readingSessions = uiState.readingSessions,
+            onClickedEdit = {
+                editingReadingSession = it
+            },
+        )
+    }
+
+    // ----- Dialogs -----
+
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
+            isRemoveButtonEnabled = true,
             onSave = {
-                onEdit(it)
+                onEditClicked(it)
                 editingReadingSession = null
+            },
+            onRemove = {
+                editingReadingSession = null
+                removeReadingSessionState = it
             },
             onDismissRequest = { editingReadingSession = null },
         )
     }
 
-    Card(
+    removeReadingSessionState?.let { readingSession ->
+        AppConfirmDialog(
+            title =
+                stringResource(
+                    R.string.reading_session_list__confirmation_dialog__title_text,
+                ),
+            message =
+                stringResource(
+                    R.string.reading_session_list__confirmation_dialog__message_text,
+                    readingSession.startedAt.format(
+                        DateTimeFormatter.ofPattern(
+                            stringResource(R.string.date_and_time_format),
+                        ),
+                    ),
+                    readingSession.readPages,
+                    readingSession.startPage,
+                    readingSession.endPage,
+                ),
+            onConfirm = {
+                onRemoveClicked(readingSession)
+                removeReadingSessionState = null
+            },
+            onDismiss = { removeReadingSessionState = null },
+        )
+    }
+}
+
+@Composable
+private fun ReadingSessionList(
+    readingSessions: List<ReadingSession>,
+    onClickedEdit: (ReadingSession) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
         modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
+    ) {
+        readingSessions.forEach { readingSession ->
+            ReadingSessionListItem(
+                readingSession = readingSession,
+                onClickedEdit = onClickedEdit,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ReadingSessionListItem(
+    readingSession: ReadingSession,
+    onClickedEdit: (ReadingSession) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable {
+                    onClickedEdit(readingSession)
+                },
         shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
     ) {
         Column(
@@ -68,63 +158,51 @@ fun BookDetailsReadingSessionsSection(
                 Modifier
                     .fillMaxWidth()
                     .padding(Dimens.paddingAllSmall),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
         ) {
-            if (sessions.isEmpty()) {
+            Row {
+                // --- read date ---
                 Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = stringResource(R.string.book_details__label__no_reading_sessions_text),
-                    style = MaterialTheme.typography.bodyMedium,
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__date_text,
+                            readingSession.startedAt.format(
+                                DateTimeFormatter.ofPattern(
+                                    stringResource(R.string.date_and_time_format),
+                                ),
+                            ),
+                        ),
+                    style = MaterialTheme.typography.labelLarge,
                 )
-            } else {
-                ShowLatestReadingSessionInfoRow(
-                    latestReadingSession = sessions.first(),
-                    onClickEditReadingSession = { latestReadingSession ->
-                        editingReadingSession = latestReadingSession
-                    },
+                // --- read pages ---
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text =
+                        stringResource(
+                            R.string.reading_session_list_item__label__read_pages_text,
+                            readingSession.readPages,
+                        ),
+                    style = MaterialTheme.typography.labelLarge,
+                    textAlign = TextAlign.End,
                 )
             }
-
-            if (!isBookFinished) {
-                AppDivider(modifier = Modifier.padding(vertical = Dimens.paddingVerticalSmall))
-
-                StartReadingSessionButton(onStartReadingSession)
-            }
-
-            AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
-
-            SeeAllReadingSessionButton(
-                quantity = sessions.size,
-                onSeeAll = onSeeAll,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
-    }
-}
-
-@Composable
-private fun ShowLatestReadingSessionInfoRow(
-    latestReadingSession: ReadingSession,
-    onClickEditReadingSession: (ReadingSession) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier.weight(1f),
-        ) {
-            // --- reading summery row ---
             Row {
                 // --- read time ---
                 Text(
                     text =
-                        stringResource(
-                            R.string.reading_session_list_item__label__read_time_text,
-                            latestReadingSession.readHours,
-                            latestReadingSession.readMinutes,
-                        ),
-                    style = MaterialTheme.typography.bodyMedium,
+                        if (readingSession.readHours > 0) {
+                            stringResource(
+                                R.string.reading_session_list_item__label__read_time_hour_minutes_text,
+                                readingSession.readHours,
+                                readingSession.readMinutes,
+                            )
+                        } else {
+                            stringResource(
+                                R.string.reading_session_list_item__label__read_time_minutes_text,
+                                readingSession.readMinutes,
+                            )
+                        },
+                    style = MaterialTheme.typography.bodySmall,
                 )
                 // --- read pages hour ---
                 Text(
@@ -132,61 +210,58 @@ private fun ShowLatestReadingSessionInfoRow(
                     text =
                         stringResource(
                             R.string.book_details__label__book_read_pages_hour_text,
-                            latestReadingSession.readPagesHour,
-                        ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                )
-                // --- read pages ---
-                Text(
-                    text =
-                        stringResource(
-                            R.string.reading_session_list_item__label__read_pages_text,
-                            latestReadingSession.readPages,
-                        ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Right,
-                )
-            }
-
-            // --- secondary row (date + page range) ---
-            Row(
-                modifier = Modifier.padding(top = Dimens.paddingTopTiny),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                // --- started date + time ---
-                Text(
-                    text =
-                        stringResource(
-                            R.string.reading_session_list_item__label__date_text,
-                            latestReadingSession.startedAt.format(
-                                DateTimeFormatter.ofPattern(
-                                    stringResource(R.string.date_and_time_format),
-                                ),
-                            ),
+                            readingSession.readPagesHour,
                         ),
                     style = MaterialTheme.typography.bodySmall,
-                )
-                Spacer(Modifier.weight(1f))
-                // --- start/end page ---
-                Text(
-                    text =
-                        stringResource(
-                            R.string.reading_session_list_item__label__read_end_page_text,
-                            latestReadingSession.startPage,
-                            latestReadingSession.endPage,
-                        ),
-                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.End,
                 )
             }
         }
-        Spacer(Modifier.width(Dimens.spacerWidthSmall))
-        // --- edit reading session button ---
-        AppIconButton(
-            imageVector = Icons.Default.Edit,
-            contentDescription = stringResource(R.string.menu_item__edit_text),
-            onClick = { onClickEditReadingSession(latestReadingSession) },
-        )
+    }
+}
+
+@Composable
+private fun ReadingStatisticInfoRow(
+    uiState: BookDetailsUiState,
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
+    ) {
+        Row(
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .padding(Dimens.paddingAllSmall),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            // --- Total Read Time ---
+            Text(
+                modifier = Modifier.weight(1f),
+                text =
+                    stringResource(
+                        R.string.book_details__label__book_total_read_time_text,
+                        uiState.readHours,
+                        uiState.readMinutes,
+                    ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            // --- Average Read Time Per Hour ---
+            Text(
+                modifier = Modifier.weight(1f),
+                text =
+                    stringResource(
+                        R.string.book_details__label__book_read_average_pages_hour_text,
+                        uiState.readPagesHour,
+                    ),
+                textAlign = TextAlign.End,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
 
@@ -195,56 +270,21 @@ private fun StartReadingSessionButton(
     onStartReadingSession: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        IconButton(
-            onClick = onStartReadingSession,
-            modifier =
-                Modifier
-                    .size(Dimens.startReadingSessionButtonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.background,
-                        shape = CircleShape,
-                    ),
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_button_record_start),
-                contentDescription = stringResource(R.string.book_details__label__start_reading_session_text),
-                modifier = Modifier.size(Dimens.startReadingSessionIconSize),
-                tint = MaterialTheme.colorScheme.primary,
-            )
-        }
-        Text(
-            text = stringResource(R.string.book_details__label__start_reading_session_text),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = Dimens.paddingTopSmall),
-            textAlign = TextAlign.Center,
-        )
-    }
-}
-
-@Composable
-private fun SeeAllReadingSessionButton(
-    quantity: Int,
-    onSeeAll: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    AppTextButton(
-        onClick = onSeeAll,
-        modifier = modifier,
-    ) {
-        Text(
-            text =
-                stringResource(
-                    R.string.book_details__button__see_all_reading_sessions_text,
-                    quantity,
+    IconButton(
+        onClick = onStartReadingSession,
+        modifier =
+            modifier
+                .size(Dimens.startReadingSessionButtonSize)
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape,
                 ),
-            style = MaterialTheme.typography.bodyLarge,
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_button_record_start),
+            contentDescription = stringResource(R.string.book_details__label__start_reading_session_text),
+            modifier = Modifier.size(Dimens.startReadingSessionIconSize),
+            tint = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }
@@ -252,47 +292,74 @@ private fun SeeAllReadingSessionButton(
 @Preview(showBackground = true)
 @Composable
 private fun BookDetailsReadingSessionsSectionReadingPreview() {
-    BookDetailsReadingSessionsSection(
-        sessions = listOf(ReadingSession()),
-        isBookFinished = false,
-        onStartReadingSession = {},
-        onSeeAll = {},
-        onEdit = {},
-    )
+    EasyReadsTheme {
+        Column {
+            BookDetailsReadingSessionsSection(
+                uiState =
+                    BookDetailsUiState(
+                        readingSessions = listOf(ReadingSession(), ReadingSession(), ReadingSession()),
+                    ),
+                isReading = true,
+                onStartReadingSession = {},
+                onEditClicked = {},
+                onRemoveClicked = {},
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun BookDetailsReadingSessionsSectionReadingEmptyPreview() {
-    BookDetailsReadingSessionsSection(
-        sessions = emptyList(),
-        isBookFinished = false,
-        onStartReadingSession = {},
-        onSeeAll = {},
-        onEdit = {},
-    )
+    EasyReadsTheme {
+        Column {
+            BookDetailsReadingSessionsSection(
+                uiState = BookDetailsUiState(),
+                isReading = true,
+                onStartReadingSession = {},
+                onEditClicked = {},
+                onRemoveClicked = {},
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun BookDetailsReadingSessionsSectionFinishedPreview() {
-    BookDetailsReadingSessionsSection(
-        sessions = listOf(ReadingSession()),
-        isBookFinished = true,
-        onStartReadingSession = {},
-        onSeeAll = {},
-        onEdit = {},
-    )
+    EasyReadsTheme {
+        Column {
+            BookDetailsReadingSessionsSection(
+                uiState =
+                    BookDetailsUiState(
+                        readingSessions =
+                            listOf(
+                                ReadingSession(readTimeInMilliseconds = 3000000),
+                                ReadingSession(readTimeInMilliseconds = 3600000),
+                                ReadingSession(readTimeInMilliseconds = 4800000),
+                            ),
+                    ),
+                isReading = false,
+                onStartReadingSession = {},
+                onEditClicked = {},
+                onRemoveClicked = {},
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun BookDetailsReadingSessionsSectionFinishedEmptyPreview() {
-    BookDetailsReadingSessionsSection(
-        sessions = emptyList(),
-        isBookFinished = true,
-        onStartReadingSession = {},
-        onSeeAll = {},
-        onEdit = {},
-    )
+    EasyReadsTheme {
+        Column {
+            BookDetailsReadingSessionsSection(
+                uiState = BookDetailsUiState(),
+                isReading = false,
+                onStartReadingSession = {},
+                onEditClicked = {},
+                onRemoveClicked = {},
+            )
+        }
+    }
 }

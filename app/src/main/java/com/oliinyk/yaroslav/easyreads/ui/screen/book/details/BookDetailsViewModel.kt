@@ -105,6 +105,17 @@ class BookDetailsViewModel
             readingSessionRepository.update(readingSession)
         }
 
+        fun removeReadingSession(readingSession: ReadingSession) {
+            uiState.value.book.also { book ->
+                if (book.pageCurrent == readingSession.endPage) {
+                    bookRepository.update(
+                        book.copy(pageCurrent = readingSession.startPage),
+                    )
+                }
+            }
+            readingSessionRepository.remove(readingSession)
+        }
+
         fun handleEvent(event: BookDetailsEvent) {
             when (event) {
                 is BookDetailsEvent.EditReadingSession -> {
@@ -113,6 +124,9 @@ class BookDetailsViewModel
                     } else {
                         updateReadingSession(event.readingSession)
                     }
+                }
+                is BookDetailsEvent.RemoveReadingSession -> {
+                    removeReadingSession(event.readingSession)
                 }
                 is BookDetailsEvent.AddNote -> {
                     addNote(event.note.copy(bookId = uiState.value.book.id))
@@ -195,6 +209,10 @@ sealed interface BookDetailsEvent {
     ) : BookDetailsEvent
 
     data class EditReadingSession(
+        val readingSession: ReadingSession,
+    ) : BookDetailsEvent
+
+    data class RemoveReadingSession(
         val readingSession: ReadingSession,
     ) : BookDetailsEvent
 }

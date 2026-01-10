@@ -15,7 +15,6 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.book.list.BookListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.MyLibraryScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.NoteListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalScreen
-import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.list.ReadingSessionListScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record.ReadingSessionRecordScreen
 import com.oliinyk.yaroslav.easyreads.ui.screen.settings.SettingsScreen
 import java.util.UUID
@@ -98,9 +97,6 @@ fun AppNavHost(navHostController: NavHostController) {
                 navToReadingSessionRecord = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.ReadingSessionRecord.createRoute(bookId))
                 },
-                navToReadingSessionList = { bookId ->
-                    navHostController.navigate(route = AppNavRoutes.ReadingSessionList.createRoute(bookId))
-                },
                 navToNoteList = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.NoteList.createRoute(bookId))
                 },
@@ -139,15 +135,6 @@ fun AppNavHost(navHostController: NavHostController) {
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
 
             NoteListScreen(bookId)
-        }
-
-        // ----- ReadingSessionList Route -----
-        appComposable(
-            route = AppNavRoutes.ReadingSessionList.route,
-        ) { backStackEntry ->
-            val bookId = backStackEntry.arguments?.getString(AppNavRoutes.ReadingSessionList.ARGUMENT_KEY)
-
-            ReadingSessionListScreen(bookId)
         }
 
         // ----- ReadingSessionRecord Route -----

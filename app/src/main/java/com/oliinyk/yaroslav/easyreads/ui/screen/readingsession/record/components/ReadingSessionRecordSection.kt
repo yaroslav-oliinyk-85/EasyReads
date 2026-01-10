@@ -81,7 +81,7 @@ fun ReadingSessionRecordSection(
                     Modifier
                         .size(Dimens.startReadingSessionButtonSize)
                         .background(
-                            color = MaterialTheme.colorScheme.background,
+                            color = MaterialTheme.colorScheme.primary,
                             shape = CircleShape,
                         ),
             ) {
@@ -99,7 +99,7 @@ fun ReadingSessionRecordSection(
                             stringResource(R.string.reading_session_record__label__record_status_paused_text)
                         },
                     modifier = Modifier.size(Dimens.startReadingSessionIconSize),
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,6 +47,8 @@ fun ReadingSessionAddEditDialog(
     readingSession: ReadingSession,
     onSave: (ReadingSession) -> Unit,
     onDismissRequest: () -> Unit,
+    isRemoveButtonEnabled: Boolean = false,
+    onRemove: (ReadingSession) -> Unit = { },
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -267,6 +270,29 @@ fun ReadingSessionAddEditDialog(
                     )
                 }
 
+                if (isRemoveButtonEnabled) {
+                    Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+                    // --- Buttons Remove ---
+                    AppButton(
+                        onClick = { onRemove(readingSession) },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors =
+                            ButtonDefaults.textButtonColors().copy(
+                                containerColor = MaterialTheme.colorScheme.error,
+                                contentColor = MaterialTheme.colorScheme.onError,
+                            ),
+                    ) {
+                        Text(
+                            text =
+                                stringResource(
+                                    R.string.dialog__button__remove_text,
+                                ),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+
                 Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
                 // --- Buttons Cancel ---
@@ -306,6 +332,19 @@ private fun ReadingSessionAddEditDialogPreview() {
     EasyReadsTheme {
         ReadingSessionAddEditDialog(
             readingSession = ReadingSession(startPage = 25),
+            onSave = { },
+            onDismissRequest = { },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ReadingSessionAddEditDialogWithRemoveButtonPreview() {
+    EasyReadsTheme {
+        ReadingSessionAddEditDialog(
+            readingSession = ReadingSession(startPage = 25),
+            isRemoveButtonEnabled = true,
             onSave = { },
             onDismissRequest = { },
         )

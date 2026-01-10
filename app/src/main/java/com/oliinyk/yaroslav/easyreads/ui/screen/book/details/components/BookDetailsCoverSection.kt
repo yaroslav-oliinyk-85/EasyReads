@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -41,7 +40,6 @@ import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.components.ReadingProgressIndicator
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.io.File
@@ -52,7 +50,6 @@ import java.time.format.DateTimeFormatter
 fun BookDetailsCoverSection(
     book: Book,
     progressPercentage: Int,
-    uiState: BookDetailsUiState,
     onClickShelf: (BookShelvesType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -77,10 +74,6 @@ fun BookDetailsCoverSection(
             AuthorText(author = book.author)
 
             AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalSmall))
-
-            ReadingStatisticInfoRow(uiState = uiState)
-
-            Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
             DateAndProgressRow(
                 book = book,
@@ -184,46 +177,6 @@ private fun AuthorText(
             modifier
                 .fillMaxWidth(),
     )
-}
-
-@Composable
-private fun ReadingStatisticInfoRow(
-    uiState: BookDetailsUiState,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // --- Total Read Time ---
-        Text(
-            modifier = Modifier.weight(1f),
-            text =
-                stringResource(
-                    R.string.book_details__label__book_total_read_time_text,
-                    uiState.readHours,
-                    uiState.readMinutes,
-                ),
-            style = MaterialTheme.typography.bodyMedium,
-        )
-        // --- Average Read Time Per Hour ---
-        Text(
-            text =
-                stringResource(
-                    R.string.book_details__label__book_read_average_pages_hour_text,
-                    uiState.readPagesHour,
-                ),
-            textAlign = TextAlign.End,
-            style = MaterialTheme.typography.bodyMedium,
-            modifier =
-                Modifier
-                    .weight(1f)
-                    .padding(
-                        end = Dimens.bookListItemPercentageSize + Dimens.spacerWidthSmall,
-                    ),
-        )
-    }
 }
 
 @Composable
@@ -416,7 +369,6 @@ private fun BookDetailsCoverSectionFinishedPreview() {
                 finishedAt = LocalDateTime.now(),
             ),
             progressPercentage = 50,
-            uiState = BookDetailsUiState(),
             onClickShelf = { },
         )
     }
@@ -435,7 +387,6 @@ private fun BookDetailsCoverSectionReadingPreview() {
                 shelf = BookShelvesType.READING,
             ),
             progressPercentage = 50,
-            uiState = BookDetailsUiState(),
             onClickShelf = { },
         )
     }
@@ -454,7 +405,6 @@ private fun BookDetailsCoverSectionWantToReadPreview() {
                 shelf = BookShelvesType.WANT_TO_READ,
             ),
             progressPercentage = 50,
-            uiState = BookDetailsUiState(),
             onClickShelf = { },
         )
     }

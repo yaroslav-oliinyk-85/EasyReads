@@ -35,6 +35,7 @@
     <string name="dialog__button__ok_text">OK</string>
     <string name="dialog__button__save_text">Save</string>
     <string name="dialog__button__cancel_text">Cancel</string>
+    <string name="dialog__button__remove_text">Remove</string>
 
     <!-- Confirmation Dialog -->
     <string name="confirmation_dialog__button__ok_text">Ok</string>
@@ -94,9 +95,11 @@
     <string name="book_details__label__shelf_reading_text">LAST READ DATE\n%s</string>
     <string name="book_details__label__shelf_finished_text">FINISHED DATE\n%s</string>
 
-    <string name="book_details__label__no_reading_sessions_text">No Reading Sessions</string>
+    <string name="book_details__tab__sessions_title_text">SESSIONS %d</string>
+    <string name="book_details__tab__notes_title_text">NOTES %d</string>
+    <string name="book_details__tab__about_title_text">ABOUT</string>
+
     <string name="book_details__label__start_reading_session_text">Start Reading Session</string>
-    <string name="book_details__button__see_all_reading_sessions_text">See All Reading Sessions %d</string>
 
     <string name="book_details__confirmation_dialog__title_book_remove_text">Remove Book</string>
     <string name="book_details__confirmation_dialog__message_book_remove_text">Book will be removed!</string>
@@ -181,7 +184,7 @@
     <string name="reading_session_list__confirmation_dialog__title_text">Remove Reading Session</string>
     <string name="reading_session_list__confirmation_dialog__message_text">Date: %1$s\nRead pages: %2$d\nPages read from: %3$d to %4$d</string>
     <!-- Reading Session List Item -->
-    <string name="reading_session_list_item__label__date_text">%s</string>
+    <string name="reading_session_list_item__label__date_text">READ DATE\n%s</string>
     <string name="reading_session_list_item__label__read_time_text">READ TIME\n%1$02d:%2$02d</string>
     <string name="reading_session_list_item__label__read_end_page_text">From %1$d To %2$d Page</string>
     <string name="reading_session_list_item__label__read_pages_hour_text">PAGES/HOUR\n%d</string>

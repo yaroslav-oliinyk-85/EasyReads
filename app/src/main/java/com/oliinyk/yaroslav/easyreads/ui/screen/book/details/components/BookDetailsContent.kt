@@ -3,14 +3,26 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.book.details.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsEvent
@@ -24,7 +36,6 @@ fun BookDetailsContent(
     uiState: BookDetailsUiState,
     onEvent: (BookDetailsEvent) -> Unit,
     navToReadingSessionRecord: (String) -> Unit,
-    navToReadingSessionList: (String) -> Unit,
     navToNoteList: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -39,28 +50,79 @@ fun BookDetailsContent(
     ) {
         BookDetailsCoverSection(
             book = uiState.book,
-            uiState = uiState,
             progressPercentage = uiState.percentage,
             onClickShelf = { shelf ->
                 onEvent(BookDetailsEvent.ShelfChanged(shelf))
             },
         )
-        BookDetailsReadingSessionsSection(
-            sessions = uiState.readingSessions,
-            isBookFinished = uiState.book.isFinished,
-            onStartReadingSession = { navToReadingSessionRecord(uiState.book.id.toString()) },
-            onSeeAll = { navToReadingSessionList(uiState.book.id.toString()) },
-            onEdit = { onEvent(BookDetailsEvent.EditReadingSession(it)) },
-        )
-        BookDetailsNotesSection(
-            notes = uiState.notes,
-            onSeeAllNotes = { navToNoteList(uiState.book.id.toString()) },
-            onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
-            onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) },
-        )
-        BookDetailsIsbnSection(isbn = uiState.book.isbn)
-        BookDetailsDescriptionSection(uiState.book.description)
+
+        var selectedTab by rememberSaveable { mutableStateOf(BookDetailTabs.SESSIONS) }
+
+        PrimaryTabRow(selectedTabIndex = selectedTab.ordinal) {
+            BookDetailTabs.entries.forEachIndexed { index, bookDetailTab ->
+                Tab(
+                    selected = selectedTab.ordinal == index,
+                    onClick = { selectedTab = BookDetailTabs.entries[index] },
+                    text = {
+                        Text(
+                            text =
+                                when (bookDetailTab) {
+                                    BookDetailTabs.SESSIONS -> {
+                                        stringResource(
+                                            R.string.book_details__tab__sessions_title_text,
+                                            uiState.readingSessions.size,
+                                        )
+                                    }
+                                    BookDetailTabs.NOTES -> {
+                                        stringResource(
+                                            R.string.book_details__tab__notes_title_text,
+                                            uiState.notes.size,
+                                        )
+                                    }
+                                    BookDetailTabs.ABOUT -> {
+                                        stringResource(R.string.book_details__tab__about_title_text)
+                                    }
+                                },
+                            maxLines = Dimens.bookDetailsTabTitleMaxLines,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    },
+                )
+            }
+        }
+
+        when (selectedTab) {
+            BookDetailTabs.SESSIONS -> {
+                BookDetailsReadingSessionsSection(
+                    uiState = uiState,
+                    isReading = uiState.book.shelf == BookShelvesType.READING,
+                    onStartReadingSession = { navToReadingSessionRecord(uiState.book.id.toString()) },
+                    onEditClicked = { onEvent(BookDetailsEvent.EditReadingSession(it)) },
+                    onRemoveClicked = { onEvent(BookDetailsEvent.RemoveReadingSession(it)) },
+                )
+            }
+            BookDetailTabs.NOTES -> {
+                BookDetailsNotesSection(
+                    notes = uiState.notes,
+                    onSeeAllNotes = { navToNoteList(uiState.book.id.toString()) },
+                    onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
+                    onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) },
+                )
+            }
+            BookDetailTabs.ABOUT -> {
+                BookDetailsIsbnSection(isbn = uiState.book.isbn)
+                BookDetailsDescriptionSection(uiState.book.description)
+            }
+        }
+
+        Spacer(Modifier.height(Dimens.spacerHeightExtraLarge))
     }
+}
+
+private enum class BookDetailTabs {
+    SESSIONS,
+    NOTES,
+    ABOUT,
 }
 
 @Preview(showBackground = true)
@@ -83,7 +145,6 @@ private fun BookDetailsContentFinishedPreview() {
                 ),
             onEvent = {},
             navToNoteList = {},
-            navToReadingSessionList = {},
             navToReadingSessionRecord = {},
         )
     }
@@ -108,7 +169,6 @@ private fun BookDetailsContentReadingPreview() {
                 ),
             onEvent = {},
             navToNoteList = {},
-            navToReadingSessionList = {},
             navToReadingSessionRecord = {},
         )
     }
@@ -133,7 +193,6 @@ private fun BookDetailsContentWantToReadPreview() {
                 ),
             onEvent = {},
             navToNoteList = {},
-            navToReadingSessionList = {},
             navToReadingSessionRecord = {},
         )
     }
