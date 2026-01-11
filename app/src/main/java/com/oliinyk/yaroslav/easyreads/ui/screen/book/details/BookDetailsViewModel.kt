@@ -70,19 +70,9 @@ class BookDetailsViewModel
         }
 
         fun removeCurrentBook() {
-            bookRepository.remove(uiState.value.book)
             noteRepository.remove(uiState.value.notes)
             readingSessionRepository.remove(uiState.value.readingSessions)
-        }
-
-        fun addNote(note: Note) {
-            noteRepository.save(
-                note.copy(bookId = uiState.value.book.id),
-            )
-        }
-
-        fun updateNote(note: Note) {
-            noteRepository.update(note)
+            bookRepository.remove(uiState.value.book)
         }
 
         fun addReadingSession(readingSession: ReadingSession) {
@@ -106,19 +96,18 @@ class BookDetailsViewModel
         }
 
         fun removeReadingSession(readingSession: ReadingSession) {
-            uiState.value.book.also { book ->
-                if (book.pageCurrent == readingSession.endPage) {
-                    bookRepository.update(
-                        book.copy(pageCurrent = readingSession.startPage),
-                    )
-                }
+            if (readingSession == uiState.value.readingSessions.first()) {
+                bookRepository.update(
+                    uiState.value.book.copy(pageCurrent = readingSession.startPage),
+                )
             }
+
             readingSessionRepository.remove(readingSession)
         }
 
         fun handleEvent(event: BookDetailsEvent) {
             when (event) {
-                is BookDetailsEvent.EditReadingSession -> {
+                is BookDetailsEvent.UpdateReadingSession -> {
                     if (event.readingSession.bookId == null) {
                         addReadingSession(event.readingSession)
                     } else {
@@ -129,10 +118,17 @@ class BookDetailsViewModel
                     removeReadingSession(event.readingSession)
                 }
                 is BookDetailsEvent.AddNote -> {
-                    addNote(event.note.copy(bookId = uiState.value.book.id))
+                    noteRepository.save(
+                        event.note.copy(bookId = uiState.value.book.id),
+                    )
                 }
-                is BookDetailsEvent.EditNote -> {
-                    updateNote(event.note)
+                is BookDetailsEvent.UpdateNote -> {
+                    noteRepository.update(event.note)
+                }
+                is BookDetailsEvent.RemoveNote -> {
+                    event.note.bookId?.run {
+                        noteRepository.remove(event.note)
+                    }
                 }
                 is BookDetailsEvent.ShelfChanged -> {
                     if (_uiState.value.book.shelf != event.shelf) {
@@ -204,11 +200,15 @@ sealed interface BookDetailsEvent {
         val note: Note,
     ) : BookDetailsEvent
 
-    data class EditNote(
+    data class UpdateNote(
         val note: Note,
     ) : BookDetailsEvent
 
-    data class EditReadingSession(
+    data class RemoveNote(
+        val note: Note,
+    ) : BookDetailsEvent
+
+    data class UpdateReadingSession(
         val readingSession: ReadingSession,
     ) : BookDetailsEvent
 

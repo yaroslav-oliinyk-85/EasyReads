@@ -36,7 +36,6 @@ fun BookDetailsContent(
     uiState: BookDetailsUiState,
     onEvent: (BookDetailsEvent) -> Unit,
     navToReadingSessionRecord: (String) -> Unit,
-    navToNoteList: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -97,16 +96,16 @@ fun BookDetailsContent(
                     uiState = uiState,
                     isReading = uiState.book.shelf == BookShelvesType.READING,
                     onStartReadingSession = { navToReadingSessionRecord(uiState.book.id.toString()) },
-                    onEditClicked = { onEvent(BookDetailsEvent.EditReadingSession(it)) },
+                    onEditClicked = { onEvent(BookDetailsEvent.UpdateReadingSession(it)) },
                     onRemoveClicked = { onEvent(BookDetailsEvent.RemoveReadingSession(it)) },
                 )
             }
             BookDetailTabs.NOTES -> {
                 BookDetailsNotesSection(
                     notes = uiState.notes,
-                    onSeeAllNotes = { navToNoteList(uiState.book.id.toString()) },
                     onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
-                    onEditNote = { onEvent(BookDetailsEvent.EditNote(it)) },
+                    onEditNote = { onEvent(BookDetailsEvent.UpdateNote(it)) },
+                    onRemoveNote = { onEvent(BookDetailsEvent.RemoveNote(it)) },
                 )
             }
             BookDetailTabs.ABOUT -> {
@@ -144,7 +143,6 @@ private fun BookDetailsContentFinishedPreview() {
                         ),
                 ),
             onEvent = {},
-            navToNoteList = {},
             navToReadingSessionRecord = {},
         )
     }
@@ -168,7 +166,6 @@ private fun BookDetailsContentReadingPreview() {
                         ),
                 ),
             onEvent = {},
-            navToNoteList = {},
             navToReadingSessionRecord = {},
         )
     }
@@ -192,7 +189,6 @@ private fun BookDetailsContentWantToReadPreview() {
                         ),
                 ),
             onEvent = {},
-            navToNoteList = {},
             navToReadingSessionRecord = {},
         )
     }

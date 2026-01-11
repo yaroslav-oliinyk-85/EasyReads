@@ -25,7 +25,6 @@ fun BookDetailsScreen(
     navBack: () -> Unit,
     navToBookEdit: (String) -> Unit,
     navToReadingSessionRecord: (String) -> Unit,
-    navToNoteList: (String) -> Unit,
     viewModel: BookDetailsViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -70,12 +69,6 @@ fun BookDetailsScreen(
                 if (!isTriggeredNavTo) {
                     isTriggeredNavTo = true
                     navToReadingSessionRecord(it)
-                }
-            },
-            navToNoteList = {
-                if (!isTriggeredNavTo) {
-                    isTriggeredNavTo = true
-                    navToNoteList(it)
                 }
             },
             onEvent = { viewModel.handleEvent(it) },

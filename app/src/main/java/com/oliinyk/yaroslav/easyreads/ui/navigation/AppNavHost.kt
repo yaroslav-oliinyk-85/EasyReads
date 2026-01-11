@@ -97,9 +97,6 @@ fun AppNavHost(navHostController: NavHostController) {
                 navToReadingSessionRecord = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.ReadingSessionRecord.createRoute(bookId))
                 },
-                navToNoteList = { bookId ->
-                    navHostController.navigate(route = AppNavRoutes.NoteList.createRoute(bookId))
-                },
             )
         }
 
