@@ -83,7 +83,7 @@
     <string name="book_details__tools__book_read_time_text">READ TIME\n01:35</string>
     <string name="book_details__label__book_read_average_pages_hour_text">Av. PAGES/HOUR\n%d</string>
     <string name="book_details__tools__book_read_average_pages_hour_text">Av. PAGES/HOUR\n18</string>
-    <string name="book_details__label__book_read_pages_hour_text">PAGES/HOUR\n%d</string>
+    <string name="book_details__label__book_read_pages_hour_text">%d pages/hour</string>
     <string name="book_details__tools__progress_percentage_text">100%</string>
     <string name="book_details__tools__see_all_notes_text">See All Notes (0)</string>
     <string name="book_details__label__shelf_text">SHELF\n%s</string>
@@ -184,11 +184,12 @@
     <string name="reading_session_list__confirmation_dialog__title_text">Remove Reading Session</string>
     <string name="reading_session_list__confirmation_dialog__message_text">Date: %1$s\nRead pages: %2$d\nPages read from: %3$d to %4$d</string>
     <!-- Reading Session List Item -->
-    <string name="reading_session_list_item__label__date_text">READ DATE\n%s</string>
-    <string name="reading_session_list_item__label__read_time_text">READ TIME\n%1$02d:%2$02d</string>
+    <string name="reading_session_list_item__label__date_text">%s</string>
+    <string name="reading_session_list_item__label__read_time_hour_minutes_text">%1$02d hour %2$02d minutes</string>
+    <string name="reading_session_list_item__label__read_time_minutes_text">%1$02d minutes</string>
     <string name="reading_session_list_item__label__read_end_page_text">From %1$d To %2$d Page</string>
     <string name="reading_session_list_item__label__read_pages_hour_text">PAGES/HOUR\n%d</string>
-    <string name="reading_session_list_item__label__read_pages_text">READ PAGES\n%d</string>
+    <string name="reading_session_list_item__label__read_pages_text">%d read pages</string>
     <string name="reading_session_list__toolbar__title_text">Reading Sessions %d</string>
 
     <!-- Read Time Counter Notification -->

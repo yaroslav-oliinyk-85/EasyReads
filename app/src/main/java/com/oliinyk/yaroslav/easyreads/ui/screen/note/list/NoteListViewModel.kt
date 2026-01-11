@@ -63,7 +63,9 @@ class NoteListViewModel
         }
 
         fun remove(note: Note) {
-            noteRepository.remove(note)
+            note.bookId?.run {
+                noteRepository.remove(note)
+            }
         }
 
         fun openAddDialog() {

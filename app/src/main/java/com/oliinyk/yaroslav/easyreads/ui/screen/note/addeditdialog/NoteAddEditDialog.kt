@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +40,8 @@ fun NoteAddEditDialog(
     note: Note,
     onSave: (Note) -> Unit,
     onDismissRequest: () -> Unit,
+    isRemoveButtonEnabled: Boolean = false,
+    onRemove: (Note) -> Unit = {},
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -125,6 +128,26 @@ fun NoteAddEditDialog(
                     )
                 }
 
+                if (isRemoveButtonEnabled) {
+                    Spacer(Modifier.height(Dimens.spacerHeightSmall))
+
+                    // --- remove button ---
+                    AppButton(
+                        onClick = { onRemove(note) },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors =
+                            ButtonDefaults.buttonColors().copy(
+                                containerColor = MaterialTheme.colorScheme.error,
+                                contentColor = MaterialTheme.colorScheme.onError,
+                            ),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.dialog__button__remove_text),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                }
+
                 Spacer(Modifier.height(Dimens.spacerHeightSmall))
 
                 // --- cancel button ---
@@ -144,12 +167,26 @@ fun NoteAddEditDialog(
 
 @Preview(showBackground = true)
 @Composable
-fun NoteAddEditDialogPreview() {
+private fun NoteAddEditDialogPreview() {
     EasyReadsTheme {
         NoteAddEditDialog(
             note = Note(),
             onSave = {},
             onDismissRequest = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun NoteAddEditDialogWithRemoveButtonPreview() {
+    EasyReadsTheme {
+        NoteAddEditDialog(
+            note = Note(),
+            isRemoveButtonEnabled = true,
+            onSave = {},
+            onDismissRequest = {},
+            onRemove = {},
         )
     }
 }

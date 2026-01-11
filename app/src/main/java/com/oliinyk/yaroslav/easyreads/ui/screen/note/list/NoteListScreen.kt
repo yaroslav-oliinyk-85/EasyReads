@@ -47,18 +47,20 @@ fun NoteListScreen(
             onEdit = { note ->
                 viewModel.openEditDialog(note)
             },
-            onRemove = { note ->
-                viewModel.openRemoveDialog(note)
-            },
             modifier = Modifier.padding(paddingValues),
         )
 
         editingNote?.let { note ->
             NoteAddEditDialog(
                 note = note,
+                isRemoveButtonEnabled = (note.bookId != null),
                 onSave = {
                     viewModel.save(it)
                     viewModel.dismissAddEditDialog()
+                },
+                onRemove = {
+                    viewModel.dismissAddEditDialog()
+                    viewModel.openRemoveDialog(it)
                 },
                 onDismissRequest = { viewModel.dismissAddEditDialog() },
             )

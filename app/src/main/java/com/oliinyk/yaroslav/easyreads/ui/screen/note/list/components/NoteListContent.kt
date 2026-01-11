@@ -20,7 +20,6 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun NoteListContent(
     notes: List<Note>,
     onEdit: (Note) -> Unit,
-    onRemove: (Note) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -42,7 +41,6 @@ fun NoteListContent(
                     NoteListItemCell(
                         note = note,
                         onEdit = onEdit,
-                        onRemove = onRemove,
                     )
                 }
             }
