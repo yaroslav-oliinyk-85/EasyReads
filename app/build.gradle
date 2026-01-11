@@ -16,6 +16,18 @@ ksp {
     arg("room.generateKotlin", "true")
 }
 
+def localProps = new Properties()
+def localPropsFile = rootProject.file("local.properties")
+if (localPropsFile.exists()) {
+    localPropsFile.withInputStream { stream ->
+        localProps.load(stream)
+    }
+}
+
+static def getProp(String key, Properties props) {
+    return System.getenv(key) ?: props.getProperty(key)
+}
+
 android {
     namespace 'com.oliinyk.yaroslav.easyreads'
     compileSdk 36
@@ -35,10 +47,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("RELEASE_STORE_FILE"))
-            storePassword = System.getenv("RELEASE_STORE_PASSWORD")
-            keyAlias = System.getenv("RELEASE_KEY_ALIAS")
-            keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+            storeFile = file(getProp("RELEASE_STORE_FILE", localProps))
+            storePassword = getProp("RELEASE_STORE_PASSWORD", localProps)
+            keyAlias = getProp("RELEASE_KEY_ALIAS", localProps)
+            keyPassword = getProp("RELEASE_KEY_PASSWORD", localProps)
         }
     }
 
@@ -64,7 +76,6 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
-        viewBinding true
         compose = true
     }
     composeOptions {
