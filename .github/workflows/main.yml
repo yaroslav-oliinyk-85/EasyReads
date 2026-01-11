@@ -10,6 +10,11 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      RELEASE_STORE_FILE: ${{ github.workspace }}/keystore.jks
+      RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+      RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+      RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - name: Checkout
@@ -22,9 +27,13 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: Decode keystore
+        run: echo "${{ secrets.RELEASE_KEYSTORE_B64 }}" | base64 -d > keystore.jks
       - name: Run ktlintCheck
         run: ./gradlew ktlintCheck
       - name: Run detekt
         run: ./gradlew detekt
+      - name: Restore google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_B64 }}" | base64 -d > app/google-services.json
       - name: Build with Gradle
         run: ./gradlew assembleDebug
