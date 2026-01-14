@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,19 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.Book
-import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
-import com.oliinyk.yaroslav.easyreads.domain.model.BookSorting
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingGoal
-import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
-import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingGoalRepository
 import com.oliinyk.yaroslav.easyreads.ui.components.AppFloatingActionButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.components.MyLibraryContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.mylibrary.components.MyLibraryTopAppBar
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGoalChangeDialog
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
-import kotlinx.coroutines.flow.Flow
-import java.util.UUID
 
 @Composable
 fun MyLibraryScreen(
@@ -44,6 +36,30 @@ fun MyLibraryScreen(
     viewModel: MyLibraryViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    MyLibraryScreen(
+        uiState = uiState,
+        navToBookAdd = navToBookAdd,
+        navToReadingGoal = navToReadingGoal,
+        navToBookListByShelvesType = navToBookListByShelvesType,
+        navToBookList = navToBookList,
+        navToSettings = navToSettings,
+        onUpdateReadingGoal = viewModel::updateReadingGoal,
+        modifier = modifier,
+    )
+}
+
+@Composable
+internal fun MyLibraryScreen(
+    uiState: MyLibraryUiState,
+    navToBookAdd: () -> Unit,
+    navToReadingGoal: () -> Unit,
+    navToBookListByShelvesType: (String) -> Unit,
+    navToBookList: () -> Unit,
+    navToSettings: () -> Unit,
+    onUpdateReadingGoal: (ReadingGoal) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var openChangeGoalDialog by rememberSaveable { mutableStateOf(false) }
     var isTriggeredNavTo by remember { mutableStateOf(false) }
 
@@ -113,93 +129,24 @@ fun MyLibraryScreen(
                 openChangeGoalDialog = false
             },
             onSave = {
-                viewModel.updateReadingGoal(it)
+                onUpdateReadingGoal(it)
             },
         )
     }
 }
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun MyLibraryScreenPreview() {
     EasyReadsTheme {
         MyLibraryScreen(
-            viewModel =
-                MyLibraryViewModel(
-                    bookRepository =
-                        object : BookRepository {
-                            override fun getAllSorted(bookSorting: BookSorting): Flow<List<Book>> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun getByShelveSorted(
-                                bookShelvesType: BookShelvesType,
-                                bookSorting: BookSorting,
-                            ): Flow<List<Book>> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override suspend fun getAll(): List<Book> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun getAllAsFlow(): Flow<List<Book>> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun getById(id: UUID): Flow<Book?> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun getAuthors(): Flow<List<String>> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun save(book: Book) {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun saveAll(books: List<Book>) {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun update(book: Book) {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun remove(book: Book) {
-                                TODO("Not yet implemented")
-                            }
-                        },
-                    readingGoalRepository =
-                        object : ReadingGoalRepository {
-                            override suspend fun getAll(): List<ReadingGoal> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun getByYear(year: Int): Flow<ReadingGoal?> {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun save(readingGoal: ReadingGoal) {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun saveAll(readingGoals: List<ReadingGoal>) {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun update(readingGoal: ReadingGoal) {
-                                TODO("Not yet implemented")
-                            }
-                        },
-                ),
+            uiState = MyLibraryUiState(),
             navToBookAdd = { },
             navToReadingGoal = { },
             navToBookListByShelvesType = { },
             navToBookList = { },
             navToSettings = { },
+            onUpdateReadingGoal = {},
         )
     }
 }
