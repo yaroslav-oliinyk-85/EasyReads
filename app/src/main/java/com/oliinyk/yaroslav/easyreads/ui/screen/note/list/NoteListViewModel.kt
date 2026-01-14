@@ -23,14 +23,6 @@ class NoteListViewModel
         val stateUi: StateFlow<NoteListStateUi>
             get() = _stateUi.asStateFlow()
 
-        private val _editingNote: MutableStateFlow<Note?> = MutableStateFlow(null)
-        val editingNote: StateFlow<Note?>
-            get() = _editingNote.asStateFlow()
-
-        private val _removingNote: MutableStateFlow<Note?> = MutableStateFlow(null)
-        val removingNote: StateFlow<Note?>
-            get() = _removingNote.asStateFlow()
-
         fun setup(bookId: UUID) {
             loadNotes(bookId)
         }
@@ -66,26 +58,6 @@ class NoteListViewModel
             note.bookId?.run {
                 noteRepository.remove(note)
             }
-        }
-
-        fun openAddDialog() {
-            _editingNote.value = Note()
-        }
-
-        fun openEditDialog(note: Note) {
-            _editingNote.value = note
-        }
-
-        fun dismissAddEditDialog() {
-            _editingNote.value = null
-        }
-
-        fun openRemoveDialog(note: Note) {
-            _removingNote.value = note
-        }
-
-        fun dismissRemoveDialog() {
-            _removingNote.value = null
         }
     }
 

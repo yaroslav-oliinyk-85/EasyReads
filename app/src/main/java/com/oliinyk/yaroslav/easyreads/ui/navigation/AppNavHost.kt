@@ -134,7 +134,12 @@ fun AppNavHost(navHostController: NavHostController) {
         ) { backStackEntry ->
             val bookId = backStackEntry.arguments?.getString(AppNavRoutes.NoteList.ARGUMENT_KEY)
 
-            NoteListScreen(bookId)
+            NoteListScreen(
+                bookId = bookId,
+                navBack = {
+                    navHostController.popBackStack()
+                }
+            )
         }
 
         // ----- ReadingSessionRecord Route -----

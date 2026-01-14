@@ -14,13 +14,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconTopBarButton
+import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NoteListTopAppBar(
     noteSize: Int,
-    onAdd: () -> Unit,
+    navBack: () -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -35,12 +36,8 @@ fun NoteListTopAppBar(
                 )
             }
         },
-        actions = {
-            AppIconTopBarButton(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.menu_item__add_text),
-                onClick = onAdd,
-            )
+        navigationIcon = {
+            AppNavigationBackIconButton(navBack = navBack)
         },
         colors =
             TopAppBarDefaults.topAppBarColors(
@@ -56,7 +53,7 @@ private fun NoteListTopAppBarPreview() {
     EasyReadsTheme {
         NoteListTopAppBar(
             noteSize = 5,
-            onAdd = {},
+            navBack = {},
         )
     }
 }
