@@ -27,7 +27,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 fun MyLibraryShelvesSection(
     uiState: MyLibraryUiState,
     onShelfClick: (BookShelvesType) -> Unit,
-    onSeeAllClick: () -> Unit,
+    onSeeAllClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -55,7 +55,7 @@ fun MyLibraryShelvesSection(
                 label =
                     stringResource(
                         R.string.my_library__label__shelf_finished_text,
-                        uiState.finishedCount,
+                        uiState.finishedBooksCount,
                     ),
                 onClick = { onShelfClick(BookShelvesType.FINISHED) },
             )
@@ -64,7 +64,7 @@ fun MyLibraryShelvesSection(
                 label =
                     stringResource(
                         R.string.my_library__label__shelf_reading_text,
-                        uiState.readingCount,
+                        uiState.readingBooksCount,
                     ),
                 onClick = { onShelfClick(BookShelvesType.READING) },
             )
@@ -73,29 +73,40 @@ fun MyLibraryShelvesSection(
                 label =
                     stringResource(
                         R.string.my_library__label__shelf_want_to_read_text,
-                        uiState.wantToReadCount,
+                        uiState.wantToReadBooksCount,
                     ),
                 onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) },
             )
             AppDivider()
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
-            AppTextButton(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = Dimens.paddingVerticalSmall),
-                onClick = onSeeAllClick,
-            ) {
-                Text(
-                    text =
-                        stringResource(
-                            R.string.my_library__label__shelf_see_all_books,
-                            uiState.allCount,
-                        ),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+            SeeAllBooksButton(
+                booksCount = uiState.totalBooksCount,
+                onSeeAllClicked = onSeeAllClicked,
+            )
         }
+    }
+}
+
+@Composable
+fun SeeAllBooksButton(
+    booksCount: Int,
+    onSeeAllClicked: () -> Unit,
+) {
+    AppTextButton(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = Dimens.paddingVerticalSmall),
+        onClick = onSeeAllClicked,
+    ) {
+        Text(
+            text =
+                stringResource(
+                    R.string.my_library__button__shelf_see_all_books,
+                    booksCount,
+                ),
+            style = MaterialTheme.typography.bodyLarge,
+        )
     }
 }
 
@@ -104,9 +115,27 @@ fun MyLibraryShelvesSection(
 private fun MyLibraryShelvesSectionPreview() {
     EasyReadsTheme {
         MyLibraryShelvesSection(
+            uiState =
+                MyLibraryUiState(
+                    finishedBooksCount = 7,
+                    readingBooksCount = 3,
+                    wantToReadBooksCount = 5,
+                    totalBooksCount = 15,
+                ),
+            onShelfClick = { },
+            onSeeAllClicked = { },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyLibraryShelvesSectionNoBooksPreview() {
+    EasyReadsTheme {
+        MyLibraryShelvesSection(
             uiState = MyLibraryUiState(),
             onShelfClick = { },
-            onSeeAllClick = {},
+            onSeeAllClicked = { },
         )
     }
 }

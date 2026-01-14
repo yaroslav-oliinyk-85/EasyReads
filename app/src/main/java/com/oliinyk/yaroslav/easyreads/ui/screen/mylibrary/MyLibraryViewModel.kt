@@ -39,9 +39,9 @@ class MyLibraryViewModel
                 val currentYear: Int = LocalDate.now().year
                 readingGoalRepository.getByYear(currentYear).collectLatest { readingGoal ->
                     if (readingGoal != null) {
-                        _uiState.update { it.copy(readingGoals = readingGoal.goal) }
+                        _uiState.update { it.copy(readingGoal = readingGoal) }
                     } else {
-                        readingGoalRepository.save(ReadingGoal(year = currentYear))
+                        readingGoalRepository.save(ReadingGoal())
                     }
                 }
             }
@@ -56,23 +56,27 @@ class MyLibraryViewModel
                         }
                     _uiState.update {
                         it.copy(
-                            finishedCount = books.count { book -> book.shelf == BookShelvesType.FINISHED },
-                            readingCount = books.count { book -> book.shelf == BookShelvesType.READING },
-                            wantToReadCount = books.count { book -> book.shelf == BookShelvesType.WANT_TO_READ },
-                            allCount = books.size,
+                            finishedBooksCount = books.count { book -> book.shelf == BookShelvesType.FINISHED },
+                            readingBooksCount = books.count { book -> book.shelf == BookShelvesType.READING },
+                            wantToReadBooksCount = books.count { book -> book.shelf == BookShelvesType.WANT_TO_READ },
+                            totalBooksCount = books.size,
                             currentYearFinishedBooksCount = currentYearFinishedBooks.size,
                         )
                     }
                 }
             }
         }
+
+        fun updateReadingGoal(readingGoal: ReadingGoal) {
+            readingGoalRepository.update(readingGoal)
+        }
     }
 
 data class MyLibraryUiState(
-    val finishedCount: Int = 0,
-    val readingCount: Int = 0,
-    val wantToReadCount: Int = 0,
-    val allCount: Int = 0,
+    val finishedBooksCount: Int = 0,
+    val readingBooksCount: Int = 0,
+    val wantToReadBooksCount: Int = 0,
+    val totalBooksCount: Int = 0,
     val currentYearFinishedBooksCount: Int = 0,
-    val readingGoals: Int = 0,
+    val readingGoal: ReadingGoal = ReadingGoal(),
 )

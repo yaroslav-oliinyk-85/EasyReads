@@ -15,7 +15,9 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 @Composable
 fun MyLibraryContent(
     uiState: MyLibraryUiState,
+    onAddBookClick: () -> Unit,
     onReadingGoalClick: () -> Unit,
+    onChangeGoalClicked: () -> Unit,
     onShelfClick: (BookShelvesType) -> Unit,
     onSeeAllClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -34,26 +36,54 @@ fun MyLibraryContent(
             MyLibraryReadingGoalProgressSection(
                 uiState = uiState,
                 isVisibleChangeGoalButton = false,
+                onChangeGoalClicked = onChangeGoalClicked,
                 onClick = onReadingGoalClick,
             )
         }
         item {
-            MyLibraryShelvesSection(
-                uiState = uiState,
-                onShelfClick = onShelfClick,
-                onSeeAllClick = onSeeAllClick,
-            )
+            if (uiState.totalBooksCount > 0) {
+                MyLibraryShelvesSection(
+                    uiState = uiState,
+                    onShelfClick = onShelfClick,
+                    onSeeAllClicked = onSeeAllClick,
+                )
+            } else {
+                MyLibraryAddFirstBookSection(onAddBookClick = onAddBookClick)
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun MyLibraryContentPreView() {
+private fun MyLibraryContentNoBooksPreview() {
     EasyReadsTheme {
         MyLibraryContent(
             uiState = MyLibraryUiState(),
+            onAddBookClick = {},
             onReadingGoalClick = {},
+            onChangeGoalClicked = {},
+            onShelfClick = {},
+            onSeeAllClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MyLibraryContentPreview() {
+    EasyReadsTheme {
+        MyLibraryContent(
+            uiState =
+                MyLibraryUiState(
+                    finishedBooksCount = 7,
+                    readingBooksCount = 3,
+                    wantToReadBooksCount = 5,
+                    totalBooksCount = 15,
+                ),
+            onAddBookClick = {},
+            onReadingGoalClick = {},
+            onChangeGoalClicked = {},
             onShelfClick = {},
             onSeeAllClick = {},
         )
