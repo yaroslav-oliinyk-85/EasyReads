@@ -1,6 +1,7 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.settings
 
-import android.annotation.SuppressLint
+import android.content.Context
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.clearCompositionErrors
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,24 +33,40 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.domain.model.BackupData
-import com.oliinyk.yaroslav.easyreads.domain.repository.BackupRepository
-import com.oliinyk.yaroslav.easyreads.domain.usecase.ExportBackupDataUseCase
-import com.oliinyk.yaroslav.easyreads.domain.usecase.ImportBackupDataUseCase
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.settings.components.SettingsContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.settings.components.SettingsTopAppBar
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
+fun SettingsScreen(
+    navBack: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    SettingsScreen(
+        uiState = uiState,
+        navBack = navBack,
+        onClearBackupErrorMessage = viewModel::clearBackupErrorMessage,
+        onExportBackupData = viewModel::exportBackupData,
+        onImportBackupData = viewModel::importBackupData,
+    )
+}
+
+@Composable
+internal fun SettingsScreen(
+    uiState: SettingsUiState,
+    navBack: () -> Unit,
+    onClearBackupErrorMessage: () -> Unit,
+    onExportBackupData: (Context, Uri) -> Unit,
+    onImportBackupData: (Context, Uri) -> Unit,
+) {
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
 
     var openExportDialog by rememberSaveable { mutableStateOf(false) }
     var openImportDialog by rememberSaveable { mutableStateOf(false) }
@@ -58,7 +76,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             uiState = uiState,
             onClickOK = {
                 openExportDialog = false
-                viewModel.clearBackupErrorMessage()
+                onClearBackupErrorMessage()
             },
         )
     }
@@ -76,7 +94,14 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            SettingsTopAppBar()
+            SettingsTopAppBar(
+                navBack = {
+                    if (!isTriggeredNavTo) {
+                        isTriggeredNavTo = true
+                        navBack()
+                    }
+                },
+            )
         },
         content = { paddingValues ->
             val context = LocalContext.current
@@ -87,7 +112,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                 ) { resultUri ->
                     resultUri?.let { uri ->
                         openExportDialog = true
-                        viewModel.exportBackupData(context, uri)
+                        onExportBackupData(context, uri)
                     }
                 }
             val importBackupLauncher =
@@ -96,7 +121,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
                 ) { resultUri ->
                     resultUri?.let { uri ->
                         openImportDialog = true
-                        viewModel.importBackupData(context, uri)
+                        onImportBackupData(context, uri)
                     }
                 }
 
@@ -209,55 +234,16 @@ private fun ExportImportDataDialog(
     )
 }
 
-@SuppressLint("ViewModelConstructorInComposable")
 @Preview
 @Composable
 private fun SettingsScreenPreview() {
     EasyReadsTheme {
         SettingsScreen(
-            viewModel =
-                SettingsViewModel(
-                    ExportBackupDataUseCase(
-                        backupRepository =
-                            object : BackupRepository {
-                                override suspend fun create(): BackupData =
-                                    BackupData(
-                                        version = 1,
-                                        exportedAtEpochMillis = 0,
-                                        books = emptyList(),
-                                        notes = emptyList(),
-                                        readingSessions = emptyList(),
-                                        readingGoals = emptyList(),
-                                    )
-
-                                override suspend fun save(backupData: BackupData) {
-                                    // preview
-                                }
-                            },
-                        json = Json,
-                        ioDispatcher = Dispatchers.IO,
-                    ),
-                    ImportBackupDataUseCase(
-                        backupRepository =
-                            object : BackupRepository {
-                                override suspend fun create(): BackupData =
-                                    BackupData(
-                                        version = 1,
-                                        exportedAtEpochMillis = 0,
-                                        books = emptyList(),
-                                        notes = emptyList(),
-                                        readingSessions = emptyList(),
-                                        readingGoals = emptyList(),
-                                    )
-
-                                override suspend fun save(backupData: BackupData) {
-                                    // preview
-                                }
-                            },
-                        json = Json,
-                        ioDispatcher = Dispatchers.IO,
-                    ),
-                ),
+            uiState = SettingsUiState(),
+            navBack = {},
+            onClearBackupErrorMessage = {},
+            onExportBackupData = { p1, p2 -> },
+            onImportBackupData = { p1, p2 -> },
         )
     }
 }

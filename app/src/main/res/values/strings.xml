@@ -30,6 +30,7 @@
     <string name="menu_item__remove_text">Remove</string>
     <string name="menu_item__more_text">More</string>
     <string name="menu_item__settings_text">Settings</string>
+    <string name="menu_item__nav_back_text">Return to previous screen</string>
 
     <!-- Dialog Buttons Text -->
     <string name="dialog__button__ok_text">OK</string>

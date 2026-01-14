@@ -155,7 +155,11 @@ fun AppNavHost(navHostController: NavHostController) {
         appComposable(
             route = AppNavRoutes.Settings.route,
         ) {
-            SettingsScreen()
+            SettingsScreen(
+                navBack = {
+                    navHostController.popBackStack()
+                },
+            )
         }
     }
 }
