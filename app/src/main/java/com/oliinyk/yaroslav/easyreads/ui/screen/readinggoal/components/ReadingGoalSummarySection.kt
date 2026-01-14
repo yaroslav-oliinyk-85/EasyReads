@@ -22,7 +22,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 
 @Composable
-fun ReadingGoalReadingSummarySection(
+fun ReadingGoalSummarySection(
     uiState: ReadingGoalUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -39,7 +39,10 @@ fun ReadingGoalReadingSummarySection(
                     ),
         ) {
             Text(
-                text = stringResource(R.string.reading_goal__label__summery_title_text),
+                text = stringResource(
+                    R.string.reading_goal__label__summery_title_text,
+                    uiState.readingGoal.year
+                ),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )

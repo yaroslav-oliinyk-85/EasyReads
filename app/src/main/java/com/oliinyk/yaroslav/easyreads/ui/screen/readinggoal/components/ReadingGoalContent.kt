@@ -34,7 +34,7 @@ fun ReadingGoalContent(
             onChangeGoalClick = onChangeGoalClick,
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
-        ReadingGoalReadingSummarySection(
+        ReadingGoalSummarySection(
             uiState = uiState,
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))

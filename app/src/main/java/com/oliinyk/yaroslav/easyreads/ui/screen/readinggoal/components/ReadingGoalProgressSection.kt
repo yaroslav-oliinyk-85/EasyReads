@@ -55,7 +55,7 @@ fun ReadingGoalProgressSection(
                 text =
                     stringResource(
                         R.string.reading_goal__label__goal_title_text,
-                        LocalDate.now().year,
+                        uiState.readingGoal.year,
                     ),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,

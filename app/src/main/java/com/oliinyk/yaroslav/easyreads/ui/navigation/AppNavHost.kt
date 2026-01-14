@@ -58,6 +58,9 @@ fun AppNavHost(navHostController: NavHostController) {
             route = AppNavRoutes.ReadingGoal.route,
         ) {
             ReadingGoalScreen(
+                navBack = {
+                    navHostController.popBackStack()
+                },
                 navToBookDetails = { bookId ->
                     navHostController.navigate(route = AppNavRoutes.BookDetails.createRoute(bookId))
                 },
