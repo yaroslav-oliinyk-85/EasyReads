@@ -69,7 +69,7 @@ fun NoteAddEditDialog(
                     hint = stringResource(R.string.note_add_edit_dialog__hint__enter_note_text),
                     keyboardOptions =
                         KeyboardOptions(
-                            imeAction = ImeAction.Next,
+                            imeAction = ImeAction.Default,
                         ),
                     singleLine = false,
                     minLines = Dimens.noteTextMinLines,
