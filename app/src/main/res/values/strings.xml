@@ -167,6 +167,8 @@
     <string name="reading_session_record__tools__read_pages_text">Pages: 153/647</string>
     <string name="reading_session_record__label__read_pages_text">Pages: %1$d/%2$d</string>
     <string name="reading_session_record__toolbar__title_text">Reading Session</string>
+    <string name="reading_session_record__confirmation_dialog__title_text">Discard reading session?</string>
+    <string name="reading_session_record__confirmation_dialog__message_text">You have an unsaved reading session. If you leave this screen, it wil be lost.</string>
 
     <!-- Reading Session Add Edit Dialog -->
     <string name="reading_session_add_edit_dialog__hint__enter_start_page_text">Enter start page</string>

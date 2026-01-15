@@ -46,6 +46,7 @@ fun AppConfirmDialog(
             Text(
                 text = message,
                 maxLines = Dimens.confirmDialogMessageMaxLine,
+                style = MaterialTheme.typography.bodyLarge,
                 overflow = TextOverflow.Ellipsis,
             )
         },
