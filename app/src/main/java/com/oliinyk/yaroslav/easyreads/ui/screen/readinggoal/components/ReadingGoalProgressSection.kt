@@ -21,7 +21,6 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.ReadingGoalUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
-import java.time.LocalDate
 
 @Composable
 fun ReadingGoalProgressSection(

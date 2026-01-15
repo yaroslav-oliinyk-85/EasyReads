@@ -103,18 +103,23 @@ private fun ReadingGoalScreenPreview() {
         ReadingGoalScreen(
             uiState =
                 ReadingGoalUiState(
-                    books = listOf(
-                        Book(title = "Book 1"),
-                        Book(title = "Book 2"),
-                        Book(title = "Book 3"),
-                        Book(title = "Book 4"),
-                    ),
+                    books =
+                        listOf(
+                            Book(title = "Book 1"),
+                            Book(title = "Book 2"),
+                            Book(title = "Book 3"),
+                            Book(title = "Book 4"),
+                        ),
                     currentYearFinishedBooksCount = 6,
-                    readingGoal = ReadingGoal(2026, 12),
+                    readingGoal =
+                        ReadingGoal(
+                            year = 2026,
+                            goal = 12,
+                        ),
                     readPages = 1024,
                     averagePagesHour = 50,
                     readHours = 32,
-                    readMinutes = 0
+                    readMinutes = 0,
                 ),
             navBack = {},
             navToBookDetails = {},

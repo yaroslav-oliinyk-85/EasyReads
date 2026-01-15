@@ -39,10 +39,11 @@ fun ReadingGoalSummarySection(
                     ),
         ) {
             Text(
-                text = stringResource(
-                    R.string.reading_goal__label__summery_title_text,
-                    uiState.readingGoal.year
-                ),
+                text =
+                    stringResource(
+                        R.string.reading_goal__label__summery_title_text,
+                        uiState.readingGoal.year,
+                    ),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )

@@ -27,7 +27,6 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.note.list.components.NoteListTop
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 import java.util.UUID
 
-
 @Composable
 fun NoteListScreen(
     bookId: String?,
@@ -50,12 +49,12 @@ fun NoteListScreen(
     )
 }
 
-    @Composable
+@Composable
 fun NoteListScreen(
-        uiState: NoteListStateUi,
-        navBack: () -> Unit,
-        onSave: (Note) -> Unit,
-        onRemove: (Note) -> Unit,
+    uiState: NoteListStateUi,
+    navBack: () -> Unit,
+    onSave: (Note) -> Unit,
+    onRemove: (Note) -> Unit,
 ) {
     var editingNote: Note? by rememberSaveable { mutableStateOf(null) }
     var removingNote: Note? by rememberSaveable { mutableStateOf(null) }
@@ -84,9 +83,9 @@ fun NoteListScreen(
                         imageVector = Icons.Default.Add,
                         contentDescription = stringResource(R.string.menu_item__add_text),
                     )
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         NoteListContent(
             notes = uiState.notes,
@@ -135,15 +134,16 @@ private fun NoteListScreenPreview() {
         NoteListScreen(
             uiState =
                 NoteListStateUi(
-                    notes = listOf(
-                        Note(text = "Note 1", page = 5),
-                        Note(text = "Note 2", page = 10),
-                        Note(text = "Note 3", page = 15),
-                    ),
+                    notes =
+                        listOf(
+                            Note(text = "Note 1", page = 5),
+                            Note(text = "Note 2", page = 10),
+                            Note(text = "Note 3", page = 15),
+                        ),
                 ),
             navBack = {},
             onSave = {},
-            onRemove = {}
+            onRemove = {},
         )
     }
 }
@@ -156,7 +156,7 @@ private fun NoteListScreenEmptyPreview() {
             uiState = NoteListStateUi(),
             navBack = {},
             onSave = {},
-            onRemove = {}
+            onRemove = {},
         )
     }
 }

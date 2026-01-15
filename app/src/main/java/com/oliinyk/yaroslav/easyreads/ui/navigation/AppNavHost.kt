@@ -138,7 +138,7 @@ fun AppNavHost(navHostController: NavHostController) {
                 bookId = bookId,
                 navBack = {
                     navHostController.popBackStack()
-                }
+                },
             )
         }
 

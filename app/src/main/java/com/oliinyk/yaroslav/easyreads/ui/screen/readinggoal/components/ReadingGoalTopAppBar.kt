@@ -14,7 +14,7 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 @Composable
 fun ReadingGoalTopAppBar(
     yearGoal: Int,
-    navBack: () -> Unit
+    navBack: () -> Unit,
 ) {
     TopAppBar(
         title = {
