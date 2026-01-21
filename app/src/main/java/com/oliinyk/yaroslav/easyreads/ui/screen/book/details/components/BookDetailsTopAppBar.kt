@@ -20,11 +20,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
+import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookDetailsTopAppBar(
     title: String,
+    navBack: () -> Unit,
     onEditBook: () -> Unit,
     onRemoveBook: () -> Unit,
 ) {
@@ -32,6 +34,9 @@ fun BookDetailsTopAppBar(
     TopAppBar(
         title = {
             Text(text = title)
+        },
+        navigationIcon = {
+            AppNavigationBackIconButton { navBack() }
         },
         actions = {
             IconButton(

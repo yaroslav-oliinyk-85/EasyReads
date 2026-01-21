@@ -53,6 +53,7 @@ fun BookDetailsScreen(
         topBar = {
             BookDetailsTopAppBar(
                 title = stringResource(R.string.book_details__toolbar__title_test),
+                navBack = navBack,
                 onEditBook = {
                     if (!isTriggeredNavTo) {
                         isTriggeredNavTo = true
