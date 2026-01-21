@@ -27,6 +27,7 @@ import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
 import com.oliinyk.yaroslav.easyreads.ui.components.AppIconTopBarButton
+import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,7 +36,7 @@ fun BookListTopAppBar(
     booksCount: Int,
     bookShelvesType: BookShelvesType?,
     holderSize: HolderSize,
-    onAddBookClick: () -> Unit,
+    navBack: () -> Unit,
     onHolderSizeChange: (HolderSize) -> Unit,
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -71,13 +72,10 @@ fun BookListTopAppBar(
                 )
             }
         },
+        navigationIcon = {
+            AppNavigationBackIconButton { navBack() }
+        },
         actions = {
-            AppIconTopBarButton(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.menu_item__add_text),
-                onClick = { onAddBookClick() },
-            )
-
             IconButton(
                 onClick = { menuExpanded = true },
             ) {
@@ -190,7 +188,7 @@ private fun BookListTopAppBarPreview() {
             booksCount = 5,
             bookShelvesType = BookShelvesType.READING,
             holderSize = HolderSize.SMALL,
-            onAddBookClick = {},
+            navBack = {},
             onHolderSizeChange = {},
         )
     }
@@ -207,7 +205,7 @@ private fun BookListTopAppBarDarkPreview() {
             booksCount = 5,
             bookShelvesType = BookShelvesType.READING,
             holderSize = HolderSize.SMALL,
-            onAddBookClick = {},
+            navBack = {},
             onHolderSizeChange = {},
         )
     }

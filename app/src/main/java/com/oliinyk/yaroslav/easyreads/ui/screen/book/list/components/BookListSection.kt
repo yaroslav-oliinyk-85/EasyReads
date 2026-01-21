@@ -55,6 +55,9 @@ fun BookListSection(
             item {
                 Spacer(Modifier.height(Dimens.spacerHeightSmall))
             }
+            item {
+                Spacer(Modifier.height(Dimens.spacerHeightExtraLarge))
+            }
         }
     }
 }

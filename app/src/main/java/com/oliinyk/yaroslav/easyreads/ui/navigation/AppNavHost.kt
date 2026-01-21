@@ -192,6 +192,9 @@ private fun BookListRoute(
     bookShelvesType: String? = null,
 ) {
     BookListScreen(
+        navBack = {
+            navHostController.popBackStack()
+        },
         navToBookAdd = {
             navHostController.navigate(route = AppNavRoutes.BookAdd.createRoute())
         },
