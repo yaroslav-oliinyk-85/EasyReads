@@ -148,7 +148,7 @@ fun BookAddEditContent(
                     hint = stringResource(R.string.book_add_edit__hint__enter_book_description_text),
                     keyboardOptions =
                         KeyboardOptions(
-                            imeAction = ImeAction.Done,
+                            imeAction = ImeAction.Default,
                         ),
                     singleLine = false,
                     minLines = Dimens.descriptionMinLines,
@@ -162,5 +162,6 @@ fun BookAddEditContent(
                 )
             }
         }
+        Spacer(Modifier.height(Dimens.spacerHeightExtraLarge))
     }
 }

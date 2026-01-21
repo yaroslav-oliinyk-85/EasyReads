@@ -8,10 +8,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.oliinyk.yaroslav.easyreads.R
+import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookAddEditAppTopBar(bookTitle: String) {
+fun BookAddEditAppTopBar(
+    bookTitle: String,
+    navBack: () -> Unit,
+) {
     TopAppBar(
         title = {
             Text(
@@ -22,6 +26,9 @@ fun BookAddEditAppTopBar(bookTitle: String) {
                         stringResource(R.string.book_add_edit__title__edit_text)
                     },
             )
+        },
+        navigationIcon = {
+            AppNavigationBackIconButton { navBack() }
         },
         colors =
             TopAppBarDefaults.topAppBarColors(

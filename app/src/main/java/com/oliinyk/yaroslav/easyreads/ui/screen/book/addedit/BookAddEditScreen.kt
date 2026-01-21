@@ -91,6 +91,10 @@ fun BookAddEditScreen(
         topBar = {
             BookAddEditAppTopBar(
                 bookTitle = stateUi.book.title,
+                navBack = {
+                    viewModel.removeUnusedCoverImage(context.applicationContext)
+                    navBack()
+                }
             )
         },
         content = { paddingValues ->
