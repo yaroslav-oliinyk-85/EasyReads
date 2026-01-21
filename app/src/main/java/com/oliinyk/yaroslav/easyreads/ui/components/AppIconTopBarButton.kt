@@ -41,8 +41,8 @@ fun AppIconTopBarButton(
         onClick = onClick,
         colors =
             IconButtonDefaults.iconButtonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-                contentColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
             ),
         modifier = modifier,
     ) {
