@@ -3,7 +3,6 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
@@ -26,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.HolderSize
-import com.oliinyk.yaroslav.easyreads.ui.components.AppIconTopBarButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 

@@ -94,7 +94,7 @@ fun BookAddEditScreen(
                 navBack = {
                     viewModel.removeUnusedCoverImage(context.applicationContext)
                     navBack()
-                }
+                },
             )
         },
         content = { paddingValues ->
