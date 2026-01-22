@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">EasyReads</string>
+    <string name="app_name" translatable="false">EasyReads</string>
 
     <!-- Shared Usage -->
-    <string name="date_year_month_day_and_time_format">yyyy-MM-dd_HH:mm:ss</string>
-    <string name="date_and_time_format">dd MMM yyyy HH:mm</string>
-    <string name="date_format">dd MMM yyyy</string>
-    <string name="date_year_format">yyyy</string>
-    <string name="book_reading_progress_percentage_text">%1$d%%</string>
+    <string name="date_year_month_day_and_time_format" translatable="false">yyyy-MM-dd_HH:mm:ss</string>
+    <string name="date_and_time_format" translatable="false">dd MMM yyyy HH:mm</string>
+    <string name="date_format" translatable="false">dd MMM yyyy</string>
+    <string name="date_year_format" translatable="false">yyyy</string>
+    <string name="book_reading_progress_percentage_text" translatable="false">%1$d%%</string>
 
     <!-- Content Description -->
     <string name="book_cover_image__content_description__text">Book Cover Image</string>
@@ -45,7 +45,7 @@
     <!-- Export Data Dialog -->
     <string name="export_data_dialog__label__title_text">Export Data</string>
     <string name="export_data_dialog__label__message_text">Successfully exported backup data.</string>
-    <string name="export_data_dialog__label__error_message_text">Failed to exported backup data!!!</string>
+    <string name="export_data_dialog__label__error_message_text">Failed to export backup data!!!</string>
 
     <!-- Import Data Dialog -->
     <string name="import_data_dialog__label__title_text">Import Data</string>
@@ -93,7 +93,7 @@
     <string name="book_details__button__shelf_finished_text">Finished</string>
 
     <string name="book_details__label__shelf_want_to_read_text">ADDED DATE\n%s</string>
-    <string name="book_details__label__shelf_reading_text">LAST READ DATE\n%s</string>
+    <string name="book_details__label__shelf_reading_text">PREVIOUS READ DATE\n%s</string>
     <string name="book_details__label__shelf_finished_text">FINISHED DATE\n%s</string>
 
     <string name="book_details__tab__sessions_title_text">SESSIONS %d</string>
@@ -152,7 +152,7 @@
     <!-- Messages -->
     <string name="msg_info__image_saved">Image saved</string>
     <string name="msg_warn__not_able_to_open_image_picker">Was not able to launch image picker view!</string>
-    <string name="msg_warn__not_able_to_copy_image">Was not able to save new cove image</string>
+    <string name="msg_warn__not_able_to_copy_image">Was not able to save new cover image</string>
     <string name="msg_warn__not_able_to_launch_camera">Was not able to launch Camera!</string>
     <string name="msg_error__cannot_access_binding">Cannot access binding because it is null.</string>
 
@@ -196,7 +196,7 @@
     <string name="reading_session_list__toolbar__title_text">Reading Sessions %d</string>
 
     <!-- Read Time Counter Notification -->
-    <string name="read_time_counter_notification_channel_name">Read Time Counter</string>
+    <string name="read_time_counter_notification_channel_name" translatable="false">Read Time Counter</string>
     <string name="read_time_counter_notification_content_title_text">Reading</string>
     <string name="read_time_counter_notification_content_text">Reading time: %1$02d:%2$02d:%3$02d</string>
 
@@ -216,7 +216,7 @@
     <string name="reading_goal__label__goal_reading_progress_text">You have read %d of %d books</string>
     <string name="reading_goal__label__goal_change_text">Change Your Goal</string>
     <string name="reading_goal__label__goal_set_text">Set Your Goal</string>
-    <string name="reading_goal__label__summery_title_text">%s Reading Summery</string>
+    <string name="reading_goal__label__summery_title_text">%s Reading Summary</string>
     <string name="reading_goal__label__summery_read_pages_text">READ PAGES\n%d</string>
     <string name="reading_goal__label__summery_read_time_text">READ TIME\n%1$02dh %2$02dm</string>
     <string name="reading_goal__label__summery_read_average_pages_hour_text">Av. PAGES/HOUR\n%d</string>

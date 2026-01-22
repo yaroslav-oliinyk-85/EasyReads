@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Content Description -->
+    <string name="book_cover_image__content_description__text">Картинка Обкладинки</string>
+
+    <!-- Toolbar -->
+    <string name="note_list__toolbar__title_text">Нотатки %d</string>
+    <string name="book_details__toolbar__title_test">Детальніше</string>
+    <string name="book_list__toolbar__title_all_text">Всі Книги %d</string>
+    <string name="book_list__toolbar__title_finished_text">Прочитані %d</string>
+    <string name="book_list__toolbar__title_reading_text">Читаю %d</string>
+    <string name="book_list__toolbar__title_want_to_read_text">Хочу Прочитати %d</string>
+
+    <!-- Menu Items Text -->
+    <string name="menu_item__book_list__image_size_large_text">Великі Картинки</string>
+    <string name="menu_item__book_list__image_size_default_text">Стандартні Картинки</string>
+    <string name="menu_item__book_list__image_size_small_text">Маленькі Картинки</string>
+
+    <string name="menu_item__add_text">Додати</string>
+    <string name="menu_item__edit_text">Редагувати</string>
+    <string name="menu_item__save_text">Зберегти</string>
+    <string name="menu_item__remove_text">Видалити</string>
+    <string name="menu_item__more_text">Більше</string>
+    <string name="menu_item__settings_text">Налаштування</string>
+    <string name="menu_item__nav_back_text">Повернутись до попереднього екрану</string>
+
+    <!-- Dialog Buttons Text -->
+    <string name="dialog__button__ok_text">Так</string>
+    <string name="dialog__button__save_text">Зберегти</string>
+    <string name="dialog__button__cancel_text">Скасувати</string>
+    <string name="dialog__button__remove_text">Видалити</string>
+
+    <!-- Confirmation Dialog -->
+    <string name="confirmation_dialog__button__ok_text">Так</string>
+    <string name="confirmation_dialog__button__cancel_text">Скасувати</string>
+
+    <!-- Export Data Dialog -->
+    <string name="export_data_dialog__label__title_text">Створити Резервну Копію</string>
+    <string name="export_data_dialog__label__message_text">Резервну копію успішно створено.</string>
+    <string name="export_data_dialog__label__error_message_text">Не вдалося створити Резервну Копію!</string>
+
+    <!-- Import Data Dialog -->
+    <string name="import_data_dialog__label__title_text">Завантажити Резервну Копію</string>
+    <string name="import_data_dialog__label__message_text">Резервну копію успішно завантажено.</string>
+    <string name="import_data_dialog__label__error_message_text">Не вдалося завантажити Резервну Копію!</string>
+
+    <!-- Book List -->
+    <string name="book_list__label__no_books_text">Пустий Список</string>
+    <string name="book_list__button__sorted_by_text">Сортування за: %1$s</string>
+    <string name="book_list__dropdown_menu_item__sort_by_text">Сортування за: %1$s</string>
+    <string name="book_list__button__sorted_by_title_text">Назва</string>
+    <string name="book_list__button__sorted_by_author_text">Автор</string>
+    <string name="book_list__button__sorted_by_added_date_text">Додано</string>
+    <string name="book_list__button__sorted_by_updated_date_text">Оновлено</string>
+    <string name="book_list__button__sorted_order_content_description_text">Порядок Сортування</string>
+    <!-- Book List Item -->
+    <string name="book_list_item__label__shelf_info_text">Поличка\n%s</string>
+    <string name="book_list_item__label__shelf_want_to_read_text">Хочу Прочитати\n%s</string>
+    <string name="book_list_item__label__shelf_reading_text">Читаю\n%s</string>
+    <string name="book_list_item__label__shelf_finished_text">Прочитано\n%s</string>
+
+    <!-- Book Details -->
+    <string name="book_details__label__book_description_text">Опис</string>
+    <string name="book_details__label__book_isbn_text">ISBN:</string>
+    <string name="book_details__label__no_notes_text">Пустий Список</string>
+    <string name="book_details__label__note_page_text">%1$d Сторінка</string>
+    <string name="book_details__label__book_pages_text">Сторінки\n%1$d/%2$d</string>
+    <string name="book_details__label__book_total_read_time_text">Загальний Час\n%1$02d:%2$02d</string>
+    <string name="book_details__label__book_read_average_pages_hour_text">Сторінок на годину\n%d</string>
+    <string name="book_details__label__book_read_pages_hour_text">%d сторінок на годину</string>
+    <string name="book_details__label__shelf_text">Поличка\n%s</string>
+
+    <string name="book_details__button__add_note_text">Додати Нотаток</string>
+    <string name="book_details__button__see_all_notes_text">Всі Нотатки %d</string>
+    <string name="book_details__button__shelf_want_to_read_text">Хочу Прочитати</string>
+    <string name="book_details__button__shelf_reading_text">Читаю</string>
+    <string name="book_details__button__shelf_finished_text">Прочитано</string>
+
+    <string name="book_details__label__shelf_want_to_read_text">Додано\n%s</string>
+    <string name="book_details__label__shelf_reading_text">Попередній Сеанс\n%s</string>
+    <string name="book_details__label__shelf_finished_text">Прочитано\n%s</string>
+
+    <string name="book_details__tab__sessions_title_text">Щоденник %d</string>
+    <string name="book_details__tab__notes_title_text">Нотатки %d</string>
+    <string name="book_details__tab__about_title_text">Опис</string>
+
+    <string name="book_details__label__start_reading_session_text">Почати Читати</string>
+
+    <string name="book_details__confirmation_dialog__title_book_remove_text">Видалити</string>
+    <string name="book_details__confirmation_dialog__message_book_remove_text">Книгу буде видалено!</string>
+
+    <string name="book_details__toast__message_new_note_added_text">Додано Нотаток</string>
+    <string name="book_details__toast__message_note_updated_text">Оновлено Нотаток</string>
+
+    <string name="book_details__tools__book_description_text">For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the \"Sliver of Infinity,\" reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler\'s most hellish prison. Kelsier \"snapped\" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.\n\nKelsier recruited the underworld\'s elite, the smartest and most trustworthy allomancers, each of whom shares one of his many powers, and all of whom relish a high-stakes challenge. Then Kelsier reveals his ultimate dream, not just the greatest heist in history, but the downfall of the divine despot.\n\nBut even with the best criminal crew ever assembled, Kel\'s plan looks more like the ultimate long shot, until luck brings a ragged girl named Vin into his life. Like him, she\'s a half-Skaa orphan, but she\'s lived a much harsher life. Vin has learned to expect betrayal from everyone she meets. She will have to learn trust if Kel is to help her master powers of which she never dreamed.\n\nBrandon Sanderson, fantasy\'s newest master tale-spinner and author of the acclaimed debut Elantris, dares to turn a genre on its head by asking a simple question: What if the prophesied hero failed to defeat the Dark Lord? The answer will be found in the Mistborn Trilogy, a saga of surprises that begins with the book in your hands. Fantasy will never be the same again.</string>
+    <string name="book_details__tools__book_description_text_less">For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the \"Sliver of Infinity,\" reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler\'s most hellish prison. Kelsier \"snapped\" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.\n\nKelsier recruited the underworld\'s elite, the smartest and most trustworthy allomancers, each of whom shares one of his many powers, and all of whom relish a high-stakes challenge. Then Kelsier reveals his ultimate dream, not just the greatest heist in history, but the downfall of the divine despot.\n\nBut even with the best criminal crew ever assembled, Kel\'s plan looks more like the ultimate long shot, until luck brings a ragged girl named Vin into his life. Like him, she\'s a half-Skaa orphan, but she\'s lived a much harsher life. Vin has learned to expect betrayal from everyone she meets. She will have to learn trust if Kel is to help her master powers of which she never dreamed.</string>
+    <string name="book_details__tools__book_author_text">Brandon Sanderson</string>
+    <string name="book_details__tools__book_title_text">The Final Empire</string>
+    <string name="book_details__tools__book_pages_text">PAGES\n153/647</string>
+    <string name="book_details__tools__book_read_time_text">READ TIME\n01:35</string>
+    <string name="book_details__tools__book_read_average_pages_hour_text">Av. PAGES/HOUR\n18</string>
+    <string name="book_details__tools__progress_percentage_text">100%</string>
+    <string name="book_details__tools__see_all_notes_text">See All Notes (0)</string>
+
+    <!-- Book Add Edit -->
+    <string name="book_add_edit__title__add_text">Додати</string>
+    <string name="book_add_edit__title__edit_text">Редагувати</string>
+    <string name="book_add_edit__label__change_cover_image_text">Натисніть\nщоб\nзмінити</string>
+    <string name="book_add_edit__label__book_title_text">Назва</string>
+    <string name="book_add_edit__label__book_author_text">Автор</string>
+    <string name="book_add_edit__label__book_pages_amount_text">Сторіни</string>
+    <string name="book_add_edit__label__book_page_current_text">Поточна Сторінка</string>
+    <string name="book_add_edit__label__book_isbn_text">ISBN</string>
+    <string name="book_add_edit__label__book_description_text">Опис</string>
+    <string name="book_add_edit__hint__enter_book_title_text">Введіть назву</string>
+    <string name="book_add_edit__hint__enter_book_author_text">Введіть автора</string>
+    <string name="book_add_edit__hint__book_pages_count_text">Введіть кількість сторінок</string>
+    <string name="book_add_edit__hint__book_page_current_text">Введіть поточну сторінку</string>
+    <string name="book_add_edit__hint__book_isbn_input_text">Введіть ISBN</string>
+    <string name="book_add_edit__hint__enter_book_description_text">Введіть опис</string>
+    <string name="book_add_edit__button__save_text">Зберегти</string>
+    <string name="book_add_edit__button__cancel_text">Скасувати</string>
+
+    <string-array name="book_edit__shelves__list_items">
+        <item>Хочу Прочитати</item>
+        <item>Читаю</item>
+        <item>Прочитано</item>
+    </string-array>
+
+    <!-- Note List -->
+    <string name="note_list__label__no_notes_text">Пустий Список</string>
+    <string name="note_list__confirmation_dialog__title_text">Видалити</string>
+    <string name="note_list__confirmation_dialog__message_note_remove_text">Нотаток буде видалено!</string>
+    <!-- Note List Item -->
+    <string name="note_list_item__label__page_text">"%1$d Сторінка"</string>
+
+    <string name="note_list_item__tools__note_text">Нотаток</string>
+    <string name="note_list_item__tools__added_date_text">13.10.2024 10:30</string>
+
+    <!-- Note Add Edit Dialog -->
+    <string name="note_add_edit_dialog__label__note_text">Текст</string>
+    <string name="note_add_edit_dialog__label__note_page_text">Сторінка</string>
+    <string name="note_add_edit_dialog__hint__enter_note_text">Введіть текст</string>
+    <string name="note_add_edit_dialog__hint__enter_note_page_text">Введіть сторінку</string>
+    <string name="note_add_edit_dialog__error__message_text">Текст не може бути порожнім!</string>
+
+    <!-- Messages -->
+    <string name="msg_info__image_saved">Картинку збережено</string>
+    <string name="msg_warn__not_able_to_open_image_picker">Was not able to launch image picker view!</string>
+    <string name="msg_warn__not_able_to_copy_image">Не вдалося зберегти нове зображення обкладинки!</string>
+    <string name="msg_warn__not_able_to_launch_camera">Was not able to launch Camera!</string>
+    <string name="msg_error__cannot_access_binding">Cannot access binding because it is null.</string>
+
+    <!-- Reading Session Record -->
+    <string name="reading_session_record__label__read_time_text">%1$02d:%2$02d:%3$02d</string>
+    <string name="reading_session_record__label__record_status_started_text">Читаю</string>
+    <string name="reading_session_record__label__record_status_paused_text">Призупинено</string>
+    <string name="reading_session_record__button__finish_recording_text">Завершити</string>
+    <string name="reading_session_record__button__show_notes_text">Всі Нотатки %d</string>
+    <string name="reading_session_record__button__add_note_text">Додати Нотаток</string>
+    <string name="reading_session_record__label__read_pages_text">Сторінки: %1$d/%2$d</string>
+    <string name="reading_session_record__toolbar__title_text">Сеанс Читання</string>
+    <string name="reading_session_record__confirmation_dialog__title_text">Скасувати сеанс читання?</string>
+    <string name="reading_session_record__confirmation_dialog__message_text">У вас є незбережений сеанс читання. Якщо ви закриєте цей екран, його буде втрачено.</string>
+
+    <string name="reading_session_record__tools__read_time_text">01:13:57</string>
+    <string name="reading_session_record__tools__read_pages_text">Pages: 153/647</string>
+
+    <!-- Reading Session Add Edit Dialog -->
+    <string name="reading_session_add_edit_dialog__hint__enter_start_page_text">Введіть попередня сторінку</string>
+    <string name="reading_session_add_edit_dialog__hint__enter_end_page_text">Введіть поточну сторінку</string>
+    <string name="reading_session_add_edit_dialog__tools__start_page_text">0</string>
+    <string name="reading_session_add_edit_dialog__label__start_page_text">Попередня Сторінка</string>
+    <string name="reading_session_add_edit_dialog__label__end_page_text">Поточна Сторінка</string>
+    <string name="reading_session_add_edit_dialog__label__read_hour_text">Години</string>
+    <string name="reading_session_add_edit_dialog__label__read_minutes_text">Хвилини</string>
+    <string name="reading_session_add_edit_dialog__label__read_seconds_text">Секунди</string>
+    <string name="reading_session_add_edit_dialog__error__end_page_message_text">Поточна сторінка має бути більшою за попередню сторінку</string>
+    <string name="reading_session_add_edit_dialog__error__start_page_message_text">Попередня сторінка має бути меншою за поточну сторінку</string>
+
+    <!-- Reading Session List -->
+    <string name="reading_session_list__label__list_empty_text">Пустий Список</string>
+    <string name="reading_session_list__confirmation_dialog__title_text">Видалити</string>
+    <string name="reading_session_list__confirmation_dialog__message_text">Дата: %1$s\nСторінок прочитано: %2$d\nПрочитано: з %3$d по %4$d сторінку</string>
+    <!-- Reading Session List Item -->
+    <string name="reading_session_list_item__label__date_text">%s</string>
+    <string name="reading_session_list_item__label__read_time_hour_minutes_text">%1$02d години %2$02d хвилини</string>
+    <string name="reading_session_list_item__label__read_time_minutes_text">%1$02d хвилини</string>
+    <string name="reading_session_list_item__label__read_end_page_text">з %1$d по %2$d сторінку</string>
+    <string name="reading_session_list_item__label__read_pages_hour_text">Сторінок на годину\n%d</string>
+    <string name="reading_session_list_item__label__read_pages_text">%d прочитано сторінок</string>
+    <string name="reading_session_list__toolbar__title_text">Сеанси Читання %d</string>
+
+    <!-- Read Time Counter Notification -->
+    <string name="read_time_counter_notification_content_title_text">Читаю</string>
+    <string name="read_time_counter_notification_content_text">Час читання: %1$02d:%2$02d:%3$02d</string>
+
+    <!-- My Library -->
+    <string name="my_library__label__add_first_book_text">Додай першу книгу</string>
+    <string name="my_library__label__shelves_title_text">Полички</string>
+    <string name="my_library__label__shelf_finished_text">Прочитано %d</string>
+    <string name="my_library__label__shelf_reading_text">Читаю %d</string>
+    <string name="my_library__label__shelf_want_to_read_text">Хочу Прочитати %d</string>
+    <string name="my_library__button__shelf_see_all_books">Всі Книги %d</string>
+    <string name="my_library__button__add_book_text">Додати Книгу</string>
+
+    <string name="my_library__toolbar__title_text">@string/app_name</string>
+
+    <!-- Reading Goal -->
+    <string name="reading_goal__label__goal_title_text">Мої Плани на %s</string>
+    <string name="reading_goal__label__goal_reading_progress_text">Прочитано %d з %d книг</string>
+    <string name="reading_goal__label__goal_change_text">Змінити Плани</string>
+    <string name="reading_goal__label__goal_set_text">Встановіть Свої Плани</string>
+    <string name="reading_goal__label__summery_title_text">Аналітика за %s</string>
+    <string name="reading_goal__label__summery_read_pages_text">Прочитано\nсторінок\n%d</string>
+    <string name="reading_goal__label__summery_read_time_text">Загальний\nчас читання\n%1$02dh %2$02dm</string>
+    <string name="reading_goal__label__summery_read_average_pages_hour_text">Сторінок\nна годину\n%d</string>
+    <string name="reading_goal__label__summery_books_title_text">Прочитано %d</string>
+    <string name="reading_goal__label__no_finished_books_text">Наразі не маю прочитаних книг.</string>
+
+    <!-- Reading Goal Change Dialog -->
+    <string name="reading_goal_change_dialog__label__goal_text">Мої Плани</string>
+    <string name="reading_goal_change_dialog__hint__enter_goal_text">Ввведіть кількісь книг</string>
+
+    <string name="reading_goal__toolbar__title_text">@string/reading_goal__label__goal_title_text</string>
+
+    <!-- Settings -->
+    <string name="settings__toolbar__title_text">Налаштування</string>
+    <string name="settings__button__export_data_text">Створити Резервну Копію</string>
+    <string name="settings__button__import_data_text">Завантажити Резервну Копію</string>
+</resources>
