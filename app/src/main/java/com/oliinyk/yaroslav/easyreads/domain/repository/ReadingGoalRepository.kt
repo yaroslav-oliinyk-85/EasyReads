@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface ReadingGoalRepository {
     suspend fun getAll(): List<ReadingGoal>
 
+    fun getAllAsFlow(): Flow<List<ReadingGoal>>
+
     fun getByYear(year: Int): Flow<ReadingGoal?>
 
     fun save(readingGoal: ReadingGoal)

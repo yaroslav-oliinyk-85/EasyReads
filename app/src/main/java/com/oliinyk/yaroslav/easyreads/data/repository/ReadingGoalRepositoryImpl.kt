@@ -29,6 +29,13 @@ class ReadingGoalRepositoryImpl
                 .getAll()
                 .map { entity -> entity.toModel() }
 
+        override fun getAllAsFlow(): Flow<List<ReadingGoal>> =
+            readingGoalDao
+                .getAllAsFlow()
+                .map { entities ->
+                    entities.map { it.toModel() }
+                }.distinctUntilChanged()
+
         override fun getByYear(year: Int): Flow<ReadingGoal?> =
             readingGoalDao
                 .getByYear(year)

@@ -140,6 +140,7 @@ private fun SetChangeGoalButton(
                         R.string.reading_goal__label__goal_change_text
                     },
                 ),
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

@@ -18,12 +18,14 @@ fun AppIconButton(
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     AppIconButton(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
     )
 }
 
@@ -33,20 +35,22 @@ fun AppIconButton(
     contentDescription: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     IconButton(
         onClick = onClick,
         modifier =
             modifier.border(
                 width = Dimens.buttonBorderWith,
-                color = MaterialTheme.colorScheme.primary,
+                color = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary,
                 shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
             ),
+        enabled = enabled,
     ) {
         Icon(
             painter = painter,
             contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.primary,
+            tint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary,
         )
     }
 }

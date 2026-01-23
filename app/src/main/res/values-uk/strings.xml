@@ -80,7 +80,7 @@
     <string name="book_details__label__shelf_reading_text">Попередній Сеанс\n%s</string>
     <string name="book_details__label__shelf_finished_text">Прочитано\n%s</string>
 
-    <string name="book_details__tab__sessions_title_text">Щоденник %d</string>
+    <string name="book_details__tab__sessions_title_text">Сеанси %d</string>
     <string name="book_details__tab__notes_title_text">Нотатки %d</string>
     <string name="book_details__tab__about_title_text">Опис</string>
 
@@ -207,11 +207,11 @@
     <string name="my_library__toolbar__title_text">@string/app_name</string>
 
     <!-- Reading Goal -->
-    <string name="reading_goal__label__goal_title_text">Мої Плани на %s</string>
+    <string name="reading_goal__label__goal_title_text">Мої Цілі на %s</string>
     <string name="reading_goal__label__goal_reading_progress_text">Прочитано %d з %d книг</string>
-    <string name="reading_goal__label__goal_change_text">Змінити Плани</string>
-    <string name="reading_goal__label__goal_set_text">Встановіть Свої Плани</string>
-    <string name="reading_goal__label__summery_title_text">Аналітика за %s</string>
+    <string name="reading_goal__label__goal_change_text">Змінити Цілі</string>
+    <string name="reading_goal__label__goal_set_text">Встановіть Свої Цілі</string>
+    <string name="reading_goal__label__summery_title_text">Статистика</string>
     <string name="reading_goal__label__summery_read_pages_text">Прочитано\nсторінок\n%d</string>
     <string name="reading_goal__label__summery_read_time_text">Загальний\nчас читання\n%1$02dh %2$02dm</string>
     <string name="reading_goal__label__summery_read_average_pages_hour_text">Сторінок\nна годину\n%d</string>
@@ -219,7 +219,7 @@
     <string name="reading_goal__label__no_finished_books_text">Наразі не маю прочитаних книг.</string>
 
     <!-- Reading Goal Change Dialog -->
-    <string name="reading_goal_change_dialog__label__goal_text">Мої Плани</string>
+    <string name="reading_goal_change_dialog__label__goal_text">Мої Цілі</string>
     <string name="reading_goal_change_dialog__hint__enter_goal_text">Ввведіть кількісь книг</string>
 
     <string name="reading_goal__toolbar__title_text">@string/reading_goal__label__goal_title_text</string>

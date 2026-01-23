@@ -20,6 +20,7 @@ import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGo
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGoalContent
 import com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components.ReadingGoalTopAppBar
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
+import java.time.LocalDate
 
 @Composable
 fun ReadingGoalScreen(
@@ -29,12 +30,23 @@ fun ReadingGoalScreen(
     viewModel: ReadingGoalViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val currentYear by remember { mutableStateOf(LocalDate.now().year) }
 
     ReadingGoalScreen(
         uiState = uiState,
         navBack = navBack,
         navToBookDetails = navToBookDetails,
         onUpdateReadingGoal = viewModel::updateReadingGoal,
+        onPrevClick = {
+            if (uiState.oldestYear < (uiState.selectedReadingGoal.year)) {
+                viewModel.updateSelectedReading(uiState.selectedReadingGoal.year - 1)
+            }
+        },
+        onNextClick = {
+            if (currentYear > (uiState.selectedReadingGoal.year)) {
+                viewModel.updateSelectedReading(uiState.selectedReadingGoal.year + 1)
+            }
+        },
         modifier = modifier,
     )
 }
@@ -45,6 +57,8 @@ internal fun ReadingGoalScreen(
     navBack: () -> Unit,
     navToBookDetails: (String) -> Unit,
     onUpdateReadingGoal: (ReadingGoal) -> Unit,
+    onPrevClick: () -> Unit,
+    onNextClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showReadingGoalChangeDialog by rememberSaveable { mutableStateOf(false) }
@@ -54,7 +68,7 @@ internal fun ReadingGoalScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             ReadingGoalTopAppBar(
-                yearGoal = uiState.readingGoal.year,
+                yearGoal = uiState.selectedReadingGoal.year,
                 navBack = {
                     if (!isTriggeredNavTo) {
                         isTriggeredNavTo = true
@@ -69,6 +83,8 @@ internal fun ReadingGoalScreen(
                 onChangeGoalClick = {
                     showReadingGoalChangeDialog = true
                 },
+                onPrevClick = onPrevClick,
+                onNextClick = onNextClick,
                 onBookClick = {
                     if (!isTriggeredNavTo) {
                         isTriggeredNavTo = true
@@ -84,7 +100,7 @@ internal fun ReadingGoalScreen(
 
     if (showReadingGoalChangeDialog) {
         ReadingGoalChangeDialog(
-            readingGoal = uiState.readingGoal,
+            readingGoal = uiState.selectedReadingGoal,
             onDismissRequest = {
                 showReadingGoalChangeDialog = false
             },
@@ -103,15 +119,15 @@ private fun ReadingGoalScreenPreview() {
         ReadingGoalScreen(
             uiState =
                 ReadingGoalUiState(
-                    books =
+                    finishedBooks =
                         listOf(
                             Book(title = "Book 1"),
                             Book(title = "Book 2"),
                             Book(title = "Book 3"),
                             Book(title = "Book 4"),
                         ),
-                    currentYearFinishedBooksCount = 6,
-                    readingGoal =
+                    finishedBooksCount = 6,
+                    selectedReadingGoal =
                         ReadingGoal(
                             year = 2026,
                             goal = 12,
@@ -124,6 +140,8 @@ private fun ReadingGoalScreenPreview() {
             navBack = {},
             navToBookDetails = {},
             onUpdateReadingGoal = {},
+            onPrevClick = {},
+            onNextClick = {},
         )
     }
 }
@@ -138,6 +156,8 @@ private fun ReadingGoalScreenEmptyPreview() {
             navBack = {},
             navToBookDetails = {},
             onUpdateReadingGoal = {},
+            onPrevClick = {},
+            onNextClick = {},
         )
     }
 }

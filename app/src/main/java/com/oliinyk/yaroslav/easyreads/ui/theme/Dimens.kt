@@ -6,6 +6,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 object Dimens {
+    val rotate180 = 180f
+
     // ----- dp -----
     val spacerHeightSmall = 8.dp
     val spacerHeightMedium = 16.dp

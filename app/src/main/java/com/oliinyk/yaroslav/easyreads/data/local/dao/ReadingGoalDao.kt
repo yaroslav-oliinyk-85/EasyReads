@@ -13,6 +13,9 @@ interface ReadingGoalDao {
     @Query("SELECT * FROM reading_goals")
     suspend fun getAll(): List<ReadingGoalEntity>
 
+    @Query("SELECT * FROM reading_goals")
+    fun getAllAsFlow(): Flow<List<ReadingGoalEntity>>
+
     @Query("SELECT * FROM reading_goals WHERE year = :year")
     fun getByYear(year: Int): Flow<ReadingGoalEntity?>
 

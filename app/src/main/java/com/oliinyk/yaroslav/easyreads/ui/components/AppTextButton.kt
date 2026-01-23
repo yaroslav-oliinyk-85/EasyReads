@@ -43,7 +43,7 @@ fun AppTextButton(
         border =
             BorderStroke(
                 width = Dimens.buttonBorderWith,
-                color = MaterialTheme.colorScheme.primary,
+                color = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary,
             ),
     )
 }

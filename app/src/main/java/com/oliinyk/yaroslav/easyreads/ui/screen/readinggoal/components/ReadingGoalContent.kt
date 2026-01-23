@@ -17,6 +17,8 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 fun ReadingGoalContent(
     uiState: ReadingGoalUiState,
     onChangeGoalClick: () -> Unit,
+    onPrevClick: () -> Unit,
+    onNextClick: () -> Unit,
     onBookClick: (Book) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -32,6 +34,8 @@ fun ReadingGoalContent(
         ReadingGoalProgressSection(
             uiState = uiState,
             onChangeGoalClick = onChangeGoalClick,
+            onPrevClick = onPrevClick,
+            onNextClick = onNextClick,
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalSummarySection(
@@ -39,7 +43,7 @@ fun ReadingGoalContent(
         )
         Spacer(Modifier.height(Dimens.spacerHeightSmall))
         ReadingGoalFinishedBooksSection(
-            books = uiState.books,
+            books = uiState.finishedBooks,
             onBookClick = onBookClick,
         )
     }
