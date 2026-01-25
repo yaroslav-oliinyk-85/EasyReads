@@ -5,6 +5,7 @@ import com.oliinyk.yaroslav.easyreads.data.local.entety.BookEntity
 import com.oliinyk.yaroslav.easyreads.domain.serializer.UUIDSerializer
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Contextual
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,7 +21,8 @@ data class Book(
     val description: String = "",
     val isbn: String = "",
     val shelf: BookShelvesType = BookShelvesType.WANT_TO_READ,
-    val pageAmount: Int = 0,
+    @SerialName("pageAmount")
+    val pagesCount: Int = 0,
     val pageCurrent: Int = 0,
     @Contextual
     val addedAt: LocalDateTime = LocalDateTime.now(),
@@ -41,7 +43,7 @@ fun Book.toEntity(): BookEntity =
         isbn = isbn,
         description = description,
         shelve = shelf.toString(),
-        pageAmount = pageAmount,
+        pageAmount = pagesCount,
         pageCurrent = pageCurrent,
         addedAt = addedAt.atZone(ZoneId.systemDefault()).toInstant(),
         updatedAt = updatedAt.atZone(ZoneId.systemDefault()).toInstant(),

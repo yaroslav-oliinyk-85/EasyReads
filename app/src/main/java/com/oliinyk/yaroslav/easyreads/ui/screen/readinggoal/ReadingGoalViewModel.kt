@@ -87,7 +87,7 @@ class ReadingGoalViewModel
                 val readPages =
                     if (finishedBooks.isNotEmpty()) {
                         finishedBooks
-                            .map { it.pageAmount }
+                            .map { it.pagesCount }
                             .reduce { sum, pages -> sum + pages }
                     } else {
                         0
@@ -110,24 +110,29 @@ class ReadingGoalViewModel
                 readingSessionRepository.getAllByBookIds(
                     finishedBooks.map { it.id }.toList(),
                 )
+            var averagePagesHour = 0
+            var readHours = 0
+            var readMinutes = 0
             if (sessions.isNotEmpty()) {
                 val totalReadTimeInMilliseconds =
                     sessions
                         .map { it.readTimeInMilliseconds }
                         .reduce { acc, value -> acc + value }
                 val totalReadMinutes = totalReadTimeInMilliseconds / MILLISECONDS_IN_ONE_MINUTE
-
-                _uiState.update { state ->
-                    state.copy(
-                        averagePagesHour =
-                            (
-                                state.readPages.toDouble() / totalReadMinutes *
-                                    MINUTES_IN_ONE_HOUR
-                            ).roundToInt(),
-                        readHours = (totalReadMinutes / MINUTES_IN_ONE_HOUR).toInt(),
-                        readMinutes = (totalReadMinutes % MINUTES_IN_ONE_HOUR).toInt(),
-                    )
-                }
+                averagePagesHour =
+                    (
+                        _uiState.value.readPages.toDouble() / totalReadMinutes *
+                            MINUTES_IN_ONE_HOUR
+                    ).roundToInt()
+                readHours = (totalReadMinutes / MINUTES_IN_ONE_HOUR).toInt()
+                readMinutes = (totalReadMinutes % MINUTES_IN_ONE_HOUR).toInt()
+            }
+            _uiState.update { state ->
+                state.copy(
+                    averagePagesHour = averagePagesHour,
+                    readHours = readHours,
+                    readMinutes = readMinutes,
+                )
             }
         }
 

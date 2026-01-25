@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
@@ -69,11 +70,12 @@ fun ReadingGoalFinishedBooksSection(
                         Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(),
-                    contentAlignment = Alignment.Center,
+                    contentAlignment = Alignment.TopCenter,
                 ) {
                     Text(
                         text = stringResource(R.string.reading_goal__label__no_finished_books_text),
                         style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
                     )
                 }
             } else {

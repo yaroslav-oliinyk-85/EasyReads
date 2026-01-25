@@ -44,8 +44,8 @@ fun BookListItem(
     holderSize: HolderSize = HolderSize.DEFAULT,
 ) {
     val percentage =
-        if (book.pageAmount != 0) {
-            (book.pageCurrent * 100 / book.pageAmount)
+        if (book.pagesCount != 0) {
+            (book.pageCurrent * 100 / book.pagesCount)
         } else {
             0
         }
@@ -195,7 +195,7 @@ fun BookListItem(
                             stringResource(
                                 R.string.book_details__label__book_pages_text,
                                 book.pageCurrent,
-                                book.pageAmount,
+                                book.pagesCount,
                             ),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.End,
@@ -216,7 +216,7 @@ private fun BookListItemFinishedPreview() {
                 title = "Title",
                 author = "Author",
                 pageCurrent = 1250,
-                pageAmount = 2500,
+                pagesCount = 2500,
                 finishedAt = LocalDateTime.now(),
                 shelf = BookShelvesType.FINISHED,
             ),
@@ -234,7 +234,7 @@ private fun BookListItemReadingPreview() {
                 title = "Title",
                 author = "Author",
                 pageCurrent = 50,
-                pageAmount = 250,
+                pagesCount = 250,
                 shelf = BookShelvesType.READING,
             ),
         onClickedBook = {},
@@ -251,7 +251,7 @@ private fun BookListItemWantToReadPreview() {
                 title = "Title",
                 author = "Author",
                 pageCurrent = 50,
-                pageAmount = 250,
+                pagesCount = 250,
                 shelf = BookShelvesType.WANT_TO_READ,
             ),
         onClickedBook = {},

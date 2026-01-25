@@ -60,12 +60,12 @@
     <string name="book_list_item__label__shelf_finished_text">Прочитано\n%s</string>
 
     <!-- Book Details -->
-    <string name="book_details__label__book_description_text">Опис</string>
+    <string name="book_details__label__book_description_text">Анотація</string>
     <string name="book_details__label__book_isbn_text">ISBN:</string>
     <string name="book_details__label__no_notes_text">Пустий Список</string>
     <string name="book_details__label__note_page_text">%1$d Сторінка</string>
     <string name="book_details__label__book_pages_text">Сторінки\n%1$d/%2$d</string>
-    <string name="book_details__label__book_total_read_time_text">Загальний Час\n%1$02d:%2$02d</string>
+    <string name="book_details__label__book_total_read_time_text">Загальний Час\n%1$02d г. %2$02d хв.</string>
     <string name="book_details__label__book_read_average_pages_hour_text">Сторінок на годину\n%d</string>
     <string name="book_details__label__book_read_pages_hour_text">%d сторінок на годину</string>
     <string name="book_details__label__shelf_text">Поличка\n%s</string>
@@ -184,8 +184,8 @@
     <string name="reading_session_list__confirmation_dialog__message_text">Дата: %1$s\nСторінок прочитано: %2$d\nПрочитано: з %3$d по %4$d сторінку</string>
     <!-- Reading Session List Item -->
     <string name="reading_session_list_item__label__date_text">%s</string>
-    <string name="reading_session_list_item__label__read_time_hour_minutes_text">%1$02d години %2$02d хвилини</string>
-    <string name="reading_session_list_item__label__read_time_minutes_text">%1$02d хвилини</string>
+    <string name="reading_session_list_item__label__read_time_hour_minutes_text">%1$02d г. %2$02d хв.</string>
+    <string name="reading_session_list_item__label__read_time_minutes_text">%1$02d хв.</string>
     <string name="reading_session_list_item__label__read_end_page_text">з %1$d по %2$d сторінку</string>
     <string name="reading_session_list_item__label__read_pages_hour_text">Сторінок на годину\n%d</string>
     <string name="reading_session_list_item__label__read_pages_text">%d прочитано сторінок</string>
@@ -213,10 +213,10 @@
     <string name="reading_goal__label__goal_set_text">Встановіть Свої Цілі</string>
     <string name="reading_goal__label__summery_title_text">Статистика</string>
     <string name="reading_goal__label__summery_read_pages_text">Прочитано\nсторінок\n%d</string>
-    <string name="reading_goal__label__summery_read_time_text">Загальний\nчас читання\n%1$02dh %2$02dm</string>
+    <string name="reading_goal__label__summery_read_time_text">Загальний\nчас читання\n%1$02d г. %2$02d хв.</string>
     <string name="reading_goal__label__summery_read_average_pages_hour_text">Сторінок\nна годину\n%d</string>
     <string name="reading_goal__label__summery_books_title_text">Прочитано %d</string>
-    <string name="reading_goal__label__no_finished_books_text">Наразі не маю прочитаних книг.</string>
+    <string name="reading_goal__label__no_finished_books_text">Тут будуть\nпрочитані книги</string>
 
     <!-- Reading Goal Change Dialog -->
     <string name="reading_goal_change_dialog__label__goal_text">Мої Цілі</string>

@@ -25,7 +25,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 
 @Composable
 fun ReadingSessionRecordContent(
-    stateUi: ReadingSessionRecordUiState,
+    uiState: ReadingSessionRecordUiState,
     onEvent: (ReadingSessionRecordEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,6 +33,7 @@ fun ReadingSessionRecordContent(
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
+            pagesCount = uiState.book?.pagesCount ?: 0,
             onSave = {
                 onEvent(ReadingSessionRecordEvent.OnFinish(it))
                 editingReadingSession = null
@@ -45,6 +46,7 @@ fun ReadingSessionRecordContent(
     addingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
+            pagesCount = uiState.book?.pagesCount ?: 0,
             onSave = {
                 onEvent(ReadingSessionRecordEvent.OnAddNote(it))
                 addingNote = null
@@ -62,18 +64,18 @@ fun ReadingSessionRecordContent(
         verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
     ) {
         ReadingSessionRecordBookCoverSection(
-            book = stateUi.book ?: Book(),
+            book = uiState.book ?: Book(),
         )
 
         ReadingSessionRecordSection(
-            readingSession = stateUi.readingSession ?: ReadingSession(),
-            notesCount = stateUi.notesCount,
+            readingSession = uiState.readingSession ?: ReadingSession(),
+            notesCount = uiState.notesCount,
             onClickStartPause = { onEvent(ReadingSessionRecordEvent.OnStartPause) },
             onClickShowNotes = { onEvent(ReadingSessionRecordEvent.OnShowNotes) },
-            onClickAddNote = { addingNote = Note().copy(bookId = stateUi.book?.id) },
+            onClickAddNote = { addingNote = Note().copy(bookId = uiState.book?.id) },
             onClickFinish = {
                 onEvent(ReadingSessionRecordEvent.OnPause)
-                editingReadingSession = stateUi.readingSession
+                editingReadingSession = uiState.readingSession
             },
         )
     }
@@ -84,7 +86,7 @@ fun ReadingSessionRecordContent(
 private fun ReadingSessionRecordContentPreview() {
     EasyReadsTheme {
         ReadingSessionRecordContent(
-            stateUi =
+            uiState =
                 ReadingSessionRecordUiState(
                     book =
                         Book(

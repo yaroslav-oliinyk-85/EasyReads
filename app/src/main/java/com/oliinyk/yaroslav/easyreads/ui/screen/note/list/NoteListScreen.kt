@@ -39,7 +39,7 @@ fun NoteListScreen(
         }
     }
 
-    val uiState: NoteListStateUi by viewModel.stateUi.collectAsStateWithLifecycle()
+    val uiState: NoteListUiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     NoteListScreen(
         uiState = uiState,
@@ -51,7 +51,7 @@ fun NoteListScreen(
 
 @Composable
 fun NoteListScreen(
-    uiState: NoteListStateUi,
+    uiState: NoteListUiState,
     navBack: () -> Unit,
     onSave: (Note) -> Unit,
     onRemove: (Note) -> Unit,
@@ -101,6 +101,7 @@ fun NoteListScreen(
     editingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
+            pagesCount = uiState.pagesCount,
             isRemoveButtonEnabled = (note.bookId != null),
             onSave = {
                 onSave(it)
@@ -133,7 +134,7 @@ private fun NoteListScreenPreview() {
     EasyReadsTheme {
         NoteListScreen(
             uiState =
-                NoteListStateUi(
+                NoteListUiState(
                     notes =
                         listOf(
                             Note(text = "Note 1", page = 5),
@@ -153,7 +154,7 @@ private fun NoteListScreenPreview() {
 private fun NoteListScreenEmptyPreview() {
     EasyReadsTheme {
         NoteListScreen(
-            uiState = NoteListStateUi(),
+            uiState = NoteListUiState(),
             navBack = {},
             onSave = {},
             onRemove = {},

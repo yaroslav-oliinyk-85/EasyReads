@@ -3,11 +3,13 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.note.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
+import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -18,20 +20,29 @@ class NoteListViewModel
     @Inject
     constructor(
         private val noteRepository: NoteRepository,
+        private val bookRepository: BookRepository,
     ) : ViewModel() {
-        private val _stateUi: MutableStateFlow<NoteListStateUi> = MutableStateFlow(NoteListStateUi())
-        val stateUi: StateFlow<NoteListStateUi>
-            get() = _stateUi.asStateFlow()
+        private val _uiState: MutableStateFlow<NoteListUiState> = MutableStateFlow(NoteListUiState())
+        val uiState: StateFlow<NoteListUiState>
+            get() = _uiState.asStateFlow()
 
         fun setup(bookId: UUID) {
+            getPagesCount(bookId)
             loadNotes(bookId)
         }
 
+        private fun getPagesCount(bookId: UUID) {
+            viewModelScope.launch {
+                val book = bookRepository.getById(bookId).first()
+                _uiState.update { it.copy(pagesCount = book?.pagesCount ?: 0) }
+            }
+        }
+
         private fun loadNotes(bookId: UUID) {
-            _stateUi.update { it.copy(bookId = bookId) }
+            _uiState.update { it.copy(bookId = bookId) }
             viewModelScope.launch {
                 noteRepository.getAllByBookId(bookId).collect { notes ->
-                    _stateUi.update { it.copy(notes = notes) }
+                    _uiState.update { it.copy(notes = notes) }
                 }
             }
         }
@@ -45,7 +56,7 @@ class NoteListViewModel
         }
 
         fun add(note: Note) {
-            stateUi.value.bookId?.let { bookId ->
+            uiState.value.bookId?.let { bookId ->
                 noteRepository.save(note.copy(bookId = bookId))
             }
         }
@@ -61,7 +72,8 @@ class NoteListViewModel
         }
     }
 
-data class NoteListStateUi(
+data class NoteListUiState(
     val bookId: UUID? = null,
+    val pagesCount: Int = 0,
     val notes: List<Note> = emptyList(),
 )

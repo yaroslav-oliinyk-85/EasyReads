@@ -238,7 +238,7 @@ private fun DateAndProgressRow(
                     stringResource(
                         R.string.book_details__label__book_pages_text,
                         book.pageCurrent,
-                        book.pageAmount,
+                        book.pagesCount,
                     ),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.End,
@@ -362,7 +362,7 @@ private fun BookDetailsCoverSectionFinishedPreview() {
             Book().copy(
                 title = "Book Title",
                 author = "Book Author",
-                pageAmount = 250,
+                pagesCount = 250,
                 pageCurrent = 50,
                 shelf = BookShelvesType.FINISHED,
                 isFinished = true,
@@ -382,7 +382,7 @@ private fun BookDetailsCoverSectionReadingPreview() {
             Book().copy(
                 title = "Book Title",
                 author = "Book Author",
-                pageAmount = 250,
+                pagesCount = 250,
                 pageCurrent = 50,
                 shelf = BookShelvesType.READING,
             ),
@@ -400,7 +400,7 @@ private fun BookDetailsCoverSectionWantToReadPreview() {
             Book().copy(
                 title = "Book Title",
                 author = "Book Author",
-                pageAmount = 250,
+                pagesCount = 250,
                 pageCurrent = 50,
                 shelf = BookShelvesType.WANT_TO_READ,
             ),

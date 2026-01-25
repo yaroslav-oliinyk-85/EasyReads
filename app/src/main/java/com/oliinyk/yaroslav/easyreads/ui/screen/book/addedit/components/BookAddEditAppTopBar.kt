@@ -13,14 +13,14 @@ import com.oliinyk.yaroslav.easyreads.ui.components.AppNavigationBackIconButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookAddEditAppTopBar(
-    bookTitle: String,
+    isAdding: Boolean,
     navBack: () -> Unit,
 ) {
     TopAppBar(
         title = {
             Text(
                 text =
-                    if (bookTitle.isBlank()) {
+                    if (isAdding) {
                         stringResource(R.string.book_add_edit__title__add_text)
                     } else {
                         stringResource(R.string.book_add_edit__title__edit_text)

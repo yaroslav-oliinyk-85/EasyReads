@@ -128,7 +128,7 @@ internal fun ReadingSessionRecordScreen(
         },
     ) { paddingValues ->
         ReadingSessionRecordContent(
-            stateUi = uiState,
+            uiState = uiState,
             onEvent = onEvent,
             modifier = Modifier.padding(paddingValues),
         )
@@ -205,7 +205,7 @@ private fun ReadingSessionRecordScreenPreview() {
                             title = "Title",
                             author = "Author",
                             pageCurrent = 50,
-                            pageAmount = 250,
+                            pagesCount = 250,
                         ),
                 ),
             navBack = {},

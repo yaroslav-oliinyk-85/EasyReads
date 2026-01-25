@@ -28,6 +28,7 @@ import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
 @Composable
 fun BookDetailsNotesSection(
     notes: List<Note>,
+    pagesCount: Int,
     onAddNote: (Note) -> Unit,
     onEditNote: (Note) -> Unit,
     onRemoveNote: (Note) -> Unit,
@@ -67,6 +68,7 @@ fun BookDetailsNotesSection(
     editingNote?.let { note ->
         NoteAddEditDialog(
             note = note,
+            pagesCount = pagesCount,
             isRemoveButtonEnabled = note.bookId != null,
             onSave = {
                 if (it.bookId == null) onAddNote(it) else onEditNote(it)
@@ -133,6 +135,7 @@ private fun BookDetailsNotesSectionPreview() {
                         page = 25,
                     ),
                 ),
+            pagesCount = 0,
             onAddNote = {},
             onEditNote = {},
             onRemoveNote = {},
@@ -146,6 +149,7 @@ private fun BookDetailsNotesSectionEmptyPreview() {
     EasyReadsTheme {
         BookDetailsNotesSection(
             notes = emptyList(),
+            pagesCount = 0,
             onAddNote = {},
             onEditNote = {},
             onRemoveNote = {},

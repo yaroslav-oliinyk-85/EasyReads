@@ -103,6 +103,7 @@ fun BookDetailsContent(
             BookDetailTabs.NOTES -> {
                 BookDetailsNotesSection(
                     notes = uiState.notes,
+                    pagesCount = uiState.book.pagesCount,
                     onAddNote = { onEvent(BookDetailsEvent.AddNote(it)) },
                     onEditNote = { onEvent(BookDetailsEvent.UpdateNote(it)) },
                     onRemoveNote = { onEvent(BookDetailsEvent.RemoveNote(it)) },
@@ -135,7 +136,7 @@ private fun BookDetailsContentFinishedPreview() {
                         Book(
                             title = "Title",
                             author = "Author",
-                            pageAmount = 250,
+                            pagesCount = 250,
                             pageCurrent = 50,
                             shelf = BookShelvesType.FINISHED,
                             isFinished = true,
@@ -159,7 +160,7 @@ private fun BookDetailsContentReadingPreview() {
                         Book(
                             title = "Title",
                             author = "Author",
-                            pageAmount = 250,
+                            pagesCount = 250,
                             pageCurrent = 50,
                             shelf = BookShelvesType.READING,
                             isFinished = false,
@@ -182,7 +183,7 @@ private fun BookDetailsContentWantToReadPreview() {
                         Book(
                             title = "Title",
                             author = "Author",
-                            pageAmount = 250,
+                            pagesCount = 250,
                             pageCurrent = 50,
                             shelf = BookShelvesType.WANT_TO_READ,
                             isFinished = false,

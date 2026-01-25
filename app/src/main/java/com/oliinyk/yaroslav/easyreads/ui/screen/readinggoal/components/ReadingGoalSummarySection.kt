@@ -59,6 +59,7 @@ fun ReadingGoalSummarySection(
                         ),
                     textAlign = TextAlign.Left,
                     style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
                 )
                 Text(
                     text =
@@ -68,6 +69,7 @@ fun ReadingGoalSummarySection(
                         ),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
                 )
                 Text(
                     text =
@@ -77,6 +79,7 @@ fun ReadingGoalSummarySection(
                         ),
                     textAlign = TextAlign.Right,
                     style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
                 )
             }
         }

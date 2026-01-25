@@ -78,6 +78,7 @@ fun BookDetailsReadingSessionsSection(
     editingReadingSession?.let { readingSession ->
         ReadingSessionAddEditDialog(
             readingSession = readingSession,
+            pagesCount = uiState.book.pagesCount,
             isRemoveButtonEnabled = true,
             onSave = {
                 onEditClicked(it)
@@ -246,7 +247,7 @@ private fun ReadingStatisticInfoRow(
                         uiState.readHours,
                         uiState.readMinutes,
                     ),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
             // --- Average Read Time Per Hour ---
@@ -258,7 +259,7 @@ private fun ReadingStatisticInfoRow(
                         uiState.readPagesHour,
                     ),
                 textAlign = TextAlign.End,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary,
             )
         }

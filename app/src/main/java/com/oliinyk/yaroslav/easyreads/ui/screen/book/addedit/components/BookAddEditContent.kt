@@ -106,7 +106,7 @@ fun BookAddEditContent(
                 // Page Amount
                 AppEditField(
                     label = stringResource(R.string.book_add_edit__label__book_pages_amount_text),
-                    value = if (stateUi.book.pageAmount != 0) stateUi.book.pageAmount.toString() else "",
+                    value = if (stateUi.book.pagesCount != 0) stateUi.book.pagesCount.toString() else "",
                     hint = stringResource(R.string.book_add_edit__hint__book_pages_count_text),
                     keyboardOptions =
                         KeyboardOptions(

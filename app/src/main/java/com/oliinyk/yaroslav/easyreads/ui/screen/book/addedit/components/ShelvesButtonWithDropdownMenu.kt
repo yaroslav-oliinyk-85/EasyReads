@@ -44,6 +44,7 @@ fun ShelvesButtonWithDropdownMenu(
                         BookShelvesType.WANT_TO_READ ->
                             stringResource(R.string.book_details__button__shelf_want_to_read_text)
                     },
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
         DropdownMenu(

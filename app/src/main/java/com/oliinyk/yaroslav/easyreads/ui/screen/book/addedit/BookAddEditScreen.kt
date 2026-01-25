@@ -90,7 +90,7 @@ fun BookAddEditScreen(
         modifier = modifier.fillMaxSize(),
         topBar = {
             BookAddEditAppTopBar(
-                bookTitle = stateUi.book.title,
+                isAdding = bookId == null,
                 navBack = {
                     viewModel.removeUnusedCoverImage(context.applicationContext)
                     navBack()

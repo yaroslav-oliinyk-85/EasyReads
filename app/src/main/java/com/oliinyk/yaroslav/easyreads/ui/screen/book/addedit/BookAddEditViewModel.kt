@@ -81,9 +81,9 @@ class BookAddEditViewModel
 
                 is BookAddEditEvent.PageAmountChanged ->
                     if (event.value.isBlank()) {
-                        updateStateUi { it.copy(book = it.book.copy(pageAmount = 0)) }
+                        updateStateUi { it.copy(book = it.book.copy(pagesCount = 0)) }
                     } else if (event.value.isDigitsOnly()) {
-                        updateStateUi { it.copy(book = it.book.copy(pageAmount = event.value.toInt())) }
+                        updateStateUi { it.copy(book = it.book.copy(pagesCount = event.value.toInt())) }
                     }
 
                 is BookAddEditEvent.IsbnChanged ->

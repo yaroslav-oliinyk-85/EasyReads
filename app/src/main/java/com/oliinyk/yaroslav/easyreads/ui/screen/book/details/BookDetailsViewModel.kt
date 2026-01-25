@@ -153,8 +153,8 @@ data class BookDetailsUiState(
 ) {
     val percentage: Int
         get() {
-            return if (book.pageAmount != 0) {
-                book.pageCurrent * 100 / book.pageAmount
+            return if (book.pagesCount != 0) {
+                book.pageCurrent * 100 / book.pagesCount
             } else {
                 0
             }

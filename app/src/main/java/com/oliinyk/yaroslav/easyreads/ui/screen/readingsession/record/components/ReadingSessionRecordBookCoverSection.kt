@@ -110,7 +110,7 @@ fun ReadingSessionRecordBookCoverSection(
                         stringResource(
                             R.string.reading_session_record__label__read_pages_text,
                             book.pageCurrent,
-                            book.pageAmount,
+                            book.pagesCount,
                         ),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.End,
@@ -133,7 +133,7 @@ private fun ReadingSessionRecordBookCoverSectionPreview() {
                     """.trimIndent(),
                 author = "Author Author Author Author Author",
                 pageCurrent = 50,
-                pageAmount = 250,
+                pagesCount = 250,
             ),
         )
     }
