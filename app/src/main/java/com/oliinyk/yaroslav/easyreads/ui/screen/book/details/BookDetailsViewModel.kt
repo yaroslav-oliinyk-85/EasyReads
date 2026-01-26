@@ -76,8 +76,14 @@ class BookDetailsViewModel
         }
 
         fun addReadingSession(readingSession: ReadingSession) {
+            val (isFinished, finishedAt, shelf) = getIsFinishedWithFinishedAt(readingSession)
             bookRepository.update(
-                uiState.value.book.copy(pageCurrent = readingSession.endPage),
+                uiState.value.book.copy(
+                    pageCurrent = readingSession.endPage,
+                    isFinished = isFinished,
+                    finishedAt = finishedAt,
+                    shelf = shelf,
+                ),
             )
 
             readingSessionRepository.save(
@@ -88,12 +94,31 @@ class BookDetailsViewModel
         }
 
         fun updateReadingSession(readingSession: ReadingSession) {
+            val (isFinished, finishedAt, shelf) = getIsFinishedWithFinishedAt(readingSession)
             bookRepository.update(
-                uiState.value.book.copy(pageCurrent = readingSession.endPage),
+                uiState.value.book.copy(
+                    pageCurrent = readingSession.endPage,
+                    isFinished = isFinished,
+                    finishedAt = finishedAt,
+                    shelf = shelf,
+                ),
             )
 
             readingSessionRepository.update(readingSession)
         }
+
+        private fun getIsFinishedWithFinishedAt(
+            readingSession: ReadingSession,
+        ): Triple<Boolean, LocalDateTime, BookShelvesType> =
+            if (!uiState.value.book.isFinished && uiState.value.book.pagesCount == readingSession.endPage) {
+                Triple(true, LocalDateTime.now(), BookShelvesType.FINISHED)
+            } else {
+                Triple(
+                    uiState.value.book.isFinished,
+                    uiState.value.book.finishedAt,
+                    uiState.value.book.shelf,
+                )
+            }
 
         fun removeReadingSession(readingSession: ReadingSession) {
             if (readingSession == uiState.value.readingSessions.first()) {

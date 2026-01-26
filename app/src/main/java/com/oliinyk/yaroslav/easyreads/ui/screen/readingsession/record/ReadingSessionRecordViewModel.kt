@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.record
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
+import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.domain.model.Note
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSessionRecordStatusType
@@ -33,9 +34,6 @@ class ReadingSessionRecordViewModel
 
         val currentReadingSession
             get() = uiState.value.readingSession
-
-        val currentBook: Book
-            get() = checkNotNull(uiState.value.book)
 
         fun setup(bookId: UUID) {
             loadBookById(bookId)
@@ -102,10 +100,19 @@ class ReadingSessionRecordViewModel
 
         fun save(readingSession: ReadingSession) {
             uiState.value.book?.let { book ->
+                val (isFinished: Boolean, finishedAt: LocalDateTime, shelf: BookShelvesType) =
+                    if (!book.isFinished && book.pagesCount == readingSession.endPage) {
+                        Triple(true, LocalDateTime.now(), BookShelvesType.FINISHED)
+                    } else {
+                        Triple(book.isFinished, book.finishedAt, book.shelf)
+                    }
                 bookRepository.update(
                     book.copy(
                         pageCurrent = readingSession.endPage,
                         updatedAt = LocalDateTime.now(),
+                        isFinished = isFinished,
+                        finishedAt = finishedAt,
+                        shelf = shelf,
                     ),
                 )
 
