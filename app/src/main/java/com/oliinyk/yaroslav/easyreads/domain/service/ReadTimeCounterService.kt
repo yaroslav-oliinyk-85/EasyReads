@@ -12,11 +12,11 @@ import androidx.core.app.NotificationCompat
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadTimeCounterRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.READ_TIME_COUNTER_NOTIFICATION_CHANNEL_ID
+import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.READ_TIME_COUNTER_SERVICE_ID
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 import javax.inject.Inject
 
-private const val READ_TIME_COUNTER_SERVICE_ID = 1
 private const val NOTIFICATION_UPDATE_DELAY = 1000L
 
 @AndroidEntryPoint

@@ -196,9 +196,12 @@
     <string name="reading_session_list__toolbar__title_text">Reading Sessions %d</string>
 
     <!-- Read Time Counter Notification -->
-    <string name="read_time_counter_notification_channel_name" translatable="false">Read Time Counter</string>
+    <string name="read_time_counter_notification_channel_name" translatable="false">Reading Sessions</string>
     <string name="read_time_counter_notification_content_title_text">Reading</string>
     <string name="read_time_counter_notification_content_text">Reading time: %1$02d:%2$02d:%3$02d</string>
+
+    <!-- Firebase Cloud Messaging Notification -->
+    <string name="firebase_cloud_messaging_notification_channel_name" translatable="false">Notification Messages</string>
 
     <!-- My Library -->
     <string name="my_library__label__add_first_book_text">Add your first book</string>
