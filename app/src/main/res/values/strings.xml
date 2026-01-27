@@ -39,7 +39,7 @@
     <string name="dialog__button__remove_text">Remove</string>
 
     <!-- Confirmation Dialog -->
-    <string name="confirmation_dialog__button__ok_text">Ok</string>
+    <string name="confirmation_dialog__button__ok_text">OK</string>
     <string name="confirmation_dialog__button__cancel_text">Cancel</string>
 
     <!-- Export Data Dialog -->

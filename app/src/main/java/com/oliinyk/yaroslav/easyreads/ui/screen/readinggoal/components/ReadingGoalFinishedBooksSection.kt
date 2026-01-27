@@ -3,6 +3,7 @@ package com.oliinyk.yaroslav.easyreads.ui.screen.readinggoal.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -10,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -79,20 +77,22 @@ fun ReadingGoalFinishedBooksSection(
                     )
                 }
             } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(Dimens.gridCellsCount),
-                    modifier = Modifier.fillMaxHeight(),
-                    verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceTiny),
-                    horizontalArrangement = Arrangement.spacedBy(Dimens.arrangementHorizontalSpaceTiny),
-                    content = {
-                        items(books) { book ->
-                            ReadingGoalFinishedBooksItemCell(
-                                book = book,
-                                onBookClick = onBookClick,
-                            )
-                        }
-                    },
-                )
+                FlowRow(
+                    maxItemsInEachRow = Dimens.gridCellsCount,
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.arrangementHorizontalSpaceSmall),
+                    verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
+                ) {
+                    books.forEach { book ->
+                        ReadingGoalFinishedBooksItemCell(
+                            book = book,
+                            onBookClick = onBookClick,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    repeat(Dimens.gridCellsPlaceHolderCount) {
+                        Spacer(Modifier.weight(1f))
+                    }
+                }
             }
         }
     }
