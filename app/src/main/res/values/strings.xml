@@ -63,9 +63,9 @@
     <string name="book_list__button__sorted_order_content_description_text">Sort Order</string>
     <!-- Book List Item -->
     <string name="book_list_item__label__shelf_info_text">SHELF\n%s</string>
-    <string name="book_list_item__label__shelf_want_to_read_text">WANT TO READ\n%s</string>
-    <string name="book_list_item__label__shelf_reading_text">READING\n%s</string>
-    <string name="book_list_item__label__shelf_finished_text">FINISHED\n%s</string>
+    <string name="book_list_item__label__shelf_want_to_read_text">WANT TO READ</string>
+    <string name="book_list_item__label__shelf_reading_text">READING</string>
+    <string name="book_list_item__label__shelf_finished_text">FINISHED</string>
 
     <!-- Book Details -->
     <string name="book_details__button__add_note_text">Add Note</string>

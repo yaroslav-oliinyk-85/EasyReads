@@ -45,7 +45,7 @@ fun BookListSection(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(Dimens.arrangementVerticalSpaceSmall),
         ) {
-            items(uiState.books) { book ->
+            items(uiState.books, key = { it.id }) { book ->
                 BookListItem(
                     book = book,
                     holderSize = uiState.holderSize,

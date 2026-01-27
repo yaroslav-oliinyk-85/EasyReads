@@ -1,5 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.list.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -55,7 +56,7 @@ fun BookListItem(
 
     var titleMaxLines: Int
     var authorMaxLines: Int
-    var dateFormatStringResource: Int
+    var dateFormatStringResourceId: Int
 
     when (holderSize) {
         HolderSize.SMALL -> {
@@ -63,21 +64,21 @@ fun BookListItem(
             bookListItemHeight = Dimens.sizeSmallBookListItemHeight
             titleMaxLines = Dimens.sizeSmallBookListItemTitleMaxLines
             authorMaxLines = Dimens.sizeSmallBookListItemAuthorMaxLines
-            dateFormatStringResource = R.string.date_and_time_format
+            dateFormatStringResourceId = R.string.date_format
         }
         HolderSize.DEFAULT -> {
             coverImageWidth = Dimens.sizeMediumBookListItemCoverImageWidth
             bookListItemHeight = Dimens.sizeMediumBookListItemHeight
             titleMaxLines = Dimens.sizeMediumBookListItemTitleMaxLines
             authorMaxLines = Dimens.sizeMediumBookListItemAuthorMaxLines
-            dateFormatStringResource = R.string.date_and_time_format
+            dateFormatStringResourceId = R.string.date_format
         }
         HolderSize.LARGE -> {
             coverImageWidth = Dimens.sizeLargeBookListItemCoverImageWidth
             bookListItemHeight = Dimens.sizeLargeBookListItemHeight
             titleMaxLines = Dimens.sizeLargeBookListItemTitleMaxLines
             authorMaxLines = Dimens.sizeLargeBookListItemAuthorMaxLines
-            dateFormatStringResource = R.string.date_format
+            dateFormatStringResourceId = R.string.date_format
         }
     }
 
@@ -92,33 +93,12 @@ fun BookListItem(
                     .clickable { onClickedBook(book) }
                     .padding(Dimens.paddingAllSmall),
         ) {
-            // Book Cover Image
-            val context = LocalContext.current
-            val file: File? =
-                if (book.coverImageFileName != null) {
-                    File(context.filesDir, book.coverImageFileName)
-                } else {
-                    null
-                }
-            AsyncImage(
-                modifier =
-                    Modifier
-                        .width(coverImageWidth)
-                        .height(bookListItemHeight)
-                        .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
-                        .background(MaterialTheme.colorScheme.background),
-                model =
-                    ImageRequest
-                        .Builder(context)
-                        .data(file)
-                        .crossfade(true)
-                        .build(),
-                contentDescription = stringResource(R.string.book_cover_image__content_description__text),
-                contentScale = ContentScale.Crop,
+            BookCoverImage(
+                book = book,
+                coverImageWidth = coverImageWidth,
+                bookListItemHeight = bookListItemHeight,
             )
-
             Spacer(modifier = Modifier.width(Dimens.spacerWidthSmall))
-
             Column(
                 modifier =
                     Modifier
@@ -126,85 +106,166 @@ fun BookListItem(
                         .height(bookListItemHeight)
                         .align(Alignment.Top),
             ) {
-                Text(
+                TitleText(
                     text = book.title,
-                    style = MaterialTheme.typography.titleMedium,
                     maxLines = titleMaxLines,
-                    overflow = TextOverflow.Ellipsis,
                 )
-                Text(
+                AuthorText(
                     text = book.author,
-                    style = MaterialTheme.typography.bodyMedium,
                     maxLines = authorMaxLines,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = Dimens.paddingTopTiny),
                 )
-
                 Spacer(modifier = Modifier.weight(1f))
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // Shelves
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(end = Dimens.paddingEndTiny)
-                                .weight(1f),
-                        text =
-                            when (book.shelf) {
-                                BookShelvesType.FINISHED ->
-                                    stringResource(
-                                        R.string.book_list_item__label__shelf_finished_text,
-                                        book.finishedAt?.format(
-                                            DateTimeFormatter.ofPattern(
-                                                stringResource(dateFormatStringResource),
-                                            ),
-                                        ) ?: "",
-                                    )
-                                BookShelvesType.READING ->
-                                    stringResource(
-                                        R.string.book_list_item__label__shelf_reading_text,
-                                        book.updatedAt.format(
-                                            DateTimeFormatter.ofPattern(
-                                                stringResource(dateFormatStringResource),
-                                            ),
-                                        ),
-                                    )
-                                BookShelvesType.WANT_TO_READ ->
-                                    stringResource(
-                                        R.string.book_list_item__label__shelf_want_to_read_text,
-                                        book.addedAt.format(
-                                            DateTimeFormatter.ofPattern(
-                                                stringResource(dateFormatStringResource),
-                                            ),
-                                        ),
-                                    )
-                            },
-                        maxLines = Dimens.bookListItemShelveTextMaxLines,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
+                    ShelfText(
+                        modifier = Modifier.weight(1f),
+                        book = book,
+                        dateFormatStringResourceId = dateFormatStringResourceId,
                     )
-                    // Pages
-                    Text(
-                        modifier =
-                            Modifier
-                                .padding(end = Dimens.paddingEndSmall),
-                        text =
-                            stringResource(
-                                R.string.book_details__label__book_pages_text,
-                                book.pageCurrent,
-                                book.pagesCount,
-                            ),
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.End,
-                    )
+                    PagesText(book = book)
                     ReadingProgressIndicator(percentage = percentage)
                 }
             }
         }
     }
+}
+
+@Composable
+private fun BookCoverImage(
+    book: Book,
+    coverImageWidth: Dp,
+    bookListItemHeight: Dp,
+) {
+    val context = LocalContext.current
+    val file: File? =
+        if (book.coverImageFileName != null) {
+            File(context.filesDir, book.coverImageFileName)
+        } else {
+            null
+        }
+    AsyncImage(
+        modifier =
+            Modifier
+                .width(coverImageWidth)
+                .height(bookListItemHeight)
+                .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                .background(MaterialTheme.colorScheme.background),
+        model =
+            ImageRequest
+                .Builder(context)
+                .data(file)
+                .crossfade(true)
+                .build(),
+        contentDescription = stringResource(R.string.book_cover_image__content_description__text),
+        contentScale = ContentScale.Crop,
+    )
+}
+
+@Composable
+private fun TitleText(
+    text: String,
+    maxLines: Int,
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleMedium,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis,
+    )
+}
+
+@Composable
+private fun AuthorText(
+    text: String,
+    maxLines: Int,
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        maxLines = maxLines,
+        overflow = TextOverflow.Ellipsis,
+        modifier = Modifier.padding(top = Dimens.paddingTopTiny),
+    )
+}
+
+@Composable
+private fun ShelfText(
+    book: Book,
+    @StringRes
+    dateFormatStringResourceId: Int,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            modifier = Modifier.padding(end = Dimens.paddingEndTiny),
+            text =
+                when (book.shelf) {
+                    BookShelvesType.FINISHED ->
+                        stringResource(
+                            R.string.book_list_item__label__shelf_finished_text,
+                        )
+                    BookShelvesType.READING ->
+                        stringResource(
+                            R.string.book_list_item__label__shelf_reading_text,
+                        )
+                    BookShelvesType.WANT_TO_READ ->
+                        stringResource(
+                            R.string.book_list_item__label__shelf_want_to_read_text,
+                        )
+                },
+            maxLines = Dimens.bookListItemShelveTextMaxLines,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Text(
+            modifier = Modifier.padding(end = Dimens.paddingEndTiny),
+            text =
+                when (book.shelf) {
+                    BookShelvesType.FINISHED ->
+                        book.finishedAt?.format(
+                            DateTimeFormatter.ofPattern(
+                                stringResource(dateFormatStringResourceId),
+                            ),
+                        ) ?: ""
+                    BookShelvesType.READING ->
+                        book.updatedAt.format(
+                            DateTimeFormatter.ofPattern(
+                                stringResource(dateFormatStringResourceId),
+                            ),
+                        )
+                    BookShelvesType.WANT_TO_READ ->
+                        book.addedAt.format(
+                            DateTimeFormatter.ofPattern(
+                                stringResource(dateFormatStringResourceId),
+                            ),
+                        )
+                },
+            maxLines = Dimens.bookListItemShelveTextMaxLines,
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+}
+
+@Composable
+private fun PagesText(book: Book) {
+    Text(
+        modifier =
+            Modifier
+                .padding(end = Dimens.paddingEndSmall),
+        text =
+            stringResource(
+                R.string.book_details__label__book_pages_text,
+                book.pageCurrent,
+                book.pagesCount,
+            ),
+        style = MaterialTheme.typography.bodyMedium,
+        textAlign = TextAlign.End,
+    )
 }
 
 @Preview

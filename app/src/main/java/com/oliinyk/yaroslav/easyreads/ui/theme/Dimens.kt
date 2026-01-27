@@ -87,10 +87,10 @@ object Dimens {
     val sizeMediumBookListItemTitleMaxLines = 2
     val sizeMediumBookListItemAuthorMaxLines = 1
 
-    val sizeLargeBookListItemCoverImageWidth = 132.dp
-    val sizeLargeBookListItemHeight = 198.dp
+    val sizeLargeBookListItemCoverImageWidth = 117.dp
+    val sizeLargeBookListItemHeight = 178.dp
     val sizeLargeBookListItemTitleMaxLines = 3
-    val sizeLargeBookListItemAuthorMaxLines = 2
+    val sizeLargeBookListItemAuthorMaxLines = 1
 
     // ----- text -----
     val appTitleMediumFontSize = 18.sp
@@ -100,7 +100,7 @@ object Dimens {
     val readingSessionRecordBookTitleMaxLines = 3
     val readingSessionRecordBookAuthorMaxLines = 1
 
-    val bookListItemShelveTextMaxLines = 2
+    val bookListItemShelveTextMaxLines = 1
     val readingGoalFinishedBooksItemCellTextMaxLines = 5
 
     val descriptionMinLines = 5

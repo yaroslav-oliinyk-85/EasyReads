@@ -7,7 +7,7 @@
     <string name="note_list__toolbar__title_text">Нотатки %d</string>
     <string name="book_details__toolbar__title_test">Детальніше</string>
     <string name="book_list__toolbar__title_all_text">Всі Книги %d</string>
-    <string name="book_list__toolbar__title_finished_text">Прочитані %d</string>
+    <string name="book_list__toolbar__title_finished_text">Прочитано %d</string>
     <string name="book_list__toolbar__title_reading_text">Читаю %d</string>
     <string name="book_list__toolbar__title_want_to_read_text">Хочу Прочитати %d</string>
 
@@ -55,9 +55,9 @@
     <string name="book_list__button__sorted_order_content_description_text">Порядок Сортування</string>
     <!-- Book List Item -->
     <string name="book_list_item__label__shelf_info_text">Поличка\n%s</string>
-    <string name="book_list_item__label__shelf_want_to_read_text">Хочу Прочитати\n%s</string>
-    <string name="book_list_item__label__shelf_reading_text">Читаю\n%s</string>
-    <string name="book_list_item__label__shelf_finished_text">Прочитано\n%s</string>
+    <string name="book_list_item__label__shelf_want_to_read_text">Хочу Прочитати</string>
+    <string name="book_list_item__label__shelf_reading_text">Читаю</string>
+    <string name="book_list_item__label__shelf_finished_text">Прочитано</string>
 
     <!-- Book Details -->
     <string name="book_details__label__book_description_text">Анотація</string>
