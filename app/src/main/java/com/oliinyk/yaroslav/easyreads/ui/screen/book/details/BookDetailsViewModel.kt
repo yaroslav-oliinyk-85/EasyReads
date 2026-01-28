@@ -12,6 +12,7 @@ import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MILLISECONDS_IN_ONE_SECOND
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.MINUTES_IN_ONE_HOUR
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants.SECONDS_IN_ONE_MINUTE
+import com.oliinyk.yaroslav.easyreads.domain.util.BookUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -76,7 +77,8 @@ class BookDetailsViewModel
         }
 
         fun addReadingSession(readingSession: ReadingSession) {
-            val (isFinished, finishedAt, shelf) = getIsFinishedWithFinishedAt(readingSession)
+            val (isFinished, finishedAt, shelf) =
+                BookUtil.getFinishedWithFinishedAtAndShelf(uiState.value.book, readingSession)
             bookRepository.update(
                 uiState.value.book.copy(
                     pageCurrent = readingSession.endPage,
@@ -94,7 +96,8 @@ class BookDetailsViewModel
         }
 
         fun updateReadingSession(readingSession: ReadingSession) {
-            val (isFinished, finishedAt, shelf) = getIsFinishedWithFinishedAt(readingSession)
+            val (isFinished, finishedAt, shelf) =
+                BookUtil.getFinishedWithFinishedAtAndShelf(uiState.value.book, readingSession)
             bookRepository.update(
                 uiState.value.book.copy(
                     pageCurrent = readingSession.endPage,
@@ -106,19 +109,6 @@ class BookDetailsViewModel
 
             readingSessionRepository.update(readingSession)
         }
-
-        private fun getIsFinishedWithFinishedAt(
-            readingSession: ReadingSession,
-        ): Triple<Boolean, LocalDateTime, BookShelvesType> =
-            if (!uiState.value.book.isFinished && uiState.value.book.pagesCount == readingSession.endPage) {
-                Triple(true, LocalDateTime.now(), BookShelvesType.FINISHED)
-            } else {
-                Triple(
-                    uiState.value.book.isFinished,
-                    uiState.value.book.finishedAt,
-                    uiState.value.book.shelf,
-                )
-            }
 
         fun removeReadingSession(readingSession: ReadingSession) {
             if (readingSession == uiState.value.readingSessions.first()) {

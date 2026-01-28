@@ -11,6 +11,7 @@ import com.oliinyk.yaroslav.easyreads.domain.repository.BookRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.NoteRepository
 import com.oliinyk.yaroslav.easyreads.domain.repository.ReadingSessionRepository
 import com.oliinyk.yaroslav.easyreads.domain.service.ReadTimeCounterService
+import com.oliinyk.yaroslav.easyreads.domain.util.BookUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -99,13 +100,17 @@ class ReadingSessionRecordViewModel
         }
 
         fun save(readingSession: ReadingSession) {
+            updateBook(readingSession)
+            readingSessionRepository.update(
+                readingSession.copy(recordStatus = ReadingSessionRecordStatusType.FINISHED),
+            )
+            updateStateUi { it.copy(readingSession = null) }
+        }
+
+        private fun updateBook(readingSession: ReadingSession) {
             uiState.value.book?.let { book ->
-                val (isFinished: Boolean, finishedAt: LocalDateTime, shelf: BookShelvesType) =
-                    if (!book.isFinished && book.pagesCount == readingSession.endPage) {
-                        Triple(true, LocalDateTime.now(), BookShelvesType.FINISHED)
-                    } else {
-                        Triple(book.isFinished, book.finishedAt, book.shelf)
-                    }
+                val (isFinished: Boolean, finishedAt: LocalDateTime?, shelf: BookShelvesType) =
+                    BookUtil.getFinishedWithFinishedAtAndShelf(book, readingSession)
                 bookRepository.update(
                     book.copy(
                         pageCurrent = readingSession.endPage,
@@ -115,12 +120,7 @@ class ReadingSessionRecordViewModel
                         shelf = shelf,
                     ),
                 )
-
-                readingSessionRepository.update(
-                    readingSession.copy(recordStatus = ReadingSessionRecordStatusType.FINISHED),
-                )
             }
-            updateStateUi { it.copy(readingSession = null) }
         }
 
         fun addNote(note: Note) {
