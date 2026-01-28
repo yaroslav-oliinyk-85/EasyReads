@@ -13,6 +13,7 @@ object Dimens {
     val spacerHeightMedium = 16.dp
     val spacerHeightExtraLarge = 64.dp
 
+    val spacerWidthTiny = 4.dp
     val spacerWidthSmall = 8.dp
 
     val roundedCornerShapeSize = 8.dp
@@ -115,6 +116,7 @@ object Dimens {
     val noteTextMinLines = 3
 
     val bookDetailsTabTitleMaxLines = 1
+    val bookAddEditDialogShelfTextMaxLines = 1
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

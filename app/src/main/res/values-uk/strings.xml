@@ -111,15 +111,17 @@
     <string name="book_add_edit__label__book_pages_amount_text">Сторіни</string>
     <string name="book_add_edit__label__book_page_current_text">Поточна Сторінка</string>
     <string name="book_add_edit__label__book_isbn_text">ISBN</string>
-    <string name="book_add_edit__label__book_description_text">Опис</string>
+    <string name="book_add_edit__label__book_description_text">Анотація</string>
     <string name="book_add_edit__hint__enter_book_title_text">Введіть назву</string>
     <string name="book_add_edit__hint__enter_book_author_text">Введіть автора</string>
     <string name="book_add_edit__hint__book_pages_count_text">Введіть кількість сторінок</string>
     <string name="book_add_edit__hint__book_page_current_text">Введіть поточну сторінку</string>
     <string name="book_add_edit__hint__book_isbn_input_text">Введіть ISBN</string>
-    <string name="book_add_edit__hint__enter_book_description_text">Введіть опис</string>
+    <string name="book_add_edit__hint__enter_book_description_text">Введіть анотація</string>
     <string name="book_add_edit__button__save_text">Зберегти</string>
     <string name="book_add_edit__button__cancel_text">Скасувати</string>
+    <string name="book_add_edit__button__added_date_text">Додано</string>
+    <string name="book_add_edit__button__finished_date_text">Прочитано</string>
 
     <string-array name="book_edit__shelves__list_items">
         <item>Хочу Прочитати</item>

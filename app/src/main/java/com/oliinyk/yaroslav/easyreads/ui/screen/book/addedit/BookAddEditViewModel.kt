@@ -32,16 +32,16 @@ class BookAddEditViewModel
     ) : ViewModel() {
         private val tag: String = "BookAddEditViewModel"
 
-        private val _stateUi: MutableStateFlow<BookAddEditStateUi> =
+        private val _uiState: MutableStateFlow<BookAddEditUiState> =
             MutableStateFlow(
-                BookAddEditStateUi(),
+                BookAddEditUiState(),
             )
-        val stateUi: StateFlow<BookAddEditStateUi> = _stateUi.asStateFlow()
+        val uiState: StateFlow<BookAddEditUiState> = _uiState.asStateFlow()
 
         init {
             viewModelScope.launch {
                 bookRepository.getAllAsFlow().collectLatest { books ->
-                    _stateUi.update {
+                    _uiState.update {
                         it.copy(
                             suggestionTitles = books.map { book -> book.title }.toList(),
                             suggestionAuthors = books.map { book -> book.author }.distinct(),
@@ -58,13 +58,13 @@ class BookAddEditViewModel
         private fun loadBookById(bookId: String) {
             viewModelScope.launch {
                 bookRepository.getById(UUID.fromString(bookId)).collect { book ->
-                    _stateUi.update { it.copy(book = book ?: Book()) }
+                    _uiState.update { it.copy(book = book ?: Book()) }
                 }
             }
         }
 
-        fun updateStateUi(onUpdate: (BookAddEditStateUi) -> BookAddEditStateUi) {
-            _stateUi.update { onUpdate(it) }
+        fun updateStateUi(onUpdate: (BookAddEditUiState) -> BookAddEditUiState) {
+            _uiState.update { onUpdate(it) }
         }
 
         fun onEvent(event: BookAddEditEvent) {
@@ -100,23 +100,27 @@ class BookAddEditViewModel
 
                 is BookAddEditEvent.ShelveChanged ->
                     updateStateUi {
-                        it.copy(book = it.book.copy(shelf = event.value))
+                        it.copy(book = updateShelf(it.book.copy(shelf = event.value)))
                     }
             }
         }
 
-        fun save(contextApplication: Context) {
-            var saveBook = _stateUi.value.book
-            if (_stateUi.value.isNewImageCopied) {
-                deleteBookCoverImage(contextApplication, saveBook.coverImageFileName)
-                saveBook = saveBook.copy(coverImageFileName = _stateUi.value.pickedImageName)
+        private fun updateShelf(book: Book): Book =
+            if (!book.isFinished && book.shelf == BookShelvesType.FINISHED) {
+                book.copy(isFinished = true, finishedAt = LocalDateTime.now())
+            } else if (book.isFinished && book.shelf != BookShelvesType.FINISHED) {
+                book.copy(isFinished = false, finishedAt = null)
             } else {
-                deleteBookCoverImage(contextApplication, _stateUi.value.pickedImageName)
+                book
             }
-            if (!saveBook.isFinished && saveBook.shelf == BookShelvesType.FINISHED) {
-                saveBook = saveBook.copy(isFinished = true, finishedAt = LocalDateTime.now())
-            } else if (saveBook.isFinished && saveBook.shelf != BookShelvesType.FINISHED) {
-                saveBook = saveBook.copy(isFinished = false, finishedAt = null)
+
+        fun save(contextApplication: Context) {
+            var saveBook = _uiState.value.book
+            if (_uiState.value.isNewImageCopied) {
+                deleteBookCoverImage(contextApplication, saveBook.coverImageFileName)
+                saveBook = saveBook.copy(coverImageFileName = _uiState.value.pickedImageName)
+            } else {
+                deleteBookCoverImage(contextApplication, _uiState.value.pickedImageName)
             }
 
             bookRepository.save(saveBook)
@@ -126,13 +130,13 @@ class BookAddEditViewModel
             applicationContext: Context,
             pickedImageUri: Uri,
         ) {
-            _stateUi.value.pickedImageName?.let {
+            _uiState.value.pickedImageName?.let {
                 deleteBookCoverImage(applicationContext, it)
             }
             val pickedImageName = "IMG_${UUID.randomUUID()}.JPG"
             try {
                 copyImageToAppFolder(applicationContext, pickedImageUri, pickedImageName)
-                _stateUi.update {
+                _uiState.update {
                     it.copy(isNewImageCopied = true, pickedImageName = pickedImageName)
                 }
             } catch (e: IOException) {
@@ -154,17 +158,17 @@ class BookAddEditViewModel
         }
 
         fun removeUnusedCoverImage(applicationContext: Context) {
-            if (_stateUi.value.isNewImageCopied) {
+            if (_uiState.value.isNewImageCopied) {
                 deleteBookCoverImage(
                     applicationContext,
-                    _stateUi.value.pickedImageName,
+                    _uiState.value.pickedImageName,
                 )
-                _stateUi.update { it.copy(isNewImageCopied = false) }
+                _uiState.update { it.copy(isNewImageCopied = false) }
             }
         }
     }
 
-data class BookAddEditStateUi(
+data class BookAddEditUiState(
     val book: Book = Book(),
     val pickedImageName: String? = null,
     val tookPhotoName: String? = null,

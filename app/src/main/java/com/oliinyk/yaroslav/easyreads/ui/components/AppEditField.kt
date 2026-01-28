@@ -28,6 +28,7 @@ fun AppEditField(
     minLines: Int = 1,
     labelError: String = "",
     labelTextAlign: TextAlign = TextAlign.Start,
+    trailingIcon: @Composable (() -> Unit)? = null,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         if (label.isNotBlank()) {
@@ -53,6 +54,7 @@ fun AppEditField(
             shape = RoundedCornerShape(Dimens.roundedCornerShapeSize),
             isError = labelError.isNotBlank(),
             readOnly = readOnly,
+            trailingIcon = trailingIcon,
         )
         if (labelError.isNotBlank()) {
             Text(

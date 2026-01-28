@@ -1,5 +1,6 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,14 +21,14 @@ import androidx.compose.ui.text.style.TextAlign
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oliinyk.yaroslav.easyreads.R
-import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.BookAddEditStateUi
+import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.BookAddEditUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import java.io.File
 
 @Composable
 fun BookAddEditCoverImageSection(
     modifier: Modifier = Modifier,
-    stateUi: BookAddEditStateUi,
+    stateUi: BookAddEditUiState,
     onCoverClick: () -> Unit,
 ) {
     Box(
@@ -35,6 +36,7 @@ fun BookAddEditCoverImageSection(
             modifier
                 .size(Dimens.bookAddEditBookCoverImageSize)
                 .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
+                .background(MaterialTheme.colorScheme.background)
                 .border(
                     width = Dimens.buttonBorderWith,
                     color = MaterialTheme.colorScheme.primary,
