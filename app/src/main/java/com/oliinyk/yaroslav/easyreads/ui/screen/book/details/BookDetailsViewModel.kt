@@ -112,8 +112,18 @@ class BookDetailsViewModel
 
         fun removeReadingSession(readingSession: ReadingSession) {
             if (readingSession == uiState.value.readingSessions.first()) {
+                val sessions = uiState.value.readingSessions.toMutableList()
+                sessions.remove(readingSession)
                 bookRepository.update(
-                    uiState.value.book.copy(pageCurrent = readingSession.startPage),
+                    uiState.value.book.copy(
+                        pageCurrent = readingSession.startPage,
+                        updatedAt =
+                            if (sessions.isNotEmpty()) {
+                                sessions.first().startedAt
+                            } else {
+                                uiState.value.book.addedAt
+                            },
+                    ),
                 )
             }
 

@@ -177,6 +177,7 @@
     <string name="reading_session_add_edit_dialog__label__read_hour_text">Години</string>
     <string name="reading_session_add_edit_dialog__label__read_minutes_text">Хвилини</string>
     <string name="reading_session_add_edit_dialog__label__read_seconds_text">Секунди</string>
+    <string name="reading_session_add_edit_dialog__label__started_date_text">Створено</string>
     <string name="reading_session_add_edit_dialog__error__end_page_message_text">Поточна сторінка має бути більшою за попередню сторінку</string>
     <string name="reading_session_add_edit_dialog__error__start_page_message_text">Попередня сторінка має бути меншою за поточну сторінку</string>
 

@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlin.collections.filter
-import kotlin.math.roundToInt
 
 @HiltViewModel
 class ReadingGoalViewModel
@@ -120,10 +119,9 @@ class ReadingGoalViewModel
                         .reduce { acc, value -> acc + value }
                 val totalReadMinutes = totalReadTimeInMilliseconds / MILLISECONDS_IN_ONE_MINUTE
                 averagePagesHour =
-                    (
-                        _uiState.value.readPages.toDouble() / totalReadMinutes *
-                            MINUTES_IN_ONE_HOUR
-                    ).roundToInt()
+                    sessions
+                        .map { it.readPagesHour }
+                        .reduce { acc, value -> acc + value } / sessions.size
                 readHours = (totalReadMinutes / MINUTES_IN_ONE_HOUR).toInt()
                 readMinutes = (totalReadMinutes % MINUTES_IN_ONE_HOUR).toInt()
             }

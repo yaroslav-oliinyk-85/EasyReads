@@ -114,7 +114,7 @@ class ReadingSessionRecordViewModel
                 bookRepository.update(
                     book.copy(
                         pageCurrent = readingSession.endPage,
-                        updatedAt = LocalDateTime.now(),
+                        updatedAt = readingSession.startedAt,
                         isFinished = isFinished,
                         finishedAt = finishedAt,
                         shelf = shelf,

@@ -1,6 +1,5 @@
 package com.oliinyk.yaroslav.easyreads.ui.screen.readingsession.addeditdialog
 
-import android.os.Parcelable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,10 +12,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,13 +38,15 @@ import com.oliinyk.yaroslav.easyreads.domain.extension.toBookPage
 import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
 import com.oliinyk.yaroslav.easyreads.ui.components.AppButton
+import com.oliinyk.yaroslav.easyreads.ui.components.AppDatePickerDialog
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDivider
 import com.oliinyk.yaroslav.easyreads.ui.components.AppEditField
+import com.oliinyk.yaroslav.easyreads.ui.components.AppIconButton
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
 import com.oliinyk.yaroslav.easyreads.ui.theme.EasyReadsTheme
-import kotlinx.parcelize.Parcelize
-import kotlin.text.compareTo
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ReadingSessionAddEditDialog(
@@ -52,6 +57,43 @@ fun ReadingSessionAddEditDialog(
     isRemoveButtonEnabled: Boolean = false,
     onRemove: (ReadingSession) -> Unit = { },
 ) {
+    // --- State ---
+    var uiStateDialog by rememberSaveable {
+        mutableStateOf(
+            ReadingSessionAddEditUiStateDialog(
+                startPage = readingSession.startPage,
+                endPage = readingSession.endPage,
+                readPages = readingSession.readPages,
+                hours = readingSession.readHours,
+                minutes = readingSession.readMinutes,
+                seconds = readingSession.readSeconds,
+                startedAt = readingSession.startedAt,
+            ),
+        )
+    }
+
+    var showStartedDatePickerDialog by rememberSaveable { mutableStateOf(false) }
+    val datePickerState =
+        rememberDatePickerState(
+            selectableDates =
+                object : SelectableDates {
+                    override fun isSelectableDate(utcTimeMillis: Long): Boolean =
+                        utcTimeMillis <= System.currentTimeMillis()
+                },
+        )
+
+    if (showStartedDatePickerDialog) {
+        AppDatePickerDialog(
+            datePickerState = datePickerState,
+            onDateSelected = { selectedDate ->
+                uiStateDialog =
+                    uiStateDialog
+                        .copy(startedAt = LocalDateTime.of(selectedDate, uiStateDialog.startedAt.toLocalTime()))
+            },
+            onDismissRequest = { showStartedDatePickerDialog = false },
+        )
+    }
+
     Dialog(
         onDismissRequest = onDismissRequest,
     ) {
@@ -60,20 +102,6 @@ fun ReadingSessionAddEditDialog(
             stringResource(
                 R.string.reading_session_add_edit_dialog__error__end_page_message_text,
             )
-
-        // --- State ---
-        var uiStateDialog by rememberSaveable {
-            mutableStateOf(
-                ReadingSessionAddEditUiStateDialog(
-                    startPage = readingSession.startPage,
-                    endPage = readingSession.endPage,
-                    readPages = readingSession.readPages,
-                    hours = readingSession.readHours,
-                    minutes = readingSession.readMinutes,
-                    seconds = readingSession.readSeconds,
-                ),
-            )
-        }
 
         Card(
             modifier = Modifier.fillMaxWidth(),
@@ -161,6 +189,12 @@ fun ReadingSessionAddEditDialog(
                     )
                 }
 
+                StartedDateEditField(
+                    uiStateDialog = uiStateDialog,
+                    onStartedDateClick = { showStartedDatePickerDialog = true },
+                    modifier = Modifier.padding(top = Dimens.paddingTopMedium),
+                )
+
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
 
                 SaveButton(
@@ -174,6 +208,7 @@ fun ReadingSessionAddEditDialog(
                             uiStateDialog = uiStateDialog.copy(endPageInputErrorMessage = "")
                             onSave(
                                 readingSession.copy(
+                                    startedAt = uiStateDialog.startedAt,
                                     startPage = uiStateDialog.startPage,
                                     endPage = uiStateDialog.endPage,
                                     readPages = uiStateDialog.readPages,
@@ -336,6 +371,35 @@ private fun SecondsEditField(
 }
 
 @Composable
+private fun StartedDateEditField(
+    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    onStartedDateClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AppEditField(
+        label = stringResource(R.string.reading_session_add_edit_dialog__label__started_date_text),
+        value =
+            uiStateDialog.startedAt.format(
+                DateTimeFormatter.ofPattern(
+                    stringResource(R.string.date_format),
+                ),
+            ),
+        hint = "",
+        onValueChange = {},
+        readOnly = true,
+        trailingIcon = {
+            AppIconButton(
+                imageVector = Icons.Default.CalendarMonth,
+                contentDescription = "",
+                enabledBorder = false,
+                onClick = onStartedDateClick,
+            )
+        },
+        modifier = modifier,
+    )
+}
+
+@Composable
 private fun SaveButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -396,19 +460,6 @@ private fun CancelButton(
         )
     }
 }
-
-@Parcelize
-data class ReadingSessionAddEditUiStateDialog(
-    val startPage: Int = 0,
-    val endPage: Int = 0,
-    val readPages: Int = 0,
-    val hours: Int = 0,
-    val minutes: Int = 0,
-    val seconds: Int = 0,
-    val startPageReadOnly: Boolean = true,
-    val startPageInputErrorMessage: String = "",
-    val endPageInputErrorMessage: String = "",
-) : Parcelable
 
 @Preview(showBackground = true)
 @Composable

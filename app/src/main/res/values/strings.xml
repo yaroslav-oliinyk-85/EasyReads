@@ -181,6 +181,7 @@
     <string name="reading_session_add_edit_dialog__label__read_hour_text">Hours</string>
     <string name="reading_session_add_edit_dialog__label__read_minutes_text">Minutes</string>
     <string name="reading_session_add_edit_dialog__label__read_seconds_text">Seconds</string>
+    <string name="reading_session_add_edit_dialog__label__started_date_text">Created Date</string>
     <string name="reading_session_add_edit_dialog__error__end_page_message_text">End page must be greater than Start Page</string>
     <string name="reading_session_add_edit_dialog__error__start_page_message_text">Start Page must be less than End Page</string>
 
