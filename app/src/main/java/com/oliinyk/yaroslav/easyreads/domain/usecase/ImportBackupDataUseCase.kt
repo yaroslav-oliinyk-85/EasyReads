@@ -2,11 +2,12 @@ package com.oliinyk.yaroslav.easyreads.domain.usecase
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.oliinyk.yaroslav.easyreads.di.DispatcherIO
 import com.oliinyk.yaroslav.easyreads.domain.exception.ExportImportBackupException.NotFoundBackupFileImportException
+import com.oliinyk.yaroslav.easyreads.domain.exception.ExportImportBackupException.ReadFromFileImportException
 import com.oliinyk.yaroslav.easyreads.domain.exception.ExportImportBackupException.UnsupportedVersionImportException
 import com.oliinyk.yaroslav.easyreads.domain.exception.ExportImportBackupException.ValidationBackupImportException
-import com.oliinyk.yaroslav.easyreads.domain.exception.ExportImportBackupException.WriteToFileImportException
 import com.oliinyk.yaroslav.easyreads.domain.model.BackupData
 import com.oliinyk.yaroslav.easyreads.domain.repository.BackupRepository
 import com.oliinyk.yaroslav.easyreads.domain.util.AppConstants
@@ -16,8 +17,11 @@ import kotlinx.serialization.json.Json
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
+
+private const val TAG = "ImportBackupDataUseCase"
 
 class ImportBackupDataUseCase
     @Inject
@@ -34,39 +38,44 @@ class ImportBackupDataUseCase
                 val applicationContext = context.applicationContext
                 val contentResolver = context.applicationContext.contentResolver
 
-                contentResolver
-                    .openInputStream(uri)
-                    ?.use { inputStream ->
-                        ZipInputStream(inputStream).use { zipInputStream ->
-                            while (true) {
-                                val entry = zipInputStream.nextEntry ?: break
+                try {
+                    contentResolver
+                        .openInputStream(uri)
+                        ?.use { inputStream ->
+                            ZipInputStream(inputStream).use { zipInputStream ->
+                                while (true) {
+                                    val entry = zipInputStream.nextEntry ?: break
 
-                                if (entry.name == AppConstants.BACKUP_FILE_NAME) {
-                                    // "backup-data.json"
-                                    val byteArrayOutputStream = ByteArrayOutputStream()
-                                    zipInputStream.copyTo(byteArrayOutputStream)
+                                    if (entry.name == AppConstants.BACKUP_FILE_NAME) {
+                                        // "backup-data.json"
+                                        val byteArrayOutputStream = ByteArrayOutputStream()
+                                        zipInputStream.copyTo(byteArrayOutputStream)
 
-                                    val backupDataJsonString: String? =
-                                        byteArrayOutputStream.toString(Charsets.UTF_8.name())
+                                        val backupDataJsonString: String? =
+                                            byteArrayOutputStream.toString(Charsets.UTF_8.name())
 
-                                    backupDataJsonString?.let {
-                                        val backupData = json.decodeFromString<BackupData>(it)
-                                        validate(backupData)
-                                        backupRepository.save(backupData)
-                                    } ?: throw NotFoundBackupFileImportException(
-                                        "${AppConstants.BACKUP_FILE_NAME} not found in ZIP",
-                                    )
-                                } else {
-                                    // book cover images
-                                    val imageFile = File(applicationContext.filesDir, entry.name)
-                                    FileOutputStream(imageFile).use { fileOutputStream ->
-                                        zipInputStream.copyTo(fileOutputStream)
+                                        backupDataJsonString?.let {
+                                            val backupData = json.decodeFromString<BackupData>(it)
+                                            validate(backupData)
+                                            backupRepository.save(backupData)
+                                        } ?: throw NotFoundBackupFileImportException(
+                                            "${AppConstants.BACKUP_FILE_NAME} not found in ZIP",
+                                        )
+                                    } else {
+                                        // book cover images
+                                        val imageFile = File(applicationContext.filesDir, entry.name)
+                                        FileOutputStream(imageFile).use { fileOutputStream ->
+                                            zipInputStream.copyTo(fileOutputStream)
+                                        }
                                     }
+                                    zipInputStream.closeEntry()
                                 }
-                                zipInputStream.closeEntry()
                             }
-                        }
-                    } ?: throw WriteToFileImportException("Cannot open input stream for $uri")
+                        } ?: throw ReadFromFileImportException("Cannot open input stream for $uri")
+                } catch (e: IOException) {
+                    Log.e(TAG, e.message ?: e.toString())
+                    throw ReadFromFileImportException("Cannot open input stream for $uri")
+                }
             }
         }
 

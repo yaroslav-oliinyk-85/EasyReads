@@ -66,7 +66,7 @@ class SettingsViewModel
                     } catch (e: ExportImportBackupException) {
                         Log.e(TAG, e.message ?: e.toString())
                         _uiState.update {
-                            it.copy(backupErrorMessageId = R.string.export_data_dialog__label__error_message_text)
+                            it.copy(backupErrorMessageId = R.string.import_data_dialog__label__error_message_text)
                         }
                     }
 

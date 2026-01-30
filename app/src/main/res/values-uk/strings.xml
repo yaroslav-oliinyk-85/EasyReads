@@ -35,12 +35,12 @@
     <string name="confirmation_dialog__button__cancel_text">Скасувати</string>
 
     <!-- Export Data Dialog -->
-    <string name="export_data_dialog__label__title_text">Створити Резервну Копію</string>
+    <string name="export_data_dialog__label__title_text">Створення</string>
     <string name="export_data_dialog__label__message_text">Резервну копію успішно створено.</string>
     <string name="export_data_dialog__label__error_message_text">Не вдалося створити Резервну Копію!</string>
 
     <!-- Import Data Dialog -->
-    <string name="import_data_dialog__label__title_text">Завантажити Резервну Копію</string>
+    <string name="import_data_dialog__label__title_text">Завантаження</string>
     <string name="import_data_dialog__label__message_text">Резервну копію успішно завантажено.</string>
     <string name="import_data_dialog__label__error_message_text">Не вдалося завантажити Резервну Копію!</string>
 

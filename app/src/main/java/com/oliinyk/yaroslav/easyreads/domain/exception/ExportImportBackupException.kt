@@ -9,7 +9,7 @@ sealed class ExportImportBackupException : Throwable() {
         val errorMessage: String,
     ) : ExportImportBackupException()
 
-    data class WriteToFileImportException(
+    data class ReadFromFileImportException(
         val errorMessage: String,
     ) : ExportImportBackupException()
 
