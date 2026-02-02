@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
+import com.oliinyk.yaroslav.easyreads.ui.components.AppConfirmDialog
 import com.oliinyk.yaroslav.easyreads.ui.components.AppDatePickerDialog
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.components.BookAddEditAppTopBar
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.addedit.components.BookAddEditBottomBar
@@ -61,6 +62,8 @@ fun BookAddEditScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val snackbarMessage = stringResource(R.string.msg_warn__not_able_to_open_image_picker)
 
+    var isTriggeredNavTo by remember { mutableStateOf(false) }
+    var openConfirmDialog by rememberSaveable { mutableStateOf(false) }
     var showAddedDatePickerDialog by rememberSaveable { mutableStateOf(false) }
     var showFinishedDatePickerDialog by rememberSaveable { mutableStateOf(false) }
     val datePickerState =
@@ -73,8 +76,7 @@ fun BookAddEditScreen(
         )
 
     BackHandler {
-        viewModel.removeUnusedCoverImage(context.applicationContext)
-        navBack()
+        openConfirmDialog = true
     }
 
     // ----- Pick Image Launcher -----
@@ -82,6 +84,8 @@ fun BookAddEditScreen(
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.PickVisualMedia(),
         ) { uri: Uri? ->
+            isTriggeredNavTo = false
+
             if (uri != null) {
                 coroutineScope.launch {
                     viewModel.updateCoverImage(
@@ -112,8 +116,7 @@ fun BookAddEditScreen(
         bookId = bookId,
         snackbarHostState = snackbarHostState,
         navBack = {
-            viewModel.removeUnusedCoverImage(context.applicationContext)
-            navBack()
+            openConfirmDialog = true
         },
         onEvent = { viewModel.onEvent(it) },
         onAddedDateClick = {
@@ -122,10 +125,20 @@ fun BookAddEditScreen(
         onFinishedDateClick = {
             showFinishedDatePickerDialog = true
         },
-        onClickChangeCoverImage = { launchBookCoverImagePicker() },
+        onClickChangeCoverImage = {
+            if (!isTriggeredNavTo) {
+                isTriggeredNavTo = true
+
+                launchBookCoverImagePicker()
+            }
+        },
         onClickSave = {
-            viewModel.save(context.applicationContext)
-            navBack()
+            if (!isTriggeredNavTo) {
+                isTriggeredNavTo = true
+
+                viewModel.save(context.applicationContext)
+                navBack()
+            }
         },
     )
 
@@ -152,6 +165,26 @@ fun BookAddEditScreen(
                 }
             },
             onDismissRequest = { showFinishedDatePickerDialog = false },
+        )
+    }
+
+    if (openConfirmDialog) {
+        AppConfirmDialog(
+            title = stringResource(R.string.book_add_edit__confirmation_dialog__title_text),
+            message = stringResource(R.string.book_add_edit__confirmation_dialog__message_text),
+            onConfirm = {
+                if (!isTriggeredNavTo) {
+                    isTriggeredNavTo = true
+
+                    viewModel.removeUnusedCoverImage(context.applicationContext)
+                    openConfirmDialog = false
+                    navBack()
+                }
+            },
+            onDismiss = {
+                isTriggeredNavTo = false
+                openConfirmDialog = false
+            },
         )
     }
 }

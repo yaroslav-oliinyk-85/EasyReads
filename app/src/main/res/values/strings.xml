@@ -129,6 +129,9 @@
     <string name="book_add_edit__button__added_date_text">Added Date</string>
     <string name="book_add_edit__button__finished_date_text">Finished Date</string>
 
+    <string name="book_add_edit__confirmation_dialog__title_text">Confirm</string>
+    <string name="book_add_edit__confirmation_dialog__message_text">Unsaved changes will be lost.</string>
+
     <string-array name="book_edit__shelves__list_items">
         <item>Want To Read</item>
         <item>Reading</item>
