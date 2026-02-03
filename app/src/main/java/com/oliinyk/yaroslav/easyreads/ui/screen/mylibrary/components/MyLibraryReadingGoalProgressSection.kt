@@ -130,19 +130,15 @@ private fun SetChangeGoalButton(
                 .fillMaxWidth()
                 .padding(vertical = Dimens.paddingVerticalSmall),
         onClick = onChangeGoalClicked,
-    ) {
-        Text(
-            text =
-                stringResource(
-                    if (!isGoalSet) {
-                        R.string.reading_goal__label__goal_set_text
-                    } else {
-                        R.string.reading_goal__label__goal_change_text
-                    },
-                ),
-            style = MaterialTheme.typography.bodyLarge,
-        )
-    }
+        text =
+            stringResource(
+                if (!isGoalSet) {
+                    R.string.reading_goal__label__goal_set_text
+                } else {
+                    R.string.reading_goal__label__goal_change_text
+                },
+            ),
+    )
 }
 
 @Preview

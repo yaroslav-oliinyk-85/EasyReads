@@ -126,12 +126,8 @@ fun ReadingGoalProgressSection(
                             .padding(vertical = Dimens.paddingVerticalSmall),
                     enabled = uiState.selectedReadingGoal.year == currentYear,
                     onClick = onChangeGoalClick,
-                ) {
-                    Text(
-                        text = stringResource(R.string.reading_goal__label__goal_change_text),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                    text = stringResource(R.string.reading_goal__label__goal_change_text),
+                )
 
                 AppIconButton(
                     imageVector = Icons.AutoMirrored.Default.ArrowForwardIos,

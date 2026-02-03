@@ -222,12 +222,8 @@ private fun ExportImportDataDialog(
                     onClick = {
                         onClickOK()
                     },
-                ) {
-                    Text(
-                        text = stringResource(R.string.confirmation_dialog__button__ok_text),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                    text = stringResource(R.string.confirmation_dialog__button__ok_text),
+                )
             }
         },
     )

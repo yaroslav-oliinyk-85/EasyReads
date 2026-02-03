@@ -80,8 +80,8 @@
     <string name="book_details__label__shelf_reading_text">Попередній Сеанс\n%s</string>
     <string name="book_details__label__shelf_finished_text">Прочитано\n%s</string>
 
-    <string name="book_details__tab__sessions_title_text">Сеанси %d</string>
-    <string name="book_details__tab__notes_title_text">Нотатки %d</string>
+    <string name="book_details__tab__sessions_title_text">%d Сеанси</string>
+    <string name="book_details__tab__notes_title_text">%d Нотатки</string>
     <string name="book_details__tab__about_title_text">Опис</string>
 
     <string name="book_details__label__start_reading_session_text">Почати Читати</string>
@@ -161,7 +161,7 @@
     <string name="reading_session_record__label__record_status_started_text">Читаю</string>
     <string name="reading_session_record__label__record_status_paused_text">Призупинено</string>
     <string name="reading_session_record__button__finish_recording_text">Завершити</string>
-    <string name="reading_session_record__button__show_notes_text">Всі Нотатки %d</string>
+    <string name="reading_session_record__button__show_notes_text">%d Всі Нотатки</string>
     <string name="reading_session_record__button__add_note_text">Додати Нотаток</string>
     <string name="reading_session_record__label__read_pages_text">Сторінки: %1$d/%2$d</string>
     <string name="reading_session_record__toolbar__title_text">Сеанс Читання</string>

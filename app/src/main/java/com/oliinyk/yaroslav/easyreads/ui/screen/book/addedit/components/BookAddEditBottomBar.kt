@@ -42,12 +42,7 @@ fun BookAddEditBottomBar(
             AppTextButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
                 onClick = onClickCancel,
-                content = {
-                    Text(
-                        text = stringResource(R.string.book_add_edit__button__cancel_text),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                },
+                text = stringResource(R.string.book_add_edit__button__cancel_text),
             )
 
             Spacer(Modifier.width(Dimens.spacerHeightMedium))

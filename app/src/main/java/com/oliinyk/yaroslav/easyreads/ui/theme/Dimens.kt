@@ -116,7 +116,7 @@ object Dimens {
     val noteTextMinLines = 3
 
     val bookDetailsTabTitleMaxLines = 1
-    val bookAddEditDialogShelfTextMaxLines = 1
+    val AppTextButtonTextMaxLines = 1
 
     // ----- animation -----
     val animationEnterDurationMillis: Int = 200

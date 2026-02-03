@@ -99,16 +99,9 @@ fun ReadingGoalChangeDialog(
                 // --- Buttons Cancel ---
                 AppTextButton(
                     onClick = onDismissRequest,
+                    text = stringResource(R.string.dialog__button__cancel_text),
                     modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text =
-                            stringResource(
-                                R.string.dialog__button__cancel_text,
-                            ),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                )
             }
         }
     }

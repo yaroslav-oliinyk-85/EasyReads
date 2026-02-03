@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
 import com.oliinyk.yaroslav.easyreads.ui.components.AppTextButton
@@ -39,24 +38,18 @@ fun ShelvesButtonWithDropdownMenu(
                     .clip(RoundedCornerShape(Dimens.roundedCornerShapeSize))
                     .background(MaterialTheme.colorScheme.background),
             onClick = { expanded = true },
-        ) {
-            Text(
-                text =
-                    when (uiState.book.shelf) {
-                        BookShelvesType.FINISHED ->
-                            stringResource(R.string.book_details__button__shelf_finished_text)
+            text =
+                when (uiState.book.shelf) {
+                    BookShelvesType.FINISHED ->
+                        stringResource(R.string.book_details__button__shelf_finished_text)
 
-                        BookShelvesType.READING ->
-                            stringResource(R.string.book_details__button__shelf_reading_text)
+                    BookShelvesType.READING ->
+                        stringResource(R.string.book_details__button__shelf_reading_text)
 
-                        BookShelvesType.WANT_TO_READ ->
-                            stringResource(R.string.book_details__button__shelf_want_to_read_text)
-                    },
-                maxLines = Dimens.bookAddEditDialogShelfTextMaxLines,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-        }
+                    BookShelvesType.WANT_TO_READ ->
+                        stringResource(R.string.book_details__button__shelf_want_to_read_text)
+                },
+        )
         DropdownMenu(
             modifier = modifier,
             expanded = expanded,

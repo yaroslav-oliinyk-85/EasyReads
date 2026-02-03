@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -63,28 +62,20 @@ private fun SettingsDataSection(
             modifier = Modifier.padding(Dimens.paddingAllMedium),
         ) {
             AppTextButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     onClickExport()
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.settings__button__export_data_text),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.settings__button__export_data_text),
+            )
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
             AppTextButton(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     onClickImport()
                 },
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.settings__button__import_data_text),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.settings__button__import_data_text),
+            )
         }
     }
 }

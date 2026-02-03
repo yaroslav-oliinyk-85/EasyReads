@@ -283,15 +283,8 @@ private fun ShelfSelectionButtons(
                     } else {
                         ButtonDefaults.textButtonColors()
                     },
-            ) {
-                Text(
-                    text =
-                        stringResource(
-                            R.string.book_details__button__shelf_finished_text,
-                        ),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.book_details__button__shelf_finished_text),
+            )
         }
         // --- READING ---
         AnimatedVisibility(
@@ -312,15 +305,8 @@ private fun ShelfSelectionButtons(
                     } else {
                         ButtonDefaults.textButtonColors()
                     },
-            ) {
-                Text(
-                    text =
-                        stringResource(
-                            R.string.book_details__button__shelf_reading_text,
-                        ),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.book_details__button__shelf_reading_text),
+            )
         }
         // --- WANT_TO_READ ---
         AnimatedVisibility(
@@ -341,15 +327,8 @@ private fun ShelfSelectionButtons(
                     } else {
                         ButtonDefaults.textButtonColors()
                     },
-            ) {
-                Text(
-                    text =
-                        stringResource(
-                            R.string.book_details__button__shelf_want_to_read_text,
-                        ),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.book_details__button__shelf_want_to_read_text),
+            )
         }
     }
 }

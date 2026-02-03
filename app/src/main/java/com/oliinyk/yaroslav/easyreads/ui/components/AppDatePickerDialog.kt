@@ -50,12 +50,8 @@ fun AppDatePickerDialog(
             AppTextButton(
                 modifier = Modifier.padding(bottom = Dimens.paddingBottomSmall),
                 onClick = onDismissRequest,
-            ) {
-                Text(
-                    stringResource(R.string.confirmation_dialog__button__cancel_text),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+                text = stringResource(R.string.confirmation_dialog__button__cancel_text),
+            )
         },
         content = {
             DatePicker(

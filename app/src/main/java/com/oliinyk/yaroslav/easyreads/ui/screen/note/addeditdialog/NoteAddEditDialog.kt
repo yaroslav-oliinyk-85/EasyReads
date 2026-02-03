@@ -201,13 +201,9 @@ private fun CancelButton(
 ) {
     AppTextButton(
         onClick = onClick,
+        text = stringResource(R.string.dialog__button__cancel_text),
         modifier = modifier.fillMaxWidth(),
-    ) {
-        Text(
-            text = stringResource(R.string.dialog__button__cancel_text),
-            style = MaterialTheme.typography.bodyLarge,
-        )
-    }
+    )
 }
 
 @Preview(showBackground = true)

@@ -98,16 +98,12 @@ fun SeeAllBooksButton(
                 .fillMaxWidth()
                 .padding(vertical = Dimens.paddingVerticalSmall),
         onClick = onSeeAllClicked,
-    ) {
-        Text(
-            text =
-                stringResource(
-                    R.string.my_library__button__shelf_see_all_books,
-                    booksCount,
-                ),
-            style = MaterialTheme.typography.bodyLarge,
-        )
-    }
+        text =
+            stringResource(
+                R.string.my_library__button__shelf_see_all_books,
+                booksCount,
+            ),
+    )
 }
 
 @Preview(showBackground = true)

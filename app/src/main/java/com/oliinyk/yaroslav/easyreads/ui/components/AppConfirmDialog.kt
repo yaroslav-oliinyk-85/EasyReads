@@ -32,12 +32,10 @@ fun AppConfirmDialog(
             }
         },
         dismissButton = {
-            AppTextButton(onClick = onDismiss) {
-                Text(
-                    stringResource(R.string.confirmation_dialog__button__cancel_text),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-            }
+            AppTextButton(
+                onClick = onDismiss,
+                text = stringResource(R.string.confirmation_dialog__button__cancel_text),
+            )
         },
         title = {
             Text(text = title)

@@ -126,32 +126,24 @@ fun ReadingSessionRecordSection(
                 // --- See All Notes Button ---
                 AppTextButton(
                     onClick = onClickShowNotes,
+                    text =
+                        stringResource(
+                            R.string.reading_session_record__button__show_notes_text,
+                            notesCount,
+                        ),
                     modifier =
                         Modifier
                             .weight(1f),
-                ) {
-                    Text(
-                        text =
-                            stringResource(
-                                R.string.reading_session_record__button__show_notes_text,
-                                notesCount,
-                            ),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                )
 
                 Spacer(Modifier.width(Dimens.spacerWidthSmall))
 
                 // --- Add Note Button ---
                 AppTextButton(
-                    onClick = onClickAddNote,
                     modifier = Modifier.weight(1f),
-                ) {
-                    Text(
-                        text = stringResource(R.string.reading_session_record__button__add_note_text),
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
-                }
+                    onClick = onClickAddNote,
+                    text = stringResource(R.string.reading_session_record__button__add_note_text),
+                )
             }
 
             Spacer(Modifier.height(Dimens.spacerHeightSmall))
