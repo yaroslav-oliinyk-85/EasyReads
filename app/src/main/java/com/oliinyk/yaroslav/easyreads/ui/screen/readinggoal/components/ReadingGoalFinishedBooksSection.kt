@@ -89,9 +89,6 @@ fun ReadingGoalFinishedBooksSection(
                             modifier = Modifier.weight(1f),
                         )
                     }
-                    repeat(Dimens.gridCellsPlaceHolderCount) {
-                        Spacer(Modifier.weight(1f))
-                    }
                 }
             }
         }
