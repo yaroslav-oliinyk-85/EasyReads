@@ -123,7 +123,7 @@
     <string name="book_add_edit__button__added_date_text">Додано</string>
     <string name="book_add_edit__button__finished_date_text">Прочитано</string>
 
-    <string name="book_add_edit__confirmation_dialog__title_text">Підтвердження</string>
+    <string name="book_add_edit__confirmation_dialog__title_text">Скасувати</string>
     <string name="book_add_edit__confirmation_dialog__message_text">Незбережені зміни буде втрачено.</string>
 
     <string-array name="book_edit__shelves__list_items">

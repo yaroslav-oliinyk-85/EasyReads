@@ -60,7 +60,7 @@ fun ReadingSessionAddEditDialog(
     // --- State ---
     var uiStateDialog by rememberSaveable {
         mutableStateOf(
-            ReadingSessionAddEditUiStateDialog(
+            ReadingSessionAddEditDialogUiState(
                 startPage = readingSession.startPage,
                 endPage = readingSession.endPage,
                 readPages = readingSession.readPages,
@@ -114,30 +114,9 @@ fun ReadingSessionAddEditDialog(
                         .verticalScroll(rememberScrollState())
                         .padding(Dimens.paddingAllMedium),
             ) {
-                StartPageEditField(
+                StartedDateEditField(
                     uiStateDialog = uiStateDialog,
-                    onValueChange = { value ->
-                        val startPageValue = value.toBookPage()
-                        uiStateDialog = uiStateDialog.copy(startPage = startPageValue)
-                    },
-                )
-
-                EndPageEditField(
-                    uiStateDialog = uiStateDialog,
-                    onValueChange = { value ->
-                        val endPageValue = value.toBookPage().coerceIn(0..pagesCount)
-                        uiStateDialog =
-                            uiStateDialog.copy(
-                                endPage = endPageValue,
-                                readPages = endPageValue - uiStateDialog.startPage,
-                                endPageInputErrorMessage =
-                                    if (endPageValue <= uiStateDialog.startPage) {
-                                        endPageInputErrorMessageText
-                                    } else {
-                                        ""
-                                    },
-                            )
-                    },
+                    onStartedDateClick = { showStartedDatePickerDialog = true },
                 )
 
                 // --- Hours/Minutes/Seconds ---
@@ -189,10 +168,31 @@ fun ReadingSessionAddEditDialog(
                     )
                 }
 
-                StartedDateEditField(
-                    uiStateDialog = uiStateDialog,
-                    onStartedDateClick = { showStartedDatePickerDialog = true },
+                StartPageEditField(
                     modifier = Modifier.padding(top = Dimens.paddingTopMedium),
+                    uiStateDialog = uiStateDialog,
+                    onValueChange = { value ->
+                        val startPageValue = value.toBookPage()
+                        uiStateDialog = uiStateDialog.copy(startPage = startPageValue)
+                    },
+                )
+                EndPageEditField(
+                    modifier = Modifier.padding(top = Dimens.paddingTopMedium),
+                    uiStateDialog = uiStateDialog,
+                    onValueChange = { value ->
+                        val endPageValue = value.toBookPage().coerceIn(0..pagesCount)
+                        uiStateDialog =
+                            uiStateDialog.copy(
+                                endPage = endPageValue,
+                                readPages = endPageValue - uiStateDialog.startPage,
+                                endPageInputErrorMessage =
+                                    if (endPageValue <= uiStateDialog.startPage) {
+                                        endPageInputErrorMessageText
+                                    } else {
+                                        ""
+                                    },
+                            )
+                    },
                 )
 
                 AppDivider(Modifier.padding(vertical = Dimens.paddingVerticalMedium))
@@ -242,7 +242,7 @@ fun ReadingSessionAddEditDialog(
 
 @Composable
 private fun StartPageEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -270,7 +270,7 @@ private fun StartPageEditField(
 
 @Composable
 private fun EndPageEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -291,16 +291,13 @@ private fun EndPageEditField(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done,
             ),
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(top = Dimens.paddingTopMedium),
+        modifier = modifier.fillMaxWidth(),
     )
 }
 
 @Composable
 private fun HoursEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -324,7 +321,7 @@ private fun HoursEditField(
 
 @Composable
 private fun MinutesEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -348,7 +345,7 @@ private fun MinutesEditField(
 
 @Composable
 private fun SecondsEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -372,7 +369,7 @@ private fun SecondsEditField(
 
 @Composable
 private fun StartedDateEditField(
-    uiStateDialog: ReadingSessionAddEditUiStateDialog,
+    uiStateDialog: ReadingSessionAddEditDialogUiState,
     onStartedDateClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

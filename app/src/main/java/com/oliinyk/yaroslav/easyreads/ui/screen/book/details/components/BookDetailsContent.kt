@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.oliinyk.yaroslav.easyreads.R
 import com.oliinyk.yaroslav.easyreads.domain.model.Book
 import com.oliinyk.yaroslav.easyreads.domain.model.BookShelvesType
+import com.oliinyk.yaroslav.easyreads.domain.model.ReadingSession
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsEvent
 import com.oliinyk.yaroslav.easyreads.ui.screen.book.details.BookDetailsUiState
 import com.oliinyk.yaroslav.easyreads.ui.theme.Dimens
@@ -187,6 +188,37 @@ private fun BookDetailsContentWantToReadPreview() {
                             pageCurrent = 50,
                             shelf = BookShelvesType.WANT_TO_READ,
                             isFinished = false,
+                        ),
+                ),
+            onEvent = {},
+            navToReadingSessionRecord = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BookDetailsContentReadingSessionsPreview() {
+    EasyReadsTheme {
+        BookDetailsContent(
+            uiState =
+                BookDetailsUiState(
+                    book =
+                        Book(
+                            title = "Title",
+                            author = "Author",
+                            pagesCount = 250,
+                            pageCurrent = 50,
+                            shelf = BookShelvesType.READING,
+                            isFinished = false,
+                        ),
+                    readingSessions =
+                        listOf(
+                            ReadingSession(),
+                            ReadingSession(),
+                            ReadingSession(),
+                            ReadingSession(),
+                            ReadingSession(),
                         ),
                 ),
             onEvent = {},

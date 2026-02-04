@@ -96,16 +96,19 @@ class BookDetailsViewModel
         }
 
         fun updateReadingSession(readingSession: ReadingSession) {
-            val (isFinished, finishedAt, shelf) =
-                BookUtil.getFinishedWithFinishedAtAndShelf(uiState.value.book, readingSession)
-            bookRepository.update(
-                uiState.value.book.copy(
-                    pageCurrent = readingSession.endPage,
-                    isFinished = isFinished,
-                    finishedAt = finishedAt,
-                    shelf = shelf,
-                ),
-            )
+            val sessions = uiState.value.readingSessions
+            if (sessions.isNotEmpty() && readingSession.id == sessions.first().id) {
+                val (isFinished, finishedAt, shelf) =
+                    BookUtil.getFinishedWithFinishedAtAndShelf(uiState.value.book, readingSession)
+                bookRepository.update(
+                    uiState.value.book.copy(
+                        pageCurrent = readingSession.endPage,
+                        isFinished = isFinished,
+                        finishedAt = finishedAt,
+                        shelf = shelf,
+                    ),
+                )
+            }
 
             readingSessionRepository.update(readingSession)
         }

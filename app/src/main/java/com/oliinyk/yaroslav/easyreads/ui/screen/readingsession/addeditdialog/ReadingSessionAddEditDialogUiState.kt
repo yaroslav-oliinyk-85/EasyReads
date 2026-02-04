@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-data class ReadingSessionAddEditUiStateDialog(
+data class ReadingSessionAddEditDialogUiState(
     val startPage: Int = 0,
     val endPage: Int = 0,
     val readPages: Int = 0,
