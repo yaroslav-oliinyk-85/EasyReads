@@ -11,7 +11,7 @@ object BookUtil {
         readingSession: ReadingSession,
     ): Triple<Boolean, LocalDateTime?, BookShelvesType> =
         if (!book.isFinished && book.pagesCount == readingSession.endPage) {
-            Triple(true, LocalDateTime.now(), BookShelvesType.FINISHED)
+            Triple(true, readingSession.startedAt, BookShelvesType.FINISHED)
         } else {
             Triple(book.isFinished, book.finishedAt, book.shelf)
         }
