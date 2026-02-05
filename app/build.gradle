@@ -36,8 +36,8 @@ android {
         applicationId "com.oliinyk.yaroslav.easyreads"
         minSdk 24
         targetSdk 35
-        versionCode 10
-        versionName "1.0.0-b10"
+        versionCode 11
+        versionName "1.0.0-b11"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
