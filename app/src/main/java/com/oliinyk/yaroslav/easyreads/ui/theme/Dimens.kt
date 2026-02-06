@@ -16,6 +16,7 @@ object Dimens {
     val spacerWidthTiny = 4.dp
     val spacerWidthSmall = 8.dp
 
+    val roundedCornerShapeSizeTiny = 4.dp
     val roundedCornerShapeSize = 8.dp
     val appBadgeRoundedCornerShapeSize = 8.dp
 
@@ -60,6 +61,7 @@ object Dimens {
     val bookDetailsBookCoverImageSize = DpSize(width = 160.dp, height = 240.dp)
     val bookDetailsBookCoverImageScaledSize = DpSize(width = 320.dp, height = 480.dp)
     val readingSessionRecordBookCoverImageSize = DpSize(width = 120.dp, height = 180.dp)
+    val myLibraryBookCoverImageSize = DpSize(width = 50.dp, height = 75.dp)
 
     val bookListItemPercentageSize = 44.dp
     val bookListItemSortOrderSize = 42.dp

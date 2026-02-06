@@ -54,8 +54,18 @@ class MyLibraryViewModel
                         books.filter {
                             it.isFinished && (it.finishedAt != null) && (it.finishedAt.year == LocalDate.now().year)
                         }
+                    val booksSortedByUpdatedAt = books.sortedByDescending { it.updatedAt }
                     _uiState.update {
                         it.copy(
+                            latestFinishedBook =
+                                booksSortedByUpdatedAt
+                                    .firstOrNull { book -> BookShelvesType.FINISHED == book.shelf },
+                            latestReadingBook =
+                                booksSortedByUpdatedAt
+                                    .firstOrNull { book -> BookShelvesType.READING == book.shelf },
+                            latestWantToReadBook =
+                                booksSortedByUpdatedAt
+                                    .firstOrNull { book -> BookShelvesType.WANT_TO_READ == book.shelf },
                             finishedBooksCount = books.count { book -> book.shelf == BookShelvesType.FINISHED },
                             readingBooksCount = books.count { book -> book.shelf == BookShelvesType.READING },
                             wantToReadBooksCount = books.count { book -> book.shelf == BookShelvesType.WANT_TO_READ },
@@ -73,6 +83,9 @@ class MyLibraryViewModel
     }
 
 data class MyLibraryUiState(
+    val latestFinishedBook: Book? = null,
+    val latestReadingBook: Book? = null,
+    val latestWantToReadBook: Book? = null,
     val finishedBooksCount: Int = 0,
     val readingBooksCount: Int = 0,
     val wantToReadBooksCount: Int = 0,

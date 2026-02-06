@@ -57,6 +57,7 @@ fun MyLibraryShelvesSection(
                         R.string.my_library__label__shelf_finished_text,
                         uiState.finishedBooksCount,
                     ),
+                book = uiState.latestFinishedBook,
                 onClick = { onShelfClick(BookShelvesType.FINISHED) },
             )
             AppDivider()
@@ -66,6 +67,7 @@ fun MyLibraryShelvesSection(
                         R.string.my_library__label__shelf_reading_text,
                         uiState.readingBooksCount,
                     ),
+                book = uiState.latestReadingBook,
                 onClick = { onShelfClick(BookShelvesType.READING) },
             )
             AppDivider()
@@ -75,6 +77,7 @@ fun MyLibraryShelvesSection(
                         R.string.my_library__label__shelf_want_to_read_text,
                         uiState.wantToReadBooksCount,
                     ),
+                book = uiState.latestWantToReadBook,
                 onClick = { onShelfClick(BookShelvesType.WANT_TO_READ) },
             )
             AppDivider()
