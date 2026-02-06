@@ -48,6 +48,7 @@ import java.time.LocalTime
 fun BookAddEditScreen(
     navBack: () -> Unit,
     bookId: String? = null,
+    navToBookDetails: (String) -> Unit = {},
     viewModel: BookAddEditViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
@@ -138,6 +139,9 @@ fun BookAddEditScreen(
 
                 viewModel.save(context.applicationContext)
                 navBack()
+                if (bookId == null) {
+                    navToBookDetails(uiState.book.id.toString())
+                }
             }
         },
     )

@@ -111,6 +111,9 @@ fun AppNavHost(navHostController: NavHostController) {
                 navBack = {
                     navHostController.popBackStack()
                 },
+                navToBookDetails = { bookId ->
+                    navHostController.navigate(route = AppNavRoutes.BookDetails.createRoute(bookId))
+                },
             )
         }
 
