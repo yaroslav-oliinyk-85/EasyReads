@@ -208,7 +208,10 @@ private fun IsbnEditField(
         onValueChange = { isbn ->
             onEvent(
                 BookAddEditEvent.IsbnChanged(
-                    isbn.trim().take(AppConstants.BOOK_ISBN_MAX_LENGTH),
+                    isbn
+                        .trim()
+                        .filter { it.isDigit() }
+                        .take(AppConstants.BOOK_ISBN_MAX_LENGTH),
                 ),
             )
         },

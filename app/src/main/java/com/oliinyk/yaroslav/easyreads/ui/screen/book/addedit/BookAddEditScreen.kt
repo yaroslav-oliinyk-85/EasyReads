@@ -153,7 +153,10 @@ fun BookAddEditScreen(
             datePickerState = datePickerState,
             onDateSelected = { selectedDate ->
                 viewModel.updateStateUi {
-                    it.copy(book = it.book.copy(addedAt = LocalDateTime.of(selectedDate, LocalTime.now())))
+                    val addedAt = LocalDateTime.of(selectedDate, LocalTime.now())
+                    val updatedAt = if (bookId == null) addedAt else it.book.updatedAt
+
+                    it.copy(book = it.book.copy(addedAt = addedAt, updatedAt = updatedAt))
                 }
             },
             onDismissRequest = { showAddedDatePickerDialog = false },
